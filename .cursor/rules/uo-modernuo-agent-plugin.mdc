@@ -1,0 +1,12 @@
+---
+alwaysApply: true
+---
+
+# UO ModernUO Agent Plugin
+
+- Read `AGENTS.md` before editing this repository.
+- Treat `uo-modernuo-agent-plugin/` as the plugin root.
+- Keep guidance scoped to Ultima Online and ModernUO, without binding it to one shard.
+- Keep Cursor guidance consistent with Claude, Codex, and GitHub Copilot guidance.
+- Keep v1 repo-local and limited to skills plus rules unless the task explicitly expands the plugin surface.
+- Validate Codex plugin structure after changes to plugin manifests or skills.

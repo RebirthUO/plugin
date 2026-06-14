@@ -1,0 +1,8 @@
+{
+  "name": "uo-modernuo-agent-plugin",
+  "version": "0.1.0",
+  "description": "Shared Ultima Online and ModernUO agent guidance for Cursor, Claude, Codex, and GitHub Copilot.",
+  "author": {
+    "name": "UO ModernUO Maintainers"
+  }
+}
