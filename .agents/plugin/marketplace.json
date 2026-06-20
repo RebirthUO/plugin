@@ -1,0 +1,20 @@
+{
+  "name": "rebirthuo-plugins",
+  "interface": {
+    "displayName": "RebirthUO"
+  },
+  "plugins": [
+    {
+      "name": "modernuo",
+      "source": {
+        "source": "local",
+        "path": "./plugins/modernuo"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Ultima Online"
+    }
+  ]
+}

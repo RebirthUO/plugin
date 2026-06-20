@@ -1,0 +1,12 @@
+{
+    "name": "modernuo",
+    "version": "1.0.0",
+    "description": "ModernUO plugin",
+    "author": {
+      "name": "Jan Siems",
+      "email": "jsiems87@gmail.com"
+    },
+    "license": "MIT",
+    "skills": "./skills/",
+    "logo": "./assets/rebirthuo-logo.png"
+  }
