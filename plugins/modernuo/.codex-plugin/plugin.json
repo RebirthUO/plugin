@@ -1,12 +1,31 @@
 {
-    "name": "modernuo",
-    "version": "1.0.0",
-    "description": "ModernUO plugin",
-    "author": {
-      "name": "Jan Siems",
-      "email": "jsiems87@gmail.com"
-    },
-    "license": "MIT",
-    "skills": "./skills/",
-    "logo": "./assets/rebirthuo-logo.png"
+  "name": "modernuo",
+  "version": "1.0.1",
+  "description": "ModernUO plugin",
+  "author": {
+    "name": "Jan Siems",
+    "email": "jsiems87@gmail.com"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ModernUO",
+    "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
+    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including migration guidance, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "developerName": "Jan Siems",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "brandColor": "#7A2F1A",
+    "defaultPrompt": [
+      "Audit this ModernUO subsystem.",
+      "Plan this RebirthUO migration.",
+      "Check this Ultima Online content parity."
+    ],
+    "composerIcon": "./assets/rebirthuo-logo.png",
+    "logo": "./assets/rebirthuo-logo.png",
+    "screenshots": []
   }
+}
