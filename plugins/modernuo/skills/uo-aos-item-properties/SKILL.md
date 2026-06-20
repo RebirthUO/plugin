@@ -273,6 +273,16 @@ The `CheckHitEffect` helper takes the property value as a percentage chance and 
 - [ ] `OnAfterDelete` does not need updating for new attributes (storage is owned by `BaseAttributes`), but verify `DurabilityBonus` still works for armor/weapon via the `SetValue` hook.
 - [ ] For new hit effects, the combat effect body is gated by `Core.AOS` (or stricter era) at the dispatch site, not just inside the aggregator.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 - `uo-items-foundation` - the base classes (`BaseWeapon`, `BaseArmor`, ...) that own these property containers; also hosts the cross-cutting reading recipe at `uo-items-foundation/references/analyzing-modernuo-subsystems.md` (use it before analyzing other UO subsystems).

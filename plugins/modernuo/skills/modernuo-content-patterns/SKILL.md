@@ -359,12 +359,22 @@ public override void OnAfterDelete()
 - Skill check: `Projects/UOContent/Skills/SkillCheck.cs`
 - Loot packs: `Projects/UOContent/Misc/LootPack.cs`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
-- `dev-docs/claude-skills/modernuo-serialization.md` - Serialization details
-- `dev-docs/claude-skills/modernuo-era-expansion.md` - Era-conditional code
-- `dev-docs/claude-skills/modernuo-timers.md` - Timer patterns
-- `dev-docs/claude-skills/modernuo-property-lists.md` - Item tooltips
-- `dev-docs/claude-skills/modernuo-gump-system.md` - UI dialogs
-- `dev-docs/claude-skills/modernuo-commands-targeting.md` - Commands and targeting
-- `dev-docs/claude-skills/modernuo-events.md` - Event system
+- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - Serialization details
+- `plugins/modernuo/skills/modernuo-era-expansion/SKILL.md` - Era-conditional code
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer patterns
+- `plugins/modernuo/skills/modernuo-property-lists/SKILL.md` - Item tooltips
+- `plugins/modernuo/skills/modernuo-gump-system/SKILL.md` - UI dialogs
+- `plugins/modernuo/skills/modernuo-commands-targeting/SKILL.md` - Commands and targeting
+- `plugins/modernuo/skills/modernuo-events/SKILL.md` - Event system
 - `dev-docs/content-patterns.md` - Full content documentation

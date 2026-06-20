@@ -144,7 +144,17 @@ public class MySeasonalEvent : YearlyScheduledEvent
 - **Using EventScheduler for sub-second timing**: 1-second granularity is too coarse — use `Timer.StartTimer`
 - **Constructing `MonthDay` with invalid day**: Throws `ArgumentOutOfRangeException` — validate against `DateTime.DaysInMonth`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/event-scheduler.md` — Complete EventScheduler documentation
 - `dev-docs/timers.md` — Game-tick timer system (Timer.StartTimer, TimerExecutionToken)
-- `dev-docs/claude-skills/modernuo-timers.md` — Timer skill for game-tick delays
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` — Timer skill for game-tick delays

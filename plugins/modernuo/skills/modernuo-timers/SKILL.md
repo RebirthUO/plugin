@@ -212,10 +212,20 @@ _decayTimer = null;
 - `Projects/Server/Timer/Timer.DelayStateCall.cs` - Generic state timers
 - `Projects/Server/Timer/TimerExecutionToken.cs` - Token struct
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/timers.md` - Complete timer documentation
 - `dev-docs/event-scheduler.md` - Wall-clock/calendar scheduling (EventScheduler) — use for daily resets, weekly events, holiday seasons instead of Timer
-- `dev-docs/claude-skills/modernuo-event-scheduler.md` - EventScheduler skill for calendar-based events
-- `dev-docs/claude-skills/modernuo-serialization.md` - Timer fields not serialized
-- `dev-docs/claude-skills/modernuo-content-patterns.md` - Deletion patterns
-- `dev-docs/claude-skills/modernuo-threading.md` - Single-threaded model
+- `plugins/modernuo/skills/modernuo-event-scheduler/SKILL.md` - EventScheduler skill for calendar-based events
+- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - Timer fields not serialized
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Deletion patterns
+- `plugins/modernuo/skills/modernuo-threading/SKILL.md` - Single-threaded model

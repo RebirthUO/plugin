@@ -228,8 +228,18 @@ region.GetRegion<GuardedRegion>()  // returns first GuardedRegion in ancestor ch
 - **Using `Region.Find(string, Map)` in hot paths**: Linear O(n) scan — use `Region.Find(Point3D, Map)` (sector-indexed)
 - **Overriding a hook without calling `base`**: Breaks parent delegation chain — always call `base.Method()` unless intentionally blocking
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/regions.md` — Complete region system documentation
 - `dev-docs/timers.md` — Timer system (for deferred registration)
-- `dev-docs/claude-skills/modernuo-content-patterns.md` — Item/Mobile lifecycle (OnAfterDelete, AfterDeserialization)
-- `dev-docs/claude-skills/modernuo-serialization.md` — Serialization and AfterDeserialization hooks
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` — Item/Mobile lifecycle (OnAfterDelete, AfterDeserialization)
+- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` — Serialization and AfterDeserialization hooks

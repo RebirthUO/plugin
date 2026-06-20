@@ -197,7 +197,7 @@ mob.SendMessage($"You earned a {rank:L} trophy!");          // "gold" not "Gold"
 - **INFO**: Rules 1 (Tier 2 LINQ on warm paths — note it but don't flag as violation), 16 (switch patterns — suggest but don't flag)
 - **ASK**: Rule 11 (need user input)
 
-## How to Report
+## How to Report Issues
 When you find violations, report them as:
 ```
 [AUDIT] {SEVERITY}: {Description}
@@ -209,7 +209,10 @@ Do NOT silently fix issues. Always flag and ask.
 
 ## See Also
 - `dev-docs/code-standards.md` - Full coding standards documentation
-- `dev-docs/claude-skills/modernuo-serialization.md` - Serialization rules
-- `dev-docs/claude-skills/modernuo-timers.md` - Timer cleanup rules
-- `dev-docs/claude-skills/modernuo-threading.md` - Threading model details
-- `dev-docs/claude-skills/modernuo-property-lists.md` - PropertyList interpolation rules
+- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - Serialization rules
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer cleanup rules
+- `plugins/modernuo/skills/modernuo-threading/SKILL.md` - Threading model details
+- `plugins/modernuo/skills/modernuo-property-lists/SKILL.md` - PropertyList interpolation rules
+- `plugins/modernuo/skills/modernuo-server-lifecycle/SKILL.md` - Startup and lifecycle phase risks
+- `plugins/modernuo/skills/modernuo-pathfinding/SKILL.md` - AI movement and StepCache risks
+- `plugins/modernuo/skills/modernuo-world-saves-archives/SKILL.md` - Save/archive/restore data-loss risks

@@ -262,6 +262,16 @@ DynamicDecay.Tick();
 - [ ] Per-facet: housing is blocked in `NoHousingRegion` and on Ilshenar, allowed on other facets.
 - [ ] Addon cleanup: when the house falls, all addons with `House == thisHouse` are deleted.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 - `uo-items-foundation` - the `Item` and `BaseContainer` model used for storage and lockdown.

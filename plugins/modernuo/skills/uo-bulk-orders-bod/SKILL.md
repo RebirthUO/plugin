@@ -284,6 +284,16 @@ m_LastTurnIn = DateTime.UtcNow;
 - [ ] `MondainsLegacyRewardServiceRuntimeTests` passes (the ML BOD turn-in inspection cooldown, the pre-ML no-cooldown control, the large tailor ShoeSet material combine rules, the Tinker Guildmaster weapon-engraver recharge).
 - [ ] Per-craft BOD scope: pre-Publish-95 world = Smith/Tailor only; the others are gated by the era flag.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 - `uo-crafting-recipes-resources` - the crafting system that produces the items the BOD requires.

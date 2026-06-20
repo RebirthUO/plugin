@@ -215,3 +215,13 @@ Full per-concept tables with ModernUO equivalents, key paths, and gap notes:
 | Add a peerless boss | Encounter → BossEncounter; `Engines/Peerless/` |
 | Add a champion spawn | Encounter → ChampionSpawnDefinition; `ChampionSpawnInfo` |
 | Show a dialog UI | ClientPresentation → Gump; `Gumps/` + `modernuo-gump-system.md` |
+
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.

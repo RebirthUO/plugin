@@ -355,8 +355,18 @@ Also available via the build tool: `dotnet run --project Projects/BuildTool -- -
 
 External reference: https://github.com/modernuo/SerializationGenerator
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/serialization.md` - Complete serialization documentation
-- `dev-docs/claude-skills/modernuo-timers.md` - Timer token patterns
-- `dev-docs/claude-skills/modernuo-content-patterns.md` - Item/Mobile templates
-- `dev-docs/claude-skills/modernuo-property-lists.md` - [InvalidateProperties] usage
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer token patterns
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Item/Mobile templates
+- `plugins/modernuo/skills/modernuo-property-lists/SKILL.md` - [InvalidateProperties] usage

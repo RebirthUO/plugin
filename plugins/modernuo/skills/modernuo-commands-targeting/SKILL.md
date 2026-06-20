@@ -217,7 +217,17 @@ protected override void OnTargetUntargetable(Mobile from, object targeted)
 - Target base: `Projects/Server/Targeting/Target.cs`
 - Attributes: `Projects/Server/Attributes.cs` (Usage, Description, Aliases)
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/commands-targeting.md` - Complete documentation
-- `dev-docs/claude-skills/modernuo-gump-system.md` - Commands that open gumps
-- `dev-docs/claude-skills/modernuo-content-patterns.md` - Content creation
+- `plugins/modernuo/skills/modernuo-gump-system/SKILL.md` - Commands that open gumps
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content creation

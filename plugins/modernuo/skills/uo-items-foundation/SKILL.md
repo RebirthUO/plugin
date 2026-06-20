@@ -221,6 +221,16 @@ Hot-path rules (also from `CLAUDE.md:1-7`):
 - [ ] No use of `World.Items`/`World.Mobiles` iteration; spatial queries used instead.
 - [ ] New item appears in a tool (`[add item` or `i Dor 0x1234`) without throwing.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 - `uo-aos-item-properties` - layer magical properties on the base classes covered here.
@@ -232,5 +242,5 @@ Hot-path rules (also from `CLAUDE.md:1-7`):
 
 ## Support Files
 
-- `references/analyzing-modernuo-subsystems.md` - reading recipe for turning a ModernUO/RebirthUO subsystem into a class-level Hermes skill. Use it before analyzing Spells, Skills, AI, Combat, Crafting, or any other UO subsystem so the work follows the same citation discipline and trigger shape used here.
+- `references/analyzing-modernuo-subsystems.md` - reading recipe for turning a ModernUO/RebirthUO subsystem into a class-level skill. Use it before analyzing Spells, Skills, AI, Combat, Crafting, or any other UO subsystem so the work follows the same citation discipline and trigger shape used here.
 - `scripts/validate_cromesdk_skill.py` - validator for CromeSDK-marked SKILL.md frontmatter. Run it on every personal CromeSDK skill before declaring the work done.

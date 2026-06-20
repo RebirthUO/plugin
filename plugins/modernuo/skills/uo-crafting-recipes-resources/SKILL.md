@@ -242,6 +242,16 @@ Live QA gaps are listed in `docs/mondains-legacy-crafting-matrix.md:60-70` (rare
 - [ ] For quest items, `LootType.Blessed` is set, and the quest definition grants the recipe.
 - [ ] For an in-progress check during development, `dotnet test --filter <recipe name or Def*>` runs the relevant test subset only.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 - `uo-items-foundation` - the produced item type (`BaseArmor`, `BaseWeapon`, `BaseClothing`, `BaseJewel`, etc.) and `ICraftable`; also hosts the cross-cutting reading recipe at `uo-items-foundation/references/analyzing-modernuo-subsystems.md` (use it before analyzing other UO subsystems).

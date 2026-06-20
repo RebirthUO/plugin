@@ -38,7 +38,17 @@ description: >
 | `PacketHandlers.Register(...)` | `IncomingPackets.Register(... &handler)` |
 | `new OnPacketReceive(H)` | `&H` (function pointer) |
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/runuo-migration-docs/05-packets-networking.md` -- detailed migration reference
 - `dev-docs/networking-packets.md` -- complete ModernUO networking system
-- `dev-docs/claude-skills/modernuo-networking.md` -- ModernUO networking skill
+- `plugins/modernuo/skills/modernuo-networking/SKILL.md` -- ModernUO networking skill

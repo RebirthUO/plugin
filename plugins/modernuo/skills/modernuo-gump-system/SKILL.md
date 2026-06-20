@@ -177,7 +177,7 @@ builder.AddHtml(20, 20, 200, 100, $"<center>{Title}: {Score:N0}</center>");
 builder.AddLabel(20, 40, hue, $"You have {gold} gold");
 ```
 
-Avoid the interpolation anti-patterns (ternaries with `$"..."` branches, `.ToString()` inside holes, pre-built `var msg = $"..."` locals, `string.Format`, etc.) — they silently fall back to string-allocating overloads. See `dev-docs/claude-skills/modernuo-string-handling.md` § "Interpolation Anti-Patterns" for the full list.
+Avoid the interpolation anti-patterns (ternaries with `$"..."` branches, `.ToString()` inside holes, pre-built `var msg = $"..."` locals, `string.Format`, etc.) — they silently fall back to string-allocating overloads. See `plugins/modernuo/skills/modernuo-string-handling/SKILL.md` § "Interpolation Anti-Patterns" for the full list.
 
 ### Interactive
 ```csharp
@@ -354,6 +354,16 @@ public class NewGump : DynamicGump
 - DynamicGumpBuilder: `Projects/UOContent/Gumps/Base/DynamicGumpBuilder.cs`
 - BaseGump: `Projects/UOContent/Gumps/Base/BaseGump.cs`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/gump-system.md` - Complete gump documentation
-- `dev-docs/claude-skills/modernuo-commands-targeting.md` - Commands that open gumps
+- `plugins/modernuo/skills/modernuo-commands-targeting/SKILL.md` - Commands that open gumps

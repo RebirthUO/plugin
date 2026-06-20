@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a CromeSDK-marked Hermes SKILL.md against the schema rules used
+"""Validate a CromeSDK-marked SKILL.md against the schema rules used
 by RebirthUO personal skills.
 
 Covers:
@@ -10,7 +10,7 @@ Covers:
   * CromeSDK ownership metadata present and well-formed
     (`metadata.cromesdk.sync.marker == 'cromesdk-personal-skill'`,
     `owner == 'Crome696'`, `plugin-allowed == True`).
-  * Hermes tags include `cromesdk-personal-skill`, `cromesdk-sync-managed`,
+  * Required tags include `cromesdk-personal-skill`, `cromesdk-sync-managed`,
     `plugin-allowed`.
 
 Exit code 0 on success, 1 on first failure.

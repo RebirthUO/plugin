@@ -1,7 +1,7 @@
 # Analyzing a ModernUO/RebirthUO Subsystem
 
 A reproducible reading recipe for turning a ModernUO/ModernUO-style UO server
-codebase into a class-level Hermes skill. Validated against the Items subsystem
+codebase into a class-level skill. Validated against the Items subsystem
 in this tree; applies to Spells, Skills, AI, Combat, Crafting, Housing, and
 similar.
 
@@ -108,7 +108,7 @@ skill load.
    citation.
 5. **Producing skill content in the user's chat language**. The
    German kickoff is task framing; the SKILL.md and references must
-   be in English per Hermes skill conventions.
+   be in English for portable skill conventions.
 
 ## Verifying the analysis itself
 

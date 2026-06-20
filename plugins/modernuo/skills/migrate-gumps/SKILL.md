@@ -39,7 +39,17 @@ description: >
 ## Critical: Empty Gump Rule
 Never create a gump with no visual elements. Use the `DisplayTo()` pattern -- validate before constructing.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/runuo-migration-docs/04-gumps.md` -- detailed migration reference
 - `dev-docs/gump-system.md` -- complete ModernUO gump system
-- `dev-docs/claude-skills/modernuo-gump-system.md` -- ModernUO gump skill
+- `plugins/modernuo/skills/modernuo-gump-system/SKILL.md` -- ModernUO gump skill

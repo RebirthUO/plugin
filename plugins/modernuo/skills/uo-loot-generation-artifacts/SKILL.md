@@ -321,6 +321,16 @@ public class EventBoss : BaseCreature
 - [ ] For an item that is meant to drop multiple times, the `MaxAmount` on the entry is set correctly.
 - [ ] The `LootPackEntry.Chance` is a probability, not a percentage: 0.05 = 5%, not 5.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 - `uo-items-foundation` - the `Item` model that the loot system creates.

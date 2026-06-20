@@ -169,7 +169,19 @@ These files MAY use threading (they're server infrastructure, not game logic):
 - PooledRefList: `Projects/Server/Collections/PooledRefList.cs`
 - World save: `Projects/Server/World/World.cs`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/threading-model.md` - Complete threading documentation
-- `dev-docs/claude-skills/modernuo-code-audit.md` - Threading audit rules
-- `dev-docs/claude-skills/modernuo-timers.md` - Timer-based scheduling
+- `plugins/modernuo/skills/modernuo-code-audit/SKILL.md` - Threading audit rules
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer-based scheduling
+- `plugins/modernuo/skills/modernuo-pathfinding/SKILL.md` - Main-thread pathfinding cost and cache behavior
+- `plugins/modernuo/skills/modernuo-world-saves-archives/SKILL.md` - World save snapshot and archive boundaries

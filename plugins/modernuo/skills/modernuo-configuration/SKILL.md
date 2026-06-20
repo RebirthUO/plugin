@@ -171,7 +171,18 @@ Examples:
 - Timer pool config: `Projects/Server/Timer/Timer.Pool.cs`
 - Main config: `Distribution/Configuration/modernuo.json`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/configuration.md` - Complete configuration documentation
-- `dev-docs/claude-skills/modernuo-era-expansion.md` - Expansion configuration
-- `dev-docs/claude-skills/modernuo-events.md` - Configure() pattern
+- `plugins/modernuo/skills/modernuo-era-expansion/SKILL.md` - Expansion configuration
+- `plugins/modernuo/skills/modernuo-events/SKILL.md` - Configure() pattern
+- `plugins/modernuo/skills/modernuo-server-lifecycle/SKILL.md` - ConfigurePrompts, Configure, Initialize ordering

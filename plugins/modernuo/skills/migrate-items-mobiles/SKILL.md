@@ -35,9 +35,19 @@ description: >
 - Forgetting `[AfterDeserialization]` for timer restoration
 - Forgetting `OnAfterDelete()` for timer cancellation
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/runuo-migration-docs/09-items-mobiles-creatures.md` -- detailed migration with before/after examples
 - `dev-docs/content-patterns.md` -- ModernUO content templates
-- `dev-docs/claude-skills/modernuo-content-patterns.md` -- ModernUO content skill
-- `dev-docs/claude-skills/modernuo-serialization.md` -- serialization patterns
-- `dev-docs/claude-skills/modernuo-timers.md` -- timer patterns
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` -- ModernUO content skill
+- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` -- serialization patterns
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` -- timer patterns

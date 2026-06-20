@@ -161,6 +161,16 @@ When editing ability `.cs` files, also apply `modernuo-code-audit` rules:
 - No `Console.WriteLine` — use `LogFactory.GetLogger`
 - PropertyList string literals must be holes (`$"{"Label"}\t{value}"`)
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## Related Skills
 
 | Task | Skills |
@@ -174,4 +184,4 @@ When editing ability `.cs` files, also apply `modernuo-code-audit` rules:
 
 - Base class matrix, trigger reference, code templates, review checklist → [reference.md](reference.md)
 - Ability system source → `Projects/UOContent/Mobiles/Abilities/`
-- Creature patterns hub → `dev-docs/claude-skills/modernuo-content-patterns.md`
+- Creature patterns hub → `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md`

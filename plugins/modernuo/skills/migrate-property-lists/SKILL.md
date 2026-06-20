@@ -27,7 +27,17 @@ list.Add(1060658, $"Map\t{value}");
 list.Add(1060658, $"{"Map"}\t{value}");
 ```
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/runuo-migration-docs/06-property-lists.md` -- detailed migration reference
 - `dev-docs/property-lists.md` -- complete ModernUO property list system
-- `dev-docs/claude-skills/modernuo-property-lists.md` -- ModernUO property list skill
+- `plugins/modernuo/skills/modernuo-property-lists/SKILL.md` -- ModernUO property list skill

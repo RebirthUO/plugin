@@ -102,7 +102,7 @@ list.Add(1060658, $"{"Charges"}\t{_charges.ToString()}");
 list.Add(1060658, $"{"Charges"}\t{_charges}");
 ```
 
-Same applies to `.String()` (TextDefinition), `.GetValue()`, etc. The full list of interpolation anti-patterns (ternaries, switch expressions, pre-built locals, `string.Format`, concat in hole, LINQ in hole) applies equally to `IPropertyList.Add($"...")`. See `dev-docs/string-handling.md` § "Interpolation Anti-Patterns" or `dev-docs/claude-skills/modernuo-string-handling.md`.
+Same applies to `.String()` (TextDefinition), `.GetValue()`, etc. The full list of interpolation anti-patterns (ternaries, switch expressions, pre-built locals, `string.Format`, concat in hole, LINQ in hole) applies equally to `IPropertyList.Add($"...")`. See `dev-docs/string-handling.md` § "Interpolation Anti-Patterns" or `plugins/modernuo/skills/modernuo-string-handling/SKILL.md`.
 
 ### Cliloc as Argument (Use `:#` Format Specifier)
 
@@ -213,7 +213,17 @@ public override void GetProperties(IPropertyList list)
 - Interface: `Projects/Server/PropertyList/IPropertyList.cs`
 - Implementation: `Projects/Server/PropertyList/ObjectPropertyList.cs`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/property-lists.md` - Complete property list documentation
-- `dev-docs/claude-skills/modernuo-serialization.md` - [InvalidateProperties] on fields
-- `dev-docs/claude-skills/modernuo-era-expansion.md` - Era-conditional properties
+- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - [InvalidateProperties] on fields
+- `plugins/modernuo/skills/modernuo-era-expansion/SKILL.md` - Era-conditional properties

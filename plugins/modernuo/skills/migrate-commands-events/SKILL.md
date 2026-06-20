@@ -32,8 +32,18 @@ description: >
 ## Commands (Minimal Changes)
 Commands use the same `CommandSystem.Register()` API. Main change: use `Configure()` for registration.
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/runuo-migration-docs/07-commands-events.md` -- detailed migration reference
 - `dev-docs/events.md` -- complete ModernUO event system
-- `dev-docs/claude-skills/modernuo-events.md` -- ModernUO events skill
-- `dev-docs/claude-skills/modernuo-commands-targeting.md` -- ModernUO commands skill
+- `plugins/modernuo/skills/modernuo-events/SKILL.md` -- ModernUO events skill
+- `plugins/modernuo/skills/modernuo-commands-targeting/SKILL.md` -- ModernUO commands skill

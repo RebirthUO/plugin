@@ -38,7 +38,17 @@ description: >
 - Starting timers in `Deserialize()` -- world isn't loaded yet, use `[AfterDeserialization]`
 - Lambda closures on hot paths -- use `Timer.DelayCall` with state parameters instead
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/runuo-migration-docs/03-timers.md` -- detailed migration reference
 - `dev-docs/timers.md` -- complete ModernUO timer system
-- `dev-docs/claude-skills/modernuo-timers.md` -- ModernUO timer skill
+- `plugins/modernuo/skills/modernuo-timers/SKILL.md` -- ModernUO timer skill

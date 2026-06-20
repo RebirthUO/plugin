@@ -178,7 +178,17 @@ args.Free();
 - Connection events: `Projects/Server/Events/SocketConnectionEvent.cs`
 - GumpSystem subscription: `Projects/UOContent/Gumps/Base/GumpSystem.cs`
 
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
+
 ## See Also
 - `dev-docs/events.md` - Complete events documentation
-- `dev-docs/claude-skills/modernuo-content-patterns.md` - Content hooks
-- `dev-docs/claude-skills/modernuo-configuration.md` - Configure() pattern
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content hooks
+- `plugins/modernuo/skills/modernuo-configuration/SKILL.md` - Configure() pattern

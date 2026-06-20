@@ -184,7 +184,7 @@ This pattern produced the `Projects/UOContent/Items/Weapons/weapons.md` parity a
 5. **Building a 30 KB SKILL.md that should have been a 12 KB SKILL.md plus a 18 KB references file.** The target shape is class-level SKILL.md + session-specific `references/`. If the body is bloating, split.
 6. **Treating "WARN related skill X not in local set" from the validation script as a hard failure.** The script is a sanity check; if a related skill is intentionally external (e.g. a docs file, a web URL), prefix the entry so the check skips it (`www.uoguide.com/...` or `docs/...`).
 7. **Using the wrong skill directory.** All UO skills belong under `~/AppData/Local/hermes/skills/software-development/uo-*` and use `category: software-development`. Putting them in `gaming/` is wrong; the category is metadata for the *skill*, not the *game*.
-8. **Localizing the skill body.** All skill artifacts are in English by Hermes convention. German/Chinese/etc. content goes in conversation, not in the saved skill.
+8. **Localizing the skill body.** All skill artifacts are in English for plugin portability. German/Chinese/etc. content goes in conversation, not in the saved skill.
 9. **Skipping `metadata.cromesdk.sync.*` in new skills.** Without the marker, the cromesdk-plugin sync tooling cannot identify the skill as user-owned. The minimum required tags are `cromesdk-personal-skill`, `cromesdk-sync-managed`, `plugin-allowed`.
 10. **Forgetting the `category` field in `metadata.hermes`.** The category must match the folder group (e.g. `category: software-development` for `software-development/`). Mismatched category is a metadata lint failure.
 11. **Doing 1 web call per item instead of finding the master list.** Many UO subsystems have a single canonical master-list page (e.g. `uo.com/wiki/ultima-online-wiki/items/weapons/` lists every standard weapon in one table). Always check for the master list first; bulk-extracting it once with `curl` + regex beats N parallel `web_extract` calls. See `references/uo-master-list-extraction.md` for the parse recipe and URL generators.
@@ -203,6 +203,16 @@ This pattern produced the `Projects/UOContent/Items/Weapons/weapons.md` parity a
 - [ ] `related_skills` lists the UO siblings and the non-UO dependencies.
 - [ ] Any web citations are noted in the SKILL.md's "Related Skills" footer for offline reference, and any longer primary research is parked in `references/<topic>.md` linked from SKILL.md.
 - [ ] For parity audits over many items: the bulk-extraction recipe in Phase 6 was used, and the resulting diff table is parked in the repo (e.g. `Projects/UOContent/<Category>/<topic>-parity.md`) for the next session.
+
+## How to Report Issues
+
+When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+
+- Task or trigger that activated the skill.
+- Relevant repository path and line, or external source URL/date when parity research is involved.
+- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
+- Validation performed, including commands run or why a runtime/manual check is still needed.
+- Open questions or source conflicts that need user judgment.
 
 ## Related Skills
 
