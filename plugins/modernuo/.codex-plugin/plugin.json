@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "ModernUO plugin",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
-    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including migration guidance, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including migration guidance, named Ultima Online skill parity checks, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -22,7 +22,8 @@
     "defaultPrompt": [
       "Audit this ModernUO subsystem.",
       "Plan this RebirthUO migration.",
-      "Check this Ultima Online content parity."
+      "Check this Ultima Online content parity.",
+      "Check Magery skill parity against ModernUO."
     ],
     "composerIcon": "./assets/rebirthuo-logo.png",
     "logo": "./assets/rebirthuo-logo.png",
