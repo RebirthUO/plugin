@@ -159,6 +159,8 @@ Use these exact sections:
 ## Recommended Actions
 
 ## Questions for User
+
+## Issue Slice Options
 ```
 
 In `Recommended Actions`, recommend decision direction only. Do not include code patches until the user chooses a policy for each discrepancy.
@@ -168,6 +170,23 @@ In `Questions for User`, list each unresolved decision with stable IDs:
 - `IPPC-1`: Align with official sources, keep current implementation, or apply a custom rule?
 - `IPPC-2`: Which era/profile should control this unclear behavior?
 - `IPPC-3`: Should this item-specific exception apply globally or only to the named context?
+
+## Markdown Delivery and Issue Slicing
+
+Deliver the final parity check as Markdown. End every report with `## Issue Slice Options` and offer to turn findings into single sliced issues.
+
+Only create issue drafts or tracker issues when the user asks. When slicing is requested, create one independently actionable Markdown issue per discrepancy, gap, or unresolved decision. Each issue slice should include:
+
+- Title.
+- Source report row or stable decision ID.
+- Expected behavior with cited source.
+- ModernUO evidence with file path, line, or search evidence.
+- Impact/risk category.
+- Proposed decision direction, without code patches unless already approved.
+- Acceptance criteria and suggested validation.
+- Open questions or source conflicts.
+
+Do not bundle unrelated findings into one issue just because they affect the same item property or item family.
 
 ## Decision Loop
 

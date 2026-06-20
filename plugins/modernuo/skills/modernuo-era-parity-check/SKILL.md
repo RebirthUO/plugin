@@ -102,6 +102,25 @@ Copy the report structure from [report-template.md](report-template.md). Every a
 6. **Enhanced list** — intentional deviations
 7. **Open research** — unresolved conflicts
 
+8. **Issue slice options** - Markdown follow-up option to turn findings into single sliced issues
+
+## Markdown Delivery and Issue Slicing
+
+Deliver the final parity check as Markdown by copying [report-template.md](report-template.md). End every report with `## Issue Slice Options` and offer to turn findings into single sliced issues.
+
+Only create issue drafts or tracker issues when the user asks. When slicing is requested, create one independently actionable Markdown issue per gap, partial implementation, runtime blocker, enhanced-deviation decision, or unresolved research decision. Each issue slice should include:
+
+- Title.
+- Source report row, entity name, or stable decision ID.
+- Expected era behavior with cited source.
+- ModernUO evidence with file path, line, or search evidence.
+- Impact/risk category.
+- Proposed decision direction, without code patches unless already approved.
+- Acceptance criteria and suggested validation.
+- Open questions or source conflicts.
+
+Do not bundle unrelated findings into one issue just because they belong to the same era or aspect.
+
 ## Deep Parity Checklist (per entity)
 
 When auditing a specific entity (boss, item, skill, quest):

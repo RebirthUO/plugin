@@ -33,6 +33,8 @@ description: >
 5. **Fokus dieser Anfrage** — taxonomy classification and implementation paths
 6. **Offene Punkte / Recherche** — unresolved conflicts or items needing web search
 
+7. **Issue Slice Options** - Markdown follow-up option to turn findings into single sliced issues
+
 Run the parity workflow **before** classification advice. Use web search only when UO.com and UOGuide do not resolve open points.
 
 ## Parity Check
@@ -42,6 +44,23 @@ Full workflow, source hierarchy, status legend, domain URLs, and report template
 → [parity-check.md](parity-check.md)
 
 Primary external sources: **UO.com** wiki and **UOGuide**. Repo parity claims live in `dev-docs/eras/`; ML URLs in `Projects/UOContent/Misc/MondainsLegacySourceReferences.cs`.
+
+## Markdown Delivery and Issue Slicing
+
+Deliver the final parity report as Markdown. End every report with `## Issue Slice Options` and offer to turn findings into single sliced issues.
+
+Only create issue drafts or tracker issues when the user asks. When slicing is requested, create one independently actionable Markdown issue per gap, partial implementation, runtime blocker, enhanced-deviation decision, or unresolved research decision. Each issue slice should include:
+
+- Title.
+- Source report row, taxonomy domain, or stable decision ID.
+- Expected OSI behavior with cited source.
+- ModernUO evidence with file path, line, or search evidence.
+- Impact/risk category.
+- Proposed decision direction, without code patches unless already approved.
+- Acceptance criteria and suggested validation.
+- Open questions or source conflicts.
+
+Do not bundle unrelated findings into one issue just because they belong to the same domain.
 
 ## Taxonomy Tree
 

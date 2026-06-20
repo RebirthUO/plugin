@@ -120,7 +120,17 @@ Copy this structure into **every** taxonomy skill response:
 ## Offene Punkte / Recherche
 
 - …
+
+## Issue Slice Options
+
+- I can convert these findings into single sliced Markdown issues on request. Each issue should cover one independently actionable gap, partial implementation, runtime blocker, enhanced-deviation decision, or unresolved research decision, with evidence, impact, acceptance criteria, validation notes, and open questions.
 ```
+
+## Markdown Delivery and Issue Slicing
+
+Every taxonomy parity report must be delivered as Markdown and end with `## Issue Slice Options`. Do not create issue drafts or tracker issues unless the user asks.
+
+When slicing is requested, create one independently actionable issue per finding. Do not bundle unrelated gaps, partial implementations, runtime blockers, enhanced-deviation decisions, or unresolved research decisions into the same issue just because they share a taxonomy domain.
 
 ## Deep Parity Checklist (focus entity)
 

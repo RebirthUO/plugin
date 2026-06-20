@@ -1,0 +1,4 @@
+interface:
+  display_name: "ModernUO Era Change Gate"
+  short_description: "Route cross-era content changes to parity checks"
+  default_prompt: "Use $modernuo-era-change-gate to review this content change and route any affected eras into parity checks."

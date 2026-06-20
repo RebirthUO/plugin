@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 - 2026-06-20
+
+- Added `modernuo-era-change-gate` to require era parity involvement when content changes cross expansion or EraProfile boundaries.
+
+## 1.3.1 - 2026-06-20
+
+- Updated parity-check and content-taxonomy parity reports to require Markdown delivery and offer optional single sliced issue creation from report findings.
+
 ## 1.3.0 - 2026-06-20
 
 - Added `modernuo-item-property-parity-check` for named Ultima Online item property parity checks against ModernUO/RebirthUO source code.

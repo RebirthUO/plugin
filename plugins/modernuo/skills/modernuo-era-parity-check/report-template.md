@@ -152,3 +152,11 @@ Add a **Repo path** footnote or sub-column when helpful: `` `Projects/UOContent/
 | Fan_Dancer | Partial | Samurai Empire | https://www.uoguide.com/Fan_Dancer | Fan Dancer's Dojo stealables/loot context | 75% | Verify `FanDancersDojo.json` density |
 | Serado | Present | Samurai Empire | https://www.uoguide.com/Sleeping_Dragon | Champion-style SE boss | 80% | Confirm spawn controller wiring |
 ```
+
+## 8. Issue Slice Options
+
+```markdown
+## Issue Slice Options
+
+This report can be converted into single sliced Markdown issues on request. Each issue should cover one independently actionable gap, partial implementation, runtime blocker, enhanced-deviation decision, or unresolved research decision, with evidence, impact, acceptance criteria, validation notes, and open questions.
+```
