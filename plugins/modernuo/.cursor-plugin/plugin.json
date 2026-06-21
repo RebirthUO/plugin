@@ -1,0 +1,32 @@
+{
+  "name": "modernuo",
+  "displayName": "ModernUO",
+  "version": "1.8.0",
+  "description": "ModernUO and Ultima Online development guidance for RebirthUO.",
+  "author": {
+    "name": "Jan Siems",
+    "email": "jsiems87@gmail.com"
+  },
+  "homepage": "https://github.com/RebirthUO/plugin#readme",
+  "repository": "https://github.com/RebirthUO/plugin",
+  "license": "MIT",
+  "keywords": [
+    "modernuo",
+    "rebirthuo",
+    "ultima-online",
+    "server-development",
+    "migration",
+    "parity"
+  ],
+  "tags": [
+    "modernuo",
+    "rebirthuo",
+    "ultima-online",
+    "server-development",
+    "migration",
+    "parity"
+  ],
+  "category": "developer-tools",
+  "logo": "assets/rebirthuo-logo.png",
+  "skills": "./skills/"
+}

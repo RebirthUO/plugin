@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.8.0 - 2026-06-21
+
+- Added Cursor marketplace metadata for the `rebirthuo-plugins` marketplace.
+- Added a Cursor plugin manifest for `modernuo`.
+- Documented Cursor marketplace usage.
+- Aligned Codex, Claude Code, and Cursor plugin manifests on version `1.8.0`.
+
+## 1.7.0 - 2026-06-21
+
+- Added Claude Code marketplace metadata for the `rebirthuo-plugins` marketplace.
+- Added a Claude Code plugin manifest for `modernuo`.
+- Documented Claude Code local and GitHub marketplace installation commands.
+
+## 1.6.1 - 2026-06-21
+
+- Moved the ModernUO plugin README and changelog to the repository root.
+- Added a root MIT license for the plugin repository.
+- Updated root documentation paths for the `plugins/modernuo` plugin layout.
+
 ## 1.6.0 - 2026-06-21
 
 - Added `modernuo-lootpack-preservation` to require recommendation and confirmation before replacing source-derived `LootPack` loot calls with exact-gold or policy-helper implementations.

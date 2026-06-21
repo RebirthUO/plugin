@@ -1,0 +1,25 @@
+{
+  "name": "rebirthuo-plugins",
+  "owner": {
+    "name": "Jan Siems",
+    "email": "jsiems87@gmail.com"
+  },
+  "description": "Claude Code plugins for RebirthUO development.",
+  "plugins": [
+    {
+      "name": "modernuo",
+      "displayName": "ModernUO",
+      "source": "./plugins/modernuo",
+      "description": "ModernUO and Ultima Online development guidance for RebirthUO.",
+      "category": "developer-tools",
+      "tags": [
+        "modernuo",
+        "rebirthuo",
+        "ultima-online",
+        "server-development",
+        "migration",
+        "parity"
+      ]
+    }
+  ]
+}
