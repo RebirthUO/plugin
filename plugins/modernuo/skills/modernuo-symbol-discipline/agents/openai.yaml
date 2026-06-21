@@ -1,0 +1,4 @@
+interface:
+  display_name: "ModernUO Symbol Discipline"
+  short_description: "Review const, variable, and property surfaces"
+  default_prompt: "Use $modernuo-symbol-discipline to review this code for unnecessary constants, locals, fields, properties, and Policy* symbols."

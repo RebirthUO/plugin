@@ -1,0 +1,4 @@
+interface:
+  display_name: "ModernUO LootPack Preservation"
+  short_description: "Preserve source-derived LootPack calls"
+  default_prompt: "Use $modernuo-lootpack-preservation to review this source-derived loot change before replacing LootPack calls."

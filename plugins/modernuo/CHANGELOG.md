@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.0 - 2026-06-21
+
+- Added `modernuo-lootpack-preservation` to require recommendation and confirmation before replacing source-derived `LootPack` loot calls with exact-gold or policy-helper implementations.
+
+## 1.5.0 - 2026-06-21
+
+- Added `modernuo-symbol-discipline` to guide when ModernUO/RebirthUO code should inline values or introduce constants, locals, fields, properties, and `Policy*` symbols.
+
 ## 1.4.0 - 2026-06-20
 
 - Added `modernuo-era-change-gate` to require era parity involvement when content changes cross expansion or EraProfile boundaries.
