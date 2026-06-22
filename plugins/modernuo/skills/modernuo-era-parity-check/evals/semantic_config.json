@@ -1,0 +1,79 @@
+{
+  "fallback_positive_concepts": [
+    "era_scope",
+    "parity",
+    "delta"
+  ],
+  "positive_concepts": {
+    "era_scope": {
+      "weight": 0.35,
+      "phrases": [
+        "era",
+        "expansion",
+        "core.se",
+        "samurai empire",
+        "mondain's legacy",
+        "eraprofile",
+        "endless journey"
+      ]
+    },
+    "parity": {
+      "weight": 0.35,
+      "phrases": [
+        "parity",
+        "gap",
+        "missing",
+        "exists versus missing",
+        "content parity"
+      ]
+    },
+    "delta": {
+      "weight": 0.2,
+      "phrases": [
+        "delta",
+        "expected-vs-actual",
+        "expected vs actual",
+        "data deltas",
+        "risk rows"
+      ]
+    },
+    "modernuo": {
+      "weight": 0.1,
+      "phrases": [
+        "modernuo",
+        "rebirthuo"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "named_skill": {
+      "weight": 0.35,
+      "exclusive": true,
+      "phrases": [
+        "magery skill",
+        "blacksmithy skill",
+        "skill parity"
+      ]
+    },
+    "named_property": {
+      "weight": 0.35,
+      "exclusive": true,
+      "phrases": [
+        "item property",
+        "spell damage",
+        "lower mana cost",
+        "mage armor"
+      ]
+    },
+    "implementation_only": {
+      "weight": 0.25,
+      "exclusive": false,
+      "phrases": [
+        "serialization",
+        "custom module",
+        "write code",
+        "fix this bug"
+      ]
+    }
+  }
+}

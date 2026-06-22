@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "seed": "yao-output-eval-blind-v1",
+  "summary": {
+    "pair_count": 2,
+    "answer_key_separate": true,
+    "with_skill_hidden_count": 2
+  },
+  "pairs": [
+    {
+      "case_id": "monster_delta_required",
+      "prompt": "Run a Samurai Empire monster parity excerpt for Yomotsu Elder.",
+      "input_files": [],
+      "metadata": {},
+      "review_instruction": "Pick A or B based only on the rubric. Do not infer which output came from the skill.",
+      "rubric": [
+        {
+          "id": "has_expected",
+          "description": "Risk rows include expected behavior.",
+          "weight": 2.0
+        },
+        {
+          "id": "has_modernuo_evidence",
+          "description": "Risk rows include path-backed ModernUO evidence.",
+          "weight": 2.0
+        },
+        {
+          "id": "has_delta_matrix",
+          "description": "Risk rows include a Delta Matrix.",
+          "weight": 2.0
+        },
+        {
+          "id": "reject_confirmation_only",
+          "description": "Final risk rows must not rely on confirmation-only wording.",
+          "weight": 1.0
+        }
+      ],
+      "variant_a": {
+        "blind_id": "monster_delta_required:A",
+        "output": "| Name | State | Issue | Recommendation |\n|---|---|---|---|\n| Yomotsu_Elder | Partial | Needs confirmation; missing Axe Throw | Verify later |"
+      },
+      "variant_b": {
+        "blind_id": "monster_delta_required:B",
+        "output": "## Entity / System Detail\n\n| Name | State | Era | Source | Expected | ModernUO Evidence | Delta | Validation | Impact | Accuracy % | Recommendation |\n|---|---|---|---|---|---|---|---|---|---:|---|\n| Yomotsu_Elder | Partial | Samurai Empire | https://www.uoguide.com/Yomotsu_Elder | UOGuide creature table plus Axe Throw special | `Projects/UOContent/Mobiles/Monsters/SE/YomotsuElder.cs:88` has TODO for Axe Throw and no ability hook | Missing ability hook | confirmed | PvM balance / era parity | 65% | Implement or intentionally defer Axe Throw; add parity test |\n\n## Delta Matrix\n\n| Aspect | Name | Field | Expected | ModernUO Evidence | Delta | Validation |\n|---|---|---|---|---|---|---|\n| Monsters | Yomotsu_Elder | Ability | Axe Throw special | `YomotsuElder.cs:88` TODO / no hook | Missing ability hook | confirmed |"
+      }
+    },
+    {
+      "case_id": "crafting_research_required",
+      "prompt": "Report an unclear Samurai Empire crafting discrepancy.",
+      "input_files": [],
+      "metadata": {},
+      "review_instruction": "Pick A or B based only on the rubric. Do not infer which output came from the skill.",
+      "rubric": [
+        {
+          "id": "open_research",
+          "description": "Unresolved crafting claims move to Open Research with checked sources.",
+          "weight": 2.0
+        },
+        {
+          "id": "crafting_delta_status",
+          "description": "Crafting uncertainty is represented as open-research, not a final partial claim.",
+          "weight": 2.0
+        },
+        {
+          "id": "reject_confirmation_only",
+          "description": "Confirmation-only crafting issue wording is forbidden.",
+          "weight": 1.0
+        }
+      ],
+      "variant_a": {
+        "blind_id": "crafting_research_required:A",
+        "output": "| Name | State | Issue | Recommendation |\n|---|---|---|---|\n| Bokuto | Partial | Crafting needs confirmation | Confirm crafting |"
+      },
+      "variant_b": {
+        "blind_id": "crafting_research_required:B",
+        "output": "## Open Research\n\n- EPC-OR-1: Bokuto crafting skill requirement differs across available notes - Checked: UO.com crafting index, UOGuide Bokuto page, `Projects/UOContent/Engines/Craft/DefBlacksmithy.cs`, `Projects/UOContent/Engines/Craft/DefCarpentry.cs` - Missing evidence: exact OSI-era recipe skill and resource count - Next step: verify source table or runtime craft menu for Samurai Empire profile\n\n## Delta Matrix\n\n| Aspect | Name | Field | Expected | ModernUO Evidence | Delta | Validation |\n|---|---|---|---|---|---|---|\n| Crafting | Bokuto | Recipe requirement | Source conflict; exact OSI-era requirement not confirmed | Craft definitions checked; no final source-backed mismatch yet | No confirmed delta; moved to Open Research | open-research |"
+      }
+    }
+  ]
+}

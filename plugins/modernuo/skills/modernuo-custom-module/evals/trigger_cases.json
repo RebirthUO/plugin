@@ -1,0 +1,65 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Create a custom ModernUO content module for my shard and register it with the server.",
+      "family": "custom_module_setup"
+    },
+    {
+      "text": "Set up CUOContent and CUOContent.Tests beside UOContent.",
+      "family": "default_cuo_setup"
+    },
+    {
+      "text": "I need a separate content project loaded from assemblies.json at runtime.",
+      "family": "runtime_registration"
+    },
+    {
+      "text": "Add AVContent for the Avalon server and wire it into ModernUO.slnx.",
+      "family": "explicit_shortcut"
+    },
+    {
+      "text": "The user did not give a shard name; make the default custom module and tests.",
+      "family": "omitted_name_defaults_to_cuo"
+    },
+    {
+      "text": "Maintain our custom content assembly and verify AssemblyHandler loads it.",
+      "family": "module_maintenance"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Add a new sword under Projects/UOContent/Items.",
+      "family": "ordinary_content_edit"
+    },
+    {
+      "text": "Migrate this RunUO gump into the existing UOContent project.",
+      "family": "migration_without_module_boundary"
+    },
+    {
+      "text": "Check Flamestrike spell parity against UO.com.",
+      "family": "spell_parity"
+    },
+    {
+      "text": "Review this serialization version bump in BaseWeapon.",
+      "family": "serialization_review"
+    },
+    {
+      "text": "Explain how ModernUO loads assemblies without changing anything.",
+      "family": "explain_only"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Create folders under UOContent for a new feature, but keep everything in the existing project.",
+      "family": "same_project_feature"
+    },
+    {
+      "text": "Update Application.csproj for a dependency that is not a content module.",
+      "family": "generic_project_reference"
+    },
+    {
+      "text": "Add a test project for existing UOContent code only.",
+      "family": "test_project_only"
+    }
+  ]
+}

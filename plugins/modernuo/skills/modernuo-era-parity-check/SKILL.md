@@ -1,178 +1,81 @@
 ---
 name: modernuo-era-parity-check
 description: >
-  Produces a fine-grained Ultima Online era/add-on parity report for RebirthUO/ModernUO
-  by comparing source code against UO.com, UOGuide, and Stratics. Requires a valid era name
-  (expansion or EraProfile). Covers races, skills, stats, spells, items, world, combat,
-  crafting, pets, housing, quests, and game mechanics. Use when auditing expansion parity,
-  scoping addon content, or answering what exists vs what is missing for a target era.
+  Use when asked for an Ultima Online expansion, add-on, EraProfile, or
+  era-scoped content parity report for RebirthUO/ModernUO. Requires a valid era
+  and compares repo evidence with UO.com, UOGuide, Stratics fallback, and
+  repo-internal era docs. Produces Markdown reports with aspect coverage,
+  expected-vs-actual data deltas for risk rows, validation status, and optional
+  single-sliced issue follow-ups.
 ---
 
-# Ultima Online Addon/Era Parity Check
+# ModernUO Era Parity Check
 
-## When This Activates
+Use this skill to show what exists, what is missing, and what differs for one UO
+era, with data-backed deltas instead of vague "needs confirmation" findings.
 
-- User asks for an era or add-on parity check, inventory, or gap analysis
-- User wants to know what content exists vs is missing for a specific expansion
-- User is scoping work for a publish, expansion, or `EraProfile`
-- User names a creature, item, system, or mechanic and wants era-scoped parity evidence
+Do not edit ModernUO source code or create issues unless the user explicitly
+asks. Report parity evidence and decision points only.
 
-## Hard Gate: Valid Era Required
+## Required Input
 
-**Do not run the parity workflow until the user supplies a valid era.**
+Require one valid era or EraProfile before starting. Accept aliases such as
+`SE`, `Samurai Empire`, `Core.SE`, and profile filenames.
 
-If missing or ambiguous, ask using this list:
+Valid eras: Original UO, T2A, UOR, UOTD, LBR, AOS, SE, ML, SA, HS, TOL, EJ.
+Known profiles: `ml-baseline.json`, `endless-journey.json`.
 
-| Display name | Enum | Core check | Era doc |
-|---|---|---|---|
-| Original UO | `None` | (pre-`Core.T2A`) | `dev-docs/eras/original-uo.md` |
-| The Second Age | `T2A` | `Core.T2A` | `dev-docs/eras/the-second-age.md` |
-| Renaissance | `UOR` | `Core.UOR` | `dev-docs/eras/renaissance.md` |
-| Third Dawn | `UOTD` | `Core.UOTD` | `dev-docs/eras/third-dawn.md` |
-| Lord Blackthorn's Revenge | `LBR` | `Core.LBR` | `dev-docs/eras/lord-blackthorns-revenge.md` |
-| Age of Shadows | `AOS` | `Core.AOS` | `dev-docs/eras/age-of-shadows.md` |
-| Samurai Empire | `SE` | `Core.SE` | `dev-docs/eras/samurai-empire.md` |
-| Mondain's Legacy | `ML` | `Core.ML` | `dev-docs/eras/mondains-legacy.md` |
-| Stygian Abyss | `SA` | `Core.SA` | `dev-docs/eras/stygian-abyss.md` |
-| High Seas | `HS` | `Core.HS` | `dev-docs/eras/high-seas.md` |
-| Time of Legends | `TOL` | `Core.TOL` | `dev-docs/eras/time-of-legends.md` |
-| Endless Journey | `EJ` | `Core.EJ` | `dev-docs/eras/endless-journey.md` |
+If the era is missing or ambiguous, ask for the era and stop.
 
-Also accept **EraProfile** names when the user scopes a shard profile:
+## Source Order
 
-- `Distribution/Configuration/EraProfiles/ml-baseline.json`
-- `Distribution/Configuration/EraProfiles/endless-journey.json`
+Use sources in this order and cite every non-`Present` row:
 
-Accept aliases (`SE`, `Samurai Empire`, `samurai-empire`, `Core.SE`) and normalize to one display name in the report header.
+1. Repo docs/tests: `dev-docs/eras/`, source maps, EraProfiles, reference classes.
+2. UO.com wiki.
+3. UOGuide.
+4. UO Stratics as a secondary fallback.
+5. RunUO, ServUO, UOAlive, or other community sources only as `Unverified`.
 
-## Source Hierarchy
-
-Use sources in this order. Do not skip lower tiers when a higher tier has no answer.
-
-1. **Repo-internal** — `dev-docs/eras/{expansion}.md`, `dev-docs/uo-reference-sources.md`, era tests, `MondainsLegacySourceReferences.cs`
-2. **UO.com** — `https://uo.com/wiki/ultima-online-wiki/`
-3. **UOGuide** — `https://www.uoguide.com/`
-4. **UO Stratics** — `https://uo.stratics.com/` (secondary fallback only)
-5. **Last resort** — UOAlive, RunUO, ServUO docs or source (label as `Unverified` and cite URL)
-
-When sources conflict, record the conflict in **Issue** and lower the accuracy grade.
-
-## Parity Status Legend
-
-| State | Meaning |
-|---|---|
-| `Present` | Implemented and matches official sources for the target era |
-| `Partial` | Implemented with known gaps (stats, skills, loot, spawns, hooks) |
-| `Gap` | Documented in OSI sources but missing or not wired in repo |
-| `Enhanced` | Intentional RebirthUO deviation beyond OSI |
-| `SourceLocked` | Effect facts confirmed by approved sources; values in code |
-| `RuntimeBlocked` | Facts confirmed; live trigger/cadence/hook not wired to combat |
-| `Unverified` | Only found in RunUO/ServUO/UOAlive; not confirmed on UO.com/UOGuide |
-
-`Enhanced` is not a failure — list separately from `Gap`/`Partial`.
+When sources conflict, record it and lower confidence. Separate fact from inference.
 
 ## Mandatory Workflow
 
-Run all steps on every activation:
+1. Normalize the era to display name, enum, `Core.*`, era doc, publish range,
+   and optional EraProfile.
+2. Read era context and scan all aspects from [aspects.md](aspects.md).
+3. Collect expected behavior and actual ModernUO evidence from code, data,
+   tests, or grep results.
+4. Apply the Risk Rows default from
+   [references/delta-reporting.md](references/delta-reporting.md): every
+   non-`Present`, low-confidence, monster, crafting, and user-focused row must
+   include `Expected`, `ModernUO Evidence`, `Delta`, `Validation`, and `Impact`.
+5. If no delta can be made, move the item to `Open Research` with sources
+   checked and the next validation step.
+6. Emit the Markdown report using [report-template.md](report-template.md).
 
-1. **Validate era** — normalize display name, enum, `Core.*` check, era doc path, optional `EraProfile` JSON
-2. **Load era context** — read `dev-docs/eras/{slug}.md`, `publish-index.md` publish range, profile gates in `EraProfiles/`
-3. **Inventory repo by aspect** — scan paths from [aspects.md](aspects.md); grep/code search for era-relevant types
-4. **Cross-check external sources** — UO.com first, then UOGuide; Stratics only when both lack detail
-5. **Grade accuracy** — per-row `%` confidence (see [report-template.md](report-template.md))
-6. **Emit mandatory report** — full aspect sections + summary tables + recommendations
+## Status Labels
 
-### Efficiency Rules
+Allowed states: `Present`, `Partial`, `Gap`, `Enhanced`, `SourceLocked`,
+`RuntimeBlocked`, and `Unverified`. `Needs confirmation` is not a final state;
+convert it into a delta or `Open Research`.
 
-- **Aspect summary rows** first (coverage % per aspect), then **entity-level rows** for notable `Partial`/`Gap`/`RuntimeBlocked` items
-- Deep field-by-field parity only for user focus + direct dependencies
-- Pre-seed from era doc tables and `Open gaps` sections before web search
-- Cite a URL for every non-`Present` row
-- Pair ML entities with `MondainsLegacySourceReferences` constants when available
+## Output Contract
 
-## Mandatory Output
+Every report must include the sections in [report-template.md](report-template.md):
+header, aspect summary, entity detail, Delta Matrix, gap/partial/enhanced lists,
+Open Research, optional Focus, and `Issue Slice Options`.
 
-Copy the report structure from [report-template.md](report-template.md). Every activation must include:
+Issue slices must preserve expected-vs-actual evidence, validation, impact,
+acceptance criteria, and open questions. Do not bundle unrelated findings.
 
-1. **Era header** — display name, enum, `Core.*`, EraProfile, publish range
-2. **Aspect coverage summary** — one row per aspect (47 aspects in [aspects.md](aspects.md))
-3. **Entity/system detail table** — fine-grained rows with `Name | State | Era | Source | Issue | Accuracy % | Recommendation`
-4. **Gap list** — missing content
-5. **Partial / RuntimeBlocked list** — incomplete implementations
-6. **Enhanced list** — intentional deviations
-7. **Open research** — unresolved conflicts
+## Package Quality Evidence
 
-8. **Issue slice options** - Markdown follow-up option to turn findings into single sliced issues
+Details live in `references/`, checks in `evals/`, and output risks in
+`reports/`. Run Yao validation after package changes.
 
-## Markdown Delivery and Issue Slicing
+## Related Skills
 
-Deliver the final parity check as Markdown by copying [report-template.md](report-template.md). End every report with `## Issue Slice Options` and offer to turn findings into single sliced issues.
-
-Only create issue drafts or tracker issues when the user asks. When slicing is requested, create one independently actionable Markdown issue per gap, partial implementation, runtime blocker, enhanced-deviation decision, or unresolved research decision. Each issue slice should include:
-
-- Title.
-- Source report row, entity name, or stable decision ID.
-- Expected era behavior with cited source.
-- ModernUO evidence with file path, line, or search evidence.
-- Impact/risk category.
-- Proposed decision direction, without code patches unless already approved.
-- Acceptance criteria and suggested validation.
-- Open questions or source conflicts.
-
-Do not bundle unrelated findings into one issue just because they belong to the same era or aspect.
-
-## Deep Parity Checklist (per entity)
-
-When auditing a specific entity (boss, item, skill, quest):
-
-| Check | Repo | External |
-|---|---|---|
-| Type exists | C# class or data row under expected path | UOGuide page exists |
-| Stats / properties | ctor defaults, `SetSkill`, `GetProperties` | UOGuide statistics table |
-| Abilities / specials | `MonsterAbility`, spells, `OnGaveMeleeAttack`, TODOs | UO.com + UOGuide ability sections |
-| Loot / rewards | `GenerateLoot`, artifact tables | UOGuide loot lists |
-| Access / keys | `PeerlessAltar`, quest regions | Peerless/quest pages |
-| Spawns | `Data/Spawns/`, spawner JSON | Dungeon/region pages |
-| Era gating | `Core.*` branches, EraProfile JSON | Expansion publish notes |
-
-Document `SourceLocked` vs `RuntimeBlocked` separately when mechanics are confirmed but not live-wired.
-
-## Example Row
-
-| Name | State | Era | Source | Issue | Accuracy % | Recommendation |
-|---|---|---|---|---|---|---|
-| Yomotsu_Elder | Partial | Samurai Empire | https://www.uoguide.com/Yomotsu_Elder | Missing Axe Throw special; skills/stats may differ from UOGuide table | 65% | Wire axe-throw ability; reconcile `SetSkill`/`SetStr` ranges against UOGuide; add parity test in `Projects/UOContent.Tests/` |
-
-Repo: `Projects/UOContent/Mobiles/Monsters/SE/YomotsuElder.cs` — `// TODO: Axe Throw` at line 88.
-
-## Cross-Links
-
-| Topic | Doc / skill |
-|---|---|
-| Era checks in code | `modernuo-era-expansion.md`, `dev-docs/era-expansion.md` |
-| 9-domain taxonomy | `modernuo-content-taxonomy` |
-| Reference URL map | `dev-docs/uo-reference-sources.md` |
-| Aspect scan paths | [aspects.md](aspects.md) |
-| Report template | [report-template.md](report-template.md) |
-| ML source constants | `Projects/UOContent/Misc/MondainsLegacySourceReferences.cs` |
-| Era doc maintenance | `dev-docs/eras/README.md` |
-
-## Maintenance
-
-When parity work changes implementation status:
-
-1. Update `dev-docs/eras/{expansion}.md` anchor and parity table
-2. Add code back-reference: `// Era: dev-docs/eras/{slug}.md#{entity-slug}`
-3. Add or extend targeted tests under `Projects/UOContent.Tests/`
-
-Do not store long URL prose in content classes — use era doc anchors or reference classes.
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+- `modernuo-content-taxonomy` for 9-domain inventory routing.
+- `uo-domain-research` for source triangulation.
+- Named skill, spell, and item-property parity skills for single-subject audits.

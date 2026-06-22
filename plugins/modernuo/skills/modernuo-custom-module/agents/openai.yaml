@@ -1,0 +1,4 @@
+interface:
+  display_name: "ModernUO Custom Module"
+  short_description: "Set up custom ModernUO content modules"
+  default_prompt: "Use $modernuo-custom-module to set up a CUOContent custom module and test project for this ModernUO repository."

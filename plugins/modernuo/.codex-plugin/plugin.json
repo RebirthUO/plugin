@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "1.8.0",
+  "version": "1.10.0",
   "description": "ModernUO plugin",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
-    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including custom content module setup, migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -22,13 +22,14 @@
     "defaultPrompt": [
       "Audit this ModernUO subsystem.",
       "Plan this RebirthUO migration.",
-      "Check this Ultima Online content parity.",
+      "Check this Ultima Online content parity with source-backed data deltas.",
       "Review this content change for cross-era parity impact.",
       "Review this source-derived loot change before replacing LootPack calls.",
       "Review this code for unnecessary constants, locals, fields, properties, and Policy* symbols.",
       "Check Magery skill parity against ModernUO.",
       "Check Flamestrike spell parity against ModernUO.",
-      "Check Spell Damage item property parity against ModernUO."
+      "Check Spell Damage item property parity against ModernUO.",
+      "Set up a CUOContent custom module for this ModernUO server."
     ],
     "composerIcon": "./assets/rebirthuo-logo.png",
     "logo": "./assets/rebirthuo-logo.png",

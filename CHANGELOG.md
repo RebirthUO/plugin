@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.10.0 - 2026-06-22
+
+- Enhanced `modernuo-era-parity-check` to require source-backed expected-vs-actual deltas for non-present, low-confidence, monster, crafting, and user-focused risk rows.
+- Added delta-reporting guidance, Yao interface metadata, trigger/output evals, and reviewer-visible output risk notes for era parity reports.
+- Updated plugin documentation and manifest versions for the new era parity report contract.
+
+## 1.9.0 - 2026-06-22
+
+- Added `modernuo-custom-module` for setting up and maintaining custom ModernUO content modules such as the default `CUOContent` / `CUOContent.Tests` pair.
+- Documented custom module runtime registration through solution entries, application project references, and `Distribution/Data/assemblies.json`.
+- Updated plugin documentation and manifest versions for the new skill.
+
 ## 1.8.0 - 2026-06-21
 
 - Added Cursor marketplace metadata for the `rebirthuo-plugins` marketplace.

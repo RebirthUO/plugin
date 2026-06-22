@@ -1,0 +1,39 @@
+{
+  "recommended_threshold": 0.32,
+  "should_trigger": [
+    {
+      "text": "Run a Samurai Empire era parity check and show monster data deltas.",
+      "family": "era_parity"
+    },
+    {
+      "text": "Audit Mondain's Legacy content parity against ModernUO and include crafting expected-vs-actual rows.",
+      "family": "era_parity"
+    },
+    {
+      "text": "Check the endless-journey EraProfile for gaps, runtime blockers, and enhanced deviations.",
+      "family": "era_profile"
+    },
+    {
+      "text": "For Core.SE, what content exists versus what is missing in RebirthUO?",
+      "family": "era_parity"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Check Magery skill parity against UO.com.",
+      "family": "named_skill"
+    },
+    {
+      "text": "Check Spell Damage item property parity.",
+      "family": "named_property"
+    },
+    {
+      "text": "Explain how ModernUO serialization generation works.",
+      "family": "non_parity"
+    },
+    {
+      "text": "Create a CUOContent custom module.",
+      "family": "custom_module"
+    }
+  ]
+}

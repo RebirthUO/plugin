@@ -1,0 +1,19 @@
+interface:
+  display_name: "ModernUO Era Parity Check"
+  short_description: "Produce era parity reports with data-backed deltas"
+  default_prompt: "Use $modernuo-era-parity-check to audit Samurai Empire parity and include expected-vs-actual deltas for monster and crafting risk rows."
+compatibility:
+  canonical_format: "codex-skill"
+  adapter_targets:
+    - "codex"
+  activation:
+    mode: "implicit"
+  execution:
+    context: "inline"
+    shell: "powershell"
+  trust:
+    source_tier: "plugin"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "local only"
+  degradation:
+    codex: "Use SKILL.md plus report-template.md, aspects.md, and references/delta-reporting.md."

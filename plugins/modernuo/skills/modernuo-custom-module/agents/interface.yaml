@@ -1,0 +1,19 @@
+interface:
+  display_name: "ModernUO Custom Module"
+  short_description: "Set up custom ModernUO content modules"
+  default_prompt: "Use $modernuo-custom-module to set up a CUOContent custom module and test project for this ModernUO repository."
+compatibility:
+  canonical_format: "codex-skill"
+  adapter_targets:
+    - "codex"
+  activation:
+    mode: "implicit"
+  execution:
+    context: "inline"
+    shell: "powershell"
+  trust:
+    source_tier: "plugin"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "local only"
+  degradation:
+    codex: "Use SKILL.md plus references."

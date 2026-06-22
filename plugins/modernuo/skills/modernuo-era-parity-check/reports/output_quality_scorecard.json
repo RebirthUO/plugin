@@ -1,0 +1,319 @@
+{
+  "ok": true,
+  "cases": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\evals\\output\\cases.jsonl",
+  "summary": {
+    "case_count": 2,
+    "file_backed_case_count": 0,
+    "near_neighbor_case_count": 0,
+    "boundary_case_count": 0,
+    "baseline_pass_rate": 0.0,
+    "with_skill_pass_rate": 100.0,
+    "delta": 100.0,
+    "regression_count": 0,
+    "gate_pass": true,
+    "failure_taxonomy": [],
+    "blind_pair_count": 2
+  },
+  "results": [
+    {
+      "id": "monster_delta_required",
+      "prompt": "Run a Samurai Empire monster parity excerpt for Yomotsu Elder.",
+      "input_files": [],
+      "metadata": {},
+      "baseline": {
+        "score": 0.0,
+        "passed_count": 0,
+        "failed_count": 4,
+        "checks": [
+          {
+            "id": "has_expected",
+            "description": "Risk rows include expected behavior.",
+            "weight": 2.0,
+            "failure_type": "missing_expected",
+            "passed": false,
+            "missing": [
+              "Expected",
+              "UOGuide creature table"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "has_modernuo_evidence",
+            "description": "Risk rows include path-backed ModernUO evidence.",
+            "weight": 2.0,
+            "failure_type": "missing_repo_evidence",
+            "passed": false,
+            "missing": [
+              "ModernUO Evidence",
+              "Projects/UOContent/Mobiles/Monsters/SE/YomotsuElder.cs:88"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "has_delta_matrix",
+            "description": "Risk rows include a Delta Matrix.",
+            "weight": 2.0,
+            "failure_type": "missing_delta_matrix",
+            "passed": false,
+            "missing": [
+              "## Delta Matrix",
+              "Missing ability hook",
+              "confirmed"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "reject_confirmation_only",
+            "description": "Final risk rows must not rely on confirmation-only wording.",
+            "weight": 1.0,
+            "failure_type": "confirmation_only",
+            "passed": false,
+            "missing": [],
+            "present_forbidden": [
+              "Needs confirmation"
+            ]
+          }
+        ],
+        "failed": [
+          {
+            "id": "has_expected",
+            "description": "Risk rows include expected behavior.",
+            "weight": 2.0,
+            "failure_type": "missing_expected",
+            "passed": false,
+            "missing": [
+              "Expected",
+              "UOGuide creature table"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "has_modernuo_evidence",
+            "description": "Risk rows include path-backed ModernUO evidence.",
+            "weight": 2.0,
+            "failure_type": "missing_repo_evidence",
+            "passed": false,
+            "missing": [
+              "ModernUO Evidence",
+              "Projects/UOContent/Mobiles/Monsters/SE/YomotsuElder.cs:88"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "has_delta_matrix",
+            "description": "Risk rows include a Delta Matrix.",
+            "weight": 2.0,
+            "failure_type": "missing_delta_matrix",
+            "passed": false,
+            "missing": [
+              "## Delta Matrix",
+              "Missing ability hook",
+              "confirmed"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "reject_confirmation_only",
+            "description": "Final risk rows must not rely on confirmation-only wording.",
+            "weight": 1.0,
+            "failure_type": "confirmation_only",
+            "passed": false,
+            "missing": [],
+            "present_forbidden": [
+              "Needs confirmation"
+            ]
+          }
+        ]
+      },
+      "with_skill": {
+        "score": 100.0,
+        "passed_count": 4,
+        "failed_count": 0,
+        "checks": [
+          {
+            "id": "has_expected",
+            "description": "Risk rows include expected behavior.",
+            "weight": 2.0,
+            "failure_type": "missing_expected",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          },
+          {
+            "id": "has_modernuo_evidence",
+            "description": "Risk rows include path-backed ModernUO evidence.",
+            "weight": 2.0,
+            "failure_type": "missing_repo_evidence",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          },
+          {
+            "id": "has_delta_matrix",
+            "description": "Risk rows include a Delta Matrix.",
+            "weight": 2.0,
+            "failure_type": "missing_delta_matrix",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          },
+          {
+            "id": "reject_confirmation_only",
+            "description": "Final risk rows must not rely on confirmation-only wording.",
+            "weight": 1.0,
+            "failure_type": "confirmation_only",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          }
+        ],
+        "failed": []
+      },
+      "delta": 100.0,
+      "winner": "with_skill",
+      "failure_taxonomy": []
+    },
+    {
+      "id": "crafting_research_required",
+      "prompt": "Report an unclear Samurai Empire crafting discrepancy.",
+      "input_files": [],
+      "metadata": {},
+      "baseline": {
+        "score": 0.0,
+        "passed_count": 0,
+        "failed_count": 3,
+        "checks": [
+          {
+            "id": "open_research",
+            "description": "Unresolved crafting claims move to Open Research with checked sources.",
+            "weight": 2.0,
+            "failure_type": "missing_open_research",
+            "passed": false,
+            "missing": [
+              "## Open Research",
+              "Checked:",
+              "Missing evidence:",
+              "Next step:"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "crafting_delta_status",
+            "description": "Crafting uncertainty is represented as open-research, not a final partial claim.",
+            "weight": 2.0,
+            "failure_type": "missing_crafting_delta_status",
+            "passed": false,
+            "missing": [
+              "No confirmed delta",
+              "open-research"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "reject_confirmation_only",
+            "description": "Confirmation-only crafting issue wording is forbidden.",
+            "weight": 1.0,
+            "failure_type": "confirmation_only",
+            "passed": false,
+            "missing": [],
+            "present_forbidden": [
+              "Crafting needs confirmation",
+              "Confirm crafting"
+            ]
+          }
+        ],
+        "failed": [
+          {
+            "id": "open_research",
+            "description": "Unresolved crafting claims move to Open Research with checked sources.",
+            "weight": 2.0,
+            "failure_type": "missing_open_research",
+            "passed": false,
+            "missing": [
+              "## Open Research",
+              "Checked:",
+              "Missing evidence:",
+              "Next step:"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "crafting_delta_status",
+            "description": "Crafting uncertainty is represented as open-research, not a final partial claim.",
+            "weight": 2.0,
+            "failure_type": "missing_crafting_delta_status",
+            "passed": false,
+            "missing": [
+              "No confirmed delta",
+              "open-research"
+            ],
+            "present_forbidden": []
+          },
+          {
+            "id": "reject_confirmation_only",
+            "description": "Confirmation-only crafting issue wording is forbidden.",
+            "weight": 1.0,
+            "failure_type": "confirmation_only",
+            "passed": false,
+            "missing": [],
+            "present_forbidden": [
+              "Crafting needs confirmation",
+              "Confirm crafting"
+            ]
+          }
+        ]
+      },
+      "with_skill": {
+        "score": 100.0,
+        "passed_count": 3,
+        "failed_count": 0,
+        "checks": [
+          {
+            "id": "open_research",
+            "description": "Unresolved crafting claims move to Open Research with checked sources.",
+            "weight": 2.0,
+            "failure_type": "missing_open_research",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          },
+          {
+            "id": "crafting_delta_status",
+            "description": "Crafting uncertainty is represented as open-research, not a final partial claim.",
+            "weight": 2.0,
+            "failure_type": "missing_crafting_delta_status",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          },
+          {
+            "id": "reject_confirmation_only",
+            "description": "Confirmation-only crafting issue wording is forbidden.",
+            "weight": 1.0,
+            "failure_type": "confirmation_only",
+            "passed": true,
+            "missing": [],
+            "present_forbidden": []
+          }
+        ],
+        "failed": []
+      },
+      "delta": 100.0,
+      "winner": "with_skill",
+      "failure_taxonomy": []
+    }
+  ],
+  "failures": [],
+  "blind_review": {
+    "pack": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_blind_review_pack.json",
+    "answer_key": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_blind_answer_key.json",
+    "pair_count": 2
+  },
+  "artifacts": {
+    "json": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_quality_scorecard.json",
+    "markdown": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_quality_scorecard.md",
+    "blind_review_pack_json": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_blind_review_pack.json",
+    "blind_review_pack_md": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_blind_review_pack.md",
+    "blind_answer_key_json": "C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-era-parity-check\\reports\\output_blind_answer_key.json"
+  }
+}
