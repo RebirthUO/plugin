@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "1.10.0",
+  "version": "1.14.0",
   "description": "ModernUO plugin",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
-    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including custom content module setup, migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including GitHub issue triage into source-backed implementation plans with explicit code-change rationale, publish-to-era measurement checks, and citations limited to repo, internet, or issue-supplied evidence, custom content module setup, migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -22,6 +22,7 @@
     "defaultPrompt": [
       "Audit this ModernUO subsystem.",
       "Plan this RebirthUO migration.",
+      "Triage this GitHub issue into a source-backed implementation plan.",
       "Check this Ultima Online content parity with source-backed data deltas.",
       "Review this content change for cross-era parity impact.",
       "Review this source-derived loot change before replacing LootPack calls.",

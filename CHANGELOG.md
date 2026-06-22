@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.14.0 - 2026-06-22
+
+- Updated `modernuo-ticket-triage` to treat era- or publish-based information as an explicit measurement target before planning changes.
+- Added a publish era measurement reference with verified anchors for Publish 81, Publish 90 / Time of Legends, and the Endless Journey special case.
+- Updated plugin documentation and manifest versions for publish-to-era measurement triage.
+
+## 1.13.0 - 2026-06-22
+
+- Updated `modernuo-ticket-triage` to cite only information verified in the repository, fetched from internet sources, or supplied by the issue.
+- Added `issue-supplied` evidence handling and required unverifiable facts to become open research instead of factual citations.
+- Updated plugin documentation and manifest versions for the evidence-existence triage contract.
+
+## 1.12.0 - 2026-06-22
+
+- Updated `modernuo-ticket-triage` to require clear rationale and evidence for every necessary code change.
+- Added a publish/era rule so behavior introduced or changed by a publish is treated as an era check with explicit gate or profile impact.
+- Updated plugin documentation and manifest versions for the tightened ticket triage contract.
+
+## 1.11.0 - 2026-06-22
+
+- Added `modernuo-ticket-triage` to turn GitHub issues and pasted tickets into source-backed implementation plans.
+- Documented broad UO source research with explicit trust tiers, repository anchors, expected-vs-actual deltas, acceptance criteria, and test planning.
+- Updated plugin documentation and manifest versions for the new ticket triage workflow.
+
 ## 1.10.0 - 2026-06-22
 
 - Enhanced `modernuo-era-parity-check` to require source-backed expected-vs-actual deltas for non-present, low-confidence, monster, crafting, and user-focused risk rows.
