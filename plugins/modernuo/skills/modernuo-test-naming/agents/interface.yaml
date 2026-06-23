@@ -1,0 +1,19 @@
+interface:
+  display_name: "ModernUO Test Naming"
+  short_description: "Normalize ModernUO test names"
+  default_prompt: "Use $modernuo-test-naming to review and normalize ModernUO test file, class, and method names."
+compatibility:
+  canonical_format: "codex-skill"
+  adapter_targets:
+    - "codex"
+  activation:
+    mode: "implicit"
+  execution:
+    context: "inline"
+    shell: "powershell"
+  trust:
+    source_tier: "plugin"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "local only"
+  degradation:
+    codex: "Use SKILL.md plus eval trigger cases."

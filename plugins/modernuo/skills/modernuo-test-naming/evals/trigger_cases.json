@@ -1,0 +1,61 @@
+{
+  "recommended_threshold": 0.32,
+  "should_trigger": [
+    {
+      "text": "Rename the publish81-prefixed xUnit tests so the class and methods match what they actually test.",
+      "family": "publish_prefix_cleanup"
+    },
+    {
+      "text": "AI added our branch name to several ModernUO test methods; normalize the names without changing the assertions.",
+      "family": "branch_noise_cleanup"
+    },
+    {
+      "text": "Review these new RebirthUO tests and fix any file, class, or method names that are just task labels.",
+      "family": "new_test_name_review"
+    },
+    {
+      "text": "Clean up generated tests named FeatureMlPeerlessArtifacts_* and keep only the tested object or area in the names.",
+      "family": "generated_prefix_cleanup"
+    },
+    {
+      "text": "The tests are good but the names start with SamuraiEmpire and Publish 81 even when they test TreasuresOfTokuno; fix that.",
+      "family": "era_publish_mislabel"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Implement the missing Publish 81 Treasures of Tokuno reward behavior.",
+      "family": "ordinary_implementation"
+    },
+    {
+      "text": "Run an era parity report for Samurai Empire content gaps.",
+      "family": "era_parity_report"
+    },
+    {
+      "text": "Review this code for unnecessary constants and PolicySe names.",
+      "family": "symbol_discipline"
+    },
+    {
+      "text": "Set up CUOContent and CUOContent.Tests beside UOContent.",
+      "family": "custom_module_setup"
+    },
+    {
+      "text": "Add missing assertions for MLQuestConfigResolutionTests.",
+      "family": "test_behavior_change"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Keep MLPeerlessArtifactsTests as-is because MLPeerlessArtifacts is the production object under test.",
+      "family": "legitimate_ml_object"
+    },
+    {
+      "text": "PublishWindow_SchedulesDropAndRewardEras should keep PublishWindow because that is the tested type.",
+      "family": "legitimate_publish_object"
+    },
+    {
+      "text": "EraProfileManagerTests uses Era in the class name because EraProfileManager is the object under test.",
+      "family": "legitimate_era_object"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ModernUO Test Naming"
+  short_description: "Normalize ModernUO test names"
+  default_prompt: "Use $modernuo-test-naming to review and normalize ModernUO test file, class, and method names."
