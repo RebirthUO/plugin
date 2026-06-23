@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "ModernUO plugin",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
-    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including GitHub issue triage into source-backed implementation plans with explicit code-change rationale, publish-to-era measurement checks, and citations limited to repo, internet, or issue-supplied evidence, custom content module setup, migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including GitHub issue triage into source-backed implementation plans with explicit code-change rationale, publish-to-era measurement checks, and citations limited to repo, internet, or issue-supplied evidence, custom content module setup, test naming normalization for AI-generated xUnit files, classes, and methods, migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -30,6 +30,7 @@
       "Check Magery skill parity against ModernUO.",
       "Check Flamestrike spell parity against ModernUO.",
       "Check Spell Damage item property parity against ModernUO.",
+      "Normalize these ModernUO test file, class, and method names.",
       "Set up a CUOContent custom module for this ModernUO server."
     ],
     "composerIcon": "./assets/rebirthuo-logo.png",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.15.0 - 2026-06-23
+
+- Added `modernuo-test-naming` to normalize AI-generated xUnit test file, class, and method names around the tested object or area.
+- Added trigger evals and interface metadata for publish, era, branch, issue, and task-label test naming cleanup.
+- Updated plugin documentation and manifest versions for the new test naming workflow.
+
 ## 1.14.0 - 2026-06-22
 
 - Updated `modernuo-ticket-triage` to treat era- or publish-based information as an explicit measurement target before planning changes.
