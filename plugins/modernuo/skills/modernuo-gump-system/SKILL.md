@@ -1,12 +1,25 @@
 ---
 name: modernuo-gump-system
 description: >
-  Trigger when creating or modifying gumps (UI dialogs). When working with BaseGump, StaticGump, DynamicGump, or GumpSystem.
+  Use when creating or modifying gumps (UI dialogs), or working with BaseGump, StaticGump, DynamicGump, or GumpSystem.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, gumps, ui, static-gump, dynamic-gump]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-string-handling
+      - modernuo-commands-targeting
+      - modernuo-content-patterns
+      - modernuo-test-workflow
+      - migrate-gumps
 ---
 
 # ModernUO Gump System
 
-## When This Activates
+## When to Use
 - Creating new gumps (UI dialogs/windows)
 - Modifying existing gump layouts
 - Handling gump button responses

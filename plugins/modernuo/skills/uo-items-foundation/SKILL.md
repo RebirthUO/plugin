@@ -1,12 +1,23 @@
 ---
-name: "uo-items-foundation"
-description: "Use when working with the UO item entity model in ModernUO/RebirthUO servers - Item base class, Constructible constructors, GetProperties OPL output, LootType, Decay, and the standard item base hierarchy (BaseWeapon/BaseArmor/BaseClothing/BaseJewel/BaseContainer). Use before adding a new item, debugging item persistence, or tracing why an item behaves the way it does in-world."
-license: "MIT"
+name: uo-items-foundation
+description: Use when working with the UO item entity model in ModernUO/RebirthUO servers - Item base class, Constructible constructors, GetProperties OPL output, LootType, Decay, and the standard item base hierarchy (BaseWeapon/BaseArmor/BaseClothing/BaseJewel/BaseContainer). Use before adding a new item, debugging item persistence, or tracing why an item behaves the way it does in-world.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - items
+    - serialization
+    - properties
+    related_skills:
+    - uo-aos-item-properties
+    - uo-loot-generation-artifacts
+    - modernuo-serialization
+    - modernuo-property-lists
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Items Foundation
 
 ## Overview
@@ -208,6 +219,19 @@ Hot-path rules (also from `CLAUDE.md:1-7`):
 5. **Setting `Layer` after `Movable` without testing the equip/unequip path.** Some items look equippable but are not - check `OnEquip`/`OnUnequip` and validate the parent chain.
 6. **Assuming LootType alone prevents transfer.** `LootType.Blessed` blocks stealing and corpse looting but does not block player-to-player trading or trade gumps. Use the new `No-Trade / Shard Bound` content flags when they land for full transfer control.
 7. **Returning `string` from `DefaultName` without overriding `LabelNumber`.** If you set a `DefaultName` constant, you bypass the cliloc lookup. If you want a localized cliloc label, override `LabelNumber` instead.
+
+## Testing Item Instances in UOContent.Tests
+
+When a test directly constructs real `Item`, `BaseArmor`, `BaseClothing`, `BaseWeapon`, or other content item instances, put the test class in the initialized UOContent collection:
+
+```csharp
+[Collection("Sequential UOContent Tests")]
+public class MyItemTests
+{
+}
+```
+
+This runs `UOContentFixture` / `TestServerInitializer`, which configures `ServerConfiguration`, `World`, timers, `DecayScheduler`, skills, movement, race definitions, and optional TileData before item constructors execute. Without the fixture, item construction can fail inside `Item.Visible -> UpdateDecayRegistration -> DecayScheduler.Unregister` or similar global-singleton paths before assertions reach the item values being tested.
 
 ## Verification Checklist
 

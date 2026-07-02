@@ -1,13 +1,32 @@
 ---
-name: "modernuo-spatial-range-geometry"
-description: "Calculate exact in-game tile coverage for AoE and spatial queries in ModernUO (GetMobilesInRange, GetItemsInRange, GetClientsInRange, GetMobilesInBounds). Use whenever a spell, ability, quest, spawn rule, or gameplay mechanic uses a numeric range or radius, especially when matching a UO community spec (UOGuide, Stratics, UOAlive) that quotes things like 3 tile radius or 9 tile radius. Covers how the range argument maps to bounding box size, how Rectangle2D contains works (half-open), and the makeBoundsInclusive landmine."
+name: modernuo-spatial-range-geometry
+description: Use when calculating exact in-game tile coverage for ModernUO/RebirthUO AoE and spatial range queries such as GetMobilesInRange, GetItemsInRange, GetClientsInRange, and GetMobilesInBounds.
+version: 1.1.0
+author: Crome696
+license: MIT
 metadata:
-  author: "Crome696"
+  hermes:
+    tags:
+    - modernuo
+    - spatial
+    - range
+    - geometry
+    - performance
+    related_skills:
+    - modernuo-performance-hot-paths
+    - modernuo-code-audit
+    - modernuo-regions
+    - modernuo-content-patterns
+    - modernuo-era-expansion
+    - modernuo-pathfinding
 ---
-
 # ModernUO Spatial Range Geometry
 
-## When this skill is needed
+## Overview
+
+Use this skill to avoid off-by-one gameplay changes in UO area effects, range checks, spawn/quest radii, and spatial queries. The core rule is that `range N` normally means a centered Chebyshev radius of N tiles, producing a `(2N+1) x (2N+1)` tile box before target filtering.
+
+## When to Use
 
 ANY time you (or another agent) is about to
 
@@ -100,6 +119,14 @@ If a spec gives you both a numerical example AND a formula, always use the numer
 - Focus 6 -> range arg 9 -> 19 by 19 -> 361 tiles -> spec says 9 tile radius -> match
 
 Caster excluded by `if (Caster == m || ...) continue;` in the loop.
+
+## Verification Checklist
+
+- [ ] The code path from range argument to `Rectangle2D` bounds was inspected in the current repo.
+- [ ] The answer states whether the range is Chebyshev radius, diameter, ring, or custom bounds.
+- [ ] `makeBoundsInclusive` was checked and either absent or explicitly accounted for.
+- [ ] Caster/source filtering is treated separately from spatial coverage.
+- [ ] Any code change ran at least a focused diff/build/test check or clearly reports the blocker.
 
 ## How to verify a change in the actual repo
 

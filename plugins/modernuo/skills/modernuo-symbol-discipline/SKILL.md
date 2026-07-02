@@ -1,10 +1,25 @@
 ---
 name: modernuo-symbol-discipline
-description: >
-  Use when writing, reviewing, or refactoring ModernUO/RebirthUO C# code involving constants, local variables, fields, properties, public gameplay or parity surfaces, exposed in-game values, or Policy* names such as PolicySe*. Helps decide whether to inline a value, keep a local, create const or static readonly, add a field or property, or expose a RebirthUO policy symbol. Warn only and ask before changing code.
+description: Use when writing, reviewing, or refactoring ModernUO/RebirthUO C# code involving constants, local variables, fields, properties, public gameplay or parity surfaces, exposed in-game values, or Policy* names such as PolicySe*. Helps decide whether to inline a value, keep a local, create const or static readonly, add a field or property, or expose a RebirthUO policy symbol. Warn only and ask before changing code.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - modernuo
+    - rebirthuo
+    - symbols
+    - naming
+    - code-style
+    related_skills:
+    - modernuo-code-audit
+    - modernuo-no-publish-prefix-names
+    - modernuo-test-naming
 ---
-
 # ModernUO Symbol Discipline
+
+## Overview
 
 Use this skill to keep generated code from inventing symbols that do not carry their own weight. The goal is not to ban constants, locals, fields, properties, or `Policy*` names; it is to make every introduced symbol justify its lifetime, scope, and visibility.
 

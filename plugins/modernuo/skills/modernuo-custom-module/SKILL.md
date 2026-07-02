@@ -1,13 +1,37 @@
 ---
 name: modernuo-custom-module
 description: Use when creating, registering, reviewing, or maintaining a custom ModernUO/RebirthUO content module beside Projects/UOContent. Covers CUOContent default naming, module/test projects, ModernUO.slnx, Application.csproj, Distribution/Data/assemblies.json runtime loading, lifecycle hooks, top-level folder mirroring, and assembly-load smoke tests. Do not use for ordinary feature edits inside Projects/UOContent unless a separate custom module boundary is part of the task.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - modernuo
+    - rebirthuo
+    - custom-module
+    - content
+    - assemblies
+    related_skills:
+    - modernuo-content-patterns
+    - modernuo-server-lifecycle
+    - modernuo-configuration
+    - modernuo-test-workflow
+    - modernuo-code-audit
 ---
-
 # ModernUO Custom Module
 
 ## Overview
 
 Use this skill to keep shard-specific content in a separate assembly that builds and loads beside `UOContent`. Read `references/custom-module-setup.md` before editing; trigger cases live in `evals/trigger_cases.json`.
+
+## When to Use
+
+- Creating a separate shard/custom content assembly beside `Projects/UOContent`.
+- Registering module DLLs in `Distribution/Data/assemblies.json`.
+- Reviewing custom module project references, test project setup, lifecycle hooks, or assembly-load smoke tests.
+
+Do not use for ordinary content edits inside `Projects/UOContent` unless the request explicitly creates or maintains a separate module boundary.
 
 ## Naming
 
@@ -38,3 +62,18 @@ Use this skill to keep shard-specific content in a separate assembly that builds
 ## Maintenance Checks
 
 Use the reference for rename checks, generated-file boundaries, migration schemas, test fixture shape, and related skills.
+
+
+## Common Pitfalls
+
+1. **Hand-editing generated `.deps.json`.** Build the projects and let the SDK generate dependency files.
+2. **Confusing build references with runtime loading.** `Application.csproj` builds/copies; `assemblies.json` controls runtime loading order.
+3. **Mirroring deep folders before content exists.** Create top-level domain folders first; add nested folders only for real content.
+4. **Skipping the smoke test.** A project can build while failing runtime assembly load or lifecycle reflection.
+
+## Verification Checklist
+
+- [ ] `ModernUO.slnx`, `Application.csproj`, and `assemblies.json` all reference the module consistently.
+- [ ] Module output lands under `Distribution/Assemblies` without hand-editing generated files.
+- [ ] Tests reference `Server`, `UOContent`, the module, and `Server.Tests` as needed.
+- [ ] A build plus assembly-load smoke test ran, or the blocker is reported.

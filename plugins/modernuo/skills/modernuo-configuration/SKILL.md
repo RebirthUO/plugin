@@ -1,12 +1,24 @@
 ---
 name: modernuo-configuration
 description: >
-  Trigger when adding server settings, reading config values, or working with modernuo.json or JsonConfig.
+  Use when adding server settings, reading config values, or working with modernuo.json or JsonConfig.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, configuration, json-config, settings, startup]
+    related_skills:
+      - modernuo-server-lifecycle
+      - modernuo-events
+      - modernuo-era-expansion
+      - modernuo-code-audit
+      - modernuo-test-workflow
 ---
 
 # ModernUO Configuration System
 
-## When This Activates
+## When to Use
 - Adding new server settings
 - Reading config values with `ServerConfiguration`
 - Using `JsonConfig.Serialize/Deserialize<T>`

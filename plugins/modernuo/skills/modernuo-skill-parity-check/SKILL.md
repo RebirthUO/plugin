@@ -1,9 +1,26 @@
 ---
 name: modernuo-skill-parity-check
 description: Use when asked to perform a named Ultima Online skill parity, clarity, mechanics, discrepancy, or gap audit against ModernUO/RebirthUO source code. Trigger for requests like "Magery parity check", "Blacksmithy skill clarity", "compare Animal Taming with UO.com", or "find skill implementation gaps"; requires one UO skill name and optional user-provided URLs, documents, or notes.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - skills
+    - parity
+    - research
+    related_skills:
+    - uo-skills-stats-races
+    - uo-domain-research
+    - modernuo-era-parity-check
+    - rebirthuo-online-triage-verification
 ---
-
 # ModernUO Skill Parity Check
+
+## Overview
 
 Use this skill to compare one named Ultima Online skill against ModernUO/RebirthUO source code and produce a decision-ready parity report. The job is to reduce gaps and discrepancies in the ModernUO source, not to assume the current implementation is correct.
 

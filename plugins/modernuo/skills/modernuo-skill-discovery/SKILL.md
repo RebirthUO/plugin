@@ -1,9 +1,25 @@
 ---
 name: modernuo-skill-discovery
-description: Trigger when asked to analyze the ModernUO codebase, inspect installed or attached skills, compare repository patterns against existing skill coverage, and discover missing or under-covered skills that would improve development, review, migration, onboarding, or automation quality.
+description: Use when asked to analyze the ModernUO codebase, inspect installed or attached skills, compare repository patterns against existing skill coverage, and discover missing or under-covered skills that would improve development, review, migration, onboarding, or automation quality.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, skills, discovery, coverage, learning]
+    related_skills:
+      - hermes-agent-skill-authoring
+      - uo-modernuo-workflow
+      - modernuo-code-audit
+      - modernuo-content-patterns
+      - modernuo-lifecycle-cleanup
+      - modernuo-performance-hot-paths
+      - modernuo-test-workflow
 ---
 
 # ModernUO Skill Discovery
+
+## Overview
 
 Use this skill to audit ModernUO repository patterns against every discoverable skill source and identify evidence-backed gaps in the skill library. Be conservative: inventory existing skills first, read current repository evidence, compare coverage semantically, and recommend updates before proposing new skills.
 
@@ -18,6 +34,16 @@ Do not edit files unless explicitly asked. Do not delete, rename, merge, collaps
 5. Propose new skills only when repository evidence shows a distinct domain with lifecycle rules, APIs, anti-patterns, or recurring code patterns.
 6. Prefer updating an existing skill when the gap is small.
 7. Mark uncertain recommendations as `research needed`.
+
+## Skill Library Curation Workflow
+
+Use this subsection when the user asks to review, curate, sharpen, optimize, or clean up the UO/ModernUO skill library.
+
+1. **Patch before creating.** Treat class-level skills as the target shape. Prefer updating the loaded skill or existing umbrella before adding narrow one-session skills.
+2. **Audit mechanically, then read selectively.** Inventory `SKILL.md` files for parse errors, missing core metadata, overlong descriptions, broken `related_skills`, weak triggers, and obvious structure gaps; then read representative/high-risk skills before editing so the curation is not only regex-driven.
+3. **Separate destructive decisions.** Patch metadata, headings, references, trigger wording, and verification checklists directly when safe. Do not delete, absorb, or rename skills without explicit user confirmation; instead report consolidation candidates and the target umbrella.
+4. **Keep session detail out of the root skill.** Put reusable but bulky transcripts, scripts, or source banks under `references/`, `scripts/`, or `templates/`, and add a one-line pointer from `SKILL.md`.
+5. **Validate after edits.** Re-run a metadata/link audit and load a few touched skills with `skill_view` to verify the runtime can still resolve them. Final reporting should include counts, what changed, what was intentionally not deleted, and any remaining non-UO/global library issues left alone.
 
 ## Skill Sources To Inspect
 

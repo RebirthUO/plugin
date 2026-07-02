@@ -1,12 +1,25 @@
 ---
 name: modernuo-serialization
 description: >
-  Trigger when creating or modifying classes inheriting Item, Mobile, BaseCreature, or any type with [SerializationGenerator]. When adding serialized fields. When discussing migration or version bumps.
+  Use when creating or modifying classes inheriting Item, Mobile, BaseCreature, or any type with [SerializationGenerator], adding serialized fields, or discussing migration/version bumps.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, serialization, saves, migration, codegen]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-content-patterns
+      - modernuo-timers
+      - modernuo-lifecycle-cleanup
+      - modernuo-property-lists
+      - migrate-serialization
 ---
 
 # ModernUO Serialization System
 
-## When This Activates
+## When to Use
 - Creating/modifying classes that inherit `Item`, `Mobile`, `BaseCreature`, or any serializable type
 - Adding `[SerializableField]` or `[SerializableProperty]` attributes
 - Bumping serialization versions
@@ -22,6 +35,21 @@ description: >
 5. **Use `using ModernUO.Serialization;`** for serialization attributes
 6. **Field order matters** -- `[SerializableField(N)]` index determines serialization order
 7. **Increment version** when adding, removing, or reordering fields
+
+## Save Compatibility Guardrails
+
+Treat serialization changes as **P0 save-compatibility risk**. A bad migration can orphan world saves or corrupt persistent items/mobiles.
+
+- For new generated classes, use `[SerializationGenerator(0)]` and omit `encoded`.
+- Do not change existing `[SerializableField(N)]` indexes casually. Existing indexes are save-format contracts.
+- For generated-code version bumps, increment `[SerializationGenerator(N)]`, add `private void MigrateFrom(VXContent content)` for the previous version, and preserve old values explicitly.
+- Do **not** edit `Deserialize(reader, version)` for normal post-codegen version bumps. That method is only for pre-codegen legacy save compatibility.
+- When migrating old manual serialization, preserve the old read order exactly in `private void Deserialize(IGenericReader reader, int version)`.
+- If old manual code used `reader.ReadInt()` for the version, pass `false` as the second `[SerializationGenerator]` argument. If it used encoded ints, follow the encoded format already present in the old save stream.
+- Generate and commit migration schema JSON after version changes; `dotnet build` alone does not create schema files.
+- Never serialize runtime-only handles such as `TimerExecutionToken`; restart runtime timers in `[AfterDeserialization]` and cancel them on deletion.
+
+Completion criterion: every serialization change identifies whether it is a new class, a generated-code version bump, or a pre-codegen migration, and the save compatibility path is explicit.
 
 ## Core Attributes
 
@@ -280,8 +308,14 @@ public override void Serialize(IGenericWriter writer)
 }
 ```
 
-### Deserialize() runs on the game thread
-`Deserialize()` runs during world load on the main thread, so it CAN create entities and start timers. However, prefer `[AfterDeserialization]` for timer setup to keep deserialization clean.
+### Deserialize() should restore persisted state only
+`Deserialize()` runs during world load, but treat it as a persisted-state restoration/migration path, not a general runtime setup hook. Prefer `[AfterDeserialization]` for timers, runtime registrations, derived caches, and cleanup decisions:
+
+- Use synchronous `[AfterDeserialization]` (default) for restarting timers or rebuilding state that only touches this entity's own fields.
+- Use deferred `[AfterDeserialization(false)]` for logic that adds or deletes entities, depends on cross-entity references, registers world-facing runtime state, or otherwise affects game state after the full world is loaded.
+- Avoid starting timers, creating/deleting entities, sending packets, or registering runtime hooks directly in custom `Deserialize()` unless preserving a documented legacy pattern and the repository evidence for that exact type requires it.
+
+`[DeserializeTimerField]` is the documented exception for serialized `Timer` fields: the generated deserializer supplies the remaining delay to the marked method.
 
 ## MigrateFrom Pattern
 

@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "description": "ModernUO plugin",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
-    "longDescription": "ModernUO provides focused Codex skills for RebirthUO server work, including GitHub issue triage into source-backed implementation plans with explicit code-change rationale, publish-to-era measurement checks, and citations limited to repo, internet, or issue-supplied evidence, custom content module setup, test naming normalization for AI-generated xUnit files, classes, and methods, migration guidance, cross-era change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and Policy* surfaces, named Ultima Online skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content parity checks, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "longDescription": "ModernUO is a 1:1 plugin mirror of the Hermes profile skills used for Ultima Online, ModernUO, and RebirthUO work. It provides source-synced guidance for RebirthUO server development, including codebase navigation, issue implementation, issue triage and online verification, implementation and human-review plans, canonical game-doc authoring, test workflow and regression testing, migration guidance, cross-era change routing, LootPack source preservation, symbol and naming discipline, performance and lifecycle reviews, named Ultima Online skill, spell, and item-property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content taxonomy, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -22,9 +22,13 @@
     "defaultPrompt": [
       "Audit this ModernUO subsystem.",
       "Plan this RebirthUO migration.",
+      "Implement this RebirthUO GitHub issue as a tested PR.",
       "Triage this GitHub issue into a source-backed implementation plan.",
+      "Verify this RebirthUO triage ticket for human review.",
       "Check this Ultima Online content parity with source-backed data deltas.",
+      "Author canonical RebirthUO game-docs for this mechanic.",
       "Review this content change for cross-era parity impact.",
+      "Run a ModernUO test workflow and regression plan.",
       "Review this source-derived loot change before replacing LootPack calls.",
       "Review this code for unnecessary constants, locals, fields, properties, and Policy* symbols.",
       "Check Magery skill parity against ModernUO.",

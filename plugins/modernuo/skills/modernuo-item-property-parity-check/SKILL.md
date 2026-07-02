@@ -1,6 +1,18 @@
 ---
 name: modernuo-item-property-parity-check
-description: Use when asked to perform a named Ultima Online item property parity, tooltip/OPL, formula, generation, effect, cap, era, discrepancy, or gap audit against ModernUO/RebirthUO source code. Trigger for requests like "Spell Damage item property parity", "Lower Mana Cost formula audit", "compare Hit Fireball with UO.com", "check Mage Armor tooltip behavior", or "find item property implementation gaps"; requires one concrete item property name and optional user-provided URLs, documents, notes, item names, artifact names, or era constraints.
+description: Use when asked to perform a named Ultima Online item property parity, tooltip/OPL, formula, generation, effect, cap, era, discrepancy, or gap audit against ModernUO/RebirthUO source code. Requires one concrete item property name and optional user-provided URLs, documents, notes, item names, artifact names, or era constraints.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, item-properties, parity, tooltip, research]
+    related_skills:
+      - modernuo-property-lists
+      - uo-aos-item-properties
+      - uoguide-item-properties
+      - uo-domain-research
+      - modernuo-era-parity-check
 ---
 
 # ModernUO Item Property Parity Check

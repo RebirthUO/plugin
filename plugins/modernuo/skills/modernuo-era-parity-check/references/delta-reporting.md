@@ -19,7 +19,12 @@ not complete until it has:
 - `Impact`: the practical risk category.
 
 Never leave a final row as "needs confirmation". If evidence is incomplete,
-write an `Open Research` item with sources checked and the next validation step.
+write an `Open Research` item with sources checked and the next validation step
+— **only after** grep, file reads, or focused tests in the same session.
+
+For RebirthUO expansion epics and user-requested **prüfen**, see
+`references/review-verification-standard.md`: do not deliver **Partial** /
+**Tests fehlen** without having executed verification or added tests.
 
 ## Monster Delta Checklist
 

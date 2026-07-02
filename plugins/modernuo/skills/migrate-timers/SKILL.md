@@ -1,13 +1,26 @@
 ---
 name: migrate-timers
 description: >
-  Trigger: when converting RunUO Timer subclasses, Timer.DelayCall patterns, or TimerPriority usage to ModernUO fire-and-forget timers.
-  Covers: Timer subclass elimination, TimerExecutionToken, callback patterns, timer restoration.
+  Use when converting RunUO Timer subclasses, Timer.DelayCall patterns, or TimerPriority usage to ModernUO fire-and-forget timers.
+  Covers Timer subclass elimination, TimerExecutionToken, callback patterns, cleanup, and post-load restoration.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, timers, lifecycle]
+    related_skills:
+      - migrate-foundation
+      - modernuo-timers
+      - modernuo-lifecycle-cleanup
+      - modernuo-serialization
+      - modernuo-threading
+      - modernuo-code-audit
 ---
 
 # RunUO -> ModernUO Timer Migration
 
-## When This Activates
+## When to Use
 - Converting nested `Timer` subclasses with `OnTick()`
 - Converting `Timer.DelayCall()` patterns
 - Removing `TimerPriority` usage
@@ -17,7 +30,7 @@ description: >
 1. Move `OnTick()` logic to a method on the parent class
 2. Replace `new InternalTimer(this).Start()` with `Timer.StartTimer(..., callback, out _token)`
 3. Add `private TimerExecutionToken _token;` (NOT serialized)
-4. Cancel in `OnAfterDelete()`: `_token.Cancel();`
+4. Cancel in the deletion path: usually `OnDelete()` when callbacks can touch owner state; follow existing class hierarchy/base-call convention. Use `modernuo-lifecycle-cleanup` for hook choice.
 5. Restore in `[AfterDeserialization]`: re-call `Timer.StartTimer(...)`
 6. Delete the nested Timer class entirely
 7. Remove all `TimerPriority` references
@@ -35,7 +48,7 @@ description: >
 
 ## Anti-Patterns
 - Serializing `TimerExecutionToken` -- it's a struct tracking a pooled timer
-- Starting timers in `Deserialize()` -- world isn't loaded yet, use `[AfterDeserialization]`
+- Starting timers directly in `Deserialize()` -- restore runtime timers in `[AfterDeserialization]`; use `[AfterDeserialization(false)]` when setup depends on the fully loaded world or affects game state
 - Lambda closures on hot paths -- use `Timer.DelayCall` with state parameters instead
 
 ## How to Report Issues

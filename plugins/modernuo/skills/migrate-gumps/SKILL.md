@@ -1,13 +1,25 @@
 ---
 name: migrate-gumps
 description: >
-  Trigger: when converting RunUO Gump classes, OnResponse handlers, or gump UI code to ModernUO DynamicGump/StaticGump.
-  Covers: builder pattern, DisplayTo, response handling, empty gump rule.
+  Use when converting RunUO Gump classes, OnResponse handlers, or gump UI code to ModernUO DynamicGump/StaticGump.
+  Covers builder pattern, DisplayTo, response handling, and empty-gump safety.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, gumps, ui]
+    related_skills:
+      - migrate-foundation
+      - modernuo-gump-system
+      - modernuo-string-handling
+      - modernuo-code-audit
+      - modernuo-content-patterns
 ---
 
 # RunUO -> ModernUO Gump Migration
 
-## When This Activates
+## When to Use
 - Converting `Gump` subclasses
 - Converting `OnResponse(NetState, RelayInfo)` handlers
 - Updating gump sending/closing patterns

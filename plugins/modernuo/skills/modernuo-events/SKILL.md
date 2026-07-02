@@ -1,12 +1,26 @@
 ---
 name: modernuo-events
 description: >
-  Trigger when subscribing to or creating game events, working with EventSink or generated events. When hooking into player login, death, speech, or other game events.
+  Use when subscribing to or creating game events, working with EventSink or generated events, or hooking into player login, death, speech, or other game events.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, events, eventsink, lifecycle, hooks]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-server-lifecycle
+      - modernuo-configuration
+      - modernuo-threading
+      - modernuo-lifecycle-cleanup
+      - modernuo-content-patterns
+      - migrate-commands-events
 ---
 
 # ModernUO Events System
 
-## When This Activates
+## When to Use
 - Subscribing to game events (login, logout, death, speech)
 - Creating new events
 - Working with `EventSink` static events
@@ -14,10 +28,11 @@ description: >
 
 ## Key Rules
 
-1. **Subscribe to events in `Configure()`** static method
-2. **EventSink events are `static event Action<T>`** -- subscribe with `+=`
-3. **Event handlers must match the delegate signature**
-4. **Unsubscribe if your system can be disabled** (prevent leaks)
+1. **Subscribe process-lifetime static `EventSink` handlers in `Configure()`** so startup registration is deterministic
+2. **EventSink events are `static event Action<T>`** -- subscribe with `+=`; pair instance, temporary, reloadable, or disableable subscriptions with `-=` cleanup
+3. **Generated `[OnEvent]` handlers are attribute-driven** and do not need manual `Configure()` subscription
+4. **Event handlers must match the delegate signature**
+5. **Unsubscribe if your system can be disabled** (prevent leaks); use `modernuo-lifecycle-cleanup` for lifetime/ownership decisions
 
 ## EventSink Events
 
@@ -164,7 +179,8 @@ args.Free();
 
 ## Anti-Patterns
 
-- **Subscribing outside `Configure()`**: Won't be called during startup
+- **Missing startup registration for process-lifetime `EventSink` handlers**: subscribe static global hooks in `Configure()`; do not rely on instance constructors for global startup hooks
+- **Treating generated events like manual `EventSink` hooks**: `[OnEvent]` handlers are discovered by the generated-event system, not registered with `+=` in `Configure()`
 - **Not checking player type**: `EventSink.Connected` fires for all mobiles, cast to `PlayerMobile` if needed
 - **Blocking in event handlers**: Event handlers run on the game loop -- keep them fast
 - **Not unsubscribing**: If system can be disabled, unsubscribe to prevent leaks
@@ -190,5 +206,6 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 
 ## See Also
 - `dev-docs/events.md` - Complete events documentation
+- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` - Static process-lifetime vs instance/temporary event subscription cleanup
 - `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content hooks
 - `plugins/modernuo/skills/modernuo-configuration/SKILL.md` - Configure() pattern

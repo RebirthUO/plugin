@@ -1,13 +1,28 @@
 ---
 name: migrate-items-mobiles
 description: >
-  Trigger: when converting RunUO Item, Mobile, or BaseCreature subclasses to ModernUO. Most common migration task.
-  Covers: complete item/creature conversion combining serialization, timers, properties, naming.
+  Use when converting RunUO Item, Mobile, or BaseCreature subclasses to ModernUO.
+  Covers complete item/creature conversion across serialization, timers, lifecycle cleanup, properties, and naming.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, items, mobiles, lifecycle]
+    related_skills:
+      - migrate-foundation
+      - migrate-serialization
+      - migrate-timers
+      - migrate-property-lists
+      - modernuo-content-patterns
+      - modernuo-serialization
+      - modernuo-lifecycle-cleanup
+      - modernuo-code-audit
 ---
 
 # RunUO -> ModernUO Item/Mobile/Creature Migration
 
-## When This Activates
+## When to Use
 - Converting any `Item` subclass from RunUO
 - Converting any `Mobile`/`BaseCreature` subclass
 - This is the most common migration task -- combines all other systems
@@ -20,7 +35,7 @@ description: >
 5. [ ] Delete: Serial constructor, Serialize, Deserialize
 6. [ ] `[Constructable]` -> `[Constructible]`
 7. [ ] `Name = "text"` -> `public override string DefaultName => "text";`
-8. [ ] Timers: nested class -> `Timer.StartTimer()` + `TimerExecutionToken` + `[AfterDeserialization]` + `OnAfterDelete`
+8. [ ] Timers: nested class -> `Timer.StartTimer()` + `TimerExecutionToken` + `[AfterDeserialization]` + deletion-path cancellation; use `modernuo-lifecycle-cleanup` for hook choice
 9. [ ] Properties: `GetProperties(ObjectPropertyList)` -> `GetProperties(IPropertyList)`, apply string hole rule
 10. [ ] Context menus: `List<ContextMenuEntry>` -> `ref PooledRefList<ContextMenuEntry>`
 
@@ -33,7 +48,7 @@ description: >
 ## Anti-Patterns
 - Using `_field--` instead of `Property--` (bypasses MarkDirty tracking)
 - Forgetting `[AfterDeserialization]` for timer restoration
-- Forgetting `OnAfterDelete()` for timer cancellation
+- Forgetting lifecycle cleanup/cancellation for timers, owned children, or dynamic registrations
 
 ## How to Report Issues
 
@@ -51,3 +66,4 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 - `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` -- ModernUO content skill
 - `plugins/modernuo/skills/modernuo-serialization/SKILL.md` -- serialization patterns
 - `plugins/modernuo/skills/modernuo-timers/SKILL.md` -- timer patterns
+- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` -- deletion-path cleanup for timers, owned children, regions, and references

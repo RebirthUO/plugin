@@ -1,12 +1,23 @@
 ---
-name: "uo-quests-engine-ml"
-description: "Use when working with the UO ML Quest engine in ModernUO/RebirthUO servers - MLQuestSystem, MLQuest definitions, QuestGivers, MLQuestContext (per-player quest state), MLQuest objectives (kill/deliver/escort/obtain/collect), reward gumps, QuestConversation/ReportBack/Info/DetailedLog gumps, Bedlam/Blighted Grove/Heartwood/Sanctuary/Citadel access chains, ML context flags (Spellweaving/SummonFey/SummonFiend/BedlamAccess), and the quest config CFG file. Use when adding a new quest, debugging why a quest does not offer, wiring a quest reward, or auditing ML content parity."
-license: "MIT"
+name: uo-quests-engine-ml
+description: Use when working with the UO ML Quest engine in ModernUO/RebirthUO servers - MLQuestSystem, MLQuest definitions, QuestGivers, MLQuestContext (per-player quest state), MLQuest objectives (kill/deliver/escort/obtain/collect), reward gumps, QuestConversation/ReportBack/Info/DetailedLog gumps, Bedlam/Blighted Grove/Heartwood/Sanctuary/Citadel access chains, ML context flags (Spellweaving/SummonFey/SummonFiend/BedlamAccess), and the quest config CFG file. Use when adding a new quest, debugging why a quest does not offer, wiring a quest reward, or auditing ML content parity.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - quests
+    - mondains-legacy
+    - pvm
+    related_skills:
+    - uo-loot-generation-artifacts
+    - uo-magic-spells
+    - modernuo-gump-system
+    - uo-skills-stats-races
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Quests Engine (ML)
 
 ## Overview

@@ -1,6 +1,19 @@
 ---
 name: modernuo-server-lifecycle
 description: Use when changing or reviewing ModernUO startup, bootstrap phases, reflection lifecycle hooks, first-boot prompts, Configure/Initialize ordering, server shutdown, world load/save events, or runtime loop behavior. Use before editing ConfigurePrompts, Configure, Initialize, CallPriority, ServerConfiguration, AssemblyHandler, Core.Setup, RunEventLoop, NetState startup, PingServer startup, or EventSink lifecycle wiring.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, lifecycle, startup, shutdown, world-load]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-threading
+      - modernuo-events
+      - modernuo-configuration
+      - modernuo-world-saves-archives
+      - modernuo-test-workflow
 ---
 
 # ModernUO Server Lifecycle
@@ -9,7 +22,7 @@ description: Use when changing or reviewing ModernUO startup, bootstrap phases, 
 
 Use this skill to make startup, shutdown, reflection hook, first-boot prompt, and event-loop changes without breaking boot order, world readiness, logging boundaries, or test/runtime assumptions.
 
-## When This Activates
+## When to Use
 
 - Editing `Projects/Server/Main.cs`, `ServerConfiguration`, `AssemblyHandler`, `EventSink`, `World`, `NetState`, or startup/shutdown code.
 - Adding or moving `ConfigurePrompts()`, `Configure()`, `Initialize()`, or `[CallPriority]`.

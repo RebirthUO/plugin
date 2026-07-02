@@ -1,12 +1,25 @@
 ---
 name: modernuo-property-lists
 description: >
-  Trigger when implementing GetProperties(), working with IPropertyList/ObjectPropertyList, or customizing item tooltips.
+  Use when implementing GetProperties(), working with IPropertyList/ObjectPropertyList, or customizing item tooltips.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, property-lists, tooltips, cliloc, strings]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-serialization
+      - modernuo-string-handling
+      - modernuo-era-expansion
+      - modernuo-content-patterns
+      - migrate-property-lists
 ---
 
 # ModernUO Property Lists (Tooltips)
 
-## When This Activates
+## When to Use
 - Implementing `GetProperties()` override
 - Working with `IPropertyList` or `ObjectPropertyList`
 - Customizing item or mobile tooltips
@@ -17,9 +30,10 @@ description: >
 
 1. **Always call `base.GetProperties(list)` first** in overrides
 2. **Use cliloc numbers** when possible (int IDs that map to localized strings)
-3. **String interpolation** works with `IPropertyList` -- use `$"..."` syntax
-4. **`[InvalidateProperties]`** on `[SerializableField]` auto-refreshes tooltip on change
-5. **Call `InvalidateProperties()`** manually when non-serialized state changes tooltip
+3. **String interpolation** works with `IPropertyList`, but its handler has special delimiter semantics: human text/string constants that should become arguments must be `{}` holes; only separators like `\t` should be bare literals
+4. **This is not the same as message/gump `RawInterpolatedStringHandler` APIs** -- normal literal text is correct there
+5. **`[InvalidateProperties]`** on `[SerializableField]` auto-refreshes tooltip on change
+6. **Call `InvalidateProperties()`** manually when non-serialized state changes tooltip
 
 ## IPropertyList Interface
 

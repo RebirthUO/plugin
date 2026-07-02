@@ -1,16 +1,33 @@
 ---
 name: modernuo-monster-abilities
-description: >
-  Implements monster special attacks as reusable MonsterAbility classes in
-  Projects/UOContent/Mobiles/Abilities/, registered via GetMonsterAbilities().
-  Use when adding or refactoring boss specials, debuffs, breath attacks,
-  counters, summons, or any creature combat ability. Prevents inline ability
-  logic in monster files.
+description: Use when adding, migrating, or reviewing ModernUO/RebirthUO creature special attacks as reusable MonsterAbility classes under Projects/UOContent/Mobiles/Abilities instead of inline monster hook logic.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - modernuo
+    - rebirthuo
+    - mobiles
+    - monster-abilities
+    - combat
+    related_skills:
+    - modernuo-content-patterns
+    - uo-combat-pipeline
+    - modernuo-timers
+    - modernuo-serialization
+    - modernuo-code-audit
 ---
-
 # ModernUO Monster Abilities
 
-## When This Activates
+## Overview
+
+Use this skill to keep creature combat specials reusable, testable, and outside individual monster files. A monster should wire abilities through `GetMonsterAbilities()`; the ability class owns trigger rules, cooldowns, target selection, effects, and debuff helper items.
+
+Keep boss encounter orchestration in the boss/altar code, but extract combat specials such as debuffs, counters, breath attacks, area effects, and summons-on-hit into `MonsterAbility` classes.
+
+## When to Use
 
 - Adding or refactoring a creature special attack, debuff, proc, counter, breath, or summon
 - Implementing peerless boss combat abilities
@@ -55,7 +72,7 @@ Combat effects belong in `MonsterAbility` **even on peerless bosses** (see `Mons
 
 File: `Projects/UOContent/Mobiles/Abilities/{AbilityName}.cs`
 
-Pick a base class (details in [reference.md](reference.md)):
+Pick a base class (details in [reference.md](references/reference.md)):
 
 | Base | Use when |
 |---|---|
@@ -139,9 +156,9 @@ Minimum coverage:
 - Effect applies with correct resist/damage/debuff values
 - Era-conditional behavior if applicable (`Core.ML`, `Core.AOS`, etc.)
 
-See [reference.md](reference.md) for templates.
+See [reference.md](references/reference.md) for templates.
 
-## Anti-Patterns
+## Common Pitfalls
 
 Do **not**:
 
@@ -160,6 +177,15 @@ When editing ability `.cs` files, also apply `modernuo-code-audit` rules:
 - No LINQ on hot paths; use `PooledRefList` / `PooledRefQueue` for target collection
 - No `Console.WriteLine` — use `LogFactory.GetLogger`
 - PropertyList string literals must be holes (`$"{"Label"}\t{value}"`)
+
+
+## Verification Checklist
+
+- [ ] Combat special behavior lives in a `MonsterAbility` class, not inline monster hook code.
+- [ ] The monster wires abilities through `GetMonsterAbilities()` and does not call ability internals manually.
+- [ ] Cooldown, chance, constants, debuff items, and cleanup live with the ability or its helper item.
+- [ ] Serialized debuff/helper items use ModernUO serialization and cleanup patterns.
+- [ ] Tests or focused verification prove registration plus the player-visible effect.
 
 ## How to Report Issues
 
@@ -182,6 +208,7 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 
 ## Additional Resources
 
-- Base class matrix, trigger reference, code templates, review checklist → [reference.md](reference.md)
+- Base class matrix, trigger reference, code templates, review checklist → [reference.md](references/reference.md)
+- uo.com creature/pet ability audit workflow and master-list caveats → [uo-com-creature-ability-audit.md](references/uo-com-creature-ability-audit.md)
 - Ability system source → `Projects/UOContent/Mobiles/Abilities/`
 - Creature patterns hub → `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md`

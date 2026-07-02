@@ -1,12 +1,25 @@
 ---
 name: modernuo-commands-targeting
 description: >
-  Trigger when creating in-game commands, targeting mechanics, or working with CommandSystem/Target. When implementing [commands or player interactions.
+  Use when creating in-game commands, targeting mechanics, or working with CommandSystem/Target. Covers bracket commands, GM/admin tools, and player interactions.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, commands, targeting, admin-tools, interactions]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-gump-system
+      - modernuo-content-patterns
+      - modernuo-threading
+      - modernuo-test-workflow
+      - migrate-commands-events
 ---
 
 # ModernUO Commands & Targeting
 
-## When This Activates
+## When to Use
 - Creating new in-game `[` commands
 - Implementing targeting mechanics
 - Working with `CommandSystem.Register()` or `Target` class

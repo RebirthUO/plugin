@@ -138,7 +138,35 @@ The `web_extract` tool returns summarized content for pages over a few thousand 
 
 When a page is summarized, the per-row data must be re-extracted from a more granular source. The official `uo.com/wiki/...` per-spell pages and the Stratics AoS Combat Changes page are reliable for the granular data. When neither source yields the answer, the answer is "incomplete" - flag it in the skill and move on rather than invent the value.
 
-## Cross-Reference With Repo Documents
+## uo.com Wiki Table Extraction via Browser Console
+
+The `uo.com/wiki/ultima-online-wiki/skills/<skill>/` pages (e.g. `skills/bushido/`, `skills/ninjitsu/`, `skills/magery/`, `skills/chivalry/`) render their per-ability tables as standard `<table>` HTML — the same shape as UOGuide/UO Stratics. The `web_extract` summarizer drops the per-row data, and `browser_snapshot` returns interactive-only nodes (truncated at ~8000 chars). The reliable path is to navigate, then read the DOM with `browser_console`:
+
+```javascript
+Array.from(document.querySelectorAll('table tr'))
+  .map(r => Array.from(r.querySelectorAll('td,th'))
+    .map(c => c.innerText.trim()).join(' | '))
+  .filter(l => l).join('\n')
+```
+
+This returns the full table text — header rows, data rows, nested sub-tables (e.g. Animal Form on the Ninjitsu page), and Special-Moves-Without-Tactics matrices all in one fetch. Use `browser_console` with the `expression` parameter; the result comes back as a string. For Bushido and Ninjitsu this returned all 8+8 abilities plus the Special-Moves matrix and Animal Form table in one call.
+
+This is the canonical extraction path for any `uo.com/wiki/.../skills/<skill>/` page; apply the same recipe to `spells/<circle>/` pages and per-item pages when they have an info table. When a page has more than ~50 KB of table content, split by querying each `<table>` selector (`document.querySelectorAll('table').forEach((t,i) => ...)`) and use `expression` twice.
+
+## Source Availability Notes (Live, mid-2026)
+
+The three Tier-1 sources are not equally reliable from a Windows + browser environment. Verified by recent sessions (June–July 2026):
+
+| Source | Status | Workaround |
+|---|---|---|
+| `uo.com/wiki/...` | **Works.** Skill pages, spell pages, master-table pages all load via `browser_navigate`. `/worlds/` and `/worlds/<facet>/` (e.g. `/worlds/tokuno/`) return **404** — Broadsword has not migrated world overview pages. | Skip world overview pages; pull facet content from per-skill/per-item/per-mob pages and `Distribution/Data/map-definitions.json` instead. |
+| `www.uoguide.com` | **Frequent timeouts** (os error 10060) on this host via `browser_navigate`. Pages are the most canonical when they load. | Retry once; if still timing out, fall back to `uo.com/wiki/...` for the same topic — coverage is comparable for skills and spells. |
+| `uo.stratics.com` and `wiki.stratics.com` | **Cloudflare-blocked** ("Sicherheitsüberprüfung wird durchgeführt" challenge page). Cannot bypass via `browser_console`. | Use `web_search` to find the Stratics URL, then cite it without re-fetching. For primary content, rely on `uo.com` or `uoguide.com`. |
+| `uoalive.com/wiki/...` | **Loads**, but is a **private shard wiki** (UOAlive's custom-content sandbox). Per `uo-era-product-timeline` Pitfall § 17, do **not** cite as canonical UO behavior. | Use only for comparative "how does a sandbox shard handle it" notes; never as a Tier-1 source. |
+
+The `/worlds/tokuno/` 404 on uo.com is a recurring gap — Tokuno facet overviews must be reconstructed from per-NPC pages, per-skill pages (Bushido/Ninjitsu trainer locations), and `Distribution/Data/map-definitions.json` row `index=4`. Flag Tokuno overview details as `Needs source confirmation` when only uo.com is available.
+
+## Era / Publish Timeline (from uoguide.com/Expansion)
 
 The repo carries its own research bank. Use it as the "what we have actually implemented" side of the triangulation:
 

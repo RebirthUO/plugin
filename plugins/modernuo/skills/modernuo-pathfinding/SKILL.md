@@ -1,6 +1,25 @@
 ---
 name: modernuo-pathfinding
-description: Use when working with ModernUO creature movement, BaseAI approach behavior, PathFollower, MovementPath, BitmapAStarAlgorithm, StepCache, .swb path cache files, pathfinding first-boot prebake, PathCache admin commands, PathRecord telemetry, or pathfinding tests and benchmarks. Use before tuning pathfinding.maxSearchNodes, pathfinding.maxResidentChunks, pathfinding.prebakeMaps, cache file formats, AI obstacle behavior, pet follow/chase behavior, or map walkability cache logic.
+description: >
+  Use when working with ModernUO creature movement, BaseAI approach behavior, PathFollower,
+  MovementPath, BitmapAStarAlgorithm, StepCache, .swb path cache files, pathfinding first-boot
+  prebake, PathCache admin commands, PathRecord telemetry, or pathfinding tests and benchmarks.
+  Use before tuning pathfinding.maxSearchNodes, pathfinding.maxResidentChunks,
+  pathfinding.prebakeMaps, cache file formats, AI obstacle behavior, pet follow/chase behavior,
+  or map walkability cache logic.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, pathfinding, ai, movement, performance]
+    related_skills:
+      - modernuo-performance-hot-paths
+      - modernuo-threading
+      - modernuo-spatial-range-geometry
+      - modernuo-server-lifecycle
+      - modernuo-test-workflow
+      - modernuo-code-audit
 ---
 
 # ModernUO Pathfinding
@@ -9,7 +28,7 @@ description: Use when working with ModernUO creature movement, BaseAI approach b
 
 Use this skill to preserve movement correctness and shard performance when changing AI navigation, A* search, static walkability caching, path cache files, first-boot prebake, or pathfinding diagnostics.
 
-## When This Activates
+## When to Use
 
 - Editing `Projects/UOContent/Engines/Pathing/`, `Mobiles/AI/BaseAI/AIMovement.cs`, movement/path cache tests, or pathfinding config.
 - Debugging pets, monsters, vendors, escorts, or bosses that stall, oscillate, fail to chase, or path through/around obstacles incorrectly.

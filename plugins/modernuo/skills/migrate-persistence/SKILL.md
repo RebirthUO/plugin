@@ -1,13 +1,26 @@
 ---
 name: migrate-persistence
 description: >
-  Trigger: when converting RunUO EventSink.WorldSave/WorldLoad manual binary persistence to ModernUO GenericPersistence.
-  Covers: GenericPersistence subclassing, IGenericWriter/IGenericReader, MarkDirty pattern.
+  Use when converting RunUO EventSink.WorldSave/WorldLoad manual binary persistence to ModernUO GenericPersistence.
+  Covers GenericPersistence subclassing, IGenericWriter/IGenericReader, MarkDirty pattern, and save/load lifecycle.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, persistence, saves, lifecycle]
+    related_skills:
+      - migrate-foundation
+      - migrate-serialization
+      - modernuo-serialization
+      - modernuo-events
+      - modernuo-lifecycle-cleanup
+      - modernuo-code-audit
 ---
 
 # RunUO -> ModernUO Persistence Migration
 
-## When This Activates
+## When to Use
 - Converting `EventSink.WorldSave`/`EventSink.WorldLoad` patterns
 - Converting manual `BinaryFileWriter`/`BinaryFileReader` persistence
 - Systems that save custom data outside of Item/Mobile serialization
@@ -50,3 +63,4 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 - `dev-docs/runuo-migration-docs/08-persistence.md` -- detailed migration reference with before/after
 - `dev-docs/serialization.md` -- ModernUO serialization system (IGenericWriter/IGenericReader)
 - `plugins/modernuo/skills/modernuo-serialization/SKILL.md` -- ModernUO serialization skill
+- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` -- runtime restoration and cleanup around persisted systems

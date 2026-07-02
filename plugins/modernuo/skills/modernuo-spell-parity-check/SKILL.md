@@ -1,9 +1,26 @@
 ---
 name: modernuo-spell-parity-check
 description: Use when asked to perform a named Ultima Online spell parity, mechanics, discrepancy, formula, registration, casting, effect, or gap audit against ModernUO/RebirthUO source code. Trigger for requests like "Flamestrike parity check", "Blood Oath formula audit", "compare Spell Plague with UO.com", or "find spell implementation gaps"; requires one concrete UO spell name and optional user-provided URLs, documents, or notes.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - spells
+    - parity
+    - research
+    related_skills:
+    - uo-magic-spells
+    - uo-domain-research
+    - modernuo-era-parity-check
+    - modernuo-item-property-parity-check
 ---
-
 # ModernUO Spell Parity Check
+
+## Overview
 
 Use this skill to compare one named Ultima Online spell against ModernUO/RebirthUO source code and produce a decision-ready parity report. The job is to reduce spell behavior gaps and discrepancies safely, not to assume the current implementation is correct.
 
@@ -188,6 +205,19 @@ If no discrepancies are found, still list any remaining uncertainty, source limi
 - Prefer clarity over completeness when data conflicts.
 - Keep the main objective visible: reduce ModernUO spell-behavior gaps safely.
 
+## Source-Conflict Patterns
+
+### Death Strike formula and PvP cap
+
+When auditing Ninjitsu `Death Strike`, do not treat the formula as fully source-confirmed from one page. The durable conflict is:
+
+- Current UO.com Ninjitsu wording says damage uses the **target's** Hiding/Stealth average and says PvP is capped at `50%`.
+- UOGuide Death Strike/Ninjitsu and RunUO/ServUO/ModernUO lineage point to the **attacker/Ninja's** Hiding/Stealth average.
+- UO.com Publish 46 confirms the 30%-to-100% Hiding/Stealth scalar, ranged half-damage, and cap reduction, but not attacker-vs-target ownership.
+- UOGuide Death Strike, UO.com Publish 69, and ServUO lineage point to a **fixed 50 damage PvP cap**, not `target.HitsMax / 2`.
+
+Use `references/death-strike-source-conflicts.md` before proposing or reviewing Death Strike formula/cap changes. Label attacker-vs-target Hiding/Stealth as `source-conflict` unless the issue/era profile explicitly chooses one source tier. Default PvP cap recommendation is fixed `50` unless the project intentionally adopts the current UO.com `50%` wording as custom/current-official policy; if a half-Hits cap is chosen, require tests above and below 100 `HitsMax`.
+
 ## Related Skills
 
 - `uo-magic-spells` for spell pipeline, school model, cast lifecycle, reagents, spellbooks, scrolls, fields, summons, and school-specific pitfalls.
@@ -196,3 +226,4 @@ If no discrepancies are found, still list any remaining uncertainty, source limi
 - `modernuo-skill-parity-check` when the spell discrepancy depends on an underlying skill such as Magery, Spirit Speak, Chivalry, Focus, or Mysticism.
 - `uo-aos-item-properties` for spell damage, cast speed, cast recovery, lower mana cost, lower reagent cost, mage weapon, and mage armor effects.
 - `uo-combat-pipeline` when the spell's effect routes through combat damage, resists, slayers, or special moves.
+- `references/death-strike-source-conflicts.md` for the Death Strike attacker-vs-target Hiding/Stealth and fixed-50-vs-half-Hits PvP cap source conflict.

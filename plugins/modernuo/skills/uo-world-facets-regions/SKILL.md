@@ -1,12 +1,23 @@
 ---
-name: "uo-world-facets-regions"
-description: "Use when working with the UO world structure in ModernUO/RebirthUO servers - the 7 Facets (Felucca, Trammel, Ilshenar, Malas, Tokuno, Ter Mur, Eodon), the Map and Sector spatial index, Region lifecycle and hooks (OnEnter, OnExit, OnTravel, OnBeginSpellCast, OnDeath, OnHarmful, OnResource), travel rule validation (Recall/Gate/Sacred Journey), Champion Spawn regions, Faction towns, dungeon regions, and content gating per facet/era. Use when wiring a new region, debugging a travel-blocked spell, defining a new Champion Spawn, or auditing per-facet combat/travel rules."
-license: "MIT"
+name: uo-world-facets-regions
+description: Use when working with the UO world structure in ModernUO/RebirthUO servers - the 7 Facets (Felucca, Trammel, Ilshenar, Malas, Tokuno, Ter Mur, Eodon), the Map and Sector spatial index, Region lifecycle and hooks (OnEnter, OnExit, OnTravel, OnBeginSpellCast, OnDeath, OnHarmful, OnResource), travel rule validation (Recall/Gate/Sacred Journey), Champion Spawn regions, Faction towns, dungeon regions, and content gating per facet/era. Use when wiring a new region, debugging a travel-blocked spell, defining a new Champion Spawn, or auditing per-facet combat/travel rules.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - facets
+    - regions
+    - world
+    related_skills:
+    - modernuo-regions
+    - uo-housing-houses-multis
+    - uo-champions-cannedevil-treasures
+    - uo-era-product-timeline
+version: 1.0.0
+author: Crome696
 ---
-
 # UO World, Facets, Regions
 
 ## Overview

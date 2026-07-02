@@ -1,19 +1,51 @@
 ---
 name: modernuo-code-audit
 description: >
-  Auto-trigger whenever writing or modifying .cs files under Projects/. Audits code for ModernUO convention violations. Warnings only - flag issues and ask before fixing.
+  Use when writing, modifying, or reviewing .cs files under Projects/. Audits code for ModernUO convention, safety, serialization, lifecycle, and performance issues; reports findings by severity and asks before fixing unless fixes were explicitly requested.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, csharp, audit, safety, performance]
+    related_skills:
+      - modernuo-serialization
+      - modernuo-timers
+      - modernuo-lifecycle-cleanup
+      - modernuo-threading
+      - modernuo-performance-hot-paths
+      - modernuo-string-handling
+      - modernuo-property-lists
+      - modernuo-gump-system
+      - modernuo-content-patterns
+      - modernuo-test-workflow
 ---
 
 # ModernUO Code Audit
 
-## When This Activates
+## When to Use
 - Any time you write, edit, or modify a `.cs` file under `Projects/`
 - After generating code snippets for the user
 - During code review
 
-## Audit Rules (Warnings Only)
+## Audit Rules
 
-Flag these issues but do NOT auto-fix. Ask the user before making changes.
+Flag findings by severity but do NOT auto-fix. Report issues and ask before changing code unless the user explicitly requested automatic fixes.
+
+## Quick Pre-Submit Checklist
+
+For any `.cs` edit under `Projects/`, check this before claiming done:
+
+- Logging uses `LogFactory.GetLogger(...)`, not `Console.WriteLine` / `Console.Write`.
+- Game logic does not introduce `lock`, `volatile`, concurrent collections, `Task.Run`, thread pool work, or manual threads.
+- World scans avoid `World.Mobiles` / `World.Items`; prefer map/sector spatial queries.
+- Deleted objects cancel timers/tokens and clear held `Item` / `Mobile` references in `OnDelete()` / `OnAfterDelete()`.
+- Serializable types follow `[SerializationGenerator]`, `partial`, `[Constructible]`, non-serialized `TimerExecutionToken`, and generated-version migration rules.
+- Hot paths avoid allocating LINQ, `new List<T>()`, `ArrayPool<T>.Shared`, and `System.Text.StringBuilder` unless the detailed rules below explicitly allow the pattern.
+- Property lists, gumps, packets, and player-facing strings use the appropriate ModernUO handlers and no empty-gump code path exists.
+- Era-conditional behavior names the target era/ruleset or asks before changing mechanics.
+
+Completion criterion: every modified `.cs` file has been checked against this list, and any finding is reported with file/line evidence before optional fixes.
 
 ### 1. LINQ: Know What's Optimized (.NET 10)
 Not all LINQ is banned. .NET 10 JIT/PGO eliminates overhead for specific patterns. Anything not listed below is still forbidden on hot paths.
@@ -114,6 +146,12 @@ public override void OnAfterDelete()
 **Check**: `_camelCase` for private fields, `PascalCase` for properties/methods/classes.
 **Note**: Legacy code may use `m_` prefix -- don't flag existing `m_` fields but use `_` for new code.
 
+### 12a. No Publish-Number Prefixes in Symbols
+**Check**: Do not introduce or keep symbols whose names start with `PublishXX`, `PubXX`, or similar publish-number prefixes (for example `Publish30PoisonCloudMaxDamage`, `Pub96RequiredTactics`). This applies to functions, variables, constants, fields, properties, helper classes, and test helpers.
+**Good**: Name the domain mechanic (`PoisonCloudMaxDamage`, `PrimaryTacticsRequirement`) and keep publish/source evidence in comments, PR bodies, docs, source-reference strings, or test data notes.
+**Why**: Publish numbers are evidence, not stable domain names. Baking them into runtime/test symbols makes later era/source reconciliation harder.
+**See**: `modernuo-no-publish-prefix-names` for the detailed naming rule and replacement pattern.
+
 ### 13. No Empty Gumps
 **Check**: Any gump (legacy `Gump` constructor, or `BuildLayout`) must not have a code path that produces zero visual elements (no `AddBackground`, no `AddPage` with content, etc.).
 **Why**: The client has no way to close an empty gump — no close button, no right-click dismiss. This leaks a gump slot on both client and server until relog.
@@ -193,7 +231,7 @@ mob.SendMessage($"You earned a {rank:L} trophy!");          // "gold" not "Gold"
 
 ## Severity Levels
 - **ERROR**: Rules 3, 9, 10, 13 (will cause bugs, build failures, or client-side leaks)
-- **WARNING**: Rules 1 (Tier 3 LINQ), 2, 4, 5, 6, 7, 8, 12, 14, 15, 17 (performance/convention issues)
+- **WARNING**: Rules 1 (Tier 3 LINQ), 2, 4, 5, 6, 7, 8, 12, 12a, 14, 15, 17 (performance/convention issues)
 - **INFO**: Rules 1 (Tier 2 LINQ on warm paths — note it but don't flag as violation), 16 (switch patterns — suggest but don't flag)
 - **ASK**: Rule 11 (need user input)
 
@@ -205,13 +243,15 @@ When you find violations, report them as:
   Suggestion: {fix}
 ```
 
-Do NOT silently fix issues. Always flag and ask.
+Do NOT silently fix issues. Always report findings first; ask before fixing unless the task explicitly requested fixes.
 
 ## See Also
 - `dev-docs/code-standards.md` - Full coding standards documentation
 - `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - Serialization rules
 - `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer cleanup rules
+- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` - Deletion, ownership, timer, event, and region cleanup doctrine
 - `plugins/modernuo/skills/modernuo-threading/SKILL.md` - Threading model details
+- `plugins/modernuo/skills/modernuo-performance-hot-paths/SKILL.md` - Hot/warm/cold path classification and performance decision matrix
 - `plugins/modernuo/skills/modernuo-property-lists/SKILL.md` - PropertyList interpolation rules
 - `plugins/modernuo/skills/modernuo-server-lifecycle/SKILL.md` - Startup and lifecycle phase risks
 - `plugins/modernuo/skills/modernuo-pathfinding/SKILL.md` - AI movement and StepCache risks

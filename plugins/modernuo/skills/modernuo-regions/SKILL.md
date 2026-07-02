@@ -1,12 +1,28 @@
 ---
 name: modernuo-regions
 description: >
-  Trigger when creating custom regions, dynamic item-controlled areas, dungeon sub-zones, travel restrictions, housing blocks, spawn control, or any spatial gameplay rule. When working with Region, BaseRegion, GuardedRegion, DungeonRegion, HouseRegion, or CheckTravel.
+  Use when creating custom regions, dynamic item-controlled areas, dungeon sub-zones, travel restrictions, housing blocks, spawn control, or any spatial gameplay rule. Covers Region, BaseRegion, GuardedRegion, DungeonRegion, HouseRegion, and CheckTravel.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, regions, facets, spatial-rules, travel]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-performance-hot-paths
+      - modernuo-content-patterns
+      - modernuo-serialization
+      - modernuo-timers
+      - modernuo-lifecycle-cleanup
+      - modernuo-era-expansion
+      - uo-world-facets-regions
+      - modernuo-spatial-range-geometry
 ---
 
 # ModernUO Regions
 
-## When This Activates
+## When to Use
 - Creating a custom region (dungeon zone, boss arena, restricted area)
 - Creating a dynamic region tied to an item (chest effect zone, spawn area)
 - Adding travel spell restrictions, housing blocks, or spawn control

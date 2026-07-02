@@ -1,18 +1,33 @@
 ---
 name: modernuo-string-handling
 description: Use when working on ModernUO string construction, interpolation handlers, ValueStringBuilder, packet/gump/message text, or replacing System.Text.StringBuilder in game code.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, strings, interpolation, performance, gumps]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-performance-hot-paths
+      - modernuo-property-lists
+      - modernuo-gump-system
+      - modernuo-networking
+      - modernuo-content-patterns
 ---
 
 # ModernUO String Handling Skill
 
-## When This Skill Applies
+## Overview
+
+## When to Use
 - Any code that builds strings dynamically (concatenation, formatting, interpolation)
 - Converting `System.Text.StringBuilder` to `ValueStringBuilder`
 - Packet string construction
 - Gump/message text building
 
 ## Core Rule
-**Never use `System.Text.StringBuilder`**. Use `Server.Text.ValueStringBuilder` everywhere.
+In ModernUO server/runtime string-building code, do not use `System.Text.StringBuilder`; use `Server.Text.ValueStringBuilder`. For tooltip/property-list output, follow `modernuo-property-lists` because `IPropertyList` uses its own interpolation handler rather than a `ValueStringBuilder` call site, and its literal-as-delimiter rule is unique to property lists. Do not apply the property-list hole rule to normal message/gump handler APIs, where literal text in `$"..."` is correct.
 
 ## Quick Reference
 

@@ -1,12 +1,26 @@
 ---
 name: modernuo-threading
 description: >
-  Trigger when discussing async patterns, world saves, game loop, or reviewing code for threading issues. When using await, Task, or any concurrency-related code in game logic.
+  Use when discussing async patterns, world saves, game loop, reviewing code for threading issues, or using await, Task, or any concurrency-related code in game logic.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, threading, event-loop, world-saves, performance]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-timers
+      - modernuo-serialization
+      - modernuo-world-saves-archives
+      - modernuo-performance-hot-paths
+      - modernuo-pathfinding
+      - modernuo-test-workflow
 ---
 
 # ModernUO Threading & Event Loop
 
-## When This Activates
+## When to Use
 - Reviewing code for threading issues
 - Discussing async/await patterns
 - Working with world saves

@@ -1,12 +1,27 @@
 ---
 name: modernuo-timers
 description: >
-  Trigger when creating delayed actions, recurring timers, or any time-based behavior. When using Timer.StartTimer, Timer.DelayCall, or TimerExecutionToken.
+  Use when creating delayed actions, recurring timers, or any time-based behavior involving Timer.StartTimer, Timer.DelayCall, or TimerExecutionToken.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, timers, scheduling, lifecycle, serialization]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-serialization
+      - modernuo-lifecycle-cleanup
+      - modernuo-threading
+      - modernuo-content-patterns
+      - modernuo-event-scheduler
+      - modernuo-test-workflow
+      - migrate-timers
 ---
 
 # ModernUO Timers & Scheduling
 
-## When This Activates
+## When to Use
 - Creating delayed actions or recurring timers
 - Working with `Timer`, `TimerExecutionToken`, `DelayCallTimer`
 - Implementing decay, expiration, or periodic behavior
@@ -17,7 +32,7 @@ description: >
 1. **Prefer `Timer.StartTimer` with token** for cancellable timers
 2. **Prefer `Timer.StartTimer` without token** for fire-and-forget
 3. **Never serialize `TimerExecutionToken`** -- restore in `[AfterDeserialization]`
-4. **Always cancel timers in `OnDelete()`/`OnAfterDelete()`**
+4. **Always cancel owned timers in the deletion path** -- use `modernuo-lifecycle-cleanup` for `OnDelete()` vs `OnAfterDelete()` hook choice
 5. **8ms minimum precision** -- timer wheel uses 8ms tick rate
 6. **Timers are NOT thread-safe** -- never Start/Stop timers or call `Timer.DelayCall`/`Timer.StartTimer` from any thread other than the game thread. This includes `Serialize()` which runs on background serialization threads during world saves.
 
@@ -227,5 +242,6 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 - `dev-docs/event-scheduler.md` - Wall-clock/calendar scheduling (EventScheduler) — use for daily resets, weekly events, holiday seasons instead of Timer
 - `plugins/modernuo/skills/modernuo-event-scheduler/SKILL.md` - EventScheduler skill for calendar-based events
 - `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - Timer fields not serialized
-- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Deletion patterns
+- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content deletion patterns
+- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` - Deletion-path hook choice and ownership cleanup
 - `plugins/modernuo/skills/modernuo-threading/SKILL.md` - Single-threaded model

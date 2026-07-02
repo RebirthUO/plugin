@@ -1,12 +1,23 @@
 ---
-name: "uo-magic-spells"
-description: "Use when working with the UO magic system in ModernUO/RebirthUO servers - the Spell base class lifecycle, 8 Magery circles, Necromancy/Chivalry/Bushido/Ninjitsu/Spellweaving/Mysticism schools, reagent mechanics, CastTimer flow, SpellHelper travel/damage/indirect-target validation, Karma/Tithing requirements, and content-gating per era. Use when adding a new spell, debugging why a spell fizzles, wiring AI to cast spells, or extending the spell model for SA/ToL."
-license: "MIT"
+name: uo-magic-spells
+description: Use when working with the UO magic system in ModernUO/RebirthUO servers - the Spell base class lifecycle, 8 Magery circles, Necromancy/Chivalry/Bushido/Ninjitsu/Spellweaving/Mysticism schools, reagent mechanics, CastTimer flow, SpellHelper travel/damage/indirect-target validation, Karma/Tithing requirements, and content-gating per era. Use when adding a new spell, debugging why a spell fizzles, wiring AI to cast spells, or extending the spell model for SA/ToL.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - magic
+    - spells
+    - parity
+    related_skills:
+    - modernuo-spell-parity-check
+    - uo-combat-pipeline
+    - uo-skills-stats-races
+    - modernuo-regions
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Magic & Spells
 
 ## Overview
@@ -229,7 +240,9 @@ The pre-AOS spell model is a flat random damage path; `AOS.Damage` only runs if 
 
 ## Common Pitfalls
 
-1. **Consuming reagents at cast-start, not at OnCast.** The engine pattern is to consume at `OnCast` so the reagents return if the cast is interrupted. The `Disturb` path must refund reagents.
+1. **Spellweaving PlayerMobile tests need an ML-capable NetState.** `ArcanistSpell.CheckExpansion()` rejects `PlayerMobile` casters unless `caster.NetState?.SupportsExpansion(Expansion.ML) == true`. Positive Spellweaving tests should attach a test client such as `using var ns = AttachClient(caster, "5.0.2b")` and detach it in `finally`. If the test manually drives `OnBeginCast()` / `BeginSequence()` / `Target()`, still call `Assert.True(spell.CheckCast())` first when the goal is to exercise real cast prerequisites; otherwise the direct target path can bypass the expansion gate and hide setup bugs.
+2. **Summon spell tests need real creature/spawn setup.** Tests that instantiate summon mobiles through `CheckSequence()` must register NPC speed classes (`EnsureNpcSpeeds()` / `NPCSpeeds.Configure()`) before creating `BaseCreature` subclasses, and location-targeted summons must use coordinates proven by `map.CanSpawnMobile(x, y, z)`. A blocked tile causes the target path to send “That location is blocked” and leave `AllFollowers` null even when skill, focus, mana, and expansion setup are correct.
+3. **Consuming reagents at cast-start, not at OnCast.** The engine pattern is to consume at `OnCast` so the reagents return if the cast is interrupted. The `Disturb` path must refund reagents.
 2. **Forgetting the `NextSpellTime` reset.** After a cast, the caster has a small window during which they cannot cast again. The `NextSpellTime` is set in the Spell constructor and must be checked in custom cast paths.
 3. **Setting `CastDelayBase` lower than the timer granularity.** The engine uses `Timer` with ~250ms granularity. Setting `CastDelayBase` to 0.1s effectively still resolves to 250ms.
 4. **Not handling `AOS.Damage` returns in damage spells.** `AOS.Damage` returns the actual damage applied. Delayed-damage spells should record the actual damage (not the pre-resist value) for skill-gain calculations.

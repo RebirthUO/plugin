@@ -1,12 +1,30 @@
 ---
 name: modernuo-content-patterns
 description: >
-  Trigger when creating new items, mobiles, creatures, spells, skills, loot tables, or any game content under Projects/UOContent/. This is the hub skill that connects to all other ModernUO skills.
+  Use when creating new items, mobiles, creatures, spells, skills, loot tables, or any game content under Projects/UOContent/. This hub skill connects to the other ModernUO skills.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, content, uocontent, gameplay, hub]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-serialization
+      - modernuo-timers
+      - modernuo-lifecycle-cleanup
+      - modernuo-performance-hot-paths
+      - modernuo-era-expansion
+      - modernuo-property-lists
+      - modernuo-gump-system
+      - modernuo-commands-targeting
+      - modernuo-events
+      - modernuo-test-workflow
 ---
 
 # ModernUO Content Patterns (Hub Skill)
 
-## When This Activates
+## When to Use
 - Creating new items, weapons, armor, clothing, containers
 - Creating new creatures, NPCs, vendors
 - Creating new spells
@@ -21,7 +39,7 @@ description: >
 2. **All serializable classes must be `partial`** with `[SerializationGenerator]`
 3. **All Item/Mobile constructors need `[Constructible]`**
 4. **Clean up timers and references in `OnDelete()`/`OnAfterDelete()`**
-5. **No LINQ** in game logic -- use loops and `PooledRefList<T>`
+5. **Follow `modernuo-code-audit` LINQ tiers** -- Tier 1 zero-cost patterns are allowed when the audit skill says they are safe; avoid allocating/unsupported LINQ on hot paths, and prefer loops plus `PooledRefList<T>` when call frequency or allocation behavior is uncertain
 6. **File placement** matters -- follow the directory conventions below
 
 ## New Item Template
@@ -373,6 +391,7 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 - `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - Serialization details
 - `plugins/modernuo/skills/modernuo-era-expansion/SKILL.md` - Era-conditional code
 - `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer patterns
+- `plugins/modernuo/skills/modernuo-performance-hot-paths/SKILL.md` - Hot-path classification and LINQ/pooling choices
 - `plugins/modernuo/skills/modernuo-property-lists/SKILL.md` - Item tooltips
 - `plugins/modernuo/skills/modernuo-gump-system/SKILL.md` - UI dialogs
 - `plugins/modernuo/skills/modernuo-commands-targeting/SKILL.md` - Commands and targeting

@@ -16,6 +16,7 @@ This pattern was used to produce `Projects/UOContent/Items/Weapons/weapons.md` i
 | Topic | URL | Master table shape |
 |---|---|---|
 | **Standard weapons** | `https://uo.com/wiki/ultima-online-wiki/items/weapons/` | 1 `<table>`, 144 `<tr>` rows. Skill sections are `<th colspan="6">` cells containing the skill name. Data rows are 6 cells: Weapon Name, Crafted By, Strength, Base Damage, Speed, Special Moves. |
+| **Creatures (expansion mobs)** | *No uo.com master stat table* | uo.com: Publish + dungeon pages for mechanics only. Stats: one UOGuide page per creature. Bulk player audit: `modernuo-era-parity-check` → `references/se-monster-player-parity.md`. |
 | Spells (per-school) | `https://uo.com/wiki/ultima-online-wiki/skills/<school>/<school>/` | Per-school page; one table per circle. |
 | Skills (per-skill) | `https://uo.com/wiki/ultima-online-wiki/skills/<skill>/` | Per-skill page with stat gains and training tips. |
 | Item properties | `https://uoguide.com/Item_Properties` | Tier 1 source; per-property intensity table. |

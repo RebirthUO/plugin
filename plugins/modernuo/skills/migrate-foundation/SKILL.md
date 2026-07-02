@@ -1,15 +1,49 @@
 ---
 name: migrate-foundation
 description: >
-  Trigger: when migrating ANY RunUO code to ModernUO. Always load this skill first.
-  Covers: namespace changes, naming conventions, attribute renames, logging, threading, performance.
+  Use when migrating any RunUO code to ModernUO. Load this foundation skill before specialized migrate-* skills.
+  Covers namespace changes, naming conventions, attribute renames, logging, threading, and performance.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, foundation, csharp]
+    related_skills:
+      - migrate-serialization
+      - migrate-items-mobiles
+      - migrate-timers
+      - migrate-gumps
+      - migrate-packets
+      - migrate-property-lists
+      - migrate-commands-events
+      - migrate-persistence
+      - migrate-systems
+      - modernuo-code-audit
+      - modernuo-serialization
+      - modernuo-lifecycle-cleanup
+      - modernuo-threading
+      - modernuo-performance-hot-paths
 ---
 
 # RunUO -> ModernUO Foundation Migration
 
-## When This Activates
+## When to Use
 - Converting ANY RunUO 2.7 script to ModernUO
 - Always apply these changes FIRST before system-specific migration
+
+## Migration Chain
+
+For any RunUO migration, apply skills in this order:
+
+1. `migrate-foundation` — universal syntax, naming, threading, logging, and performance changes.
+2. `migrate-serialization` — when the script has `Serialize`/`Deserialize`, save data, `[Constructable]`, `Serial` constructors, or old-save compatibility risk.
+3. System-specific migration skill — items/mobiles, timers, gumps, packets, commands/events, property lists, persistence, or multi-file systems.
+4. Relevant `modernuo-*` runtime skill — serialization, timers, gumps, property lists, content patterns, threading, or other runtime behavior.
+5. `modernuo-code-audit` — final convention, safety, and hot-path pass.
+6. `modernuo-test-workflow` — build/test/validation where available.
+
+Completion criterion: every migrated script names which chain entries applied and why skipped entries were not needed.
 
 ## Universal Changes Checklist
 1. File-scoped namespace: `namespace X { ... }` -> `namespace X;`
@@ -57,4 +91,5 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 ## See Also
 - `dev-docs/runuo-migration-docs/01-foundation-changes.md` -- complete foundation changes reference
 - `dev-docs/code-standards.md` -- ModernUO coding standards and LINQ tiers
+- `plugins/modernuo/skills/modernuo-performance-hot-paths/SKILL.md` -- Hot/warm/cold path classification for migration performance choices
 - `dev-docs/threading-model.md` -- Why single-threaded, what's allowed

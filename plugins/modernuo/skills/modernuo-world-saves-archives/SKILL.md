@@ -1,6 +1,19 @@
 ---
 name: modernuo-world-saves-archives
 description: Use when working with ModernUO world save backups, archive rollups, archive restore flows, ArchiveJournal state transitions, local archive destinations, save snapshot post-events, crash backups, backup pruning, archive verification, or operator-facing save/restore commands. Use before editing Projects/UOContent/World Saves, EventSink.WorldSavePostSnapshot backup behavior, AutoArchive configuration, .archive-journal.json recovery, managed archive formats, or restore prompts.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, world-saves, archives, backups, restore]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-threading
+      - modernuo-server-lifecycle
+      - modernuo-events
+      - modernuo-configuration
+      - modernuo-test-workflow
 ---
 
 # ModernUO World Saves & Archives
@@ -9,7 +22,7 @@ description: Use when working with ModernUO world save backups, archive rollups,
 
 Use this skill to protect shard data when changing automatic backups, archive rollups, restore prompts, archive destinations, or journaled recovery paths around ModernUO world saves.
 
-## When This Activates
+## When to Use
 
 - Editing `Projects/UOContent/World Saves/`, `Projects/Server/World/`, crash backup handling, save commands, or archive tests.
 - Changing `AutoArchive`, `ArchiveJournal`, `LocalArchiveDestination`, `ArchiveDestinationRegistry`, `ManagedArchive`, or restore/prune commands.

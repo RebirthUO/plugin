@@ -1,12 +1,23 @@
 ---
-name: "uo-domain-research"
-description: "Use when authoring or extending Ultima Online domain knowledge for ModernUO/RebirthUO skills - the workflow for triangulating UO game-mechanics documentation (UOGuide, UO Stratics, uo.com wiki) with the actual repo source (Projects/Server, Projects/UOContent, Distribution/Data, dev-docs, docs/) to produce a class-level UO skill. Use when the user asks for a new UO skill, wants to expand an existing one, or wants to audit a mechanic against canonical UO behavior."
-license: "MIT"
+name: uo-domain-research
+description: Use when authoring or extending Ultima Online domain knowledge for ModernUO/RebirthUO skills - the workflow for triangulating UO game-mechanics documentation (UOGuide, UO Stratics, uo.com wiki) with the actual repo source (Projects/Server, Projects/UOContent, Distribution/Data, dev-docs, docs/) to produce a class-level UO skill. Use when the user asks for a new UO skill, wants to expand an existing one, or wants to audit a mechanic against canonical UO behavior.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - research
+    - sources
+    - parity
+    related_skills:
+    - uo-modernuo-workflow
+    - uo-living-world-review
+    - modernuo-era-parity-check
+    - uo-game-docs-canonical-authoring
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Domain Research
 
 ## Overview
@@ -190,8 +201,73 @@ This pattern produced the `Projects/UOContent/Items/Weapons/weapons.md` parity a
 11. **Doing 1 web call per item instead of finding the master list.** Many UO subsystems have a single canonical master-list page (e.g. `uo.com/wiki/ultima-online-wiki/items/weapons/` lists every standard weapon in one table). Always check for the master list first; bulk-extracting it once with `curl` + regex beats N parallel `web_extract` calls. See `references/uo-master-list-extraction.md` for the parse recipe and URL generators.
 12. **Using `web_search` per item to discover URLs.** UOGuide and Stratics Wiki URLs follow deterministic patterns: UOGuide is `https://www.uoguide.com/{Name_With_Underscores}` (apostrophes → `%27`); Stratics Wiki is `https://wiki.stratics.com/index.php?title=UO:{Name}`. Generate the URL from the code class name, only fall back to a `web_search` if the generated URL 404s.
 13. **Treating code-vs-canonical diffs as bugs by default.** When the repo diverges from the canonical UO source, the cause is often an *intentional era gate* (the repo keeps the pre-2016 Revamp stats for a pre-Revamp shard) or a *deliberate parity choice* (the ModernUO project has not yet back-ported Publish 96 special-move changes). Verify with the era enum (`Core.AOS`, `Core.SE`, `Core.ML`, `Core.SA`) and the in-repo `docs/mondains-legacy-content-matrix.md` before flagging the diff as a bug.
-14. **Leaving a long UO analysis only in chat.** When the answer becomes a reusable design analysis or content-policy argument, write a standalone Markdown under `docs/` and summarize the path in the final response. This is especially important for German player-/shard-design explanations where the user needs to read and revise the argument outside chat. Keep the chat concise; put the full structured analysis, decision tables, player-facing wording, developer-facing wording, and open questions in the Markdown.
+14. **Trusting a single UOGuide fetch.** UOGuide raw/action endpoints intermittently return empty bodies or stall, especially when fetching many creature pages. Cache raw pages under a scratch/report directory, use `curl -L --connect-timeout 8 --max-time 25 --retry 1 -A "Mozilla/5.0"`, verify each file contains `{{Creatures`, and retry only the misses before building a parity table. Do not let empty fetches silently become `SourceLocked` findings.
+15. **Parsing RebirthUO spawn JSON with plain UTF-8.** Some `Distribution/Data/Spawns/**/*.json` files include a UTF-8 BOM; Python `json.loads(path.read_text(encoding="utf-8"))` fails with `Unexpected UTF-8 BOM`. Use `encoding="utf-8-sig"` when bulk-parsing spawn packages for parity/source reports.
+16. **Leaving a long UO analysis only in chat.** When the answer becomes a reusable design analysis or content-policy argument, write a standalone Markdown under `docs/` and summarize the path in the final response. This is especially important for German player-/shard-design explanations where the user needs to read and revise the argument outside chat. Keep the chat concise; put the full structured analysis, decision tables, player-facing wording, developer-facing wording, and open questions in the Markdown.
 15. **Re-parsing the same source file 168 times in 168 separate `read_file` calls.** When the task is "extract a stat from every class in a folder", one `execute_code` script that does `rglob("*.cs")` + regex per file is dramatically faster and gives you structured JSON you can sort/filter/diff. Only fall back to per-file reads when the regex misses something you need to inspect manually.
+
+16. **Treating `game-docs/GameDocs/` as a flat doc tree.** RebirthUO splits canonical/era documentation under `game-docs/GameDocs/01_Broadsword/<Domain>/<Era>/...` from project parity under `02_Project_Parity/<Domain>/<Era>/...`. When the user asks for canonical SE/ML/SA/ToL doc content, the deliverable is a **per-mechanic file tree** under the matching `<Domain>/<Era>/` folder — not a single flat Markdown under `02_Project_Parity/`. One README per skill + one README per `<Domain>/<Era>/` entry point, plus one `.md` per documented mechanic that follows the project's Knot schema (Kopfblock / Kurzfassung / Voraussetzungen / Mechanik / PvP-PvM-Economy / Repo-Anker / Quellen). See the Fast Recipe below.
+
+17. **Editing `00_Index/README.md` mid-session without re-reading.** When the agent is part of a parallel-session workspace, sibling subagents can modify `00_Index/README.md` between your `read_file` and your `patch`. The patch tool returns a `_warning` with the sibling timestamp — always re-read the file before retrying, otherwise you overwrite the sibling's additions. If the file now contains content you did not author, prefer `patch` (replace) over `write_file` to avoid clobbering concurrent edits.
+
+### Fast Recipe: Authoring `game-docs/GameDocs/01_Broadsword/<Domain>/<Era>/*` (canonical era documentation)
+
+When the user asks for canonical/era documentation that lands in the repo (e.g. "erstelle eine Skill-Liste für SE", "dokumentiere die Bushido-Mechaniken", "schreib eine Broadsword-Übersicht für Mondain's Legacy"), produce a **per-mechanic file tree**, not a flat summary. The user has explicitly rejected flat "skill list with subcategory heading" outputs.
+
+**Tree shape** (canonical pattern; mirror it for every era and domain):
+
+```
+game-docs/GameDocs/01_Broadsword/<Domain>/<Era>/
+├── README.md                       # <Domain>/<Era> entry point + node index
+├── <skill-or-topic-1>/
+│   ├── README.md                   # skill/topic overview
+│   ├── <mechanic-1>.md             # one node per documented mechanic
+│   ├── <mechanic-2>.md
+│   └── ...
+└── <skill-or-topic-2>/
+    ├── README.md
+    └── ...
+```
+
+Example for SE Skills (`<Domain>` = Skills, `<Era>` = Samurai_Empire):
+
+```
+01_Broadsword/Skills/Samurai_Empire/
+├── README.md
+├── bushido/
+│   ├── README.md
+│   ├── honorable-execution.md
+│   ├── confidence.md
+│   ├── counter-attack.md
+│   ├── lightning-strike.md
+│   ├── evasion.md
+│   ├── momentum-strike.md
+│   ├── perfection.md
+│   ├── weapon-parry.md
+│   ├── whirlwind-bonus.md
+│   ├── special-moves-without-tactics.md
+│   └── lesser-hiryu-riding.md
+└── ninjitsu/
+    ├── README.md
+    ├── animal-form.md
+    └── ... (one per ability + hooks)
+```
+
+**Knot schema** (every per-mechanic `.md` follows this six-section shape):
+
+1. **Kopfblock** — Skill, Typ (Active / Active (Defensiv) / Active (Stealth) / Active (Teleport) / Active (Morph) / Passiv / Hook), Mana, Skill-Gate, canonical source URL.
+2. **Kurzfassung** — 1–2 sentences in the canonical source's wording (uo.com / Stratics / UOGuide).
+3. **Voraussetzungen** — Skill-Gate, Begleitskills (e.g. Hiding/Stealth), Trainer-Anker (Zento / New Haven Dojo for SE), item requirements.
+4. **Mechanik** — table with formulas, caps, PvP-DR, PvP-Cap. Use source-locked values, mark unknowns as `Needs source confirmation`.
+5. **PvP/PvM/Economy** — short product-impact row (PvP counterplay, PvM sustain, faucets/sinks, housing, new-player/veteran impact).
+6. **Repo-Anker** — concrete `Projects/UOContent/Skills/<Skill>.cs`, `Projects/UOContent/Spells/<School>/<Ability>.cs` paths with `file:line` where known.
+7. **Quellen** — primary (uo.com), secondary (Stratics, UOGuide).
+
+**README files** (top-level + one per skill/topic) list every node as a relative markdown link so the tree is navigable from the GitHub UI, and they reference the umbrella `Systems/<Era>.md` for the era overview.
+
+**Cross-reference discipline:** when a per-mechanic node changes, update the matching `02_Project_Parity/<Domain>/<Era>/<topic>.md` parity skeleton if one exists (the parity file is the implementation-side mirror). The Broadsword side is canonical; the parity side is repo-anchored implementation status.
+
+This is the same pattern RebirthUO uses for `01_Broadsword/Skills/Samurai_Empire/`, `01_Broadsword/Systems/Samurai_Empire.md`, and the 16 domain folders under `02_Project_Parity/`. Reuse it for any era or domain the user asks to document.
 
 ## Verification Checklist
 
@@ -203,6 +279,7 @@ This pattern produced the `Projects/UOContent/Items/Weapons/weapons.md` parity a
 - [ ] `related_skills` lists the UO siblings and the non-UO dependencies.
 - [ ] Any web citations are noted in the SKILL.md's "Related Skills" footer for offline reference, and any longer primary research is parked in `references/<topic>.md` linked from SKILL.md.
 - [ ] For parity audits over many items: the bulk-extraction recipe in Phase 6 was used, and the resulting diff table is parked in the repo (e.g. `Projects/UOContent/<Category>/<topic>-parity.md`) for the next session.
+- [ ] When the deliverable lands in `game-docs/`, the per-mechanic file tree under `01_Broadsword/<Domain>/<Era>/` follows the Knot schema, every mechanic has its own `.md`, and the three README entry points (top-level + one per skill/topic + matching parity file under `02_Project_Parity/`) are updated. See the Fast Recipe: `game-docs/` authoring.
 
 ## How to Report Issues
 
@@ -229,6 +306,6 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 ### Companion skills
 
 - `hermes-skill-creator` - strict SKILL.md schema (frontmatter, headings, ordering, validation). Use this for the "is the skill valid?" check; use this umbrella for the "what should the skill contain?" workflow.
-- `references/uo-source-tiers.md` (this skill's support file) - a curated index of the canonical UO sources by trust tier and topic, used as the default starting point for any new UO research.
+- `references/uo-source-tiers.md` (this skill's support file) - a curated index of the canonical UO sources by trust tier and topic, used as the default starting point for any new UO research. Contains the `uo.com` `browser_console` table-extraction recipe and the live source-availability matrix (uo.com works, uoguide timeouts, Stratics Cloudflare-blocked, uoalive is shard-only).
 - `references/uo-master-list-extraction.md` (this skill's support file) - the recipe for parity audits over many similar items: master-list URL pattern, `curl` + regex parse, bulk code extraction, name normalization, UOGuide/Stratics URL generators, and the four common code-vs-canonical divergence modes. Use when the task is "audit every X in the repo against canonical UO".
 - `references/endless-journey-ml-no-housing.md` (this skill's support file) - condensed notes for Endless Journey / no-housing Mondain's Legacy analysis: content still reachable, housing/storage losses, 20-item bank limit, Arcane Circle group mechanics, and fair custom-solution patterns such as Public Arcane Circle Assist, Peerless Key Binder, whitelisted EJ Quest Vault, and Completion Satchel.

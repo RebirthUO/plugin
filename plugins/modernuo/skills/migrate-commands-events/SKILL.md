@@ -1,13 +1,26 @@
 ---
 name: migrate-commands-events
 description: >
-  Trigger: when converting RunUO command registration, EventSink handlers, or event delegate patterns.
-  Covers: event name changes, delegate removal, Configure vs Initialize.
+  Use when converting RunUO command registration, EventSink handlers, or event delegate patterns to ModernUO.
+  Covers event name changes, delegate removal, Configure vs Initialize, and generated event handlers.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, commands, events]
+    related_skills:
+      - migrate-foundation
+      - modernuo-commands-targeting
+      - modernuo-events
+      - modernuo-configuration
+      - modernuo-code-audit
+      - migrate-persistence
 ---
 
 # RunUO -> ModernUO Commands & Events Migration
 
-## When This Activates
+## When to Use
 - Converting `EventSink` subscriptions
 - Converting event handler signatures
 - Moving from `Initialize()` to `Configure()`

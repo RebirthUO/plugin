@@ -1,13 +1,25 @@
 ---
 name: migrate-property-lists
 description: >
-  Trigger: when converting RunUO GetProperties(ObjectPropertyList) to ModernUO GetProperties(IPropertyList). Critical string literal rule.
-  Covers: IPropertyList interface, string hole rule, cliloc arguments.
+  Use when converting RunUO GetProperties(ObjectPropertyList) overrides to ModernUO GetProperties(IPropertyList).
+  Covers IPropertyList interpolation, the property-list-specific string hole rule, and cliloc arguments.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, property-lists, cliloc]
+    related_skills:
+      - migrate-foundation
+      - modernuo-property-lists
+      - modernuo-string-handling
+      - modernuo-code-audit
+      - modernuo-content-patterns
 ---
 
 # RunUO -> ModernUO Property List Migration
 
-## When This Activates
+## When to Use
 - Converting `GetProperties(ObjectPropertyList list)` overrides
 - Updating tooltip/property list code
 
@@ -19,6 +31,8 @@ description: >
 5. Cliloc as argument: `"#" + cliloc` -> `$"{cliloc:#}"`
 
 ## Critical Rule: String Literals Must Be Holes
+This is a property-list-specific rule for `IPropertyList` interpolation. Do not apply it to normal message/gump `RawInterpolatedStringHandler` APIs such as `SendMessage` or `builder.AddHtml`; see `modernuo-string-handling` for those call sites.
+
 Only `\t` should be a bare literal. All text must be inside `{}` holes:
 ```csharp
 // BAD: "Map" is a delimiter

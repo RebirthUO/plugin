@@ -1,12 +1,23 @@
 ---
-name: "uo-housing-houses-multis"
-description: "Use when working with the UO housing system in ModernUO/RebirthUO servers - BaseHouse, HouseSign, HouseRegion, multi components, lockdown and secure storage, friend/co-owner/access/ban lists, house placement and customization, IDOC decay stages, demolition-pending vendor rental contracts, addon components (forge/anvil/loom), and HouseGumpAOS. Use when placing a house, debugging a lockdown bug, wiring a friend list, debugging a decay cycle, or auditing a per-facet housing rule."
-license: "MIT"
+name: uo-housing-houses-multis
+description: Use when working with the UO housing system in ModernUO/RebirthUO servers - BaseHouse, HouseSign, HouseRegion, multi components, lockdown and secure storage, friend/co-owner/access/ban lists, house placement and customization, IDOC decay stages, demolition-pending vendor rental contracts, addon components (forge/anvil/loom), and HouseGumpAOS. Use when placing a house, debugging a lockdown bug, wiring a friend list, debugging a decay cycle, or auditing a per-facet housing rule.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - housing
+    - multis
+    - economy
+    related_skills:
+    - uo-world-facets-regions
+    - uo-items-foundation
+    - uo-living-world-review
+    - modernuo-regions
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Housing, Houses, Multis
 
 ## Overview
@@ -188,6 +199,21 @@ The `BaseAddon` is added to a `BaseHouse` via the `HouseSign.AddAddon(gump)` gum
 `Keep` and `Castle` designs have been added in periodic contests since Publish 101. The designs are added to the `HousePlacementTool` as a new "Custom Keep" or "Custom Castle" option. The published designs are listed in `Publish_101`, `Publish_103`, etc. on UOGuide.
 
 The custom contest designs are stored as multi data files. The engine reads them at startup and adds the designs to the `HousePlacementTool` menu.
+
+## Testing Customization Components
+
+For source-level/runtime tests around custom housing component data (`Distribution/Data/Components/*.txt`), `ComponentVerification`, `HouseFoundation.ValidPiece`, `DesignState.IsFixture`, `TileData` roof flags, or `MultiComponentList` add/remove behavior, put the test class in the initialized UOContent collection:
+
+```csharp
+[Collection("Sequential UOContent Tests")]
+public class MyHousingComponentTests
+{
+}
+```
+
+The fixture loads `ServerConfiguration` and available client TileData before `ComponentVerification` resolves data files or `TileData.ItemTable` is inspected. Without it, tests can fail from uninitialized `ServerConfiguration.DataDirectories` or false `ValidPiece(..., roof: true)` results. When available, prefer real client TileData for roof assertions so `TileData.ItemTable[id].Roof` is meaningful.
+
+When validating broad Japanese custom-housing coverage, count rows by component family instead of using an unexplained single total. For the current SE Japanese component ranges, the representative data rows are 34 wall rows (`walls.txt` categories 16-25), 4 door rows (`doors.txt` categories 15-18), and 12 roof rows (`roof.txt` categories 8-13), total 50.
 
 ## Common Pitfalls
 

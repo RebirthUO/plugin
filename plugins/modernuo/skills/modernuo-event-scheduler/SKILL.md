@@ -1,12 +1,24 @@
 ---
 name: modernuo-event-scheduler
 description: >
-  Trigger when creating holiday events, seasonal content, scheduled maintenance, daily/weekly resets, or any wall-clock/calendar-based scheduling. When using EventScheduler, ScheduledEvent, YearlyScheduledEvent, or IRecurrencePattern.
+  Use when creating holiday events, seasonal content, scheduled maintenance, daily/weekly resets, or any wall-clock/calendar-based scheduling. Covers EventScheduler, ScheduledEvent, YearlyScheduledEvent, and IRecurrencePattern.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, event-scheduler, calendar, seasonal-events, scheduling]
+    related_skills:
+      - modernuo-timers
+      - modernuo-code-audit
+      - modernuo-threading
+      - modernuo-content-patterns
+      - modernuo-test-workflow
 ---
 
 # ModernUO EventScheduler (Wall-Clock / Calendar Scheduling)
 
-## When This Activates
+## When to Use
 - Creating holiday or seasonal events (Halloween, Christmas, etc.)
 - Scheduling daily/weekly/monthly resets or activities
 - Any event that must fire at a real-world time or date

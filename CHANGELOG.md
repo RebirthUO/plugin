@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.16.0 - 2026-07-02
+
+- Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile for Ultima Online, ModernUO, and RebirthUO themed skills.
+- Added missing Hermes-used skills including RebirthUO issue implementation, ModernUO lifecycle/performance/regression/test workflows, RebirthUO codebase and online triage verification, human-review promotion, canonical game-doc authoring, living-world review, era/product timeline, Samurai Empire research, UO research-doc parity, UOGuide item-property extraction, and the Ultima Online product model.
+- Refreshed existing ModernUO/UO skill contents and support references from Hermes so the plugin no longer carries divergent local copies.
+- Updated plugin manifests and README documentation for the Hermes sync contract.
+
 ## 1.15.0 - 2026-06-23
 
 - Added `modernuo-test-naming` to normalize AI-generated xUnit test file, class, and method names around the tested object or area.

@@ -1,12 +1,23 @@
 ---
-name: "uo-crafting-recipes-resources"
-description: "Use when working with the UO crafting engine in ModernUO/RebirthUO servers - CraftSystem, CraftItem, Def* registration files, recipe scrolls, subresources, ML-era recipe gates, runic tools, and bulk order deeds. Use when adding a new craftable item, wiring a new recipe scroll, debugging why a craft succeeds/exceptional/fails, or auditing ML/HL/SA crafting parity."
-license: "MIT"
+name: uo-crafting-recipes-resources
+description: Use when working with the UO crafting engine in ModernUO/RebirthUO servers - CraftSystem, CraftItem, Def* registration files, recipe scrolls, subresources, ML-era recipe gates, runic tools, and bulk order deeds. Use when adding a new craftable item, wiring a new recipe scroll, debugging why a craft succeeds/exceptional/fails, or auditing ML/HL/SA crafting parity.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - crafting
+    - resources
+    - economy
+    related_skills:
+    - uo-bulk-orders-bod
+    - uo-harvest-gathering-resources
+    - uo-items-foundation
+    - uo-aos-item-properties
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Crafting, Recipes, Resources
 
 ## Overview
@@ -227,6 +238,10 @@ Live QA gaps are listed in `docs/mondains-legacy-crafting-matrix.md:60-70` (rare
 8. **Inheriting the wrong `LootType`.** Crafted items default to `LootType.Regular` unless `SetQuestItem` is called or `OnCraft` sets a different type. Quest items need explicit `LootType.Blessed` and `BumpQuantity` for stackables.
 9. **Forgetting to register a `BaseTool` requirement for the matching skill.** A craft that requires Blacksmithing but accepts no Forge gate will be craftable on a player with no tongs. `Def*.cs` lines like `AddCraft(typeof(...), ..., typeof(Forge), ...)` are how the system enforces tool requirements.
 10. **Adding a recipe to a satchel that does not exist in `Distribution/Data`.** Satchels are content items with their own drop tables. Adding a recipe id to a satchel that no player can obtain breaks parity with the parity target.
+
+## Samurai Empire Craft Metadata Tests
+
+For SE recipe coverage tickets, prefer table-driven assertions through runtime `CraftItem` metadata instead of source-grep checks. Assert output type, gump group/name clilocs, `RequiredExpansion`, all skill rows, all resource rows, and `UseAllRes` where relevant. See `references/se-craft-metadata-test-pattern.md` for helper templates, observed SE row anchors, and the static `CraftSystem`/`Core.Expansion` test-isolation pitfall.
 
 ## Verification Checklist
 

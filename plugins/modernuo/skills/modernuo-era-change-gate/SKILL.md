@@ -1,9 +1,23 @@
 ---
 name: modernuo-era-change-gate
-description: Use when a ModernUO/RebirthUO content change, parity finding, implementation plan, diff, issue, or review crosses Ultima Online era boundaries or changes which expansion/profile owns behavior. Trigger for requests like "content changed from Samurai Empire to Time of Legends", "this ML feature now uses TOL rules", "move this spawn from SE to ML", "era-breaking change", "Core.SE to Core.TOL", or any skill, spell, item, quest, loot, spawn, mobile, world, combat, crafting, or property audit with era/profile ambiguity. Requires the affected era check(s) to be involved, especially `modernuo-era-parity-check`.
+description: Use when a ModernUO/RebirthUO content change, parity finding, implementation plan, diff, issue, or review crosses Ultima Online era boundaries or changes which expansion/profile owns behavior. Requires affected era checks to be involved, especially modernuo-era-parity-check.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, rebirthuo, era, parity, gate]
+    related_skills:
+      - modernuo-era-parity-check
+      - modernuo-era-expansion
+      - uo-era-product-timeline
+      - uo-living-world-review
+      - modernuo-ticket-triage
 ---
 
 # ModernUO Era Change Gate
+
+## Overview
 
 Use this skill to catch content changes that can silently break expansion parity. The job is to identify the affected eras, require the era parity workflow for those eras, and produce a Markdown routing report before implementation or issue slicing continues.
 

@@ -1,12 +1,24 @@
 ---
 name: modernuo-era-expansion
 description: >
-  Trigger when writing era-conditional code, using Core.AOS/SE/ML etc., or when user hasn't specified target era. Always ask which expansion to target if not specified.
+  Use when writing era-conditional code, using Core.AOS/SE/ML/etc., or when the user has not specified a target era. Always ask which expansion to target if not specified.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, era, expansion, core-flags, parity]
+    related_skills:
+      - modernuo-era-change-gate
+      - modernuo-era-parity-check
+      - modernuo-content-patterns
+      - modernuo-code-audit
+      - uo-era-product-timeline
 ---
 
 # ModernUO Era & Expansion Support
 
-## When This Activates
+## When to Use
 - Writing code that depends on game era (damage formulas, skill caps, mechanics)
 - Using `Core.AOS`, `Core.SE`, `Core.ML`, etc.
 - User asks for a feature without specifying era

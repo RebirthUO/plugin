@@ -1,6 +1,8 @@
 # ModernUO Plugin
 
-This repository contains the `modernuo` plugin metadata for Codex, Claude Code, and Cursor RebirthUO development. It packages focused skills for ModernUO server implementation, GitHub issue triage into source-backed implementation plans with explicit code-change rationale, publish-to-era measurement checks, and citations limited to repo, internet, or issue-supplied evidence, custom content module setup, test naming normalization for AI-generated xUnit files, classes, and methods, Ultima Online domain research, migration work, subsystem audits, cross-era content change routing, LootPack source preservation, symbol discipline for constants, variables, fields, properties, and `Policy*` surfaces, named UO skill, spell, and item property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, and content parity checks.
+This repository packages the `modernuo` plugin metadata for Codex, Claude Code, Cursor, and Hermes-adjacent RebirthUO development workflows. The plugin's skill payload is a 1:1 mirror of the active Hermes `ultima-online` profile skills that are thematically used for Ultima Online, ModernUO, and RebirthUO work.
+
+The plugin should not carry local-only or hand-edited ModernUO skill variants. When Hermes learns or updates a UO/ModernUO/RebirthUO skill, sync the matching skill directory from the Hermes profile into `plugins/modernuo/skills/` so the plugin and Hermes use the same guidance.
 
 ## Contents
 
@@ -10,12 +12,36 @@ This repository contains the `modernuo` plugin metadata for Codex, Claude Code, 
 - `.cursor-plugin/marketplace.json` defines the Cursor marketplace catalog.
 - `plugins/modernuo/.cursor-plugin/plugin.json` defines the Cursor plugin manifest.
 - `plugins/modernuo/assets/rebirthuo-logo.png` provides the plugin logo and composer icon.
-- `plugins/modernuo/skills/` contains ModernUO and Ultima Online guidance skills for code review, GitHub issue triage, custom module setup, test naming normalization, migration, LootPack source preservation, symbol discipline, cross-era content change gates, named skill, spell, and item property parity checks, delta-backed era parity reporting, content systems, combat, crafting, persistence, networking, regions, quests, housing, and related workflows.
-- `AGENTS.md` contains repository-level Codex instructions for plugin maintenance.
+- `plugins/modernuo/skills/` contains the Hermes-synced Ultima Online, ModernUO, and RebirthUO skills, including migration, code audit, codebase navigation, issue triage, online verification, human-review promotion, canonical game-doc authoring, test workflow, regression testing, era parity, skill/spell/item-property parity, subsystem/domain research, lifecycle, performance, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, and related workflows.
+- `AGENTS.md` contains repository-level maintenance instructions for plugin changes.
+- `CHANGELOG.md` records plugin-version changes.
+
+## Skill Sync Contract
+
+The ModernUO plugin is sourced from:
+
+```text
+C:\Users\Jsiem\AppData\Local\hermes\profiles\ultima-online\skills\
+```
+
+The synced set is every Hermes skill in that profile skills tree whose name or frontmatter description is scoped to Ultima Online, ModernUO, RebirthUO, RunUO/ServUO migration, UOGuide research, or closely related RebirthUO implementation/review/triage workflows. Non-UO general software-development skills such as generic planning, TDD, debugging, code-review, or Hermes skill-authoring guidance are intentionally excluded.
+
+After changing the plugin skill payload, bump the plugin version, update this README if the purpose/usage changed, and add a `CHANGELOG.md` entry.
 
 ## Usage
 
-For Codex, install or load the plugin through the configured local marketplace, then ask for ModernUO or RebirthUO help by topic. Example requests include triaging a GitHub issue into a source-backed implementation plan, creating a `CUOContent` custom module when no shard shortcut is provided, normalizing generated xUnit test file/class/method names that picked up publish, era, branch, or task prefixes, migration guidance, subsystem audits, LootPack preservation reviews before replacing source-derived `AddLoot(LootPack.*)` calls with exact-gold or policy helpers, symbol-discipline reviews for unnecessary constants, locals, fields, properties, and `Policy*` names, era parity checks with source-backed expected-vs-actual deltas for monsters, crafting, and other risk rows, cross-era change reviews such as moving content from Samurai Empire to Time of Legends behavior, named UO skill parity checks such as Magery or Blacksmithy, named spell parity checks such as Flamestrike or Blood Oath, named item property parity checks such as Spell Damage or Mage Armor, item property research, serialization reviews, and content implementation planning.
+For Codex, install or load the plugin through the configured local marketplace, then ask for ModernUO or RebirthUO help by topic. Example requests include:
+
+- triaging a GitHub issue into a source-backed implementation plan;
+- implementing a sufficiently specified RebirthUO GitHub issue as an isolated tested PR;
+- verifying a `Triage required` ticket for `Human Review` promotion;
+- producing a German RebirthUO implementation plan;
+- authoring canonical RebirthUO game-docs for an era mechanic;
+- planning or reviewing ModernUO migrations from RunUO/ServUO patterns;
+- auditing code for ModernUO lifecycle, performance, serialization, string, packet, gump, timer, threading, or region risks;
+- checking named Ultima Online skill, spell, item-property, or era parity against ModernUO/RebirthUO source and approved web sources;
+- reviewing UO living-world side effects across era/ruleset, facets, economy, housing, PvP, PvM, and player trust;
+- normalizing generated xUnit test names and planning focused or broad validation.
 
 For Claude Code, add the marketplace from a local checkout while testing:
 
@@ -32,7 +58,5 @@ Or add the GitHub-hosted marketplace:
 ```
 
 For Cursor, add this repository as a plugin marketplace in Cursor's marketplace settings. Cursor reads `.cursor-plugin/marketplace.json`; install or use `modernuo` from the `rebirthuo-plugins` marketplace.
-
-Ticket triage, parity-check, and content-taxonomy outputs are delivered as Markdown. Ticket triage turns one GitHub issue into an implementation plan with tiered UO source evidence, repository anchors, expected-vs-actual deltas, explicitly justified code changes, publish/era measurement checks, acceptance criteria, tests, and tracker recommendations; it only cites information verified in the repository, fetched from the internet, or supplied by the issue. Era parity reports require expected behavior, ModernUO evidence, concrete deltas, validation status, and impact for every non-present, low-confidence, monster, crafting, and user-focused risk row. Issue creation or issue-draft generation happens only when requested, with one independently actionable issue per discrepancy, gap, runtime blocker, or unresolved decision.
 
 The plugin UI uses `plugins/modernuo/assets/rebirthuo-logo.png` through the manifest `interface.logo` and `interface.composerIcon` fields.

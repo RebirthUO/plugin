@@ -1,15 +1,25 @@
 ---
 name: modernuo-test-naming
-description: >
-  Use when writing, reviewing, or cleaning up ModernUO/RebirthUO C# xUnit tests
-  whose file, class, or method names include noisy AI-generated prefixes such as
-  eras, publishes, branch names, issue IDs, task labels, or generic regression
-  labels. Normalizes test identity to the tested object or area, keeps
-  publish/era words only when they are the actual tested object or domain, and
-  proposes or applies rename-only cleanup without changing test behavior.
+description: Use when writing, reviewing, or cleaning up ModernUO/RebirthUO C# xUnit tests whose file, class, or method names include noisy AI-generated prefixes such as eras, publishes, branch names, issue IDs, task labels, or generic regression labels. Normalizes test identity to the tested object or area, keeps publish/era words only when they are the actual tested object or domain, and proposes or applies rename-only cleanup without changing test behavior.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - modernuo
+    - rebirthuo
+    - tests
+    - naming
+    - code-style
+    related_skills:
+    - modernuo-test-workflow
+    - modernuo-regression-testing
+    - modernuo-no-publish-prefix-names
 ---
-
 # ModernUO Test Naming
+
+## Overview
 
 Use this skill to keep generated tests named after what they test, not after
 the branch, ticket, publish note, or AI work batch that produced them.
@@ -76,6 +86,51 @@ Flag these when they are only prefixes or labels:
 4. Use `rg` to find references before changing file/class names.
 5. Run the narrowest relevant test or at least `dotnet test --no-build` for the
    affected test project when practical.
+6. If the tests live on existing PR branches and the user asked for the PRs to
+   be changed, follow the GitHub PR workflow after validation: stage, commit,
+   push each branch, and verify the PR heads moved. Do not stop at local-only
+   rename cleanup.
+
+## Audit-Only Review Workflow
+
+When the user asks to *find* additional AI-generated wrong prefixes, do not edit
+first. Produce an evidence-backed candidate list:
+
+1. Scan file stems, class names, and xUnit method names separately.
+2. Treat hard source-of-work prefixes as high-confidence noise: `Publish\d+`,
+   `Pub\d+`, `P\d+`, `Issue\d+`, `Task\d+`, `Codex`, `Generated`,
+   `Regression`, and `AI`.
+3. Treat `Coverage` and `Smoke` in file/class names as generic AI batch labels
+   unless the suite is intentionally a broad health check. Prefer concrete
+   names such as `{System}Tests`, `{ContentArea}Tests`, or
+   `{Operation}Tests`.
+4. For era words (`MondainsLegacy`, `SamuraiEmpire`, `ML`, `SE`), separate real
+   domain names from noisy context:
+   - keep when the word names the tested production API, source-reference hub,
+     quest engine, artifact family, or stable content area;
+   - flag when the test class is already specific (`DisarmAbilityTests`,
+     `ParrotContentTests`, `BaseWeapon...Tests`) and only the method starts with
+     the era label.
+5. Include line numbers and suggest rename-only replacements, but mark ambiguous
+   cases as review candidates instead of presenting them as certain fixes.
+6. If hard noise count is zero, say so explicitly before listing softer
+   era/context candidates.
+
+See `references/test-prefix-audit.md` for a compact checklist and examples from
+RebirthUO-style test-name audits.
+
+## Rename-Only PR Cleanup Workflow
+
+When the user asks to apply the normalization and merge it:
+
+- Work from a clean branch/worktree based on the requested base branch so existing user changes in the main working copy are not touched.
+- Keep the change rename-only: file/class/method identifiers and direct references only; do not alter assertions, fixtures, production code, or behavior.
+- On Windows/MSYS, file mode-only noise can appear in worktrees. Inspect/stage with `git -c core.filemode=false` and stage only the test paths involved.
+- After edits, run the prefix scan and expect zero actionable generated-prefix findings, allowing true domain names such as source-reference tests and `MLSetArmorTests`.
+- Validate with `git diff --cached --check`, a full build, and targeted renamed-class xUnit filters. If a broad exploratory test run hits unrelated static-state/order-sensitive failures, report it as exploratory rather than mixing behavior fixes into the rename-only PR.
+- If the user asked for PR/merge completion, do not stop at local cleanup: commit, push, open the PR, merge it, delete the branch, and verify the PR/base state.
+
+Detailed command snippets live in `references/rename-pr-cleanup.md`.
 
 ## Examples
 

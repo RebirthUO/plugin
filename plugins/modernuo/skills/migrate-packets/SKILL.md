@@ -1,13 +1,25 @@
 ---
 name: migrate-packets
 description: >
-  Trigger: when converting RunUO Packet subclasses, PacketWriter/PacketReader, or packet handler registration to ModernUO span-based packets.
-  Covers: outgoing packet conversion, incoming handler conversion, SpanWriter/SpanReader.
+  Use when converting RunUO Packet subclasses, PacketWriter/PacketReader, or packet handler registration to ModernUO span-based packets.
+  Covers outgoing packet conversion, incoming handler conversion, SpanWriter/SpanReader, and packet text handling.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, packets, networking]
+    related_skills:
+      - migrate-foundation
+      - modernuo-networking
+      - modernuo-string-handling
+      - modernuo-code-audit
+      - modernuo-threading
 ---
 
 # RunUO -> ModernUO Packet Migration
 
-## When This Activates
+## When to Use
 - Converting `Packet` subclasses to static create methods
 - Converting `PacketHandlers.Register()` to `IncomingPackets.Register()`
 - Converting `PacketWriter`/`PacketReader` to `SpanWriter`/`SpanReader`

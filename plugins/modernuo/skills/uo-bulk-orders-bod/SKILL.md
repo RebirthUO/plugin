@@ -1,12 +1,22 @@
 ---
-name: "uo-bulk-orders-bod"
-description: "Use when working with the UO Bulk Order Deed (BOD) system in ModernUO/RebirthUO servers - SmallBOD, LargeBOD, the BulkOrderBook (BOB) for storage, BOD rewards (Colored Anvil, Mining Gloves, etc.), the ML-era Smith/Tailor BOD turn-in timer, BulkMaterialType, the BOB gump, and the bribery system. Use when adding a new BOD type, debugging a turn-in, wiring a BOB filter, auditing the BOD reward pool, or aligning the BOD to a specific craft system."
-license: "MIT"
+name: uo-bulk-orders-bod
+description: Use when working with the UO Bulk Order Deed (BOD) system in ModernUO/RebirthUO servers - SmallBOD, LargeBOD, the BulkOrderBook (BOB) for storage, BOD rewards (Colored Anvil, Mining Gloves, etc.), the ML-era Smith/Tailor BOD turn-in timer, BulkMaterialType, the BOB gump, and the bribery system. Use when adding a new BOD type, debugging a turn-in, wiring a BOB filter, auditing the BOD reward pool, or aligning the BOD to a specific craft system.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - bod
+    - crafting
+    - economy
+    related_skills:
+    - uo-crafting-recipes-resources
+    - uo-items-foundation
+    - uo-loot-generation-artifacts
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Bulk Order Deeds (BOD)
 
 ## Overview

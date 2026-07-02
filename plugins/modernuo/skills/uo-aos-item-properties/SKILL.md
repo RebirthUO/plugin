@@ -1,12 +1,24 @@
 ---
-name: "uo-aos-item-properties"
-description: "Use when working with the Age of Shadows (AoS) item property system in ModernUO/RebirthUO servers - AosAttribute, AosWeaponAttribute, AosArmorAttribute, AosSkillBonuses, AosElementAttributes, the BaseAttributes storage pattern, and the GetProperties OPL rows for magical items. Use when adding a new property, debugging a property that does not show in tooltip, wiring a property into combat/spell/resist formulas, or extending the property system per Stygian Abyss (SA) parity."
-license: "MIT"
+name: uo-aos-item-properties
+description: Use when working with the Age of Shadows (AoS) item property system in ModernUO/RebirthUO servers - AosAttribute, AosWeaponAttribute, AosArmorAttribute, AosSkillBonuses, AosElementAttributes, the BaseAttributes storage pattern, and the GetProperties OPL rows for magical items. Use when adding a new property, debugging a property that does not show in tooltip, wiring a property into combat/spell/resist formulas, or extending the property system per Stygian Abyss (SA) parity.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - aos
+    - item-properties
+    - parity
+    related_skills:
+    - uoguide-item-properties
+    - modernuo-item-property-parity-check
+    - uo-items-foundation
+    - uo-combat-pipeline
+    - uo-loot-generation-artifacts
+version: 1.0.0
+author: Crome696
 ---
-
 # UO AOS Item Properties
 
 ## Overview

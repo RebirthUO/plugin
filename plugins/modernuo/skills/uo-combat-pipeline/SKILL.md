@@ -1,12 +1,23 @@
 ---
-name: "uo-combat-pipeline"
-description: "Use when working with the UO combat pipeline in ModernUO/RebirthUO servers - the BaseWeapon swing lifecycle, AOS.Damage damage formula, the 5 elemental resists, slayer groups, weapon abilities, special moves, parry, parrying with shields vs weapons, anatomy/tactics/swordsmanship modifiers, PvP vs PvM damage, delayed damage, and area-effect damage. Use when debugging why a hit connects/misses, why a damage type splits, why a slayer does not apply, or how the pre-AOS vs AOS damage formula differ."
-license: "MIT"
+name: uo-combat-pipeline
+description: Use when working with the UO combat pipeline in ModernUO/RebirthUO servers - the BaseWeapon swing lifecycle, AOS.Damage damage formula, the 5 elemental resists, slayer groups, weapon abilities, special moves, parry, parrying with shields vs weapons, anatomy/tactics/swordsmanship modifiers, PvP vs PvM damage, delayed damage, and area-effect damage. Use when debugging why a hit connects/misses, why a damage type splits, why a slayer does not apply, or how the pre-AOS vs AOS damage formula differ.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - combat
+    - pvp
+    - pvm
+    related_skills:
+    - uo-aos-item-properties
+    - uo-magic-spells
+    - modernuo-spatial-range-geometry
+    - modernuo-performance-hot-paths
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Combat Pipeline
 
 ## Overview
@@ -143,6 +154,8 @@ The pre-SE Slayer system was the only `AosWeaponAttribute` that pre-dated AoS; p
 
 A special move is a weapon-bound ability that costs mana and can be activated by the player. `BaseWeapon.PrimaryAbility` and `BaseWeapon.SecondaryAbility` are the per-weapon bindings. The abilities themselves live in `Projects/UOContent/Items/Weapons/Abilities/` and inherit from `WeaponAbility`.
 
+For Samurai Empire weapon special-move parity, prefer a table-driven test over per-class one-offs: instantiate each SE weapon type and assert `PrimaryAbility` / `SecondaryAbility` against the authoritative UO.com weapons matrix. Watch for later-era overrides (`Core.HS`/`Core.ML`) on weapons like Sai/Tessen/Nunchaku before calling a mismatch an SE regression.
+
 The current requirements (per UOGuide Publish 96):
 
 - **Primary move**: 30 Tactics + 70 weapon skill
@@ -263,6 +276,18 @@ Each Peerless altar has a 10-minute post-kill loot window (`PeerlessAltar.Comple
 
 `AOS.Damage` also has a "Direct Damage cap of 35" for player-vs-player and 70 with Death Strike. The archer path applies a separate cap when the damage type is `Direct`.
 
+## Bushido Honor / Perfection (SE)
+
+Bushido's Honor Perfection path is part combat, part Virtue system. The implementation anchor is `Projects/UOContent/Engines/Virtues/HonorContext.cs`, with swing integration in `BaseWeapon` via `IHonorTarget.ReceivedHonorContext?.OnTargetHit/OnTargetMissed`. When auditing Perfection, verify the combat effect and the virtue context together.
+
+Key parity rules captured from UO.com Bushido: at 50+ Bushido, hits against an Honored target increase Perfection; the current RebirthUO damage step is `bushido / 10` per hit capped at 100. Luck should scale linearly from that current damage bonus (`PerfectionLuckBonus = PerfectionDamageBonus * 10`), so examples are 50 luck for one 50.0 Bushido hit, 90 luck for one 90.0 hit, 100 luck for one GM hit, and 1000 luck at full GM Perfection. Kill restore currently applies `Math.Min(PerfectionDamageBonus * (targetFame + 5000) / 25000, 10)` equally to Hits/Stam/Mana.
+
+See `references/bushido-honor-perfection.md` for the source excerpt, implementation anchors, and focused `HonorContext` test fixture pattern.
+
+See `references/bushido-spell-regression-tests.md` for session-derived RebirthUO test patterns for Bushido spell/stance issues: Honorable Execution cleanup, Confidence parry/interruption, Evasion replacement, generated-event cleanup, deterministic timers, and NetState/mobile fixture setup.
+
+See `references/bushido-special-move-regression-tests.md` for session-derived RebirthUO test patterns for Bushido special-move/combat-pipeline issues: Counter Attack parry integration, Counter Attack active weapon-ability carry-through, Lightning Strike hit chance cap coverage, Hit Lower Attack exception coverage, deterministic skill handlers, and `BaseWeapon.CheckHit` chance capture.
+
 ## Common Pitfalls
 
 1. **Calling `Mobile.Damage` directly instead of `AOS.Damage`.** Pre-AoS path is OK; AoS+ shards must use `AOS.Damage` to get the elemental split.
@@ -354,6 +379,10 @@ public override void AlterMeleeDamageTo(Mobile to, ref int damage)
 - [ ] Combat-side effects (Reveal, Aggression, Stat gain, Skill gain, Durability loss) are present in the swing lifecycle.
 - [ ] Facet-specific behavior is gated through `Region`/`SpellHelper`/`SpellHelper.TravelCheckType` rather than `Map == Map.Felucca` checks scattered through content.
 - [ ] Champion Spawn region hooks (`Region.OnBeginSpellCast`, `Region.OnTravel`) are not bypassed in custom content.
+
+## Session References
+
+- `references/bushido-honorable-execution-tests.md` — Bushido Honorable Execution parity anchors, generated-event cleanup pattern, and deterministic tests for penalty lockout/expiry/cleanup.
 
 ## How to Report Issues
 

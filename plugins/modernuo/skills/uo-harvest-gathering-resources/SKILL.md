@@ -1,12 +1,22 @@
 ---
-name: "uo-harvest-gathering-resources"
-description: "Use when working with the UO resource gathering system in ModernUO/RebirthUO servers - the HarvestSystem base class, Mining, Lumberjacking, Fishing, vein tables, BonusHarvestResource, RandomizeVeins, Elf respawn-reduction, Ter Mur sub-resources (Sand/Granite/Quality Gems), HarvestTarget and HarvestTimer, RaceBonus, and the ML harvest branches. Use when adding a new harvest system, adjusting a vein table, debugging why a player does not get a colored resource, wiring an Elf bonus, or auditing per-era resource parity."
-license: "MIT"
+name: uo-harvest-gathering-resources
+description: Use when working with the UO resource gathering system in ModernUO/RebirthUO servers - the HarvestSystem base class, Mining, Lumberjacking, Fishing, vein tables, BonusHarvestResource, RandomizeVeins, Elf respawn-reduction, Ter Mur sub-resources (Sand/Granite/Quality Gems), HarvestTarget and HarvestTimer, RaceBonus, and the ML harvest branches. Use when adding a new harvest system, adjusting a vein table, debugging why a player does not get a colored resource, wiring an Elf bonus, or auditing per-era resource parity.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - harvest
+    - resources
+    - economy
+    related_skills:
+    - uo-crafting-recipes-resources
+    - uo-world-facets-regions
+    - uo-skills-stats-races
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Harvest & Gathering Resources
 
 ## Overview

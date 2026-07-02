@@ -1,18 +1,24 @@
 ---
 name: modernuo-content-taxonomy
 description: >
-  Classifies Ultima Online game content into World, Entity, ItemSystem, MobileSystem,
-  Progression, EconomyCrafting, QuestNarrative, Encounter, and ClientPresentation domains.
-  Maps taxonomy concepts to ModernUO types, data files, and workflows. Always produces a
-  mandatory 9-domain inventory (Bestandsaufnahme) with parity check against UO.com and
-  UOGuide, listing Gap, Partial, and Enhanced items. Use when planning content, scoping
-  features, migrating RunUO scripts, auditing parity, or deciding where to implement
-  facets, regions, items, mobiles, quests, loot, spawns, or client presentation.
+  Use when planning content, scoping features, migrating RunUO scripts, auditing parity, or deciding where to implement facets, regions, items, mobiles, quests, loot, spawns, or client presentation. Classifies Ultima Online game content into the 9-domain inventory and maps taxonomy concepts to ModernUO types, data files, and workflows.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, taxonomy, content, parity, planning]
+    related_skills:
+      - modernuo-content-patterns
+      - modernuo-era-parity-check
+      - modernuo-era-change-gate
+      - uo-living-world-review
+      - uo-modernuo-workflow
 ---
 
 # ModernUO Content Taxonomy
 
-## When This Activates
+## When to Use
 
 - Planning new game content or scoping a feature request
 - Classifying where a piece of content belongs in the codebase

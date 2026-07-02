@@ -1,12 +1,23 @@
 ---
-name: "uo-loot-generation-artifacts"
-description: "Use when working with the UO loot generation system in ModernUO/RebirthUO servers - LootPack, LootPackEntry, TypeRandom treasure rolls, Champion Spawn artifacts, Peerless artifacts, ML minor artifacts, Treasure Maps (Stash/Supply/Cache/Hoard/Trove), Cartography decoding, chest mob spawns, Paragon monsters, monster corpse loot generation, and the per-tier roll tables. Use when adding a new monster, adjusting drop rates, wiring treasure map chests, debugging why a boss does not drop the right artifact, or building a custom loot table."
-license: "MIT"
+name: uo-loot-generation-artifacts
+description: Use when working with the UO loot generation system in ModernUO/RebirthUO servers - LootPack, LootPackEntry, TypeRandom treasure rolls, Champion Spawn artifacts, Peerless artifacts, ML minor artifacts, Treasure Maps (Stash/Supply/Cache/Hoard/Trove), Cartography decoding, chest mob spawns, Paragon monsters, monster corpse loot generation, and the per-tier roll tables. Use when adding a new monster, adjusting drop rates, wiring treasure map chests, debugging why a boss does not drop the right artifact, or building a custom loot table.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - loot
+    - artifacts
+    - economy
+    related_skills:
+    - modernuo-lootpack-preservation
+    - uo-aos-item-properties
+    - uo-champions-cannedevil-treasures
+    - uo-quests-engine-ml
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Loot Generation & Artifacts
 
 ## Overview

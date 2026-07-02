@@ -1,12 +1,23 @@
 ---
-name: "uo-skills-stats-races"
-description: "Use when working with the UO skill/stat/race system in ModernUO/RebirthUO servers - the 58 Skills, the 3 Stats (Str/Dex/Int), the 3 Races (Human/Elf/Gargoyle), the 720-point cap, 100/225/125/150 stat caps, skill gain mechanics, anti-macro, stat gain, the 7 expansion skill gates, and the PowerScroll/Scroll of Alacrity/Transcendence extension system. Use when adding a new skill, debugging why a skill does not gain, wiring a custom skill use, balancing a stat-gain path, or auditing per-era skill availability."
-license: "MIT"
+name: uo-skills-stats-races
+description: Use when working with the UO skill/stat/race system in ModernUO/RebirthUO servers - the 58 Skills, the 3 Stats (Str/Dex/Int), the 3 Races (Human/Elf/Gargoyle), the 720-point cap, 100/225/125/150 stat caps, skill gain mechanics, anti-macro, stat gain, the 7 expansion skill gates, and the PowerScroll/Scroll of Alacrity/Transcendence extension system. Use when adding a new skill, debugging why a skill does not gain, wiring a custom skill use, balancing a stat-gain path, or auditing per-era skill availability.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - skills
+    - stats
+    - races
+    related_skills:
+    - modernuo-skill-parity-check
+    - uo-magic-spells
+    - uo-combat-pipeline
+    - uo-crafting-recipes-resources
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Skills, Stats, Races
 
 ## Overview

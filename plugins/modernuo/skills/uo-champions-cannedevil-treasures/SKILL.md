@@ -1,12 +1,22 @@
 ---
-name: "uo-champions-cannedevil-treasures"
-description: "Use when working with the UO Champion Spawn system and Treasures events in ModernUO/RebirthUO servers - CannedEvil/ChampionSpawn altars, the 16-candle level scaling, the Harrower / Star Room mechanic, the 6 Champion Skull altars, Champion Artifact rolls, Doom Gauntlet, Treasures of Tokuno (ToT) Lesser/Moderate/Greater artifacts, and the per-facet reward differences. Use when adding a new champion altar, debugging why a champion does not summon, wiring Treasures event drops, auditing Felucca-vs-other-facet rewards, or connecting champion spawns to regional region hooks."
-license: "MIT"
+name: uo-champions-cannedevil-treasures
+description: Use when working with the UO Champion Spawn system and Treasures events in ModernUO/RebirthUO servers - CannedEvil/ChampionSpawn altars, the 16-candle level scaling, the Harrower / Star Room mechanic, the 6 Champion Skull altars, Champion Artifact rolls, Doom Gauntlet, Treasures of Tokuno (ToT) Lesser/Moderate/Greater artifacts, and the per-facet reward differences. Use when adding a new champion altar, debugging why a champion does not summon, wiring Treasures event drops, auditing Felucca-vs-other-facet rewards, or connecting champion spawns to regional region hooks.
+license: MIT
 metadata:
-  version: "1.0.0"
-  author: "Crome696"
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - champion-spawns
+    - pvm
+    - artifacts
+    related_skills:
+    - uo-world-facets-regions
+    - uo-loot-generation-artifacts
+    - uo-combat-pipeline
+version: 1.0.0
+author: Crome696
 ---
-
 # UO Champions, CannedEvil, Treasures
 
 ## Overview

@@ -1,12 +1,25 @@
 ---
 name: modernuo-networking
 description: >
-  Trigger when creating or modifying packets, working with NetState, SpanWriter, SpanReader, or implementing network protocol handlers.
+  Use when creating or modifying packets, working with NetState, SpanWriter, SpanReader, or implementing network protocol handlers.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, networking, packets, spanwriter, protocol]
+    related_skills:
+      - modernuo-code-audit
+      - modernuo-threading
+      - modernuo-performance-hot-paths
+      - modernuo-string-handling
+      - modernuo-test-workflow
+      - migrate-packets
 ---
 
 # ModernUO Networking & Packets
 
-## When This Activates
+## When to Use
 - Creating new packets (outgoing or incoming)
 - Modifying existing packet handlers
 - Working with `NetState`, `SpanWriter`, `SpanReader`
@@ -221,6 +234,8 @@ reader.Remaining;    // Bytes remaining
 ```
 
 ## Player-Facing Message APIs
+
+This section is about chat/system/overhead text APIs, not low-level packet serialization. For packet payload strings, use `SpanWriter` string methods, spans, or `ValueStringBuilder` where appropriate.
 
 For chat / system messages / overhead text, use the convenience methods on `Mobile` and `Item` rather than building packets manually. They handle stackalloc sizing, spatial queries, and visibility filtering, and each has a `ref RawInterpolatedStringHandler` overload for zero-allocation interpolation.
 

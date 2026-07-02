@@ -1,13 +1,28 @@
 ---
 name: migrate-systems
 description: >
-  Trigger: when converting multi-file RunUO engines or systems (crafting, spawners, economy, quests) to ModernUO.
-  Covers: system mapping, conversion order, file organization, cross-reference handling.
+  Use when converting multi-file RunUO engines or systems such as crafting, spawners, economy, or quests to ModernUO.
+  Covers system mapping, conversion order, file organization, cross-reference handling, and lifecycle cleanup.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags: [modernuo, runuo, migration, systems, engines, lifecycle]
+    related_skills:
+      - migrate-foundation
+      - migrate-persistence
+      - migrate-serialization
+      - migrate-commands-events
+      - modernuo-configuration
+      - modernuo-events
+      - modernuo-lifecycle-cleanup
+      - modernuo-code-audit
 ---
 
 # RunUO -> ModernUO Multi-File System Migration
 
-## When This Activates
+## When to Use
 - Converting RunUO systems with multiple interdependent files
 - Converting custom engines (crafting, spawners, economy, quests)
 - Organizing RunUO `Scripts/Custom/` code into ModernUO structure

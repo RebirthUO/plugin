@@ -1,9 +1,26 @@
 ---
 name: modernuo-ticket-triage
 description: Use when asked to triage a ModernUO/RebirthUO GitHub issue, ticket, bug report, feature request, or pasted issue text into a source-backed implementation plan. Trigger for requests like "triage this issue", "turn this GitHub ticket into an implementation plan", "research this UO bug ticket", or "what should we do for issue 123"; requires explicit rationale for needed code changes, maps publish/era claims to a measurement target, and only cites information verified in the repo or on the internet.
+version: 1.1.0
+author: Hermes Agent
+license: MIT
+metadata:
+  hermes:
+    tags:
+    - ultima-online
+    - modernuo
+    - rebirthuo
+    - github
+    - triage
+    related_skills:
+    - uo-domain-research
+    - modernuo-era-parity-check
+    - rebirthuo-online-triage-verification
+    - triage-to-human-review
 ---
-
 # ModernUO Ticket Triage
+
+## Overview
 
 Use this skill to turn one GitHub issue or ticket into a decision-ready implementation plan. The job is to connect the issue's claim to canonical Ultima Online sources, current ModernUO/RebirthUO source evidence, risks, acceptance criteria, and tests.
 
@@ -77,6 +94,10 @@ If information is era-based, use that era, publish, or profile as the measuremen
 
 Use issue keywords and normalized UO names to search the repo. Prefer `rg` and inspect the smallest useful set of files.
 
+If an issue names a specific repo path, ledger row, or doc anchor, verify that path against the exact implementation base before planning edits. Issue-supplied paths can be stale or from a branch-local ledger. When a referenced ledger/doc file is absent on the target base, do not invent or recreate it by default; make the doc update conditional, cite the missing-path evidence in the plan, and use the GitHub issue/PR body as the resolution record unless the user explicitly asks to create the missing artifact.
+
+When the current checkout is dirty or behind the target branch, plan implementation in an isolated worktree from the target remote branch. Record the dirty root evidence and avoid touching unrelated local modifications.
+
 Start with these surfaces:
 
 - `Projects/Server/` for engine behavior, expansion gates, serialization, networking, accounts, world state, and core services.
@@ -94,6 +115,31 @@ rg --files Projects/UOContent Projects/UOContent.Tests Distribution docs dev-doc
 ```
 
 For GitHub issue bodies, preserve important user claims, reproduction steps, acceptance criteria, screenshots, and linked evidence. Do not copy long issue comments into the final plan; summarize them and link or cite the issue.
+
+## High-Information Triage Comment Standard
+
+For RebirthUO triage tickets, default to the high-information implementation-plan comment style used in issue #73 unless the user asks for a shorter summary. The goal is maximum implementation handoff quality, not a terse triage label.
+
+When posting or drafting a triage comment, include these sections when applicable:
+
+- `## Konkretisierter Implementierungsplan` (or English equivalent if the user/repo context is English).
+- `### Kurzfassung` - classify the ticket precisely (test gap, source formula gap, code gap, runtime proof, doc gap, not planned) and state whether it is a feature build, bug fix, parity correction, or evidence/test slice.
+- `### Ziel` - define what "done" means as concrete bullets.
+- `### Quellen` - cite official/canonical/user-supplied sources with the exact mechanic each source proves.
+- `### Relevante Repo-Anker` - list exact files/classes/methods/docs/tests and what each anchor owns.
+- `### Code-Change-Plan` - numbered, minimal implementation steps; explain which code changes are necessary and which are explicitly out of scope.
+- `### Erwartete Testwerte / Formelhinweise` - include exact constants, formulas, expected values, helper shapes, data rows, or command snippets the implementer should not have to rediscover.
+- `### Akzeptanzkriterien` - observable completion criteria tied to sources and repo evidence.
+- `### Testplan` - focused and broader commands with expected pass/fail purpose.
+- `### Risiken / Hinweise fuer den Implementierer` - hot paths, save compatibility, era/profile gates, economy/PvP/PvM risk, dirty worktree/base branch warnings, and missing-ledger/doc handling.
+
+Quality bar:
+
+- Prefer explicit implementation handoff over abstract recommendation. Name concrete files and likely method/helper names.
+- Preserve the smallest safe slice and call out non-goals such as "no broad combat refactor" or "no era policy change without a separate ticket".
+- Include exact source-derived formulas/values when the ticket is formula/data parity, with percent-vs-decimal conversions if code uses fractions.
+- If the issue references a ledger/doc path that is missing on the target branch, say so and make the doc update conditional instead of inventing the file.
+- If the current checkout is dirty or behind target branch, say so and recommend an isolated worktree from the target remote branch.
 
 ## Confidence Labels
 
@@ -195,6 +241,16 @@ Produce one Markdown plan per issue using this structure:
 ```
 
 Omit empty sections only when they do not apply. Keep `Source Evidence`, `Repository Evidence`, `Expected vs Actual`, `Code Change Plan`, `Recommended Implementation`, `Acceptance Criteria`, and `Test Plan` whenever the issue implies code or data changes. Keep `Publish / Era Check` whenever a source mentions a publish, publish-note behavior change, era boundary, expansion, or EraProfile.
+
+## SE-PARITY-MON issue creation
+
+When the user asks to file **gameplay** parity issues after a monster audit (not
+`SE-MISS-MON` field rows):
+
+- Prefix `[SE-PARITY-MON-{NNN}]`; body **Deutsch** (#73 sections); `Related: #SE-MISS-MON-*`.
+- Do not reopen closed `SE-MISS-MON` tickets for the same gameplay delta.
+- Before `gh issue create`, run `gh label list --repo <repo>` — label `parity` may not exist; use `Triage required` or an existing project label.
+- Workflow detail: `modernuo-era-parity-check` → `references/se-monster-player-parity.md`.
 
 ## Planning Rules
 
