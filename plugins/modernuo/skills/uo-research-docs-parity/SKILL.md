@@ -438,6 +438,8 @@ If source code cannot be inspected:
 5. **Treating missing search results as proof.** Search aliases, IDs, enums, class names, registration code, data files, and tests before calling something `missing`.
 6. **Using `02_Open_Parity` by accident.** RebirthUO's current parity tree is `02_Project_Parity`; only use another tree if the user explicitly requests it.
 7. **Forgetting the cross-reference pass.** The task is not complete until related pages are linked and duplicates are reported.
+8. **Leaving scripted-generation placeholders unresolved.** When generating many pages from Python/templates, run a final content search for unresolved tokens such as `<{UO_...}>`, `{ERA}`, `{SOURCE}`, or other template variables before reporting completion. Patch those immediately; unresolved placeholders break the visible-source requirement even if most rows are correct.
+9. **Relying on the agent process CWD inside `execute_code`.** In Hermes, helper scripts may start outside the repo even when the chat workspace is inside it. For bulk doc generation or repo parsing, anchor scripts with an absolute repo root (for RebirthUO: `C:/Users/Jsiem/Documents/GitHub/RebirthUO/service`) or use tool calls with explicit paths; do not assume relative paths inside `execute_code` point at the workspace.
 
 ## Verification Checklist
 
@@ -452,4 +454,5 @@ If source code cannot be inspected:
 - [ ] Source code searched by exact name, normalized name, aliases, IDs, enums, classes, and system terms.
 - [ ] Parity status is exactly one of `complete`, `partial`, `missing`, `unknown`.
 - [ ] Cross-reference pass completed and duplicate/overlap issues reported.
+- [ ] Generated docs contain no unresolved template placeholders such as `<{UO_...}>`, `{SOURCE}`, `{ERA}`, or similar scripting tokens.
 - [ ] Final report includes created, updated, compared paths and parity summary when applicable.
