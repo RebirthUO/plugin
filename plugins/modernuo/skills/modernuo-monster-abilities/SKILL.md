@@ -1,7 +1,7 @@
 ---
 name: modernuo-monster-abilities
 description: Use when adding, migrating, or reviewing ModernUO/RebirthUO creature special attacks as reusable MonsterAbility classes under Projects/UOContent/Mobiles/Abilities instead of inline monster hook logic.
-version: 1.1.0
+version: 1.2.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -167,6 +167,8 @@ Do **not**:
 - Duplicate ability constants on the monster (read from the ability class instead)
 - Copy-paste an ability for each creature — parameterize or reuse the singleton
 - Store per-creature cooldown on the monster — `MonsterAbility` tracks cooldown per `BaseCreature` internally
+- Assume a monster that lacks a `GetMonsterAbilities()` registration has no abilities. SE-era monsters (`Yamandon`, `Serado`, `KazeKemono.FlurryOfTwigs`/`ChlorophyllBlast`, `LadyOfTheSnow.ColdWind`, `Kappa.SpillAcid`, the three `YomotsuX` Laugh-stun paths, `FireBeetle.OnHarmfulSpell` speed boost) all use inline `OnGaveMeleeAttack` / `OnGotMeleeAttack` / `OnDamagedBySpell` / `OnDamage` hooks instead. Always `grep` the file for inline hooks before claiming a special is missing, and add it to the **Migrate-to-MonsterAbility** follow-up list when you find one.
+- Mistake `WeaponAbility.X` for `MonsterAbility.X`. `WeaponAbility` is the engine damage-ability slot (e.g. `WeaponAbility.Dismount`, `WeaponAbility.BleedAttack`, `WeaponAbility.CrushingBlow`, `WeaponAbility.DoubleStrike`) wired through `GetWeaponAbility()`. `MonsterAbility` lives under `Projects/UOContent/Mobiles/Abilities/` and is wired through `GetMonsterAbilities()`. The same monster can carry one of each; audit hooks for both before reporting.
 
 ## Code Audit Hooks
 
@@ -186,6 +188,7 @@ When editing ability `.cs` files, also apply `modernuo-code-audit` rules:
 - [ ] Cooldown, chance, constants, debuff items, and cleanup live with the ability or its helper item.
 - [ ] Serialized debuff/helper items use ModernUO serialization and cleanup patterns.
 - [ ] Tests or focused verification prove registration plus the player-visible effect.
+- [ ] When auditing existing monsters for `MonsterAbility` parity, every inline `OnGaveMeleeAttack` / `OnGotMeleeAttack` / `OnDamagedBySpell` / `OnDamage` / `OnHarmfulSpell` body that fires a damage burst, debuff, or DOT is recorded on the **Migrate-to-MonsterAbility** follow-up list (see `uo-research-docs-parity` skill, `references/monster-ability-bulk-extraction.md`).
 
 ## How to Report Issues
 

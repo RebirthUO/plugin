@@ -66,6 +66,16 @@ When the user asks for a per-era overview document (e.g. "erstelle eine Era Übe
 3. **Skill content** — `uo.com/wiki/ultima-online-wiki/skills/<skill>/` pages. For SE these are exactly two skills: `bushido/` and `ninjitsu/`. Extract per-ability tables via the `browser_console` recipe in `uo-domain-research/references/uo-source-tiers.md` ("uo.com Wiki Table Extraction via Browser Console"). This bypasses the `web_extract` summarizer and the `browser_snapshot` truncation that drop per-row data.
 4. **Facet overviews** — `uo.com/wiki/.../worlds/<facet>/` URLs **404** (Broadsword has not migrated world overview pages). Reconstruct from per-skill/per-item/per-mob pages plus `map-definitions.json`; flag Tokuno-style overviews as `Needs source confirmation`.
 
+### Conceptual `game-docs/` Vault Lists: Internet First
+
+When the user is building a conceptual data-collection vault under `game-docs/` and asks for empty nodes/lists such as monsters, bosses, champions, eras, or bestiary entries, do **not** derive the list from RebirthUO/ModernUO source code unless the user explicitly asks for repo parity. The repo is implementation evidence, not the conceptual source of truth. Use internet/product sources first:
+
+1. Prefer UO.com for official current pages when available.
+2. Use UOGuide MediaWiki API for broad list generation: `https://www.uoguide.com/api.php?action=query&list=categorymembers&cmtitle=Category:<Name>&cmlimit=500&format=json`.
+3. Useful UOGuide categories for monster scaffolding: `Monsters`, `Bosses`, `Champion Spawns`, `Champion spawns`, plus era/location categories such as `The Second Age`, `Third Dawn`, `Samurai Empire`, `Mondain's Legacy`, `Stygian Abyss`, `High Seas`, `Time of Legends`.
+4. Create only the requested structural artifact (often empty `.md` files named after source titles). Do not add explanatory content unless asked.
+5. Treat era placement from wiki categories as provisional. Say so, because current wiki pages often reflect the modern cumulative state rather than a precise historical publish boundary.
+
 ## Output Convention for Era Overview Documents
 
 When the per-era overview is meant to live in `game-docs/GameDocs/`, produce **one canonical era doc + one parity-check sketch per affected domain** under the user's existing 16-domain schema:

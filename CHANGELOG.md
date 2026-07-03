@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.18.0 - 2026-07-03
+
+- Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile for Ultima Online, ModernUO, and RebirthUO themed skills.
+- Auto-pushed the synchronized plugin update from the daily Hermes cron job.
+
 ## 1.17.0 - 2026-07-02
 
 - Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile for Ultima Online, ModernUO, and RebirthUO themed skills.

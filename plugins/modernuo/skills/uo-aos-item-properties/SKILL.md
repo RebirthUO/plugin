@@ -196,6 +196,10 @@ The plan in `docs/superpowers/plans/2026-06-02-item-properties-completion.md` ad
 
 ## Common Recipes
 
+### Generating Source-Backed Item Property Documentation
+
+When the user asks for "all item properties from the Internet" or similar documentation output, use the extraction recipe in `references/item-properties-internet-extraction.md`. The durable source pattern is UO.com Magic Item Properties as the official table plus UOGuide's Item Properties wikitext API to recover concrete tooltip variants, Stygian Abyss properties, special state properties, and negative properties. Generate one Markdown file per property plus an index, and label the result as source documentation rather than RebirthUO implementation parity.
+
 ### Auditing Named Artifact Property Parity
 
 When a named artifact must match an external item table, test the concrete artifact class directly before editing it. Cover both normal item stats and AoS containers: base weapon damage/speed/skill/damage split, `Attributes`, `WeaponAttributes`, `ArmorAttributes`, `ClothingAttributes`, `SkillBonuses`, slayers, and resist overrides. Do not assume the base item class already matches the artifact row; named artifacts may need artifact-level `AosMinDamage`, `AosMaxDamage`, or `MlSpeed` overrides when the source row differs from the inherited normal weapon.
