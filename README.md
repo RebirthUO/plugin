@@ -12,7 +12,7 @@ The plugin should not carry local-only or hand-edited ModernUO skill variants. W
 - `.cursor-plugin/marketplace.json` defines the Cursor marketplace catalog.
 - `plugins/modernuo/.cursor-plugin/plugin.json` defines the Cursor plugin manifest.
 - `plugins/modernuo/assets/rebirthuo-logo.png` provides the plugin logo and composer icon.
-- `plugins/modernuo/skills/` contains the Hermes-synced Ultima Online, ModernUO, and RebirthUO skills, including migration, code audit, codebase navigation, issue triage, online verification, human-review promotion, canonical game-doc authoring, test workflow, regression testing, era parity, skill/spell/item-property parity, subsystem/domain research, lifecycle, performance, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, and related workflows.
+- `plugins/modernuo/skills/` contains the Hermes-synced Ultima Online, ModernUO, and RebirthUO skills, including migration, code audit, codebase navigation, issue implementation, issue request drafting, issue triage, GitHub review, implementation checkpoints, verification guards, test workflow, regression testing, era parity, skill/spell/item-property parity, Stygian Abyss item-property implementation, subsystem/domain research, lifecycle, performance, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, and related workflows.
 - `AGENTS.md` contains repository-level maintenance instructions for plugin changes.
 - `CHANGELOG.md` records plugin-version changes.
 
@@ -36,10 +36,12 @@ For Codex, install or load the plugin through the configured local marketplace, 
 - implementing a sufficiently specified RebirthUO GitHub issue as an isolated tested PR;
 - verifying a `Triage required` ticket for `Human Review` promotion;
 - producing a German RebirthUO implementation plan;
-- authoring canonical RebirthUO game-docs for an era mechanic;
+- turning RebirthUO ideas into review-ready GitHub issues;
+- running implementation checkpoint or verification-guard workflows when evidence is missing;
 - planning or reviewing ModernUO migrations from RunUO/ServUO patterns;
 - auditing code for ModernUO lifecycle, performance, serialization, string, packet, gump, timer, threading, or region risks;
 - checking named Ultima Online skill, spell, item-property, or era parity against ModernUO/RebirthUO source and approved web sources;
+- planning or implementing Stygian Abyss item-property slices;
 - reviewing UO living-world side effects across era/ruleset, facets, economy, housing, PvP, PvM, and player trust;
 - normalizing generated xUnit test names and planning focused or broad validation.
 

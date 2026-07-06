@@ -75,6 +75,8 @@ For batches, first read all issues enough to discover duplicates, existing PRs, 
 
 Hard checkpoint rule: do not scaffold or edit the whole remaining range once the first issue proves the pattern. Finish each wave to a durable state — validated, committed, pushed, PR opened, review artifact posted, and PR/head verified — before creating or editing additional worktrees. If a generated-but-uncommitted worktree exists, prioritize either completing it or reverting/removing it before starting more. Tool/session limits make many local-only worktrees a liability, not progress.
 
+Single-issue checkpoint rule: large implementation-ready tickets can also exhaust tool/session budget during issue reading, skill loading, repo inspection, implementation, and validation. After the sufficiency decision and isolated worktree creation, keep the status table current with branch/worktree/base/head and the concrete next files/tests. Once the owning subsystem and safety gates are clear, stop expanding context and implement the smallest behavior/test slice. After focused tests, broad owning tests, and solution build pass, immediately move to the durable publish path (diff check, commit, push, remote-head verification, PR) before additional searches, re-reads, or optional audit expansion. If tool budget is getting tight, prefer a committed/pushed PR with recorded validation over a locally perfect but unpublished diff. If interrupted before code lands or before publish completes, the final report must include exact continuation state, not just a narrative.
+
 ## Step 1 — Resolve Repo and Issue IDs
 
 Completion criterion: every user-provided item maps to an exact issue in an exact GitHub repository.
@@ -139,6 +141,8 @@ If GitHub access fails, do not invent issue contents. Ask the user to paste the 
 ## Step 3 — Sufficiency Gate
 
 Completion criterion: each issue is classified as `sufficient`, `missing-data`, `blocked-duplicate`, or `blocked-risk`, with explicit reasons.
+
+For item-property `needs-review` tickets from a parent epic, use `references/item-property-review-ticket-analysis.md` before coding. These tickets often need an implementation-ready supplement first: era gate, item family, runtime hook, context-menu behavior, exact formula/cap table, exclusions, non-goals for loot/runic/imbuing, and focused acceptance tests.
 
 A ticket is sufficient only when it defines a safe implementation and validation target:
 
@@ -298,9 +302,11 @@ git ls-remote origin "refs/heads/$(git branch --show-current)"
 
 ## Step 9 — Open the Pull Request
 
-Completion criterion: a PR URL exists and the PR body includes issue link, gamer/player-facing explanation, evidence, risk, real validation results, and `Closes #ISSUE`.
+Completion criterion: a PR URL exists and the PR body includes issue link, gamer/player-facing explanation, evidence, risk, real validation results, and the correct issue relationship (`Closes #ISSUE` only when the PR satisfies the full ticket).
 
 Lead with what players, staff, or shard operators will notice. Only then add implementation details.
+
+Partial implementation-ready slices: if the ticket explicitly separates a safe implementation slice from unresolved acceptance criteria (for example Storage + Tooltip is ready, but gameplay formula/distribution remains undecided), do **not** auto-close the issue. Use `Related to #ISSUE`, state which slice is implemented, and list the remaining unresolved acceptance criteria. Only use `Closes #ISSUE` when the PR fully completes the ticket or the maintainer explicitly approves closing with remaining scope deferred to new issues.
 
 PR body template:
 
@@ -318,7 +324,7 @@ PR body template:
 - PvP, PvM, economy, crafting, housing, loot, staff, save, client, or operator side effects, including "none expected" when verified.
 
 ## Sources / Evidence
-- Issue: Closes #ISSUE
+- Issue: Closes #ISSUE / Related to #ISSUE (choose `Related to` for deliberate partial slices)
 - <official/canonical/community/source/repo anchors as applicable>
 
 ## Implementation Notes
@@ -336,14 +342,18 @@ PR body template:
 - [x] No unintended era/ruleset/economy/PvP/PvM/housing/save/client side effects were introduced.
 
 Closes #ISSUE
+<!-- If this PR is a deliberate partial slice, replace the closing keyword with: Related to #ISSUE, and list remaining acceptance criteria above. -->
 ```
 
 Create and verify:
 
 ```bash
-gh pr create --repo OWNER/REPO --base "$BASE" --head "$BRANCH" --title "fix: short issue title" --body-file /tmp/pr-ISSUE.md
-gh pr view --repo OWNER/REPO --json number,url,state,headRefName,baseRefName,statusCheckRollup
+PR_URL=$(gh pr create --repo OWNER/REPO --base "$BASE" --head "$BRANCH" --title "fix: short issue title" --body-file /tmp/pr-ISSUE.md)
+printf '%s\n' "$PR_URL"
+gh pr view "$PR_URL" --repo OWNER/REPO --json number,url,state,headRefName,baseRefName,statusCheckRollup
 ```
+
+Important GitHub CLI pitfall: after `gh pr create`, do not run `gh pr view --repo OWNER/REPO` without a selector. In some contexts `gh` reports `argument required when using the --repo flag`, leaving the PR head/checks unverified. Capture the PR URL (or PR number/head branch) from `gh pr create` and pass it explicitly to `gh pr view`.
 
 If GitHub reports no checks, say `no checks reported`; do not imply CI passed.
 
@@ -372,8 +382,9 @@ Never claim a test, push, PR, or comment happened unless verified with tool outp
 ## Common Pitfalls
 
 1. **Implementing under-specified gameplay.** Missing era/ruleset/source or acceptance criteria means comment and skip, not guess.
-2. **Comment-only PRs disguised as implementation.** For `/rebirthuo-implement`, a PR that only removes a TODO, changes a comment, or rewrites the PR body is not an implementation. Either deliver a concrete code/test behavior change or classify the issue as no-op/blocked with evidence. User feedback on this was explicit: do not document instead of implement.
-3. **Static-list tests that miss runtime behavior.** If the ticket is about loot, generated items, special abilities, combat behavior, or player-visible state, add a test that exercises the generated behavior (e.g. construct the mobile, call the factory/method, inspect the backpack/corpse/ability array), not only a test that a type exists in a static list.
+2. **Under-reading review comments as optional.** If an issue comment contains a human review result or an implementation treatment, make it explicit in the sufficiency decision and PR body. If the review splits storage/tooltip from gameplay, say which slice is being implemented; if the user later approves the proposed gameplay approximation, update the same PR to complete the behavior and change `Related to` to `Closes` only after the gameplay acceptance criteria are covered.
+3. **Comment-only PRs disguised as implementation.** For `/rebirthuo-implement`, a PR that only removes a TODO, changes a comment, or rewrites the PR body is not an implementation. Either deliver a concrete code/test behavior change or classify the issue as no-op/blocked with evidence. User feedback on this was explicit: do not document instead of implement.
+4. **Static-list tests that miss runtime behavior.** If the ticket is about loot, generated items, special abilities, combat behavior, or player-visible state, add a test that exercises the generated behavior (e.g. construct the mobile, call the factory/method, inspect the backpack/corpse/ability array), not only a test that a type exists in a static list.
 4. **Mixing tickets.** One issue gets one branch/worktree and one PR unless the user explicitly says otherwise.
 5. **Treating focused tests as suite-green.** Label focused validation honestly and run broader checks when feasible.
 6. **Inventing E2E coverage.** If no harness exists, document manual QA and why.
@@ -382,7 +393,8 @@ Never claim a test, push, PR, or comment happened unless verified with tool outp
 9. **Leaking exploit detail.** Keep public comments minimal and safe for exploit/security tickets.
 10. **Skipping push verification.** Local commits are not complete until the remote branch and PR URL are verified.
 11. **Post-edit verification guard false negatives.** In multi-worktree batches, Hermes may still flag recently edited paths after PR creation. Do not argue with the guard or cite old logs only. Create a temporary `C:/Users/Jsiem/AppData/Local/Temp/hermes-verify-*.sh` script that enters the exact flagged worktrees, prints repo/branch/head/status, runs changed-path `git diff --check`, builds the owning test project, runs focused test filters, removes the script, and report the result explicitly as ad-hoc/focused verification rather than broad suite green.
-12. **Test-gap implementation waves and no-op issues.** When a Human Review issue's acceptance criterion is explicitly test-only (for example “add property/table/guard tests”), a test-only PR is a valid implementation if it adds durable regression coverage and no gameplay behavior change. If `origin/live` already has equivalent tests, do **not** open a duplicate/comment-only PR; verify the existing tests in a clean worktree and post a no-op/closure comment with repo anchors and validation. For adjacent issues that touch the same test file, minimize merge conflicts by using a new focused test file when appropriate. See `references/test-gap-and-noop-issue-waves.md`.
+12. **UOContent focused tests after project-only builds.** If a newly added UOContent test class fails before assertions in fixture setup (for example `SkillsInfo.Configure()` / `AOS.DisableStatInfluences()` nulls) after only `dotnet build Projects/UOContent.Tests/UOContent.Tests.csproj`, do not debug the gameplay change first. Run a solution build from the exact issue worktree (`MSBUILDDISABLENODEREUSE=1 dotnet build ModernUO.slnx --nologo --verbosity quiet -m:1`) so the `Distribution/Data` copy step populates the test output, then rerun the focused `--no-build --no-restore` filter. Record the initial failure as a validation-environment/setup-order symptom, not a product regression, if the solution-build rerun passes.
+13. **Test-gap implementation waves and no-op issues.** When a Human Review issue's acceptance criterion is explicitly test-only (for example “add property/table/guard tests”), a test-only PR is a valid implementation if it adds durable regression coverage and no gameplay behavior change. If `origin/live` already has equivalent tests, do **not** open a duplicate/comment-only PR; verify the existing tests in a clean worktree and post a no-op/closure comment with repo anchors and validation. For adjacent issues that touch the same test file, minimize merge conflicts by using a new focused test file when appropriate. See `references/test-gap-and-noop-issue-waves.md`.
 
 ## Verification Checklist
 
@@ -395,4 +407,4 @@ Never claim a test, push, PR, or comment happened unless verified with tool outp
 - [ ] Validation commands actually ran and results are recorded.
 - [ ] Branch was committed, pushed, and remote head verified.
 - [ ] PR was opened and verified by URL.
-- [ ] PR body explains the change at gamer/player level and includes evidence, risks, tests, and `Closes #ISSUE`.
+- [ ] PR body explains the change at gamer/player level and includes evidence, risks, tests, and the correct issue relationship (`Closes #ISSUE` for complete fixes, `Related to #ISSUE` for deliberate partial slices).

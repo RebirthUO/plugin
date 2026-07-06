@@ -41,6 +41,7 @@ This skill covers the four layers, the `TypeRandom` resolver, the per-era loot p
 - Adding a new Treasure Map tier (or adjusting the chest's spawn pool).
 - Adding a new Peerless boss artifact.
 - Auditing the loot generation to match an era's per-monster drop rates.
+- Triaging late Live-UO Dynamic Treasures / Halloween event artifacts and deciding whether they are item-only rewards or part of a larger event currency/crafting system.
 - Implementing a custom loot table for a custom boss.
 
 Don't use for:
@@ -218,6 +219,15 @@ Some artifacts are race-restricted:
 - Aegis of Grace, Fey Leggings, Helm of Swiftness: All-races Peerless variants
 - Flesh Ripper: one-handed, Mage Slayer tooltip, mage-target slayer behavior
 
+## Dynamic Treasures / Event Artifacts
+
+Late Live-UO Dynamic Treasures and Halloween rewards are not automatically standard monster loot, champion artifacts, or ML minor artifacts. Before placing one in a loot pack, decide whether the scope is:
+
+1. **Item-only reward surface** — a named artifact class, tooltip/properties, item-use behavior, and explicit distribution policy.
+2. **Full event system parity** — event currency/turn-ins, reward trader, region/drop rules, special crafting/damage eligibility, shard-bound/trade policy, and optional champion/boss integration.
+
+For Mask/Pendant of Khal Ankur and the Treasures of Khaldun/Caddellite stack, read `references/mask-of-khal-ankur-dynamic-treasures-research.md`. It preserves canonical UO.com facts, UOGuide notes, ServUO precedent, local RebirthUO anchors, and unresolved source conflicts such as Mana Increase, Mage Armor, weight, and Shard Bound event version.
+
 ## Paragon Monsters
 
 `BaseCreature.Paragons` is a boolean flag set on specific monster types. A Paragon monster has boosted stats (HP, damage, resists) and a glowing hue. On death, it rolls an additional `LootPack` with a higher-tier roll and a small chance of dropping a Paragon-specific item (a "heart" or "essence" type item).
@@ -322,6 +332,7 @@ public class EventBoss : BaseCreature
 - [ ] `dotnet build` succeeds.
 - [ ] New monster: `LootPack.<Tier>.Generate(this)` is called in the constructor; the tier matches the monster's `FightMode`/`Fame`/`Karma`.
 - [ ] New artifact: `LootType` is set (Regular for looted, Blessed for ML minor), `DefaultName` is set, `Hue` is set if the artifact is themed, `[Constructible]` is present.
+- [ ] Artifact rarity audit: verify both value assignment (`ArtifactRarity` overrides) and tooltip emission (`list.Add(1061078, ...)`) across base item families; see `references/artifact-rarity-audit.md` for the two-tier “plumbing vs parity-complete” review pattern.
 - [ ] Peerless artifact: registered in `MLPeerlessArtifacts.cs` mapping, factory exists, `m_DropArtifacts` includes the artifact.
 - [ ] Champion artifact: dropped via the `ChampionSpawn.OnChampionKilled` callback, not as a direct `AddItem`.
 - [ ] Treasure map: decoded via `Cartography`, chest has the right `Level` (1-5), drop pool is wired.

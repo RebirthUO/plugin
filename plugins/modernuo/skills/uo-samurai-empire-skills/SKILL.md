@@ -16,7 +16,6 @@ metadata:
     - uo-skills-stats-races
     - uo-combat-pipeline
     - modernuo-era-expansion
-    - uo-game-docs-canonical-authoring
 license: MIT
 ---
 # Samurai Empire Skills
@@ -40,13 +39,12 @@ This skill explains the Samurai Empire skill area for Ultima Online, focused on 
 - Official source pages to check first:
   - `https://uo.com/wiki/ultima-online-wiki/skills/bushido/`
   - `https://uo.com/wiki/ultima-online-wiki/skills/ninjitsu/`
-- Game-doc overview source, when available locally: `game-docs/GameDocs/01_Broadsword/Systems/Samurai_Empire.md`.
 - For RebirthUO code work, load `uo-era-product-timeline`, `uo-skills-stats-races`, and the relevant ModernUO implementation skill before editing.
 - No credentials or environment variables are required.
 
 ## How to Run
 
-Use `browser_navigate` and `browser_console` to extract the official UO.com Bushido and Ninjitsu pages. Use `read_file` for the Samurai Empire game-doc overview if it exists in the checkout or was attached by the user. Use `search_files` to find `Core.SE`, `Expansion.SE`, `Bushido`, `Ninjitsu`, and individual ability classes before making any implementation claim.
+Use `browser_navigate` and `browser_console` to extract the official UO.com Bushido and Ninjitsu pages. Use `search_files` to find `Core.SE`, `Expansion.SE`, `Bushido`, `Ninjitsu`, and individual ability classes before making any implementation claim.
 
 ## Quick Reference
 
@@ -126,51 +124,6 @@ Use `browser_navigate` and `browser_console` to extract the official UO.com Bush
 
 11. **Tie to code only after source capture.** Use `search_files` for the ability name and era gates. Treat `Core.SE` as cumulative: SE or later, not exactly SE. You are done when each mechanic claim has a source URL and each implementation claim has a repo anchor.
 
-12. **Output to `game-docs/` as a per-mechanic file tree, not a flat summary** (when the user asks for in-repo canonical docs). The user explicitly rejected flat "skill list with subcategory heading" outputs and expects one node per documented mechanic under `game-docs/GameDocs/01_Broadsword/Skills/Samurai_Empire/`. Required layout:
-
-    ```
-    game-docs/GameDocs/01_Broadsword/Skills/Samurai_Empire/
-    ├── README.md                       # Skill-Übersicht & Knoten-Index
-    ├── bushido/
-    │   ├── README.md                   # Bushido-Skill-Übersicht
-    │   ├── honorable-execution.md      # B-1
-    │   ├── confidence.md               # B-2
-    │   ├── counter-attack.md           # B-3
-    │   ├── lightning-strike.md         # B-4
-    │   ├── evasion.md                  # B-5
-    │   ├── momentum-strike.md          # B-6
-    │   ├── perfection.md               # B-7 (passiv)
-    │   ├── weapon-parry.md             # B-8 (passiv)
-    │   ├── whirlwind-bonus.md          # Hook (Special-Move)
-    │   ├── special-moves-without-tactics.md
-    │   └── lesser-hiryu-riding.md      # Hook (Pet)
-    └── ninjitsu/
-        ├── README.md
-        ├── animal-form.md              # N-1
-        ├── mirror-image.md             # N-2
-        ├── focus-attack.md             # N-3
-        ├── backstab.md                 # N-4
-        ├── shadowjump.md               # N-5
-        ├── surprise-attack.md          # N-6
-        ├── ki-attack.md                # N-7
-        ├── death-strike.md             # N-8
-        ├── ninja-equipment.md          # Hook (Item)
-        ├── special-moves-without-tactics.md
-        └── tier-3-talismans.md         # Hook (Item)
-    ```
-
-    Each per-mechanic `.md` follows the **six-section Knot schema** (canonical Broadsword):
-
-    1. **Kopfblock** — Skill, Typ, Mana, Skill-Gate, uo.com source URL.
-    2. **Kurzfassung** — 1–2 sentences in official uo.com wording.
-    3. **Voraussetzungen** — Skill-Gate, Begleitskills (e.g. Hiding/Stealth for Ninjitsu), Trainer-Anker (Zento / New Haven Dojo).
-    4. **Mechanik** — table with formulas, caps (e.g. Evasion PvP-DR 70 %, Death Strike PvP-Cap 50 %, Whirlwind `(Bushido/60 × n)²` cap 100).
-    5. **PvP/PvM/Economy** — short product-impact row.
-    6. **Repo-Anker** — concrete `Projects/UOContent/Skills/<Skill>.cs` and `Projects/UOContent/Spells/<School>/<Ability>.cs` paths.
-    7. **Quellen** — uo.com primary, Stratics + UOGuide as secondary.
-
-    The two per-skill READMEs list every node as a relative markdown link, and the top-level `Samurai_Empire/README.md` mirrors the folder tree as the entry point. Do **not** collapse the per-mechanic nodes into a single big Markdown — each node evolves independently and partial work is reviewable per-node.
-
 ## Pitfalls
 
 - Do not call every Tokuno feature a Samurai Empire skill; this skill area is Bushido and Ninjitsu.
@@ -179,9 +132,7 @@ Use `browser_navigate` and `browser_console` to extract the official UO.com Bush
 - Do not assume UO.com current behavior equals launch-day Samurai Empire behavior; mark publish-sensitive behavior before parity work.
 - Do not claim a RebirthUO feature is live because a class exists. Check registration, expansion gates, maps, trainers, books, items, spawns, and tests.
 - Do not ignore PvP diminishing returns, stealth checks, follower slots, poison interactions, and special-move substitutions; these are high-impact balance details.
-- If the local `game-docs/.../Samurai_Empire.md` file is absent, use the user's attached context as source material and say the local file was not present.
-- **Do not output SE-Skills content as a flat "skill list with subcategory heading" Markdown when the user asks for in-repo canonical docs.** The user wants the per-mechanic file tree under `game-docs/GameDocs/01_Broadsword/Skills/Samurai_Empire/` (one node per mechanic, each with the six-section Knot schema). Defaulting to a single-file summary forces a rewrite and breaks the canonical-doc reviewability contract.
 
 ## Verification
 
-A completed Samurai Empire skills explanation has exactly two SE skills named, official UO.com links for both, a Bushido ability table, a Ninjitsu ability table, an Animal Form table, one `Core.SE`/`Expansion.SE` warning, and side-effect notes for PvP, PvM, economy, housing, new players, and veterans. **When produced for `game-docs/`,** the deliverable is the per-mechanic file tree under `01_Broadsword/Skills/Samurai_Empire/` with each node following the six-section Knot schema, three README entry points (top-level + one per skill), and every mechanic covered by an independent `.md` file — not a single flat Markdown.
+A completed Samurai Empire skills explanation has exactly two SE skills named, official UO.com links for both, a Bushido ability table, a Ninjitsu ability table, an Animal Form table, one `Core.SE`/`Expansion.SE` warning, and side-effect notes for PvP, PvM, economy, housing, new players, and veterans.

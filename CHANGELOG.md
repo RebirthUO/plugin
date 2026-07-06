@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.20.0 - 2026-07-06
+
+- Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile using name/frontmatter UO, ModernUO, RebirthUO, RunUO/ServUO, UOGuide, and Stratics scope.
+- Added Hermes-used skills that were missing from the plugin: `modernuo-verification-guard`, `rebirthuo-implementation-checkpoints`, `rebirthuo-request`, `uo-item-property-review`, and `uo-sa-item-property-implementation`.
+- Removed no-longer-selected plugin-only payloads such as `uo-game-docs-canonical-authoring` and refreshed existing skill directories from Hermes so the plugin does not carry divergent local copies.
+
+## 1.19.0 - 2026-07-04
+
+- Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile for Ultima Online, ModernUO, and RebirthUO themed skills.
+- Auto-pushed the synchronized plugin update from the daily Hermes cron job.
+
 ## 1.18.0 - 2026-07-03
 
 - Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile for Ultima Online, ModernUO, and RebirthUO themed skills.

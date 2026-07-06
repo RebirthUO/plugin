@@ -48,6 +48,7 @@ Treat serialization changes as **P0 save-compatibility risk**. A bad migration c
 - If old manual code used `reader.ReadInt()` for the version, pass `false` as the second `[SerializationGenerator]` argument. If it used encoded ints, follow the encoded format already present in the old save stream.
 - Generate and commit migration schema JSON after version changes; `dotnet build` alone does not create schema files.
 - Never serialize runtime-only handles such as `TimerExecutionToken`; restart runtime timers in `[AfterDeserialization]` and cancel them on deletion.
+- When adding a generated field at index 31 or higher, verify the generator's save-flag type before adding `[SerializableFieldSaveFlag(31)]`: RebirthUO has hit generated-code `uint` → `int` compile failures for field/save-flag 31. If the field is a raw/defaultable object such as a `BaseAttributes` container, prefer no save flag (or a lower safe field index when available) and make the migration JSON match `usesSaveFlag: false`.
 
 Completion criterion: every serialization change identifies whether it is a new class, a generated-code version bump, or a pre-codegen migration, and the save compatibility path is explicit.
 
@@ -358,6 +359,7 @@ public partial class MagicGem
 - **Wrong field prefix**: Use `_camelCase`, not `m_camelCase` for new fields
 - **Forgetting `[Constructible]`**: Items/Mobiles need this for `[add` command
 - **Modifying `Deserialize(reader, version)` for version bumps**: `Deserialize` exists ONLY for pre-codegen legacy saves. Use `MigrateFrom(VXContent)` for all post-codegen version transitions.
+- **Blindly pairing field 31 with `[SerializableFieldSaveFlag(31)]`**: the generated save-flag path may emit a `uint` flag expression where an `int` is expected. Build the owning project immediately after adding high-index fields and remove/avoid the save flag when the field can be safely default-deserialized.
 
 ## Real Examples
 - Simple creature: `Projects/UOContent/Mobiles/Animals/Bears/BlackBear.cs`
