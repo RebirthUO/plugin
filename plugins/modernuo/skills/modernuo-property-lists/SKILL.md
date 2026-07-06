@@ -67,6 +67,24 @@ public override void GetProperties(IPropertyList list)
 }
 ```
 
+### Ordering: Insert Immediately After Name/Weight
+
+If a source or client reference says a custom item property belongs directly after the item's weight, do **not** append it at the end of `GetProperties()` after `base.GetProperties(list)`. `Item.GetProperties()` calls `AddNameProperties(list)` first, and `Item.AddNameProperties()` is where name, loot flags, quest item, and `AddWeightProperty(list)` are emitted. Override `AddNameProperties(IPropertyList list)`, call `base.AddNameProperties(list)`, then add the custom property there:
+
+```csharp
+public override void AddNameProperties(IPropertyList list)
+{
+    base.AddNameProperties(list); // emits name/loot/weight
+
+    if (Core.HS)
+    {
+        list.Add(1150058); // Spell Focusing
+    }
+}
+```
+
+Add a focused property-list test that records entry numbers and asserts relative order (for example `Weight: 1 Stone` `1072788` before the custom cliloc, and the custom cliloc before Brittle/Mana/DCI/Strength/Durability). Also assert the era gate still suppresses the property before the target expansion.
+
 ### Cliloc Arguments Format
 Cliloc strings use `~1_val~`, `~2_val~`, etc. as placeholders. Arguments are tab-separated:
 

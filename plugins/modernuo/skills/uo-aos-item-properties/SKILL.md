@@ -27,7 +27,7 @@ The AoS item property system is the in-game answer to "this weapon has +30 spell
 
 This skill covers the five property containers, the `BaseAttributes` bit storage model, the static `GetValue(Mobile, attribute)` aggregation that combat/spell/AI use, and the OPL rows that every typed `GetProperties` must add. It is the bridge between the raw `Item` entity (covered in `uo-items-foundation`) and the gameplay formulas (covered in `AOS.Damage`).
 
-The reference implementation is `Projects/UOContent/Misc/AOS.cs` (1607 lines). The plan that defines the remaining UOGuide item properties is `docs/superpowers/plans/2026-06-02-item-properties-completion.md`.
+The reference implementation is `Projects/UOContent/Misc/AOS.cs`. For Stygian Abyss property introduction, read `references/sa-item-properties-introduction.md` before editing: it records the source hierarchy, RebirthUO anchors, recommended implementation slices, and pitfalls discovered while reviewing SA properties. For negative item properties such as `Antique`, read `references/antique-item-property-review.md`: it captures UO.com wording, ServUO anchors, RebirthUO durability/Powder-of-Fortifying anchors, implementation shape, and economy-side-effect boundaries. For the first SA weapon-hit slice (`HitCurse`, `HitFatigue`, `HitManaDrain`) read `references/sa-weapon-attributes-implementation-notes.md`: it captures the separate `SaWeaponAttributes` container pattern, BaseWeapon migration checklist, effect semantics, and test strategy. That first slice is now present in RebirthUO `live`; when deciding what to implement next, read `references/sa-defensive-properties-next-slices.md` for the recommended follow-up order (`Reactive Paralyze`, then `Soul Charge`, then `Casting Focus`, with Damage Eater/Resonance deferred). For dynamic tooltip-only item properties such as `Last Parry Chance`, read `references/last-parry-chance-runtime-tooltip.md` before adding storage: some official magic-property table rows are runtime display state, not rollable AoS/SA attribute bits. For Publish 96 weapon properties, especially `Sparks`, read `references/sparks-publish96-review.md` before planning storage, tooltip, or gameplay: Sparks is post-ToL/Publish 96 Doom content, not an SA attribute; prefer a modern/extended weapon-property container and keep loot/runic/imbuing distribution as a separate decision. For `Swarm`, read `references/swarm-publish96-review.md`: it captures UO.com/Publish-96 evidence, the practical `Core.TOL` gate, extended weapon storage, cliloc `1157325`, normal-hit-only trigger, physical `AOS.Damage` DoT, fire/torch counterplay, distribution guard, and Hermes post-edit verification script pattern. For `Bone Breaker`, read `references/bone-breaker-publish96-review.md`: it captures UO.com Publish 96 evidence, the practical `Core.TOL` gate, ServUO comparison values (+50 physical damage, 4s stamina drain, 60s immunity), refresh-potion blocking, and test expectations. For `Massive`, read `references/massive-publish86-review.md`: it captures UO.com/UOGuide Publish-86 evidence, the RebirthUO `Core.HS` gate decision, AoS weapon/armor storage, effective Strength Requirement 125 behavior, retained Lower Requirements tooltip policy, and focused tests for weapon/armor/shield equip + tooltip + auto-drop. For Mana Phase / Mana Phasing Orb tickets, read `references/mana-phase-talisman-implementation-notes.md`: it records UO.com, UOGuide, ServUO, and RebirthUO anchors, plus the required parity decision about whether damage caused or damage taken clears the effect.
 
 ## When to Use
 
@@ -56,13 +56,15 @@ All five live in `Projects/UOContent/Misc/AOS.cs` and inherit from `BaseAttribut
 | `AosSkillBonuses` | (SkillName/value pairs, slot-indexed) | Armor, jewelry | `AOS.cs:1030-1311` (class) |
 | `AosElementAttributes` | `AosElementAttribute` | Weapons (damage type splits) | `AOS.cs:1313-1391` (class) |
 
-Interfaces used to dispatch generic access:
+Current repository dispatch notes:
 
-- `IAosItem` exposes `AosAttributes Attributes { get; }` (`AOS.cs:312-315`).
-- `IAosWeaponAttributesItem` exposes `AosWeaponAttributes WeaponAttributes { get; }` (`AOS.cs:317-320`).
-- `IAosArmorAttributesItem` exposes `AosArmorAttributes ArmorAttributes { get; }` (`AOS.cs:322-325`).
+- `IAosItem` exposes `AosAttributes Attributes { get; }` (`AOS.cs:307-310`) and is implemented by many host item types, but the effective-value aggregators do **not** dispatch polymorphically through `IAosItem`.
+- There are no current `IAosWeaponAttributesItem` or `IAosArmorAttributesItem` interfaces in `Projects/`.
+- `AosAttributes.GetValue(Mobile, AosAttribute)` explicitly scans equipped `BaseWeapon`, `BaseArmor`, `BaseJewel`, `BaseClothing`, `Spellbook`, `BaseQuiver`, and `BaseTalisman`; for `Luck`, it also adds weapon/armor resource luck bonuses (`AOS.cs:496-585`).
+- `AosWeaponAttributes.GetValue(Mobile, AosWeaponAttribute)` scans equipped `BaseWeapon` plus the special `ElvenGlasses._weaponAttributes` case (`AOS.cs:851-886`).
+- `AosArmorAttributes.GetValue(Mobile, AosArmorAttribute)` scans equipped `BaseArmor` and `BaseClothing` (`AOS.cs:944-979`); local armor/clothing code reads most armor attributes directly instead.
 
-`BaseWeapon`, `BaseArmor`, `BaseClothing`, and `BaseJewel` all implement one or more of these interfaces. The static `GetValue` aggregator in each container walks `m.Items` (the equipped layers) and sums the bitmask value across all matching items, which is the model used by combat and spell formulas.
+The static `GetValue` aggregator in each container walks `m.Items` (the equipped layers) and sums the bitmask value across the hard-coded matching item types. Learning: adding a new host item with `IAosItem` and a tooltip is not enough; if combat/spells/status must see its properties, update the relevant static aggregator and add a test.
 
 ## BaseAttributes Storage Model
 
@@ -98,15 +100,9 @@ The `(Item owner, BaseAttributes other)` copy constructor (`AOS.cs:1410-1416`) d
 
 ## Adding a New Property
 
-The implementation plan in `docs/superpowers/plans/2026-06-02-item-properties-completion.md` defines the canonical pattern. It is a five-step process:
+When adding a property, use the local source shape plus `references/sa-item-properties-introduction.md` for SA-era scope. Treat storage, tooltip, gameplay effect, and generation as separate work items:
 
-1. **Extend the bit enum.** Add a new value to `AosAttribute`, `AosWeaponAttribute`, or `AosArmorAttribute`. Use the next free high bit. Example for weapon attributes (`docs/superpowers/plans/2026-06-02-item-properties-completion.md:428-431`):
-
-   ```csharp
-   HitCurse = 0x02000000,
-   HitFatigue = 0x04000000,
-   HitManaDrain = 0x08000000
-   ```
+1. **Extend the bit enum.** Add a new value to `AosAttribute`, `AosWeaponAttribute`, or `AosArmorAttribute`. Use the next safe free high bit in the existing storage model. Be especially careful with `0x80000000` because `BaseAttributes` stores a `uint` mask but many callers cast enum values through `int`.
 
 2. **Add a typed property wrapper** in the matching container (`AosAttributes`, `AosWeaponAttributes`, `AosArmorAttributes`):
 
@@ -119,15 +115,13 @@ The implementation plan in `docs/superpowers/plans/2026-06-02-item-properties-co
    }
    ```
 
-   This is the user-facing API and the `[CommandProperty]` path for `i.props`.
+3. **Wire `GetProperties(IPropertyList list)` in the relevant base class.** Prefer known client clilocs. If a helper such as `ItemPropertyDisplay` or a capturing test utility is not present in the target branch, do not assume it exists — either use established local OPL patterns or add the helper/test infrastructure deliberately.
 
-3. **Wire `GetProperties(IPropertyList list)` in the relevant base class.** Append a row with a cliloc or with the `ItemPropertyDisplay` helper. For percentage-based hit effects, `ItemPropertyDisplay.AddPercent` is the right helper (`docs/superpowers/plans/2026-06-02-item-properties-completion.md:451-465`).
+4. **Add static aggregation only when formulas need equipped totals.** `AosAttributes.GetValue`, `AosWeaponAttributes.GetValue`, and `AosArmorAttributes.GetValue` walk equipped items. Some item-local effects can read the owner item directly; status/combat formulas need aggregators.
 
-4. **Add a static aggregation in the container** (`GetValue(Mobile m, AosAttribute attribute)` etc.) so that combat and spell formulas can read the value from the equipped item set. The aggregation walks `m.Items` and sums across all matching items.
+5. **Implement the gameplay effect in the owning pipeline.** Weapon hit effects belong in `BaseWeapon.OnHit`; defensive/parry properties belong in `AbsorbDamageAOS`/shield hooks; damage-to-resource properties belong in `AOS.Damage` or a deliberately named helper.
 
-5. **Implement the gameplay effect.** For weapon hit effects, the `BaseWeapon` hit pipeline calls `CheckHitEffect(attacker, defender, attribute, bonus)` and dispatches. New effect bodies are simple mutations: `CurseSpell.DoCurse`, `defender.Stam = Math.Max(0, defender.Stam - Utility.RandomMinMax(10, 20))`, etc. (`docs/superpowers/plans/2026-06-02-item-properties-completion.md:481-497`).
-
-The plan's task list at `docs/superpowers/plans/2026-06-02-item-properties-completion.md:14-26` orders the work: shared test infrastructure first, then low-risk partial properties, then missing classic hit effects, then negative property storage, then engine transfer flags, then SA-specific weapon and defensive properties, then loot/runic/artifact wiring.
+6. **Enable generation separately.** Do not add a new property to `BaseRunicTool`, loot packs, artifacts, or imbuing in the same step unless the task explicitly includes distribution/economy policy. A stored and working property can remain GM/test-only until generation is reviewed.
 
 ## Existing AoS Attribute Reference
 
@@ -166,11 +160,11 @@ The static `GetValue(Mobile m, AosAttribute attribute)` aggregator (`AOS.cs:570-
 
 `AosWeaponAttribute` (`AOS.cs:658-685`) holds weapon-only effects. Each value is a 26-bit bit slot. Existing values are LowerStatReq, SelfRepair, the three HitLeech family, HitLowerAttack/Defend, the hit spells (Magic Arrow, Harm, Fireball, Lightning, Dispel), the area hit effects (Cold/Fire/Poison/Energy/Physical Area), the five resist bonuses, UseBestSkill, MageWeapon, and DurabilityBonus.
 
-The plan in `docs/superpowers/plans/2026-06-02-item-properties-completion.md` adds `HitCurse`, `HitFatigue`, `HitManaDrain` at the next free high bits (`0x02000000`, `0x04000000`, `0x08000000`).
+The SA review notes in `references/sa-item-properties-introduction.md` originally recommended `HitCurse`, `HitFatigue`, and `HitManaDrain` as the first low-scope weapon-hit slice; that slice now exists on current RebirthUO `live` as a separate `SaWeaponAttribute` enum and `SaWeaponAttributes : BaseAttributes` container. For additional SA weapon properties, keep using the separate SA container pattern when the property family is broader than original AoS. For the next post-hit-slice priorities, see `references/sa-defensive-properties-next-slices.md`: prefer `Reactive Paralyze` first because it hangs off successful parry/block, then `Soul Charge` in `AOS.Damage`, then `Casting Focus`; defer Damage Eater/Resonance until absorption caps/charges and distribution policy are scoped. Keep new properties GM/test-only until loot/runic/imbuing distribution is explicitly reviewed.
 
 ## Existing Armor Attribute Reference
 
-`AosArmorAttribute` (`AOS.cs:928-935`) is intentionally small: LowerStatReq, SelfRepair, MageArmor, DurabilityBonus. SA-era additions (Soul Charge, Reactive Paralyze, etc.) are tracked as future work in the item-properties plan.
+`AosArmorAttribute` (`AOS.cs:928-935`) is intentionally small: LowerStatReq, SelfRepair, MageArmor, DurabilityBonus. For SA-era additions, keep `SoulCharge` and `ReactiveParalyze` as a separate defensive/parry slice, and prefer a separate SA-specific absorption container for Damage Eater / Resonance / Casting Focus if that family is implemented.
 
 ## Skill Bonuses
 
@@ -240,29 +234,38 @@ if ((prop = WeaponAttributes.HitFireball) != 0)
 }
 ```
 
-For properties without a cliloc (the new partial-property set), use the `ItemPropertyDisplay` helper:
+For properties without a cliloc, first check whether the target branch already has a display helper. If not, either add a reusable helper deliberately or use the closest established local OPL pattern. Do not assume `ItemPropertyDisplay` exists on this branch.
 
 ```csharp
 if (Attributes.Luck < 0)
 {
-    ItemPropertyDisplay.AddName(list, "Unlucky");
+    list.Add($"{"Unlucky"}");
 }
 ```
+
+If a reusable helper exists or is added, route these fallback rows through it so future raw-name properties stay consistent.
 
 Remember `CLAUDE.md:14`: PropertyList string literals must be holes. Use `$"{}"` form inside the cliloc arg, never bare concatenation.
 
 ### Adding a Hit-Effect Property
 
-The `BaseWeapon` hit pipeline routes through `CheckHitEffect`. To wire a new effect:
+The existing `BaseWeapon.OnHit` pipeline already computes property chances and dispatches hit spell, area, leech, and lower-attack/defense effects. To wire a new SA hit effect, add a `Core.SA`-gated block beside the existing AoS hit-effect block, use the property value as a percentage chance with any active property-bonus scalar, and keep the effect body small and testable.
+
+Example shape:
 
 ```csharp
-if (CheckHitEffect(attacker, defender, AosWeaponAttribute.HitCurse, propertyBonus))
+if (Core.SA)
 {
-    CurseSpell.DoCurse(attacker, defender);
+    var curseChance = (int)(WeaponAttributes.HitCurse * propertyBonus);
+
+    if (curseChance != 0 && curseChance > Utility.Random(100))
+    {
+        DoHitCurse(attacker, defender);
+    }
 }
 ```
 
-The `CheckHitEffect` helper takes the property value as a percentage chance and applies the per-property-bonus scalar used by `CheckHitEffect` and the various other hit effects. New effects need to be added next to the existing block in `BaseWeapon.OnHit` to keep the order stable.
+New effects need tests for trigger/no-trigger and a pre-SA no-effect control. Do not add them to loot/runic/imbuing generation in the same change unless distribution policy is part of the task.
 
 ## Pitfalls
 
@@ -271,10 +274,15 @@ The `CheckHitEffect` helper takes the property value as a percentage chance and 
 3. **Adding a new bit value to a `[Flags]` enum without picking the next high bit.** The bit allocation is dense and intentional. If a contributor adds a low bit, they collide with an existing value. New bits go at the top of the enum (next high bit) and the change is recorded in the plan.
 4. **Forgetting `ReflectPhysical` consumption in combat.** `AOS.Damage` reads `ReflectPhysical` once and applies it before `m.Damage`. New reflect-style effects (e.g. SA `Blood Oath`-style reflect) need a parallel code path in `AOS.Damage` or a `BaseCreature` hook.
 5. **Adding a new SA attribute without considering pre-SA shards.** SA attributes that affect formulas need an `if (Core.SA)` or `if (Core.ML)` gate in the consumer. Stygian Abyss introduced several property types that should not affect pre-SA combat.
-6. **Overlapping property definitions.** If two different properties can apply to the same slot (e.g. `LowerStatReq` on both `AosAttributes` and `AosArmorAttributes`), the static `GetValue` aggregator must dispatch through the right interface. `AosArmorAttributes.GetValue` and `AosAttributes.GetValue` both exist and must be called from the right code path.
+6. **Overlapping property definitions.** If two different properties can apply to the same concept (e.g. `LowerStatReq` on weapon/armor-specific containers versus common `AosAttributes`), the consumer must read the right container/static aggregator. Current effective-value dispatch is hard-coded by item family, not generic interface dispatch.
 7. **Wrong OPL row order.** The client expects properties in a documented order: name, hue, amount, weight, equipped layer, resists, then `AosAttributes` (alphabetical by cliloc), then `AosWeaponAttributes`/`AosArmorAttributes`, then `AosSkillBonuses`, then `AosElementAttributes`. Moving properties around confuses tooling and breaks player muscle memory.
-8. **Skipping `InvalidateProperties` after a mutation.** `SetValue` does not auto-invalidate the OPL for items in-world. After programmatic property changes, call `weapon.InvalidateProperties()` to re-render the tooltip.
-9. **Assuming `SkillBonuses.GetProperties` covers negative bonuses.** It only emits `GetValues` slots that pass the truthiness check. Negative skill bonuses still show in tooltip, but a future fix may hide them. Always verify with `CapturingPropertyList` (`docs/superpowers/plans/2026-06-02-item-properties-completion.md:78-147`).
+8. **Bypassing `BaseAttributes.SetValue`.** The indexed/typed setters auto-update durability scaling where needed, refresh equipped mobile stats/resistances/deltas, re-apply skill mods, and invalidate item/mobile properties (`AOS.cs:1403-1534`). Direct field mutation or custom side-channel state will skip those side effects; use the container setter unless you intentionally handle every side effect yourself.
+9. **Assuming test helpers exist.** Some branches may not have `CapturingPropertyList`, `ItemPropertyDisplay`, or SA absorption containers yet. Search the target branch before following examples; add missing helpers intentionally with tests, or adapt to the existing local patterns.
+10. **Using `AosAttributes.AddStatBonuses` without checking the remove key.** Current `AOS.cs` adds stat mods with `$"{GetHashCode()}Str/Dex/Int"` but `RemoveStatBonuses` removes `$"{Owner.Serial}Str/Dex/Int"` (`AOS.cs:590-626`). The helper is used by `BaseQuiver` and `BaseTalisman`; until fixed/tested, prefer the item-local serial-key pattern used by `BaseWeapon`, `BaseArmor`, `BaseClothing`, `BaseJewel`, and `Spellbook`, or fix the helper plus a regression test before adding a new helper caller.
+11. **Treating storage/tooltip/generation/gameplay as one step.** `BaseRunicTool.ApplyAttributesTo` has separate per-family random property tables for weapons, armor, hats, jewelry, and spellbooks. Adding a stored property and OPL row does not automatically make it roll on loot/runics/artifacts or affect combat; add each surface deliberately and test each one.
+12. **Using conceptual documentation as implementation evidence.** For RebirthUO development, inspect local source and product/mechanics sources directly. Do not rely on conceptual docs trees as proof that a mechanic is implemented or that a property should be live.
+13. **Forcing every UO.com magic-property row into `BaseAttributes`.** Some table rows are dynamic display state rather than persistent, rollable item properties. `Last Parry Chance` is the canonical example: use runtime state on `BaseShield`/`BaseWeapon`, EJ-gated cliloc `1158861`, and no loot/runic/imbuing rollout unless explicitly scoped. See `references/last-parry-chance-runtime-tooltip.md`.
+14. **Treating Mana Phase as a generic talisman roll without a parity decision.** UO.com lists Mana Phase as `Talisman (L)`, while UOGuide and ServUO point to a concrete `ManaPhasingOrb` with charges, 30s cooldown, `BuffIcon.ManaPhase`, and `Spell`/`SpecialMove` mana hooks. Decide whether damage caused or damage taken clears the effect before implementing, and keep loot/runic/imbuing distribution separate. See `references/mana-phase-talisman-implementation-notes.md`.
 
 ## Verification Checklist
 
@@ -285,9 +293,11 @@ The `CheckHitEffect` helper takes the property value as a percentage chance and 
 - [ ] Static `GetValue(Mobile, attribute)` aggregation includes the new property on the right `if` branch (weapon/armor/clothing/IAosItem).
 - [ ] `CapturingPropertyList` test covers the OPL output for at least one new property and one non-AoS era control.
 - [ ] No `_values` direct access from outside `BaseAttributes`.
-- [ ] `InvalidateProperties()` is called after programmatic mutations in any test or generation routine.
+- [ ] Programmatic mutations go through typed/indexed `BaseAttributes` setters, or custom state explicitly invalidates properties and updates affected mobile stats/resistances.
 - [ ] `OnAfterDelete` does not need updating for new attributes (storage is owned by `BaseAttributes`), but verify `DurabilityBonus` still works for armor/weapon via the `SetValue` hook.
-- [ ] For new hit effects, the combat effect body is gated by `Core.AOS` (or stricter era) at the dispatch site, not just inside the aggregator.
+- [ ] For new hit effects, the combat effect body is gated by `Core.SA` (or the correct stricter era) at the dispatch site, not just inside the aggregator.
+- [ ] Property distribution is intentional: storage/OPL/effect work does not automatically add loot/runic/imbuing rolls.
+- [ ] For SA work, `references/sa-item-properties-introduction.md` was checked for source hierarchy, repo anchors, and phased implementation guidance.
 
 ## How to Report Issues
 
@@ -305,4 +315,4 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 - `uo-crafting-recipes-resources` - generation routines that produce these magical items.
 - `modernuo-property-lists` - OPL mechanics and cliloc lookup.
 - `modernuo-era-expansion` - `Core.AOS`/`Core.SE`/`Core.ML`/`Core.SA` gating for properties.
-- `docs/superpowers/plans/2026-06-02-item-properties-completion.md` - the open work tracker for property parity.
+- `references/sa-item-properties-introduction.md` - session-derived SA item property implementation notes: UO.com/ServUO source hierarchy, local RebirthUO anchors, recommended implementation slices, and pitfalls for storage/tooltip/gameplay/generation separation.

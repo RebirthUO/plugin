@@ -63,6 +63,8 @@ Do not use for ordinary content edits inside `Projects/UOContent` unless the req
 
 Use the reference for rename checks, generated-file boundaries, migration schemas, test fixture shape, and related skills.
 
+For infrastructure-only custom module PRs and Hermes post-commit verification guards, see `references/custom-module-smoke-and-guard.md`. It covers the no-op marker pattern, assembly-load smoke tests, committed-branch `HEAD~1..HEAD` diff checks, generated DLL/deps checks, and how to report the result as ad-hoc/focused verification rather than broad suite-green.
+
 
 ## Common Pitfalls
 
