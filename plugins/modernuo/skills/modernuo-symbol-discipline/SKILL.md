@@ -1,6 +1,10 @@
 ---
 name: modernuo-symbol-discipline
-description: Use when writing, reviewing, or refactoring ModernUO/RebirthUO C# code involving constants, local variables, fields, properties, public gameplay or parity surfaces, exposed in-game values, or Policy* names such as PolicySe*. Helps decide whether to inline a value, keep a local, create const or static readonly, add a field or property, or expose a RebirthUO policy symbol. Warn only and ask before changing code.
+description: >
+  Use when deciding whether ModernUO-based C# values should be inline,
+  locals, constants, static readonly objects, fields, properties, or explicit
+  Policy* surfaces. Report overexposure as a warning; do not rewrite existing
+  symbols unless cleanup was requested or the user confirms the change.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -11,148 +15,81 @@ metadata:
     workflow_phase: none
     workflow_tier: support
     tags:
-    - modernuo
-    - rebirthuo
-    - symbols
-    - naming
-    - code-style
+      - modernuo
+      - rebirthuo
+      - symbols
+      - naming
+      - code-style
     related_skills:
-    - modernuo-code-audit
-    - modernuo-no-publish-prefix-names
-    - modernuo-test-naming
+      - modernuo-code-audit
+      - modernuo-no-publish-prefix-names
+      - modernuo-test-naming
 ---
+
 # ModernUO Symbol Discipline
 
-## Overview
+## Boundary
 
-Use this skill to keep generated code from inventing symbols that do not carry their own weight. The goal is not to ban constants, locals, fields, properties, or `Policy*` names; it is to make every introduced symbol justify its lifetime, scope, and visibility.
+Every symbol must justify its lifetime, scope, visibility, and semantic value.
+This is a warning/recommendation lens, not permission for behavior or public API
+changes.
 
-## Operating Rule
+## Workflow
 
-Report symbol-discipline issues as warnings. Do not silently rewrite code. Ask before changing existing code unless the user explicitly requested cleanup.
-
-Use this report shape:
-
-```text
-[SYMBOL] WARNING: {why this symbol is unnecessary or overexposed}
-  File: {path}:{line}
-  Suggestion: {inline, reduce scope, rename, or keep with justification}
-```
+1. Find all consumers, reflection/string references, serialization/config/
+   command exposure, tests, docs, and client-visible uses.
+2. Classify the value with the decision ladder below.
+3. Choose the narrowest scope and stable mechanic name. Preserve source/parity
+   evidence without embedding ticket or publish labels in the identifier.
+4. Report the candidate and ask before rewriting unless the request explicitly
+   asks for symbol cleanup.
+5. If changed, run reference search plus focused build/tests and confirm no
+   behavior or compatibility surface changed unintentionally.
 
 ## Decision Ladder
 
-1. **Inline one-off values** - Keep obvious literals or expressions inline when they are used once and do not name gameplay policy, client-visible behavior, or a non-obvious formula term.
-2. **Use locals for real local work** - Keep a local when it is reused, snapshots mutable game state, avoids repeated expensive or side-effectful calls, clarifies a branch/formula, or gives a meaningful name to a non-obvious intermediate result.
-3. **Use `const` for reusable compile-time values** - Add a `const` only when the value is reused, asserted by tests/docs, intentionally exposed as gameplay/parity surface, or names a non-obvious source-backed or policy-backed rule. Prefer the narrowest useful access level.
-4. **Use `static readonly` for shared runtime objects** - Use it for `TimeSpan`, arrays, dictionaries, `SpellInfo`, `MonsterAbility[]`, cached `SearchValues`, loggers, or other shared values that cannot be `const` or must preserve identity.
-5. **Use fields for state** - Add a field only for real object/system state: persistence, timers, lifecycle cleanup, cross-method state, caches, entity references, or data that changes over time.
-6. **Use properties for public or engine surfaces** - Add or override properties for engine contracts, serialization/config/commands, gumps/tooltips, client-visible behavior, in-game exposed values, or stable external consumers. Do not add wrapper properties that only rename a one-off literal or forward to another symbol.
-7. **Use `Policy*` only for explicit RebirthUO policy** - A `Policy*` symbol means "source-incomplete or intentionally chosen RebirthUO behavior." Require a clear reason: source pages lack exact values, the value is reused by helpers/tests/docs, the policy is important to parity review, or downstream code needs a stable name.
+1. Inline obvious one-use values that do not name policy or a formula term.
+2. Use locals for reuse, snapshots, side-effect avoidance, or meaningful steps.
+3. Use `const` for reusable compile-time rules with durable consumers/evidence.
+4. Use `static readonly` for shared runtime objects or identity.
+5. Use fields for persistence, timers, ownership, caches, and changing state.
+6. Use properties for engine/public/serialized/config/client contracts, not
+   wrappers that merely rename another value.
 
-## Policy Name Checks
+## Policy Names
 
-Flag a new `Policy*`, `PolicySe*`, `PolicyML*`, or similar symbol when it only exists because the code is in an era branch. Era gating alone is not policy.
+`Policy*` means a deliberate configured-project decision where official sources
+are incomplete or the project intentionally chooses custom behavior. Era gating
+alone is not policy.
+Require a mechanic-specific name and at least one durable reason: reuse, focused
+tests, parity documentation, or a stable downstream consumer. Keep it private or
+internal unless public access is genuinely needed.
 
-Allow `Policy*` when all relevant checks hold:
+## Output Contract
 
-- The value represents a deliberate RebirthUO decision, not just a convenience alias.
-- The name describes the gameplay decision, not only the era.
-- The value is reused, tested, documented, or intentionally exposed for parity review.
-- A public `const` is actually needed; otherwise keep it private/internal or inline it.
-
-Good policy surface:
-
-```csharp
-public const double PolicySeLowSkillHitChanceBase = 30.0;
-public const double PolicySeLowSkillHitChancePerPoint = 2.2;
-
-public static double GetSamuraiEmpireHitChance(double ninjitsu) =>
-    PolicySeLowSkillHitChanceBase + (ninjitsu - 85.0) * PolicySeLowSkillHitChancePerPoint;
+```text
+[SYMBOL] WARNING: {unnecessary, vague, or overexposed symbol}
+  File: {path}:{line}
+  Consumers/contracts: {evidence}
+  Suggestion: {inline|local|const|static readonly|field|property|rename}
+  Compatibility: {none|serialization|reflection|config|public API}
 ```
 
-This is acceptable when the SE formula is source-incomplete, the values are part of a named helper, and tests or parity docs assert the behavior.
+For implementation, also return old/new mappings, access-level changes, source
+evidence location, and verification.
 
-Bad policy surface:
+## Verification
 
-```csharp
-public const int PolicySeTreasureMapLevel = 5;
-public override int TreasureMapLevel => PolicySeTreasureMapLevel;
-```
+- The symbol is reused, exposed, tested/documented, required by a contract, or
+  names a non-obvious decision.
+- Scope is no wider than its actual consumers.
+- `Policy*` denotes explicit policy rather than era context.
+- Reference search/build/tests show no compatibility or behavior change.
 
-If no source gap, reuse, test assertion, or review surface needs the symbol, prefer:
+## Reference Routing
 
-```csharp
-public override int TreasureMapLevel => 5;
-```
-
-## Local And Field Examples
-
-Inline a local that only re-labels a literal:
-
-```csharp
-var bodyId = 0x1234;
-Body = bodyId;
-```
-
-Prefer:
-
-```csharp
-Body = 0x1234;
-```
-
-Keep locals that snapshot or clarify behavior:
-
-```csharp
-var ninjitsu = attacker.Skills.Ninjitsu.Value;
-var movedEnough = steps >= 5;
-var divisor = movedEnough ? PolicySeMovingDamageDivisor : PolicySeStandingDamageDivisor;
-```
-
-Keep fields that hold real state:
-
-```csharp
-private static readonly Dictionary<Mobile, DeathStrikeTimer> _table = new();
-private TimerExecutionToken _timerToken;
-private readonly Mobile _target;
-```
-
-Flag fields that only support unnecessary wrapper properties:
-
-```csharp
-private readonly int _baseMana = 30;
-public override int BaseMana => _baseMana;
-```
-
-Prefer:
-
-```csharp
-public override int BaseMana => 30;
-```
-
-## Property Examples
-
-Keep properties and overrides when they are the ModernUO contract or a client-visible surface:
-
-```csharp
-public override string DefaultName => "a yomotsu warrior";
-public override int BaseMana => 30;
-public override double RequiredSkill => 85.0;
-public override MonsterAbility[] GetMonsterAbilities() => _abilities;
-```
-
-Flag properties that only duplicate another symbol or hide a one-off literal:
-
-```csharp
-public static int SeMovingDamageCap => PolicySeMovingDamageCap;
-```
-
-Prefer using the existing symbol directly, reducing its visibility, or inlining the value when no stable consumer exists.
-
-## Final Check
-
-Before accepting a new symbol, ask:
-
-- Is it used more than once, exposed in-game, tested, documented, or required by an engine/API contract?
-- Does the name make a non-obvious gameplay decision easier to audit?
-- Is the access level no wider than the actual consumer set?
-- Would inlining make the code simpler without losing parity, performance, or lifecycle clarity?
+- Read [symbol decision examples](references/symbol-decision-examples.md) when a
+  local, wrapper property, or `Policy*` surface is ambiguous.
+- Load `modernuo-no-publish-prefix-names` when the symbol embeds source publish
+  numbers and `modernuo-test-naming` when the symbol is a test identity.
+- Load the serialization/configuration/API owner before changing a contract name.

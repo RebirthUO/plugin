@@ -1,0 +1,54 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Skill Discovery",
+    "inputs": [
+      "modernuo skill discovery"
+    ],
+    "trigger_actions": [
+      "Review this modernuo skill discovery task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo skill discovery in the configured ModernUO-based repository.",
+      "Help me implement a modernuo skill discovery change and identify the focused verification.",
+      "Audit this modernuo skill discovery diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo codebase",
+      "modernuo code audit",
+      "modernuo content patterns",
+      "modernuo lifecycle cleanup",
+      "modernuo performance hot paths",
+      "modernuo test workflow"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo skill discovery"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

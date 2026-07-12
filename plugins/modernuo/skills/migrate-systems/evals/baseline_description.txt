@@ -1,0 +1,1 @@
+Use when converting multi-file RunUO engines or systems such as crafting, spawners, economy, or quests to ModernUO. Covers system mapping, conversion order, file organization, cross-reference handling, and lifecycle cleanup.

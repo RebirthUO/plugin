@@ -18,7 +18,7 @@ A project-only build can leave distribution data absent from the test output. If
 
 ```bash
 dotnet build ModernUO.slnx --nologo --verbosity quiet -m:1
-MODERNUO_TEST_DATA_DIR='C:/Program Files (x86)/Electronic Arts/Ultima Online Classic' \
+MODERNUO_TEST_DATA_DIR='<uo-client-dir>' \
   dotnet test Projects/UOContent.Tests/UOContent.Tests.csproj ...
 ```
 

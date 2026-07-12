@@ -1,0 +1,1 @@
+Use when creating in-game commands, targeting mechanics, or working with CommandSystem/Target. Covers bracket commands, GM/admin tools, and player interactions.

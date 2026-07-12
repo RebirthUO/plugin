@@ -1,0 +1,57 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Threading and Event Loop",
+    "inputs": [
+      "modernuo threading and event loop",
+      "modernuo threading"
+    ],
+    "trigger_actions": [
+      "Review this modernuo threading and event loop task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo threading and event loop in the configured ModernUO-based repository.",
+      "Help me implement a modernuo threading and event loop change and identify the focused verification.",
+      "Audit this modernuo threading and event loop diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo timers",
+      "modernuo serialization",
+      "modernuo world saves archives",
+      "modernuo performance hot paths",
+      "modernuo pathfinding",
+      "modernuo test workflow"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo threading and event loop",
+        "modernuo threading"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

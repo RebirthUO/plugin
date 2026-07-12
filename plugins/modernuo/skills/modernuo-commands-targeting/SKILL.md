@@ -1,7 +1,6 @@
 ---
 name: modernuo-commands-targeting
-description: >
-  Use when creating in-game commands, targeting mechanics, or working with CommandSystem/Target. Covers bracket commands, GM/admin tools, and player interactions.
+description: Use when creating or changing ModernUO in-game commands, access levels, CommandEventArgs parsing, Target subclasses, or command-to-target flows. Covers registration, validation, stale-target safety, and focused tests. Do not use for migrating legacy registrations or for gump-only interactions.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -21,230 +20,40 @@ metadata:
       - migrate-commands-events
 ---
 
-# ModernUO Commands & Targeting
+# ModernUO Commands and Targeting
 
-## When to Use
-- Creating new in-game `[` commands
-- Implementing targeting mechanics
-- Working with `CommandSystem.Register()` or `Target` class
-- Adding GM/admin tools
+## Boundary
 
-## Key Rules
+Own new or changed bracket commands and interactive targeting. Use [migrate-commands-events](../migrate-commands-events/SKILL.md) for RunUO conversion and [modernuo-gump-system](../modernuo-gump-system/SKILL.md) for UI-only flows.
 
-1. **Register commands in `Configure()`** static method (called at startup)
-2. **Use `[Usage]` and `[Description]`** attributes on handler methods
-3. **Prefix is `[`** by default (e.g., `[mycommand`)
-4. **Target inherits from `Target`** class, override `OnTarget()`
-5. **Always validate inputs** in command handlers
+## Workflow
 
-## Command Registration
+1. Define the actor, minimum access level, arguments, target kinds, range/LOS/ground policy, side effects, cancellation, and observable success/failure.
+2. Inspect the current local `CommandSystem.Register`, `CommandEventArgs`, and `Target` APIs plus the nearest command of equal privilege.
+3. Register the command in `Configure()` with the least required `AccessLevel`; add accurate `[Usage]` and `[Description]`.
+4. Validate argument count and parse failures before any mutation. Return a precise usage/error message without exposing privileged data.
+5. Create a narrowly scoped `Target` with explicit range, ground, flags, and type handling. Revalidate access, ownership, deletion, map, range, LOS, and mechanic-specific rules inside `OnTarget`.
+6. Keep harmful/beneficial flags aligned with notoriety and combat semantics. Handle cancel and stale/invalid targets without partial mutation.
+7. Test unauthorized, malformed, valid, wrong-type, out-of-range/LOS, deleted/stale, and cancel paths.
 
-```csharp
-using Server.Commands;
+## Safety gates
 
-namespace Server.Custom;
+- Never rely only on the access check performed at command dispatch; delayed target responses can be stale.
+- Do not use unlimited range or disabled LOS without a documented staff/tool requirement.
+- Keep mutations atomic after all validation and log privileged destructive actions where local precedent does.
+- Do not assume typed accessors distinguish missing from invalid input; inspect their implementation.
+- Do not put blocking or background work in a command/target callback.
 
-public static class MyCommands
-{
-    public static void Configure()
-    {
-        CommandSystem.Register("MyCommand", AccessLevel.GameMaster, MyCommand_OnCommand);
-        CommandSystem.Register("MyOtherCmd", AccessLevel.Player, MyOtherCmd_OnCommand);
-    }
+## Verification/self-check
 
-    [Usage("MyCommand <name> [count]")]
-    [Description("Does something with a name and optional count")]
-    public static void MyCommand_OnCommand(CommandEventArgs e)
-    {
-        var from = e.Mobile;
+Run the permission/input/target matrix, inspect logs and side effects, and confirm delayed responses revalidate current state. Recheck that no path mutates before all validation succeeds.
 
-        if (e.Length < 1)
-        {
-            from.SendMessage("Usage: [MyCommand <name> [count]");
-            return;
-        }
+## Output contract
 
-        var name = e.GetString(0);
-        var count = e.Length > 1 ? e.GetInt32(1) : 1;
+Return registration and target changes, the permission/input/target contract, changed files, focused verification evidence, and remaining manual in-game checks. If reviewing, report findings without editing.
 
-        from.SendMessage($"Processing {name} x{count}");
-    }
-}
-```
+## Reference routing
 
-## CommandEventArgs
-
-```csharp
-e.Mobile        // Mobile who issued the command
-e.Command       // Command name string
-e.ArgString     // Raw argument string
-e.Arguments     // string[] split arguments
-e.Length         // Number of arguments
-
-// Typed argument accessors:
-e.GetString(0)  // Get string at index (empty string if missing)
-e.GetInt32(1)   // Get int at index (0 if missing/invalid)
-e.GetUInt32(0)  // Get uint at index
-e.GetBoolean(0) // Get bool at index
-e.GetDouble(0)  // Get double at index
-e.GetTimeSpan(0) // Get TimeSpan at index
-```
-
-## Access Levels
-
-```csharp
-AccessLevel.Player        // Regular players
-AccessLevel.Counselor     // Support staff
-AccessLevel.GameMaster    // GMs
-AccessLevel.Seer          // Event coordinators
-AccessLevel.Administrator // Server admins
-AccessLevel.Developer     // Developers
-AccessLevel.Owner         // Server owner
-```
-
-## Target System
-
-### Basic Target
-```csharp
-using Server.Targeting;
-
-private class MyTarget : Target
-{
-    public MyTarget() : base(
-        12,                    // Range (-1 for unlimited)
-        false,                 // AllowGround
-        TargetFlags.None       // None, Harmful, or Beneficial
-    )
-    {
-        // Optional settings:
-        // CheckLOS = false;      // Skip line-of-sight check
-        // DisallowMultis = true; // Don't allow targeting multi objects
-    }
-
-    protected override void OnTarget(Mobile from, object targeted)
-    {
-        if (targeted is Mobile m)
-        {
-            from.SendMessage($"You targeted {m.Name}");
-        }
-        else if (targeted is Item item)
-        {
-            from.SendMessage($"You targeted item {item.Name}");
-        }
-        else if (targeted is LandTarget land)
-        {
-            from.SendMessage($"You targeted land at {land.Location}");
-        }
-        else if (targeted is StaticTarget st)
-        {
-            from.SendMessage($"You targeted static {st.ItemID}");
-        }
-    }
-
-    protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
-    {
-        from.SendMessage("Targeting cancelled.");
-    }
-
-    protected override void OnTargetFinish(Mobile from)
-    {
-        // Always called after targeting completes (success or cancel)
-    }
-}
-
-// Usage:
-from.Target = new MyTarget();
-```
-
-### TargetFlags
-```csharp
-TargetFlags.None       // Neutral targeting
-TargetFlags.Harmful    // Criminal check, combat targeting
-TargetFlags.Beneficial // Healing, buffing
-```
-
-### Target Object Types
-- `Mobile` -- a player or creature
-- `Item` -- an item in the world or container
-- `LandTarget` -- ground tile (`Location`, `TileID`, `Name`)
-- `StaticTarget` -- static map object (`Location`, `ItemID`, `Name`, `Hue`)
-
-### Command + Target Pattern
-```csharp
-public static void Configure()
-{
-    CommandSystem.Register("Tame", AccessLevel.GameMaster, Tame_OnCommand);
-}
-
-[Usage("Tame")]
-[Description("Force-tames a creature")]
-public static void Tame_OnCommand(CommandEventArgs e)
-{
-    e.Mobile.SendMessage("Select a creature to tame.");
-    e.Mobile.Target = new TameTarget();
-}
-
-private class TameTarget : Target
-{
-    public TameTarget() : base(-1, false, TargetFlags.None) { }
-
-    protected override void OnTarget(Mobile from, object targeted)
-    {
-        if (targeted is BaseCreature { Tamable: true } creature)
-        {
-            creature.SetControlMaster(from);
-            from.SendMessage($"You have tamed {creature.Name}.");
-        }
-        else
-        {
-            from.SendMessage("That cannot be tamed.");
-        }
-    }
-}
-```
-
-### Target Validation Overrides
-```csharp
-// Override these for custom validation:
-protected override bool CanTarget(Mobile from, Mobile mobile, ref Point3D loc, ref Map map)
-protected override bool CanTarget(Mobile from, Item item, ref Point3D loc, ref Map map)
-protected override bool CanTarget(Mobile from, LandTarget land, ref Point3D loc, ref Map map)
-protected override bool CanTarget(Mobile from, StaticTarget st, ref Point3D loc, ref Map map)
-
-// Error handlers:
-protected override void OnTargetOutOfRange(Mobile from, object targeted)
-protected override void OnTargetOutOfLOS(Mobile from, object targeted)
-protected override void OnTargetNotAccessible(Mobile from, object targeted)
-protected override void OnTargetDeleted(Mobile from, object targeted)
-protected override void OnTargetUntargetable(Mobile from, object targeted)
-```
-
-## Anti-Patterns
-
-- **Registering commands outside `Configure()`**: Won't be called during startup
-- **Missing access level validation**: Always set appropriate `AccessLevel`
-- **Not checking `e.Length`**: Accessing missing arguments returns defaults silently
-- **Hardcoded range in targeting**: Use -1 for unlimited, appropriate range for game mechanics
-
-## Real Examples
-- Command registration: `Projects/UOContent/Commands/StaffAccess.cs`
-- Target from item: `Projects/UOContent/Items/Misc/InteriorDecorator.cs`
-- Spell targeting: `Projects/UOContent/Spells/First/MagicArrow.cs`
-- Command system: `Projects/Server/Commands.cs`
-- Target base: `Projects/Server/Targeting/Target.cs`
-- Attributes: `Projects/Server/Attributes.cs` (Usage, Description, Aliases)
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/commands-targeting.md` - Complete documentation
-- `plugins/modernuo/skills/modernuo-gump-system/SKILL.md` - Commands that open gumps
-- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content creation
+- Read [commands-targeting-patterns.md](references/commands-targeting-patterns.md) for API shapes and test cases.
+- Read [modernuo-gump-system](../modernuo-gump-system/SKILL.md) when a command opens UI and [modernuo-content-patterns](../modernuo-content-patterns/SKILL.md) when it mutates game content.
+- Cross-check the official [ModernUO commands and targeting guide](https://modernuo.com/docs/development/commands-and-targeting/).

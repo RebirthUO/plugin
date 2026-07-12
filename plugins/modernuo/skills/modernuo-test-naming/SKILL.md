@@ -1,6 +1,10 @@
 ---
 name: modernuo-test-naming
-description: Use when writing, reviewing, or cleaning up ModernUO/RebirthUO C# xUnit tests whose file, class, or method names include noisy AI-generated prefixes such as eras, publishes, branch names, issue IDs, task labels, or generic regression labels. Normalizes test identity to the tested object or area, keeps publish/era words only when they are the actual tested object or domain, and proposes or applies rename-only cleanup without changing test behavior.
+description: >
+  Use when auditing or normalizing ModernUO-based xUnit file, class, or
+  method names polluted by publish, era-context, branch, issue, task, AI,
+  regression, coverage, or smoke prefixes. Keep real product/domain names and
+  make rename-only changes; use modernuo-regression-testing for test behavior.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -11,152 +15,69 @@ metadata:
     workflow_phase: none
     workflow_tier: support
     tags:
-    - modernuo
-    - rebirthuo
-    - tests
-    - naming
-    - code-style
+      - modernuo
+      - rebirthuo
+      - tests
+      - naming
+      - code-style
     related_skills:
-    - modernuo-test-workflow
-    - modernuo-regression-testing
-    - modernuo-no-publish-prefix-names
+      - modernuo-test-workflow
+      - modernuo-regression-testing
+      - modernuo-no-publish-prefix-names
 ---
+
 # ModernUO Test Naming
 
-## Overview
+## Boundary
 
-Use this skill to keep generated tests named after what they test, not after
-the branch, ticket, publish note, or AI work batch that produced them.
+Name tests after the tested production object, operation, or stable area—not the
+work batch that created them. This skill changes identity only: no assertions,
+fixtures, data, production code, or behavior.
 
-## Operating Rule
+## Workflow
 
-Before renaming, inspect the test body, file path, namespace, fixture/data names,
-and referenced production symbols. Choose the smallest name that identifies the
-tested object, operation, or stable area.
+1. Inspect the test body, production symbols, namespace/path, fixture/data names,
+   and assertions before choosing a name.
+2. Scan file stems, classes, and xUnit methods separately; classify prefix noise
+   with the audit reference.
+3. Review `Coverage`, `Smoke`, and era words; keep only real suite/domain names.
+4. Rename files/classes to `{ObjectOrArea}Tests` and methods to the local style
+   (concise PascalCase or `Subject_Scenario_Expected`).
+5. Search references/collisions, then run prefix scan, diff check, build, and
+   focused renamed-class filters.
+6. Complete the repository branch/PR workflow when requested.
 
-Report proposed cleanup in this shape:
+## Guardrails
 
-```text
-[TEST-NAME] WARNING: {why the current name is noisy}
-  File: {path}:{line}
-  Current: {file, class, or method name}
-  Suggested: {new name}
-  Reason: {tested object or area}
-```
+- Keep era/publish names when they are the actual tested object/domain.
+- Move source/era context into scenario text, inline data, setup, comments, or
+  assertion messages when it is not the subject.
+- Ask before ambiguous, colliding, or cross-file renames.
+- Do not mix behavior fixes into rename-only work.
+- Preserve production-type acronym/casing conventions.
 
-If the user asked to normalize or clean up test names, apply straightforward
-rename-only changes after recording the warning. Ask before changing when the
-target name is ambiguous, would collide with another test, or requires moving
-tests between files.
+## Output Contract
 
-Do not change assertions, fixtures, test data, production code, or behavior just
-because a test name is bad.
+For audit-only work, group findings by confidence with
+path/line/current/suggested/reason and state when hard-noise count is zero. For
+implementation, return old/new mappings, unchanged behavior scope,
+commands/results, and requested PR state.
 
-## Naming Standard
+## Verification
 
-- File and class names should be `{ObjectOrArea}Tests`, matching the tested
-  production type, service, packet, engine, content system, or stable test area.
-- Method names should follow the existing file style: concise PascalCase or
-  `SubjectOrOperation_Scenario_Expected`.
-- Start method names with the tested subject or operation, not a publish, era,
-  branch, issue, or task label.
-- Keep acronyms and domain names that are part of the object: `MLQuest`,
-  `MLPeerlessArtifacts`, `EraProfileManager`, `TreasuresOfTokuno`,
-  `PublishWindow`, `AOS`, `SE`, and similar real APIs or content areas.
-- Keep era or publish words only when the era/publish is the tested object or
-  domain. If it is only context, move that information into the scenario,
-  inline data, fixture setup, or assertion message.
+- Prefix scan has no actionable hard-noise findings after cleanup.
+- File, class, and method names identify the actual tested object/operation.
+- Only identifiers/direct references changed; staged diff contains no behavior.
+- Focused renamed-class tests/build pass; broad exploratory failures are labeled
+  separately.
 
-## Noise To Remove
+## Reference Routing
 
-Flag these when they are only prefixes or labels:
-
-- Publish labels: `Publish81`, `publish81`, `P81`, `Pub90`.
-- Era labels: `SE`, `ML`, `TOL`, `SamuraiEmpire`, `MondainsLegacy` when they do
-  not name the tested object or stable area.
-- Branch/task labels: `sync-modernuo-main`, `feature-*`, `issue123`, `task2`,
-  `codex-*`, ticket slugs, or PR names.
-- Generic batch labels: `Generated`, `Regression`, `Coverage`, `Smoke`, or
-  `AI` when the word does not identify the tested behavior.
-
-## Rename Recipe
-
-1. Identify the tested object or area from production type references, helper
-   names, setup calls, and assertions.
-2. Rename the file and class to `{ObjectOrArea}Tests` unless the file is an
-   intentional broad-area suite.
-3. Rename each method to preserve its operation, scenario, and expected result
-   while removing source-of-work prefixes.
-4. Use `rg` to find references before changing file/class names.
-5. Run the narrowest relevant test or at least `dotnet test --no-build` for the
-   affected test project when practical.
-6. If the tests live on existing PR branches and the user asked for the PRs to
-   be changed, follow the GitHub PR workflow after validation: stage, commit,
-   push each branch, and verify the PR heads moved. Do not stop at local-only
-   rename cleanup.
-
-## Audit-Only Review Workflow
-
-When the user asks to *find* additional AI-generated wrong prefixes, do not edit
-first. Produce an evidence-backed candidate list:
-
-1. Scan file stems, class names, and xUnit method names separately.
-2. Treat hard source-of-work prefixes as high-confidence noise: `Publish\d+`,
-   `Pub\d+`, `P\d+`, `Issue\d+`, `Task\d+`, `Codex`, `Generated`,
-   `Regression`, and `AI`.
-3. Treat `Coverage` and `Smoke` in file/class names as generic AI batch labels
-   unless the suite is intentionally a broad health check. Prefer concrete
-   names such as `{System}Tests`, `{ContentArea}Tests`, or
-   `{Operation}Tests`.
-4. For era words (`MondainsLegacy`, `SamuraiEmpire`, `ML`, `SE`), separate real
-   domain names from noisy context:
-   - keep when the word names the tested production API, source-reference hub,
-     quest engine, artifact family, or stable content area;
-   - flag when the test class is already specific (`DisarmAbilityTests`,
-     `ParrotContentTests`, `BaseWeapon...Tests`) and only the method starts with
-     the era label.
-5. Include line numbers and suggest rename-only replacements, but mark ambiguous
-   cases as review candidates instead of presenting them as certain fixes.
-6. If hard noise count is zero, say so explicitly before listing softer
-   era/context candidates.
-
-See `references/test-prefix-audit.md` for a compact checklist and examples from
-RebirthUO-style test-name audits.
-
-## Rename-Only PR Cleanup Workflow
-
-When the user asks to apply the normalization and merge it:
-
-- Work from a clean branch/worktree based on the requested base branch so existing user changes in the main working copy are not touched.
-- Keep the change rename-only: file/class/method identifiers and direct references only; do not alter assertions, fixtures, production code, or behavior.
-- On Windows/MSYS, file mode-only noise can appear in worktrees. Inspect/stage with `git -c core.filemode=false` and stage only the test paths involved.
-- After edits, run the prefix scan and expect zero actionable generated-prefix findings, allowing true domain names such as source-reference tests and `MLSetArmorTests`.
-- Validate with `git diff --cached --check`, a full build, and targeted renamed-class xUnit filters. If a broad exploratory test run hits unrelated static-state/order-sensitive failures, report it as exploratory rather than mixing behavior fixes into the rename-only PR.
-- If the user asked for PR/merge completion, do not stop at local cleanup: commit, push, open the PR, merge it, delete the branch, and verify the PR/base state.
-
-Detailed command snippets live in `references/rename-pr-cleanup.md`.
-
-## Examples
-
-```text
-Publish81TreasuresOfTokunoTests.cs
-  -> TreasuresOfTokunoTests.cs
-
-Publish81DropsUseToTTwoEra()
-  -> DropEra_InsidePublishWindow_UsesToTTwo()
-
-syncModernuoMainMovementThrottleTests.cs
-  -> MovementThrottleTests.cs
-
-FeatureMlPeerlessArtifacts_SourceTableCoverage()
-  -> OfficialMappingContainsRequiredArtifactForSource()
-
-MLPeerlessArtifactsTests.cs
-  -> keep; MLPeerlessArtifacts is the tested object.
-
-EraProfileManagerTests.cs
-  -> keep; EraProfileManager is the tested object.
-
-PublishWindow_SchedulesDropAndRewardEras()
-  -> keep; PublishWindow is the tested object.
-```
+- Read [test prefix audit checklist](references/test-prefix-audit.md) for hard vs
+  soft classification and era/domain examples.
+- Read [rename-only PR cleanup](references/rename-pr-cleanup.md) only when applying
+  the normalization in an isolated branch/worktree or completing a PR.
+- When changing this skill's trigger, run the existing cases in
+  `evals/trigger_cases.json` with `evals/semantic_config.json`.
+- Load `modernuo-regression-testing` for assertion/fixture changes and
+  `modernuo-test-workflow` for full validation.

@@ -1,0 +1,52 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Regression Testing",
+    "inputs": [
+      "modernuo regression testing"
+    ],
+    "trigger_actions": [
+      "Review this modernuo regression testing task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo regression testing in the configured ModernUO-based repository.",
+      "Help me implement a modernuo regression testing change and identify the focused verification.",
+      "Audit this modernuo regression testing diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo test workflow",
+      "modernuo test naming",
+      "modernuo code audit",
+      "modernuo era expansion"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo regression testing"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

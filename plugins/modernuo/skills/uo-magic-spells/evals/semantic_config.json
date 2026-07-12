@@ -1,0 +1,54 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Magic and Spells",
+    "inputs": [
+      "uo magic and spells",
+      "uo magic spells"
+    ],
+    "trigger_actions": [
+      "Review this uo magic and spells task and give me the repository-specific checks.",
+      "Compare the requested uo magic and spells behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo magic and spells change and identify the focused verification.",
+      "Audit this uo magic and spells diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo official evidence",
+      "uo combat pipeline",
+      "uo skills stats races",
+      "modernuo regions"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo magic and spells",
+        "uo magic spells"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

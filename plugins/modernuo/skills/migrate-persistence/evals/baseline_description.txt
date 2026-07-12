@@ -1,0 +1,1 @@
+Use when converting RunUO EventSink.WorldSave/WorldLoad manual binary persistence to ModernUO GenericPersistence. Covers GenericPersistence subclassing, IGenericWriter/IGenericReader, MarkDirty pattern, and save/load lifecycle.

@@ -1,7 +1,10 @@
 ---
 name: modernuo-property-lists
 description: >
-  Use when implementing GetProperties(), working with IPropertyList/ObjectPropertyList, or customizing item tooltips.
+  Use when implementing or reviewing ModernUO GetProperties,
+  AddNameProperties, IPropertyList/ObjectPropertyList tooltip entries, cliloc
+  arguments, property ordering, or invalidation. Do not apply its special
+  literal-as-delimiter rule to ordinary message or gump interpolation handlers.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -21,245 +24,64 @@ metadata:
       - migrate-property-lists
 ---
 
-# ModernUO Property Lists (Tooltips)
+# ModernUO Property Lists
 
-## When to Use
-- Implementing `GetProperties()` override
-- Working with `IPropertyList` or `ObjectPropertyList`
-- Customizing item or mobile tooltips
-- Using `[InvalidateProperties]` attribute
-- Adding cliloc-based text to items
+## Boundary
 
-## Key Rules
+Own client tooltip content, localization arguments, relative entry order, and
+refresh behavior. Ordinary messages, gumps, and packet strings use different
+handlers; route their formatting to `modernuo-string-handling`.
 
-1. **Always call `base.GetProperties(list)` first** in overrides
-2. **Use cliloc numbers** when possible (int IDs that map to localized strings)
-3. **String interpolation** works with `IPropertyList`, but its handler has special delimiter semantics: human text/string constants that should become arguments must be `{}` holes; only separators like `\t` should be bare literals
-4. **This is not the same as message/gump `RawInterpolatedStringHandler` APIs** -- normal literal text is correct there
-5. **`[InvalidateProperties]`** on `[SerializableField]` auto-refreshes tooltip on change
-6. **Call `InvalidateProperties()`** manually when non-serialized state changes tooltip
+## Workflow
 
-## IPropertyList Interface
+1. Identify the expected cliloc/raw text, argument count/order, era gate, desired
+   position, and state changes that should refresh the tooltip.
+2. Inspect `Item`/`Mobile` base property emission and a neighboring implementation.
+3. Use `GetProperties()` and call `base.GetProperties(list)` first for normal
+   appended entries. If the entry must immediately follow name/weight, override
+   `AddNameProperties()`, call its base first, then emit the entry.
+4. Encode arguments with the `IPropertyList` handler rules and use clilocs where
+   stable localized text exists.
+5. Add `[InvalidateProperties]` to generated serialized fields or call
+   `InvalidateProperties()` when non-generated/non-serialized display state
+   changes.
+6. Test entry number, arguments, relative order, era presence/absence, and refresh
+   behavior at the smallest reliable layer.
 
-```csharp
-public interface IPropertyList
-{
-    void Add(int number);                    // Cliloc number only
-    void Add(int number, string argument);   // Cliloc with ~1_val~ arg
-    void Add(string text);                   // Raw string (uses internal cliloc)
-    void Add(int number, int value);         // Cliloc with int arg
-    void AddLocalized(int value);            // Cliloc number as value
-    void AddLocalized(int number, int value); // Cliloc wrapper for cliloc
+## Guardrails
 
-    // String interpolation overloads
-    void Add(ref InterpolatedStringHandler handler);
-    void Add(int number, ref InterpolatedStringHandler handler);
-}
-```
+- In `IPropertyList` interpolation, bare literal text is a delimiter. Put human
+  text/string constants in holes; normally only `\t` remains bare:
+  `list.Add(1060658, $"{"Charges"}\t{charges}")`.
+- Do not copy that rule to normal `RawInterpolatedStringHandler` message/gump
+  APIs, where literal text is correct.
+- Pass values directly in holes; `.ToString()`, concatenation, pre-built strings,
+  ternaries, and LINQ formatting allocate or defeat handler binding.
+- When an argument is itself a cliloc, use `{number:#}` or `AddLocalized`, not a
+  string such as `"#1060000"`.
+- Do not append an entry when source/client ordering requires it between base
+  name properties and later equipment properties.
+- Avoid invalidating in tight loops; invalidate only when visible state changes.
 
-## Patterns
+## Output Contract
 
-### Basic GetProperties Override
-```csharp
-public override void GetProperties(IPropertyList list)
-{
-    base.GetProperties(list);  // ALWAYS call base first
+Return the emitted entry sequence (cliloc/raw, arguments, era gate), chosen hook,
+invalidation source, changed paths, and test evidence. For reviews, identify the
+exact malformed argument, ordering, or stale-tooltip risk.
 
-    list.Add(1060741, $"{_charges}");          // "charges: ~1_val~"
-    list.Add($"{"Quality: "}{_quality}");          // Raw string
-    list.Add(1060637, $"{_uses}\t{_maxUses}"); // "~1_val~ / ~2_val~"
-}
-```
+## Verification
 
-### Ordering: Insert Immediately After Name/Weight
+- Base entries remain present and custom entries appear in the required order.
+- Recorded arguments distinguish delimiters, text, values, and cliloc references.
+- Target-era and pre-era cases both pass when gated.
+- State changes rebuild the tooltip once; unchanged state does not churn it.
+- Focused property-list tests/build results are reported with actual scope.
 
-If a source or client reference says a custom item property belongs directly after the item's weight, do **not** append it at the end of `GetProperties()` after `base.GetProperties(list)`. `Item.GetProperties()` calls `AddNameProperties(list)` first, and `Item.AddNameProperties()` is where name, loot flags, quest item, and `AddWeightProperty(list)` are emitted. Override `AddNameProperties(IPropertyList list)`, call `base.AddNameProperties(list)`, then add the custom property there:
+## Reference Routing
 
-```csharp
-public override void AddNameProperties(IPropertyList list)
-{
-    base.AddNameProperties(list); // emits name/loot/weight
-
-    if (Core.HS)
-    {
-        list.Add(1150058); // Spell Focusing
-    }
-}
-```
-
-Add a focused property-list test that records entry numbers and asserts relative order (for example `Weight: 1 Stone` `1072788` before the custom cliloc, and the custom cliloc before Brittle/Mana/DCI/Strength/Durability). Also assert the era gate still suppresses the property before the target expansion.
-
-### Cliloc Arguments Format
-Cliloc strings use `~1_val~`, `~2_val~`, etc. as placeholders. Arguments are tab-separated:
-
-```csharp
-// Cliloc 1060637 = "~1_val~ / ~2_val~"
-list.Add(1060637, $"{current}\t{max}");
-
-// Cliloc 1072241 = "Contents: ~1_ITEMS~/~2_MAXITEMS~ items, ~3_WEIGHT~/~4_MAXWEIGHT~ stones"
-list.Add(1072241, $"{TotalItems}\t{MaxItems}\t{TotalWeight}\t{MaxWeight}");
-
-// Cliloc 1042971 = "~1_val~" (generic single argument)
-list.Add(1042971, $"{"Custom text here"}");
-```
-
-### String Literals Must Be Holes (CRITICAL)
-
-The interpolated string handler distinguishes **literals** (bare text between `{}` holes) from **holes** (values inside `{}`). Literals are delimiters. Holes are arguments. This matters because the property list system is also used for web rendering, which must tell arguments apart from delimiters.
-
-**String constants must always be wrapped as holes: `{"..."}`**
-
-```csharp
-// BAD — "Chances" becomes a literal/delimiter, not an argument
-list.Add(1060658, $"Chances\t{_charges}");
-
-// GOOD — "Chances" is a hole → argument ~1_val~
-list.Add(1060658, $"{"Chances"}\t{_charges}");
-```
-
-Real examples (`Teleporter.cs`):
-```csharp
-list.Add(1060658, $"{"Map"}\t{_mapDest}");       // "~1_val~: ~2_val~"
-list.Add(1060659, $"{"Coords"}\t{_pointDest}");
-list.Add(1060661, $"{"Range"}\t{_range}");
-```
-
-**Rule**: Only `\t` (argument separator) should be bare literal text. Everything else — including string constants — must be inside `{}` holes.
-
-### No `.ToString()` Inside Holes
-
-`IPropertyList`'s handler formats values directly via `ISpanFormattable.TryFormat` — no intermediate `string` allocation per hole. An explicit `.ToString()` defeats this:
-
-```csharp
-// BAD — .ToString() allocates a string the handler then re-buffers
-list.Add(1060658, $"{"Charges"}\t{_charges.ToString()}");
-
-// GOOD — handler formats _charges directly with no intermediate string
-list.Add(1060658, $"{"Charges"}\t{_charges}");
-```
-
-Same applies to `.String()` (TextDefinition), `.GetValue()`, etc. The full list of interpolation anti-patterns (ternaries, switch expressions, pre-built locals, `string.Format`, concat in hole, LINQ in hole) applies equally to `IPropertyList.Add($"...")`. See `dev-docs/string-handling.md` § "Interpolation Anti-Patterns" or `plugins/modernuo/skills/modernuo-string-handling/SKILL.md`.
-
-### Cliloc as Argument (Use `:#` Format Specifier)
-
-When an argument is itself a cliloc number, use the `:#` format specifier — **not** a `"#number"` string:
-
-```csharp
-// BAD — "#1060000" is a string, web renderers will display it literally
-list.Add(1050039, $"{m_Amount}\t{"#1060000"}");
-
-// GOOD — :# tells the handler this is a cliloc number to resolve
-list.Add(1050039, $"{m_Amount}\t{1060000:#}");
-```
-
-The `:#` format lets the handler (and other consumers like web renderers) know the value is a cliloc reference to resolve, not a raw number. Also available via `list.AddLocalized(number, clilocValue)`.
-
-### Looking Up Cliloc Text
-
-If you don't know what arguments a cliloc number expects, you can read the `cliloc.enu` binary file. Loading logic is in `Projects/Server/Localization/Localization.cs` → `LoadClilocs(string lang, string file)`. Ask the user where their `cliloc.enu` file is (typically in the UO client data directory).
-
-### Auto-Refresh with [InvalidateProperties]
-```csharp
-[SerializableField(0)]
-[InvalidateProperties]  // Auto-calls InvalidateProperties() when Charges changes
-[SerializedCommandProperty(AccessLevel.GameMaster)]
-private int _charges;
-```
-
-### Manual Refresh
-```csharp
-public void UseCharge()
-{
-    _charges--;
-    InvalidateProperties();  // Manually trigger tooltip refresh
-    this.MarkDirty();
-}
-```
-
-### Conditional Properties
-```csharp
-public override void GetProperties(IPropertyList list)
-{
-    base.GetProperties(list);
-
-    if (_charges > 0)
-        list.Add(1060741, $"{_charges}");
-
-    if (_owner != null)
-        list.Add($"{"Owned by: "}{_owner.Name}");
-
-    if (Core.AOS)  // Era-conditional properties
-        list.Add(1061170, $"{_imbueLevel}");  // "animal " ~1_val~
-}
-```
-
-### Mobile Properties
-```csharp
-public override void GetProperties(IPropertyList list)
-{
-    base.GetProperties(list);
-
-    if (Core.AOS && Faction != null)
-    {
-        list.Add(1060776, $"{Rank.Title}\t{Faction.Definition.PropName}");
-    }
-
-    if (DisplayChampionTitle)
-    {
-        var titleLabel = ChampionTitleSystem.GetChampionTitleLabel(this);
-        if (titleLabel > 0)
-            list.Add(titleLabel);
-    }
-}
-```
-
-## Common Cliloc Numbers
-
-| Number | Text | Usage |
-|---|---|---|
-| 1042971 | `~1_val~` | Generic single argument |
-| 1060741 | `charges: ~1_val~` | Charge count |
-| 1060637 | `~1_val~ / ~2_val~` | Current/max values |
-| 1060658 | `~1_val~: ~2_val~` | Key: value pair |
-| 1050044 | `~1_ITEMS~ items, ~2_WEIGHT~ stones` | Container contents |
-| 1072241 | `Contents: ~1~/~2~ items, ~3~/~4~ stones` | ML container |
-| 1060776 | `~1_val~, ~2_val~` | Two comma-separated values |
-| 1061170 | `animal lore ~1_val~` | Taming info |
-| 1053099 | `damage ~1_val~ - ~2_val~` | Damage range |
-
-## ObjectPropertyList Internals
-
-- Packet ID: 0xD6
-- Hash-based change detection -- only sends if content actually changed
-- `InvalidateProperties()` rebuilds the list and compares hash
-- Uses `STArrayPool<char>` for string building (zero GC)
-- Global toggle: `ObjectPropertyList.Enabled`
-
-## Anti-Patterns
-
-- **Forgetting `base.GetProperties(list)`**: Loses default name/weight display
-- **Not using cliloc**: Raw strings don't get localized
-- **Excessive rebuilds**: Don't call `InvalidateProperties()` in tight loops
-- **Assuming tooltip support**: Check `ObjectPropertyList.Enabled` if needed
-
-## Real Examples
-- Item properties: `Projects/Server/Items/Item.cs` (AddNameProperties, GetProperties)
-- Mobile properties: `Projects/UOContent/Mobiles/PlayerMobile.cs` (GetProperties)
-- Container properties: `Projects/Server/Items/Container.cs` (era-conditional display)
-- Interface: `Projects/Server/PropertyList/IPropertyList.cs`
-- Implementation: `Projects/Server/PropertyList/ObjectPropertyList.cs`
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/property-lists.md` - Complete property list documentation
-- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` - [InvalidateProperties] on fields
-- `plugins/modernuo/skills/modernuo-era-expansion/SKILL.md` - Era-conditional properties
+- Read [property-list formatting and ordering](references/property-list-formatting.md)
+  for concrete cliloc/handler examples.
+- Read [recording test doubles](references/recording-property-list-test-doubles.md)
+  only when `IPropertyList` interface additions break private test doubles.
+- Load `modernuo-serialization` for generated invalidation and
+  `modernuo-era-expansion` for expansion gates.

@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.0.0 - 2026-07-12
+
+- Replaced overlapping RebirthUO/direct-ModernUO issue routes with three public
+  phases: `modernuo-issue-create`, `modernuo-issue-research`, and
+  `modernuo-issue-implement`.
+- Made GitHub repository resolution project-configured: issue workflows now read
+  the exact repository from applicable `AGENTS.md` instructions and fail closed
+  when it is missing, ambiguous, or mismatched.
+- Added strict `IntakePacket`, `ResearchPacket`, and `ImplementationResult`
+  handoffs. Research and implementation stop for unresolved behavior instead
+  of selecting defaults.
+- Added `uo-official-evidence`; only OSI/EA/Broadsword official material can
+  establish expected gameplay. Community, client, emulator, and repository
+  evidence remain separately classified.
+- Added repository-agnostic `modernuo-codebase` navigation and moved
+  cross-system product effects into `uo-living-world-review`.
+- Removed 12 duplicate, project-specific, or broad routing skills and retired
+  ticket/session snapshots and duplicate property case files.
+- Consolidated test and verification references into portable, current
+  contracts; removed hard-coded workstation paths and repository targets.
+- Made the complete payload and generated contracts English-only, updated
+  trigger routing, and regenerated the 66-skill catalog and Yao artifacts.
+
 ## 1.21.0 - 2026-07-12
 
 - Rebased the plugin onto `origin/main`, superseding the outdated automated 1.20.0 Hermes sync with the authoritative local skill-portfolio overhaul.

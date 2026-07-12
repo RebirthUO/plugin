@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "RunUO to ModernUO Commands and Events",
+    "inputs": [
+      "runuo to modernuo commands and events",
+      "migrate commands events"
+    ],
+    "trigger_actions": [
+      "Migrate this RunUO runuo to modernuo commands and events code to current ModernUO conventions.",
+      "I need an evidence-backed plan for runuo to modernuo commands and events in the configured ModernUO-based repository.",
+      "Help me implement a runuo to modernuo commands and events change and identify the focused verification.",
+      "Audit this runuo to modernuo commands and events diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "migrate foundation",
+      "modernuo commands targeting",
+      "modernuo events",
+      "modernuo configuration",
+      "modernuo code audit",
+      "migrate persistence"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "runuo to modernuo commands and events",
+        "migrate commands events"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

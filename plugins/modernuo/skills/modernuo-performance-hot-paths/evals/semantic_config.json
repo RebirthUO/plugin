@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Performance Hot Paths",
+    "inputs": [
+      "modernuo performance hot paths"
+    ],
+    "trigger_actions": [
+      "Review this modernuo performance hot paths task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo performance hot paths in the configured ModernUO-based repository.",
+      "Help me implement a modernuo performance hot paths change and identify the focused verification.",
+      "Audit this modernuo performance hot paths diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo threading",
+      "modernuo string handling",
+      "modernuo regions",
+      "modernuo pathfinding",
+      "modernuo spatial range geometry",
+      "modernuo networking",
+      "modernuo content patterns"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo performance hot paths"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

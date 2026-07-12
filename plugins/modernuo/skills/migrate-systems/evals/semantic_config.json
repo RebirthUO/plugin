@@ -1,0 +1,58 @@
+{
+  "optimizer_hints": {
+    "capability": "RunUO to ModernUO Multi-File System Migration",
+    "inputs": [
+      "runuo to modernuo multi-file system migration",
+      "migrate systems"
+    ],
+    "trigger_actions": [
+      "Migrate this RunUO runuo to modernuo multi-file system migration code to current ModernUO conventions.",
+      "I need an evidence-backed plan for runuo to modernuo multi-file system migration in the configured ModernUO-based repository.",
+      "Help me implement a runuo to modernuo multi-file system migration change and identify the focused verification.",
+      "Audit this runuo to modernuo multi-file system migration diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "migrate foundation",
+      "migrate persistence",
+      "migrate serialization",
+      "migrate commands events",
+      "modernuo configuration",
+      "modernuo events",
+      "modernuo lifecycle cleanup",
+      "modernuo code audit"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "runuo to modernuo multi-file system migration",
+        "migrate systems"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

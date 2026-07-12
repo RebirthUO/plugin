@@ -1,0 +1,53 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Champions, CannedEvil, and Treasures",
+    "inputs": [
+      "uo champions, cannedevil, and treasures",
+      "uo champions cannedevil treasures"
+    ],
+    "trigger_actions": [
+      "Review this uo champions, cannedevil, and treasures task and give me the repository-specific checks.",
+      "Compare the requested uo champions, cannedevil, and treasures behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo champions, cannedevil, and treasures change and identify the focused verification.",
+      "Audit this uo champions, cannedevil, and treasures diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo world facets regions",
+      "uo loot generation artifacts",
+      "uo combat pipeline"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo champions, cannedevil, and treasures",
+        "uo champions cannedevil treasures"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

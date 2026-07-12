@@ -1,6 +1,10 @@
 ---
 name: modernuo-server-lifecycle
-description: Use when changing or reviewing ModernUO startup, bootstrap phases, reflection lifecycle hooks, first-boot prompts, Configure/Initialize ordering, server shutdown, world load/save events, or runtime loop behavior. Use before editing ConfigurePrompts, Configure, Initialize, CallPriority, ServerConfiguration, AssemblyHandler, Core.Setup, RunEventLoop, NetState startup, PingServer startup, or EventSink lifecycle wiring.
+description: >
+  Use when changing or reviewing ModernUO startup/shutdown phases,
+  ConfigurePrompts/Configure/Initialize ordering, CallPriority, world load/save
+  events, networking startup, or the event loop. Do not use for per-entity
+  deletion cleanup; route that to modernuo-lifecycle-cleanup.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,86 +26,60 @@ metadata:
 
 # ModernUO Server Lifecycle
 
-## Purpose
+## Boundary
 
-Use this skill to make startup, shutdown, reflection hook, first-boot prompt, and event-loop changes without breaking boot order, world readiness, logging boundaries, or test/runtime assumptions.
+Own process bootstrap, reflection hook ordering, first-boot interaction, world
+readiness, shutdown, and runtime-loop placement. The production sequence, not a
+partial test fixture, is authoritative.
 
-## When to Use
+## Workflow
 
-- Editing `Projects/Server/Main.cs`, `ServerConfiguration`, `AssemblyHandler`, `EventSink`, `World`, `NetState`, or startup/shutdown code.
-- Adding or moving `ConfigurePrompts()`, `Configure()`, `Initialize()`, or `[CallPriority]`.
-- Adding first-boot prompts, startup validation, boot-time cache work, server-start hooks, or world-save/world-load behavior.
-- Debugging behavior that differs between production startup and xUnit fixtures.
+1. Trace the current production path through configuration load, assembly load,
+   `ConfigurePrompts`, logging, serialization verification/timer setup,
+   `Configure`, tile/region/world load, `Initialize`, networking,
+   `ServerStarted`, and `RunEventLoop()`.
+2. Classify the work by earliest safe phase:
+   - `ConfigurePrompts()`: self-gated first-boot console input only.
+   - `Configure()`: commands, settings, event subscriptions, and pre-world wiring.
+   - `Initialize()`: work requiring tile data, regions, or loaded world entities.
+   - lifecycle events: behavior tied to a completed load/save/start/stop boundary.
+3. Inspect `CallPriority`, explicit calls, and neighboring hooks. Do not depend on
+   reflection enumeration or same-priority order.
+4. Keep prompts and their later world-dependent work separate; make headless and
+   redirected-input behavior non-blocking.
+5. Verify production startup behavior as well as targeted fixture tests.
 
-## Key Rules
+## Guardrails
 
-- `ConfigurePrompts()` runs after assemblies load and before Serilog's first log line; use `Console`, self-gate, and skip redirected input.
-- `Configure()` runs before world load; use it for command registration, settings, event subscriptions, and pre-world wiring.
-- `Initialize()` runs after tile data, regions, and world entities are loaded; use it for world-dependent validation, decoration, generation, and cache work.
-- Do not depend on same-priority hook order. Use `[CallPriority(n)]`, explicit calls, or event wiring when order matters.
-- Do not touch `World` entities, tile matrix data, or map-dependent content from `ConfigurePrompts()`.
-- Treat tests carefully: fixture startup calls a curated subset and does not prove the full `Core.Setup()` ordering or first-boot console behavior.
+- `ConfigurePrompts()` runs before normal logging; use the established console
+  path, self-gate, and skip redirected input. It must not touch world entities,
+  regions, tile matrices, or map-dependent content.
+- Do not prompt from `Configure()` or `Initialize()` where it can block services
+  or interleave with runtime logging.
+- Use explicit priority/calls/events when order matters; same-priority hooks have
+  no reliable relative order.
+- Tests may invoke only a curated startup subset. A passing fixture does not prove
+  first-boot console behavior or full `Core.Setup()` ordering.
+- Keep post-snapshot archive work and background serialization boundaries with
+  their owning lifecycle event.
 
-## Patterns
+## Output Contract
 
-### First-Boot Prompt Plus Later Work
+Return the chosen phase, dependencies available there, ordering mechanism,
+headless/test behavior, changed paths, and verification. Review findings must
+name the exact phase mismatch and consequence.
 
-```csharp
-public static void ConfigurePrompts()
-{
-    if (ServerConfiguration.GetSetting("my.feature", (string)null) != null || Console.IsInputRedirected)
-    {
-        return;
-    }
+## Verification
 
-    Console.Write("Enable my feature? [y/N] ");
-    var enabled = Console.ReadLine()?.Trim().StartsWith("y", StringComparison.OrdinalIgnoreCase) == true;
-    ServerConfiguration.SetSetting("my.feature", enabled);
-}
+- Fresh configuration, existing configuration, and redirected/headless input do
+  not block or repeat prompts.
+- World/tile/region consumers run only after their dependencies are ready.
+- Hook order is explicit where required.
+- Targeted tests and a production startup/shutdown smoke check are distinguished.
 
-public static void Initialize()
-{
-    if (ServerConfiguration.GetSetting("my.feature", false))
-    {
-        // World, regions, tile matrix, and content entities are available here.
-    }
-}
-```
+## Reference Routing
 
-### Startup Phase Check
-
-Before moving startup code, map it to the production sequence: `ServerConfiguration.Load()`, `AssemblyHandler.LoadAssemblies(...)`, `ConfigurePrompts`, first Serilog log, `VerifySerialization()`, `Timer.Init(...)`, `Configure`, tile/region load, `World.Load()`, `Initialize`, networking, `ServerStarted`, `RunEventLoop()`.
-
-## Anti-Patterns
-
-- Logging with Serilog inside `ConfigurePrompts()` before the logging pipeline is live.
-- Prompting from `Configure()` or `Initialize()`, where console output can interleave with logs or block headless boots.
-- Reading world entities, regions, tile matrices, or client data before their phase has loaded them.
-- Assuming xUnit fixture success proves first-boot prompt order, async console behavior, or production `Main.cs` startup order.
-- Adding same-priority startup hooks that silently depend on execution order.
-
-## Real Examples
-
-- `Projects/Server/Main.cs` runs `AssemblyHandler.Invoke("ConfigurePrompts")` before first logger output, then `Configure`, then `World.Load()`, then `Initialize`.
-- `Projects/Server/Configuration/ServerConfiguration.cs` owns engine first-boot prompts and uses `[CallPriority(0)]` so map selection precedes content prompts.
-- `Projects/UOContent/Engines/Pathing/PathCacheCommands.cs` stores `pathfinding.prebakeMaps` in `ConfigurePrompts()` and bakes in `Initialize()` because baking needs tile data.
-- `Projects/UOContent.Tests/Fixtures/TestServerInitializer.cs` manually calls selected startup pieces; keep fixture coverage separate from first-boot runtime verification.
-
-## How to Report Issues
-
-Report lifecycle findings with the phase, path, risk, and verification boundary:
-
-```text
-[LIFECYCLE] {severity}: {phase or event} - {issue}
-  File: {path}:{line}
-  Why it matters: {world readiness, logging, prompt, ordering, or test/runtime gap}
-  Suggested check: {targeted test, first-boot runtime check, or dotnet build}
-```
-
-## See Also
-
-- `dev-docs/server-lifecycle.md` - canonical startup phase guide.
-- `dev-docs/threading-model.md` - event loop, async continuation, and world save threading model.
-- `plugins/modernuo/skills/modernuo-configuration/SKILL.md` - configuration setting patterns.
-- `plugins/modernuo/skills/modernuo-events/SKILL.md` - `EventSink` and event subscription patterns.
-- `plugins/modernuo/skills/modernuo-threading/SKILL.md` - single-threaded game loop constraints.
+- Read `dev-docs/server-lifecycle.md` before moving code between phases.
+- Load `modernuo-configuration` for settings, `modernuo-events` for lifecycle
+  events, `modernuo-threading` for loop/continuation behavior, and
+  `modernuo-world-saves-archives` for post-snapshot backup work.

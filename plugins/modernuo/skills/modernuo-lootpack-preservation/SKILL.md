@@ -1,6 +1,10 @@
 ---
 name: modernuo-lootpack-preservation
-description: Use when editing or migrating ModernUO/RebirthUO creature loot, especially GenerateLoot() and AddLoot(LootPack.*) calls. Preserves source-derived loot entries unless the user explicitly approves an economy-changing replacement.
+description: >
+  Use when editing or migrating ModernUO-based creature loot that contains
+  GenerateLoot, AddLoot(LootPack.*), PackGold, PackItem, or loot-policy helpers.
+  Preserve source-derived pack behavior unless the request explicitly authorizes
+  an economy change; use uo-loot-generation-artifacts for new loot-system design.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -20,86 +24,66 @@ metadata:
 
 # ModernUO LootPack Preservation
 
-## Overview
+## Boundary
 
-Use this skill as the economy-safety gate for creature loot edits. `AddLoot(LootPack.*[, count])` calls are not formatting noise: they encode gold, magic-item, gem, reagent, and artifact-roll behavior that affects shard inflation, farming value, PvM risk/reward, and source-era parity.
+Treat existing or migration-source `LootPack` calls as economy behavior, not
+formatting. This skill guards unrelated creature work from silently changing
+gold variance, item rolls, gems, reagents, artifacts, or farming value. It does
+not design a new loot system.
 
-The default stance is preservation. Replace a source-derived loot block only when the user explicitly requests the economy change or confirms it after seeing the behavioral difference.
+## Workflow
 
-## When to Use
+1. Record every scoped loot call, pack name, count, order, special drop, era
+   branch, and source tier before editing.
+2. Implement unrelated stats, skills, AI, abilities, or serialization while
+   leaving that loot surface unchanged.
+3. If prose and source code disagree, describe the concrete behavior difference
+   and recommend a path. Generic prose such as "gold and magic items" is not a
+   replacement recipe.
+4. Ask for confirmation before removing or replacing source-derived calls unless
+   the request already authorizes that exact economy change.
+5. Implement only the confirmed delta and compare the resulting loot block with
+   the recorded baseline.
 
-- Migrating RunUO/ServUO creature code into ModernUO/RebirthUO.
-- Editing `GenerateLoot()`, constructor loot blocks, `AddLoot(LootPack.*)`, `PackGold(...)`, `PackItem(...)`, or named loot-policy helpers.
-- Reconciling source code with UOGuide/UO.com prose such as "700 to 1000 gold and magic items".
-- Reviewing a creature stat, ability, or serialization change that happens near loot code.
-- Proposing era-specific loot policy conversions, such as Tokuno magic-item helper policies.
+## Guardrails
 
-Don't use this as the main loot-design reference for brand-new systems; load `uo-loot-generation-artifacts` for loot-system design and this skill only for the preservation gate.
+- Preserve count arguments: `AddLoot(LootPack.Gems, 2)` is not equivalent to the
+  one-roll form.
+- Replacing several packs with `PackGold(min, max)` changes more than the gold
+  range; it can remove item, gem, reagent, and variance behavior.
+- Do not introduce a named policy helper as a silent substitute for source code.
+- State the relevant era/ruleset before calling a guide-alignment canonical.
+- Direct replacement is allowed when explicitly requested, when designing a new
+  profile with no source-derived block, or when the user asked to fix proven
+  dead, duplicated, uncompilable, or out-of-era loot.
 
-## Core Rule
-
-Preserve source-derived `AddLoot(LootPack.*[, count])` calls by default.
-
-Treat existing repo code, migration source code, and source-derived snippets as behavior evidence. Do not replace, remove, collapse, or reinterpret `LootPack` entries unless the user explicitly asks to add, remove, replace, align with exact source-gold values, or use a named policy conversion.
-
-## Confirmation Gate
-
-When source code and a guide page suggest different loot shapes, stop before editing the loot behavior. Give a concise recommendation and ask whether that is the intended solution.
-
-Use this gate for changes like:
-
-```csharp
-AddLoot(LootPack.FilthyRich);
-AddLoot(LootPack.Rich);
-AddLoot(LootPack.Gems, 2);
-```
-
-being replaced by:
-
-```csharp
-PackGold(700, 1000);
-TokunoMagicItemPolicy.PackUOGuideListedMagicItem(this);
-```
-
-That replacement changes economy and drop behavior. UOGuide prose such as "700 to 1000 Gold and Magic Items" is not enough by itself to justify removing source `LootPack` entries.
-
-## Recommended Workflow
-
-1. Identify every source-derived loot call in the scoped `GenerateLoot()` or constructor loot block, including pack names, counts, order, and nearby special drops.
-2. Preserve those calls exactly while implementing unrelated stats, skills, abilities, resistances, names, body values, or serialization work.
-3. If a guide lists exact gold or generic "magic items" that conflicts with the source `LootPack` block, explain the conflict and recommend one path.
-4. Ask the user to confirm before changing the loot surface unless the original request already explicitly authorizes that exact loot change.
-5. After confirmation, implement only the confirmed loot change and leave unrelated `LootPack` entries untouched.
-6. Verify the diff still contains the expected loot calls or the confirmed replacement, then report the economic behavior change plainly.
-
-## Recommendation Format
-
-Use a short recommendation that names the behavior difference:
+## Confirmation Shape
 
 ```text
-Recommendation: preserve the source LootPack block for now. Replacing it with PackGold(700, 1000) plus TokunoMagicItemPolicy would enforce UOGuide exact-gold prose, but it removes the source pack rolls and changes economy/drop behavior. Should I make that replacement, or keep the source LootPack calls?
+Recommendation: preserve the source LootPack block. Replacing it with {new form}
+would change {gold variance/item rolls/gems/reagents/artifacts}. Should that
+economy change be made, or should the source calls remain?
 ```
 
-If the user already requested the exact replacement, do not ask again. Implement the requested replacement and note that it intentionally changes source loot behavior.
+## Output Contract
 
-## Direct Implementation Is Allowed When
+Return the before/after loot calls, source/era used, whether confirmation was
+required and obtained, and a plain-language statement of any drop/economy
+change. Do not describe an intentional loot replacement as only a refactor.
 
-- The user explicitly requests UOGuide alignment, exact-gold replacement, removed loot, added loot, or a named policy conversion.
-- The scoped creature has no source-derived loot block, and the task is to create a new loot profile.
-- A `LootPack` call is clearly dead, duplicated by typo, uncompilable, outside the scoped era, or contradicted by stronger source evidence, and the user asked for cleanup or parity correction.
+## Verification
 
-## Common Pitfalls
+- Expected `AddLoot(LootPack.*[, count])` calls remain unless explicitly replaced.
+- No `PackGold` or policy helper silently substitutes for a pack.
+- Special drops and era branches remain intact outside the approved scope.
+- The diff and focused build/test are reported with their actual scope.
 
-1. **Treating generic source prose as a replacement recipe.** "Magic Items" does not imply a specific ModernUO `LootPack` or custom helper without an explicit policy decision.
-2. **Collapsing multiple pack rolls into one exact `PackGold`.** This removes variance, item rolls, and often gem/reagent rolls; it is an economy change, not a refactor.
-3. **Editing loot while doing unrelated creature work.** Stats, skills, AI, abilities, and serialization can usually be fixed while leaving loot untouched.
-4. **Forgetting count arguments.** `AddLoot(LootPack.Gems, 2)` and `AddLoot(LootPack.Gems)` are different drop surfaces.
-5. **Calling a UOGuide alignment canonical without era scope.** Name the era/ruleset and source tier before replacing loot behavior.
+## Reference Routing
 
-## Verification Checklist
-
-- [ ] Source `AddLoot(LootPack.*)` calls are still present unless an explicit user-approved replacement removed them.
-- [ ] Counts such as `AddLoot(LootPack.Gems, 2)` are preserved or intentionally changed.
-- [ ] `PackGold(...)` was not added as a substitute for a pack unless explicitly requested or confirmed.
-- [ ] Policy helpers such as `TokunoMagicItemPolicy.PackUOGuideListedMagicItem(this)` were not introduced as silent replacements.
-- [ ] The final response names any loot behavior change as economy/drop behavior, not only as a mechanical refactor.
+- Read [economy-change examples](references/economy-change-examples.md) when a
+  guide and source-derived pack block imply different drop shapes.
+- Load `uo-loot-generation-artifacts` for brand-new generation, artifact, runic,
+  or distribution design.
+- Load `modernuo-era-expansion` when the decision differs by expansion.
+- Inspect the current creature, its migration source, and the active loot-pack
+  implementation before relying on guide prose.

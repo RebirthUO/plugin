@@ -1,4 +1,4 @@
-# UOContent Test Fixture Pitfalls (session-derived)
+# UOContent Test Fixture Pitfalls
 
 Concrete pitfalls hit while writing regression tests under `Projects/UOContent.Tests/`.
 The umbrella skill `modernuo-regression-testing` says "register a minimal

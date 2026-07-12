@@ -1,6 +1,7 @@
 # Custom Module Smoke Tests and Post-Commit Guard
 
-Use this when a ModernUO/RebirthUO custom content module PR is already committed/pushed but Hermes asks for fresh verification evidence on the changed paths.
+Use this when a ModernUO-based custom content module change requires fresh
+post-edit verification evidence on its changed paths.
 
 ## Minimal no-op module marker
 
@@ -34,7 +35,7 @@ Keep the fixture lightweight: set `Core.ApplicationAssembly`, load mocked `Serve
 
 ## Post-commit Hermes guard script shape
 
-When the branch is already committed and pushed, validate the committed delta rather than an empty worktree diff. Create a temporary script under `C:/Users/Jsiem/AppData/Local/Temp` with prefix `hermes-verify-`, run it, then remove it. If Hermes repeats the guard after a successful run, treat it as a request for a **fresh evidence bundle**, not something to debate: create a new `hermes-verify-*` script and rerun the committed-path checks with a visible timestamp.
+When the branch is already committed and pushed, validate the committed delta rather than an empty worktree diff. Create a temporary script through the OS temp directory (for example, `tempfile.mkstemp(prefix="hermes-verify-", suffix=".sh")`), run it, then remove it. If Hermes repeats the guard after a successful run, treat it as a request for a **fresh evidence bundle**: create a new `hermes-verify-*` script and rerun the committed-path checks with a visible timestamp.
 
 The script should print:
 

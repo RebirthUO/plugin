@@ -1,6 +1,10 @@
 ---
 name: modernuo-skill-discovery
-description: Use when asked to analyze the ModernUO codebase, inspect installed or attached skills, compare repository patterns against existing skill coverage, and discover missing or under-covered skills that would improve development, review, migration, onboarding, or automation quality.
+description: >
+  Use when auditing or curating ModernUO skill-library coverage against current
+  repository patterns, installed skills, developer docs, and source domains.
+  Prefer evidence-backed patches to existing skills; do not create, merge,
+  rename, or delete skills unless the request explicitly authorizes it.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -12,8 +16,7 @@ metadata:
     workflow_tier: support
     tags: [modernuo, skills, discovery, coverage, learning]
     related_skills:
-      - hermes-agent-skill-authoring
-      - uo-modernuo-workflow
+      - modernuo-codebase
       - modernuo-code-audit
       - modernuo-content-patterns
       - modernuo-lifecycle-cleanup
@@ -23,307 +26,67 @@ metadata:
 
 # ModernUO Skill Discovery
 
-## Overview
+## Boundary
 
-Use this skill to audit ModernUO repository patterns against every discoverable skill source and identify evidence-backed gaps in the skill library. Be conservative: inventory existing skills first, read current repository evidence, compare coverage semantically, and recommend updates before proposing new skills.
-
-Do not edit files unless explicitly asked. Do not delete, rename, merge, collapse, or rewrite existing skills unless explicitly asked. Do not run destructive commands.
+Determine which recurring ModernUO jobs are covered, partial, duplicated, or
+missing, and improve the smallest durable skill surface. This skill is read-only
+unless the user asks for edits. It does not authorize repository or GitHub
+mutation, nor speculative skill creation.
 
 ## Workflow
 
-1. Inventory skills before scanning for new candidates.
-2. Inspect repository guidance, developer docs, conventional skill folders, and ModernUO source domains.
-3. Extract each discovered skill's name, source location, source type, description, covered systems, key rules, anti-patterns, examples, related documentation, overlap, gaps, and whether it is generic or tool-specific.
-4. Compare repository patterns against skill coverage by meaning, not only by filename or heading.
-5. Propose new skills only when repository evidence shows a distinct domain with lifecycle rules, APIs, anti-patterns, or recurring code patterns.
-6. Prefer updating an existing skill when the gap is small.
-7. Mark uncertain recommendations as `research needed`.
-
-## Skill Library Curation Workflow
-
-Use this subsection when the user asks to review, curate, sharpen, optimize, or clean up the UO/ModernUO skill library.
-
-1. **Patch before creating.** Treat class-level skills as the target shape. Prefer updating the loaded skill or existing umbrella before adding narrow one-session skills.
-2. **Audit mechanically, then read selectively.** Inventory `SKILL.md` files for parse errors, missing core metadata, overlong descriptions, broken `related_skills`, weak triggers, and obvious structure gaps; then read representative/high-risk skills before editing so the curation is not only regex-driven.
-3. **Separate destructive decisions.** Patch metadata, headings, references, trigger wording, and verification checklists directly when safe. Do not delete, absorb, or rename skills without explicit user confirmation; instead report consolidation candidates and the target umbrella.
-4. **Keep session detail out of the root skill.** Put reusable but bulky transcripts, scripts, or source banks under `references/`, `scripts/`, or `templates/`, and add a one-line pointer from `SKILL.md`.
-5. **Validate after edits.** Re-run a metadata/link audit and load a few touched skills with `skill_view` to verify the runtime can still resolve them. Final reporting should include counts, what changed, what was intentionally not deleted, and any remaining non-UO/global library issues left alone.
-
-## Skill Sources To Inspect
-
-Inspect all available skill sources. Do not assume only one skill directory exists.
-
-- Skills installed in the current assistant or AI agent environment, if discoverable.
-- Skills attached to the current task or session.
-- Skills bundled with the project repository.
-- Skill files referenced by project documentation.
-- Conventional repository directories: `skills/`, `.skills/`, `dev-docs/skills/`, `dev-docs/claude-skills/`, `.claude/skills/`, `docs/skills/`, `tooling/skills/`, `agent/skills/`, `agents/skills/`.
-
-Inspect these ModernUO locations when available:
-
-- `README.md`
-- `CLAUDE.md`
-- `AGENTS.md`
-- `GEMINI.md`
-- `.cursorrules`
-- `dev-docs/`
-- `docs/`
-- `skills/`
-- `.skills/`
-- `dev-docs/skills/`
-- `dev-docs/claude-skills/`
-- `.claude/skills/`
-- `Projects/Server/`
-- `Projects/UOContent/`
-- `Projects/Tests/`
-- `Projects/BuildTool/`
-
-## Inventory Commands
-
-Use the commands below from the repository root when the paths exist. Prefer `rg` for speed. Use platform equivalents only when the shell does not support these commands.
-
-```bash
-find . -type f \( -iname '*skill*.md' -o -path '*/skills/*' -o -path '*/.skills/*' \) | sort
-find . -type d \( -iname 'skills' -o -iname '.skills' -o -iname '*skills*' \) | sort
-rg -n "^(name:|description:|# |## |---)" . --glob '*.md'
-rg -n "skill|skills|agent|assistant|instructions|onboarding|workflow" README.md CLAUDE.md AGENTS.md GEMINI.md .cursorrules dev-docs docs 2>/dev/null
-```
-
-For each discovered skill, record:
-
-- Skill name.
-- Source location.
-- Source type: `installed`, `attached`, `repository`, `referenced`, or `unknown`.
-- Description and trigger conditions.
-- Covered systems.
-- Key rules.
-- Anti-patterns.
-- Real examples.
-- Related documentation.
-- Overlap with other skills.
-- Missing examples or trigger conditions.
-- Whether the skill is generic or tool-specific.
-- Whether the skill should be updated, replaced, generalized, or left unchanged.
-
-## Developer Docs Scan
-
-Scan developer docs for:
-
-- Rules.
-- Anti-patterns.
-- `must`, `never`, `always`, `critical`, or `warning` statements.
-- Code examples.
-- Migration notes.
-- Performance-sensitive patterns.
-- Serialization or save-compatibility guidance.
-- Agent-specific instructions.
-- Project-specific terminology.
-- Repeated developer workflows.
-
-```bash
-find dev-docs docs -type f -name '*.md' 2>/dev/null | sort
-rg -n "MUST|Must|must|Never|never|Always|always|WARNING|Warning|CRITICAL|Critical|Anti-Pattern|Pattern|Rule|rule|migration|serialization|performance|hot path|allocation" dev-docs docs 2>/dev/null
-```
-
-## Codebase Scan
-
-Scan source code for domains that may deserve skill coverage:
-
-- Server lifecycle and startup.
-- Serialization and migrations.
-- Items, mobiles, creatures.
-- Skills and abilities.
-- Spells and combat.
-- AI and pathfinding.
-- Gumps and UI.
-- Commands and targeting.
-- Regions and maps.
-- Events and schedulers.
-- Timers.
-- Networking and packets.
-- Accounts and persistence.
-- Housing.
-- Vendors.
-- Guilds and factions.
-- Crafting.
-- Loot.
-- Spawners.
-- Quests.
-- Localization and cliloc handling.
-- Logging and diagnostics.
-- Memory, pooling, and string handling.
-- Tests, benchmarks, build tooling, and release tooling.
-
-Use representative searches:
-
-```bash
-find Projects -maxdepth 3 -type d | sort
-rg --files Projects | sed 's#^Projects/##' | cut -d/ -f1-3 | sort | uniq -c | sort -nr | head -100
-rg -n "class .*: .*" Projects/Server Projects/UOContent
-rg -n "class .*: (Item|Mobile|BaseCreature|BaseWeapon|BaseArmor|Spell|Gump|StaticGump|DynamicGump|Region|Packet|GenericPersistence)" Projects
-rg -n "\[(SerializationGenerator|SerializableField|SerializableProperty|Constructible|AfterDeserialization|CommandProperty|SerializedCommandProperty|Usage|ConfigProperty|TypeAlias)\]" Projects
-rg -n "(OnThink|OnMovement|OnDoubleClick|OnDragDrop|OnDelete|OnAfterDelete|Serialize\(|Deserialize\(|Configure\(|Initialize\(|BuildLayout|OnResponse)" Projects
-rg -n "(Console\.WriteLine|Console\.Write|Task\.Run|new Thread|ThreadPool\.QueueUserWorkItem|lock\s*\(|volatile |ConcurrentDictionary|World\.Mobiles|World\.Items|ArrayPool\.Shared|new List<|StringBuilder)" Projects
-rg -n "(BaseAI|Pathfind|AStar|Combatant|Damage|SpellHelper|SkillCheck|BaseVendor|BaseHouse|Quest|Spawner|Loot|Localization|cliloc|BuffInfo|ContextMenu|Notoriety|Faction|Guild|Account|CraftSystem|HarvestSystem)" Projects
-```
-
-## Coverage Classification
-
-Use these exact labels:
-
-- `covered`: An existing skill clearly covers the domain with accurate triggers, rules, and examples.
-- `partial`: An existing skill mentions the domain but lacks important rules, examples, or activation conditions.
-- `missing`: No existing skill covers the domain well.
-- `duplicate`: A proposed skill would overlap too much with an existing skill.
-- `vendor-specific but usable`: A skill is tied to a specific tool or agent name, but its guidance is still relevant.
-- `needs generalization`: A skill contains useful project guidance but should be rewritten in neutral language.
-- `research needed`: There is evidence, but not enough to safely draft rules.
-
-If an existing skill is tool-specific but its content is generally useful, classify the content neutrally and avoid recommending a duplicate generic replacement unless there is a clear maintenance reason.
-
-## Priority Labels
-
-Use these exact priorities for proposed skills:
-
-- `P0`: Critical. High risk, frequent edits, possible save corruption, crash, exploit, data loss, severe performance regression, or client-breaking behavior.
-- `P1`: High value. Common development area with complex conventions and likely AI agent mistakes.
-- `P2`: Medium value. Useful for onboarding or maintenance but lower risk.
-- `P3`: Low value. Niche, rare, speculative, or better handled inside another skill.
-
-## Recommendation Rules
-
-- Do not invent missing skills from intuition.
-- Ground every proposed skill in repository evidence.
-- Use exact file paths and line numbers where possible.
-- Include `rg` counts or representative matches when useful.
-- Compare against all discoverable installed, attached, bundled, referenced, and repository-provided skills.
-- Recommend a new skill only when the domain has distinct lifecycle rules, APIs, anti-patterns, or recurring code patterns.
-- Prefer updating an existing skill when the gap is small.
-- Put uncertain candidates under `research needed`.
-- Put overlapping candidates under `Not Recommended`.
-
-## Final Report
-
-Use this structure for the final report:
-
-```markdown
-# ModernUO Skill Discovery Report
-
-## Summary
-
-- Installed skills reviewed:
-- Attached skills reviewed:
-- Repository skills reviewed:
-- Referenced skills reviewed:
-- Developer docs reviewed:
-- Code domains scanned:
-- Candidate new skills:
-- Existing skills needing updates:
-- Existing skills needing neutralization/generalization:
-- Highest-value gap:
-
-## Skill Inventory
-
-| Skill | Source | Type | Description | Covered Domain | Notes |
-|---|---|---|---|---|---|
-
-Source type must be one of:
-- installed
-- attached
-- repository
-- referenced
-- unknown
-
-## Existing Skill Coverage
-
-| Skill | Covered Domain | Evidence | Coverage Quality | Notes |
-|---|---|---|---|---|
-
-Coverage quality must be one of:
-- covered
-- partial
-- duplicate
-- vendor-specific but usable
-- needs generalization
-- research needed
-
-## Domain Coverage Matrix
-
-| Domain | Evidence | Existing Skill Coverage | Gap | Recommendation |
-|---|---|---|---|---|
-
-## Recommended New Skills
-
-For each candidate:
-
-### Priority: skill-name
-
-**Why this matters:**
-
-**Evidence:**
-- path/file.cs:line - observed pattern
-- path/doc.md:line - related rule or documentation
-- rg count or representative matches
-
-**Overlap check:**
-
-**Existing skills compared:**
-
-**Suggested activation triggers:**
-
-**Suggested skill outline:**
-- Purpose
-- When this activates
-- Key rules
-- Patterns
-- Anti-patterns
-- Real examples
-- See also
-
-**Confidence:** high / medium / low
-
-## Existing Skills to Update
-
-| Skill | Missing Content | Evidence | Suggested Change |
-|---|---|---|---|
-
-## Existing Skills to Generalize or Neutralize
-
-| Skill | Current Issue | Evidence | Suggested Neutral Version |
-|---|---|---|---|
-
-## Not Recommended
-
-| Candidate | Reason |
-|---|---|
-
-## Follow-Up Searches
-
-List commands that should be run next to confirm uncertain candidates.
-```
-
-## Drafting New Skills
-
-Draft a new skill only when explicitly requested. A drafted new skill must include:
-
-- YAML front matter with `name` and `description`.
-- Purpose.
-- When This Activates.
-- Key Rules.
-- Patterns.
-- Anti-Patterns.
-- Real Examples.
-- How to Report Issues.
-- See Also.
-
-Keep drafted skills neutral. Refer to `AI agent`, `assistant`, `skill`, `repository`, `project`, and `development workflow` instead of vendor-specific terms unless an existing repository path or document name must be cited as evidence.
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+1. Inventory every skill source exposed by the runtime and repository. Verify
+   each `SKILL.md` exists; record name, location, source type, description,
+   metadata, references, and tool/vendor coupling.
+2. Run a mechanical audit for YAML/frontmatter, description length and trigger
+   quality, broken links/related skills, context size, mojibake, absolute local
+   paths, and unused resources.
+3. Read repository instructions, developer docs, and representative/high-risk
+   source domains. Extract recurring APIs, lifecycle rules, failure modes,
+   verification practices, and near-neighbor boundaries.
+4. Compare by meaning, not filenames, and apply the coverage labels in the
+   reference.
+5. Patch an existing class-level skill when a sharper trigger, workflow,
+   reference, or self-check closes the gap. Propose a new skill only for a
+   distinct reusable job with evidence and an output contract.
+6. Re-run scoped YAML/link/context checks and inspect representative edited
+   skills through the runtime when available.
+
+## Guardrails
+
+- Use only installed/exposed skills and existing files; never treat a cached but
+  unavailable package as installed.
+- Keep entrypoints lean; defer detail, deterministic logic, and evidence only to
+  task-authorized resources.
+- Require recurring evidence, distinct boundaries, and route value before calling
+  a skill missing.
+- Preserve owner/project metadata and high-risk gotchas during curation.
+- Report global/non-scoped issues without editing them.
+
+## Output Contract
+
+For an audit, return inventory counts, coverage matrix, evidence paths, existing
+skills to update, proposed gaps with priority/confidence, and not-recommended
+duplicates. For implementation, return touched skills/references, trigger and
+boundary changes, checks run, and residual issues; explicitly list destructive
+actions not taken.
+
+## Verification
+
+- Every changed description begins with a concrete recurring job and excludes
+  plausible near neighbors.
+- Every changed skill contains an executable workflow, output contract,
+  verification/self-check, and conditional reference routing.
+- YAML parses, descriptions meet the runtime limit, local links resolve, initial
+  context stays within the selected budget, and no absolute host path/mojibake
+  remains in scope.
+- Sample route cases distinguish each edited skill from adjacent skills.
+
+## Reference Routing
+
+- Read [coverage audit labels, priorities, scan queries, and report shape](references/coverage-audit.md)
+  when running a full library audit or proposing gaps.
+- Load the active skill-authoring/meta-skill only when the user requests content
+  changes or a new reusable package.
+- Read repository `AGENTS.md`, plugin metadata, and current source/docs before
+  treating local conventions as authoritative.

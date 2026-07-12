@@ -1,0 +1,1 @@
+Use when calculating exact in-game tile coverage for ModernUO/RebirthUO AoE and spatial range queries such as GetMobilesInRange, GetItemsInRange, GetClientsInRange, and GetMobilesInBounds.

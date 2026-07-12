@@ -1,0 +1,52 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Items Foundation",
+    "inputs": [
+      "uo items foundation"
+    ],
+    "trigger_actions": [
+      "Review this uo items foundation task and give me the repository-specific checks.",
+      "Compare the requested uo items foundation behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo items foundation change and identify the focused verification.",
+      "Audit this uo items foundation diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo aos item properties",
+      "uo loot generation artifacts",
+      "modernuo serialization",
+      "modernuo property lists"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo items foundation"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

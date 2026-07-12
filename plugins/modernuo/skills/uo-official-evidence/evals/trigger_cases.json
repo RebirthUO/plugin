@@ -1,0 +1,53 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Establish the official OSI/EA behavior for this claim and keep community or emulator evidence separate.",
+      "family": "owned_job"
+    },
+    {
+      "text": "I need an evidence-backed plan for uo official evidence in the configured ModernUO-based repository.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Help me implement a uo official evidence change and identify the focused verification.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Audit this uo official evidence diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Refactor this unrelated ASP.NET service; no Ultima Online or ModernUO code is involved.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Create a marketing image for our shard announcement.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Give general advice only; do not create, edit, push, or update any GitHub artifact.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Research this issue against official OSI/EA sources and the configured repository; stop and ask me about every unresolved behavior decision.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo era and expansion behavior task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo era change gate task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this uo living-world review task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    }
+  ]
+}

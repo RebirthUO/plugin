@@ -1,8 +1,6 @@
 ---
 name: migrate-commands-events
-description: >
-  Use when converting RunUO command registration, EventSink handlers, or event delegate patterns to ModernUO.
-  Covers event name changes, delegate removal, Configure vs Initialize, and generated event handlers.
+description: Use when converting RunUO command registration, EventSink subscriptions, event delegates, or handler signatures to ModernUO. Covers startup registration, renamed connection events, generated events, and persistence handoff. Do not use for command/target design or new event APIs; use the corresponding modernuo-* skill.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,45 +20,39 @@ metadata:
       - migrate-persistence
 ---
 
-# RunUO -> ModernUO Commands & Events Migration
+# RunUO to ModernUO Commands and Events
 
-## When to Use
-- Converting `EventSink` subscriptions
-- Converting event handler signatures
-- Moving from `Initialize()` to `Configure()`
-- Converting WorldSave/WorldLoad events to GenericPersistence
+## Boundary
 
-## Conversion Steps
-1. Change `Initialize()` to `Configure()` for event registration
-2. Remove delegate constructors: `new LoginEventHandler(OnLogin)` -> `OnLogin`
-3. Rename events: `Login` -> `Connected`, `Logout` -> `Disconnected`
-4. Update signatures: `OnLogin(LoginEventArgs e)` -> `OnConnected(Mobile m)`
-5. WorldSave persistence -> convert to `GenericPersistence` (see migrate-persistence skill)
+Own migration of existing command registrations, EventSink hooks, delegate wrappers, and handler signatures. Do not redesign command permissions, targeting behavior, or a new event surface here.
 
-## Event Mapping
-| RunUO | ModernUO |
-|---|---|
-| `EventSink.Login` | `EventSink.Connected` (Action<Mobile>) |
-| `EventSink.Logout` | `EventSink.Disconnected` (Action<Mobile>) |
-| `EventSink.WorldSave` | `EventSink.WorldSave` (Action -- no args) |
-| `EventSink.Crashed` | `EventSink.ServerCrashed` |
-| `new XXXEventHandler(method)` | `method` (direct reference) |
+## Workflow
 
-## Commands (Minimal Changes)
-Commands use the same `CommandSystem.Register()` API. Main change: use `Configure()` for registration.
+1. Load [migrate-foundation](../migrate-foundation/SKILL.md), then inspect the source registration site, handler signatures, lifetime, and every subscriber.
+2. Verify the current local ModernUO event or command declaration; never migrate a remembered name or delegate shape.
+3. Register process-lifetime commands and static EventSink handlers in `Configure()`. Remove obsolete delegate constructors and pass method groups directly.
+4. Map renamed connection hooks deliberately: RunUO login/logout patterns commonly become `Connected`, `BeforeDisconnected`, or `Disconnected`; choose by required lifecycle semantics, not name similarity.
+5. Use attribute-driven `[OnEvent]` handlers only for an existing generated event. Do not also subscribe the same handler manually.
+6. Pair instance, reloadable, temporary, or disableable subscriptions with deterministic unsubscription. Route custom world-save files to [migrate-persistence](../migrate-persistence/SKILL.md).
+7. Build the owning project and exercise registration, permission rejection, event firing, and cleanup.
 
-## How to Report Issues
+## Safety gates
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+- Preserve the command's access level, argument validation, and player-type checks.
+- Do not equate disconnect, logout, death, and deletion; cleanup requirements differ.
+- Keep event handlers short and game-loop safe.
+- Do not remove legacy persistence until old saves have a tested load path.
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+## Verification/self-check
 
-## See Also
-- `dev-docs/runuo-migration-docs/07-commands-events.md` -- detailed migration reference
-- `dev-docs/events.md` -- complete ModernUO event system
-- `plugins/modernuo/skills/modernuo-events/SKILL.md` -- ModernUO events skill
-- `plugins/modernuo/skills/modernuo-commands-targeting/SKILL.md` -- ModernUO commands skill
+Confirm current declarations/signatures, one registration per handler, correct lifetime cleanup, and focused command/event tests. Re-scan for leftover RunUO delegate wrappers and old hook names before completion.
+
+## Output contract
+
+Return the migrated registrations and handlers, an old-to-new hook map with lifetime rationale, files changed, verification commands/results, and any unresolved lifecycle or save-compatibility risk. If only analysis was requested, report findings without editing.
+
+## Reference routing
+
+- For new command permissions or targeting, read [modernuo-commands-targeting](../modernuo-commands-targeting/SKILL.md).
+- For generated-event definitions, subscription lifetime, and handler behavior, read [modernuo-events](../modernuo-events/SKILL.md).
+- For a repository-independent API cross-check, consult the official [ModernUO commands and targeting guide](https://modernuo.com/docs/development/commands-and-targeting/).

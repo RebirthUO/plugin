@@ -1,0 +1,54 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Spatial Range Geometry",
+    "inputs": [
+      "modernuo spatial range geometry"
+    ],
+    "trigger_actions": [
+      "Review this modernuo spatial range geometry task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo spatial range geometry in the configured ModernUO-based repository.",
+      "Help me implement a modernuo spatial range geometry change and identify the focused verification.",
+      "Audit this modernuo spatial range geometry diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo performance hot paths",
+      "modernuo code audit",
+      "modernuo regions",
+      "modernuo content patterns",
+      "modernuo era expansion",
+      "modernuo pathfinding"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo spatial range geometry"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

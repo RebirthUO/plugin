@@ -1,78 +1,112 @@
 # ModernUO Plugin
 
-This repository packages the `modernuo` plugin metadata for Codex, Claude Code, Cursor, and Hermes-adjacent RebirthUO development workflows. The plugin's skill payload is a filtered mirror of the active Hermes `ultima-online` profile skills that are thematically used for Ultima Online, ModernUO, and RebirthUO work.
+The `modernuo` plugin packages 66 English Agent Skills for official Ultima
+Online research, ModernUO engineering, RunUO migration, testing, and a strict
+three-phase issue workflow. It is distributed for Codex, Claude Code, Cursor,
+and compatible Agent Skills runtimes.
 
-The plugin should not carry local-only or hand-edited ModernUO skill variants. When Hermes learns or updates a UO/ModernUO/RebirthUO skill, sync the matching skill directory from the Hermes profile into `plugins/modernuo/skills/` so the plugin and Hermes use the same guidance.
+## Purpose
+
+The plugin treats OSI/EA/Broadsword official-server material as the only
+authority for expected UO gameplay. Community pages, client data, emulators, and
+repository code can locate evidence or prove implementation state, but cannot
+silently define official mechanics. Missing or conflicting official evidence
+remains unresolved until the user supplies an explicit custom-policy decision.
+
+## Three-phase issue workflow
+
+1. `modernuo-issue-create` reads the exact GitHub repository from the consuming
+   project's applicable `AGENTS.md`, validates its live issue form, and produces
+   or creates an `IntakePacket`.
+2. `modernuo-issue-research` establishes official behavior, inspects the same
+   verified repository, and produces a `ResearchPacket`. It asks focused
+   questions and stops whenever a behavior-changing fact or policy is unresolved.
+3. `modernuo-issue-implement` accepts only a current `READY` research handoff,
+   verifies the configured repository, checkout, and push remote, then
+   implements and tests the smallest approved change.
+
+No phase infers a repository from the cwd, remotes, organization, neighboring
+project, issue number, stale documentation, or memory. If project instructions
+do not declare one unambiguous `owner/repository` or canonical GitHub URL, the
+workflow fails closed and asks the user.
+
+`uo-official-evidence` owns source authority. `uo-living-world-review` checks
+cross-system player consequences. `modernuo-codebase`, the engine/domain skills,
+and `modernuo-test-workflow` support implementation without creating a second
+implicit workflow.
 
 ## Contents
 
-- `plugins/modernuo/.codex-plugin/plugin.json` defines the plugin manifest and Codex UI metadata.
-- `.claude-plugin/marketplace.json` defines the Claude Code marketplace catalog.
-- `plugins/modernuo/.claude-plugin/plugin.json` defines the Claude Code plugin manifest.
-- `.cursor-plugin/marketplace.json` defines the Cursor marketplace catalog.
-- `plugins/modernuo/.cursor-plugin/plugin.json` defines the Cursor plugin manifest.
-- `plugins/modernuo/assets/rebirthuo-logo.png` provides the plugin logo and composer icon.
-- `plugins/modernuo/skills/` contains 75 curated Ultima Online, ModernUO, and RebirthUO skills in a flat layout. See [`plugins/modernuo/skills/SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md) for grouping, agent workflow, and migrate pairs.
-- `AGENTS.md` contains repository-level maintenance instructions for plugin changes.
-- `CHANGELOG.md` records plugin-version changes.
+- `plugins/modernuo/.codex-plugin/plugin.json` - Codex manifest and UI metadata.
+- `plugins/modernuo/.claude-plugin/plugin.json` - Claude Code manifest.
+- `plugins/modernuo/.cursor-plugin/plugin.json` - Cursor manifest.
+- `.agents/`, `.claude-plugin/`, and `.cursor-plugin/` - marketplace metadata.
+- `plugins/modernuo/skills/` - 66 flat skill packages, grouped by frontmatter.
+- [`SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md) - generated
+  workflow and skill index.
+- `scripts/` - deterministic preparation, catalog, verification, Yao, and
+  Hermes-preview tooling.
+- `reports/` - generated validation evidence and the consolidation ledger.
 
-## Skill Sync Contract
+Each skill keeps `SKILL.md` focused on trigger boundaries, procedure, output,
+and verification. Conditional detail belongs in `references/`; generated
+adapter metadata lives in `agents/interface.yaml`, `manifest.json`, and `evals/`.
 
-The ModernUO plugin is sourced from:
+## Source and synchronization
 
-```text
-C:\Users\Jsiem\AppData\Local\hermes\profiles\ultima-online\skills\
-```
-
-After changing the plugin skill payload, bump the plugin version, update this README if the purpose/usage changed, and add a `CHANGELOG.md` entry.
-
-## Skill Groups and Agent Workflow
-
-Skills are grouped by frontmatter (`skill_group`: `uo`, `modernuo`, `rebirthuo`) rather than physical subfolders:
-
-- **UO** — game mechanics, era/product model, living-world review gates.
-- **ModernUO** — engine, migration (`migrate-*`), tests, code audit, direct-modernuo issue escape hatch.
-- **RebirthUO** — project-specific intake/review/implement workflow extending ModernUO.
-
-**Primary agentic path:**
-
-1. **Create** — `rebirthuo-issue-create` on `RebirthUO/rebirthuo` (`needs-review`).
-2. **Review** — `rebirthuo-issue-review` with `rebirthuo-review-patterns`.
-3. **Implement** — `rebirthuo-implement` on `RebirthUO/ModernUO` (branch, tests, PR).
-
-Start from `uo-modernuo-workflow` for routing. Full tables: [`plugins/modernuo/skills/SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md).
-
-The synced set is every Hermes skill whose name matches `uo-*`, `modernuo-*`, `rebirthuo-*`, or `migrate-*` under the active profile's `software-development` and `github` trees. Non-UO general skills are excluded.
-
-## Usage
-
-For Codex, install or load the plugin through the configured local marketplace, then ask for ModernUO or RebirthUO help by topic. Example requests include:
-
-- triaging a GitHub issue into a source-backed implementation plan;
-- implementing a sufficiently specified RebirthUO GitHub issue as an isolated tested PR;
-- verifying a `Triage required` ticket for `Human Review` promotion;
-- producing a German RebirthUO implementation plan;
-- authoring canonical RebirthUO game-docs for an era mechanic;
-- planning or reviewing ModernUO migrations from RunUO/ServUO patterns;
-- auditing code for ModernUO lifecycle, performance, serialization, string, packet, gump, timer, threading, or region risks;
-- checking named Ultima Online skill, spell, item-property, or era parity against ModernUO/RebirthUO source and approved web sources;
-- reviewing UO living-world side effects across era/ruleset, facets, economy, housing, PvP, PvM, and player trust;
-- normalizing generated xUnit test names and planning focused or broad validation.
-
-For Claude Code, add the marketplace from a local checkout while testing:
+The reviewed source is:
 
 ```text
-/plugin marketplace add .
-/plugin install modernuo@rebirthuo-plugins
+plugins/modernuo/skills/
 ```
 
-Or add the GitHub-hosted marketplace:
+Do not hand-edit an installed Codex or Hermes cache. Validate this checkout
+first. To preview a Hermes profile synchronization:
+
+```powershell
+python scripts/sync-plugin-to-hermes.py `
+  --hermes-root <profile-skills> `
+  --dry-run
+```
+
+Run the real synchronization only as a separately authorized action after all
+gates pass.
+
+## Quality workflow
+
+```powershell
+python -m pip install -r scripts/requirements.txt
+python scripts/prepare-yao-portfolio.py
+python scripts/generate-skill-catalog.py
+python scripts/verify-skill-portfolio.py
+python scripts/run-yao-portfolio.py `
+  --yao-root <path-to-yao-meta-skill> `
+  --extended
+```
+
+The checks cover structure, metadata, resource boundaries, English-only
+contracts, repository portability, removed-skill references, trigger cases,
+Skill IR, runtime conformance, and static trust checks. Local gates are not
+provider-backed execution, human blind review, native permission enforcement,
+or live telemetry.
+
+## Typical requests
+
+- create a template-conformant intake issue in the repository declared by the
+  consuming project;
+- deeply research an issue and stop for unresolved official behavior;
+- implement a current research-ready issue with focused tests;
+- audit a ModernUO subsystem, serialization migration, lifecycle, or hot path;
+- migrate RunUO/ServUO code to current ModernUO conventions;
+- compare a named UO mechanic with official evidence and repository state;
+- review economy, PvP/PvM, housing, client, save, or player-trust effects.
+
+For Claude Code:
 
 ```text
 /plugin marketplace add RebirthUO/plugin
 /plugin install modernuo@rebirthuo-plugins
 ```
 
-For Cursor, add this repository as a plugin marketplace in Cursor's marketplace settings. Cursor reads `.cursor-plugin/marketplace.json`; install or use `modernuo` from the `rebirthuo-plugins` marketplace.
-
-The plugin UI uses `plugins/modernuo/assets/rebirthuo-logo.png` through the manifest `interface.logo` and `interface.composerIcon` fields.
+For Cursor, add this repository as a plugin marketplace. Cursor consumes the
+same neutral Agent Skills payload through `.cursor-plugin/marketplace.json`.

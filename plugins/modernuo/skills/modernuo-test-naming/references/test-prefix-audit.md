@@ -1,6 +1,6 @@
 # Test Prefix Audit Checklist
 
-Use this reference when reviewing RebirthUO/ModernUO test names for AI-generated
+Use this reference when reviewing a ModernUO-based repository's test names for AI-generated
 or source-of-work prefixes.
 
 ## What to scan

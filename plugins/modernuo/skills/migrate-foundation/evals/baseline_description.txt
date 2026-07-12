@@ -1,0 +1,1 @@
+Use when migrating any RunUO code to ModernUO. Load this foundation skill before specialized migrate-* skills. Covers namespace changes, naming conventions, attribute renames, logging, threading, and performance.

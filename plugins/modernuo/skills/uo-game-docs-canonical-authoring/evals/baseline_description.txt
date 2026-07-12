@@ -1,0 +1,1 @@
+Use when authoring canonical-era RebirthUO game-docs under game-docs/GameDocs/01_Broadsword with one file per mechanic, Knot schema, README indexes, and mirrored parity skeletons.

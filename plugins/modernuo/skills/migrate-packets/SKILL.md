@@ -1,8 +1,6 @@
 ---
 name: migrate-packets
-description: >
-  Use when converting RunUO Packet subclasses, PacketWriter/PacketReader, or packet handler registration to ModernUO span-based packets.
-  Covers outgoing packet conversion, incoming handler conversion, SpanWriter/SpanReader, and packet text handling.
+description: Use when converting RunUO Packet subclasses, PacketWriter/PacketReader code, or packet-handler registration to ModernUO span-based networking. Covers outgoing buffers, incoming readers, function-pointer registration, and text safety. Do not use for protocol design or unrelated networking changes.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -21,50 +19,37 @@ metadata:
       - modernuo-threading
 ---
 
-# RunUO -> ModernUO Packet Migration
+# RunUO to ModernUO Packet Migration
 
-## When to Use
-- Converting `Packet` subclasses to static create methods
-- Converting `PacketHandlers.Register()` to `IncomingPackets.Register()`
-- Converting `PacketWriter`/`PacketReader` to `SpanWriter`/`SpanReader`
+## Boundary
 
-## Conversion Steps (Outgoing)
-1. Create static class: `public static class OutgoingMyPackets`
-2. Define length constant
-3. Convert constructor to `static void CreateXxx(Span<byte> buffer, ...)`
-4. Replace `m_Stream.Write(x)` with `writer.Write(x)`
-5. Create `SendXxx(this NetState ns, ...)` extension method
-6. Check `ns.CannotSendPackets()` at start
-7. Use `stackalloc byte[length].InitializePacket()` for buffer
-8. Replace `ns.Send(new Packet(...))` with `ns.SendXxx(...)`
+Convert an existing, known packet contract. Do not invent IDs, lengths, field widths, endianness, encoding, or client-version rules.
 
-## Conversion Steps (Incoming)
-1. Change `PacketHandlers.Register(id, len, ingame, new OnPacketReceive(H))` to `IncomingPackets.Register(id, len, ingame, &H)` in `unsafe Configure()`
-2. Change handler: `void H(NetState, PacketReader)` -> `void H(NetState, SpanReader)`
-3. Replace read calls: `pvSrc.ReadString()` -> `reader.ReadAsciiSafe()`
+## Workflow
 
-## Quick Mapping
-| RunUO | ModernUO |
-|---|---|
-| `class X : Packet` | Static `CreateX(Span<byte>)` method |
-| `m_Stream.Write(val)` | `writer.Write(val)` (SpanWriter) |
-| `PacketWriter` | `SpanWriter` |
-| `PacketReader` / `pvSrc` | `SpanReader` / `reader` |
-| `ns.Send(new X(...))` | `ns.SendX(...)` extension |
-| `PacketHandlers.Register(...)` | `IncomingPackets.Register(... &handler)` |
-| `new OnPacketReceive(H)` | `&H` (function pointer) |
+1. Load [migrate-foundation](../migrate-foundation/SKILL.md). Trace packet ID, fixed/variable length, every field, callers, registration, and supported client versions.
+2. Compare with the current local `SpanWriter`, `SpanReader`, packet initialization, send, and incoming registration APIs.
+3. For outgoing packets, replace the class with the repository's static create/send pattern, initialize the exact buffer length, and guard `CannotSendPackets()`.
+4. For incoming packets, register the exact ID/length and handler function pointer in the expected startup phase; update the handler to `SpanReader`.
+5. Use bounded/safe text readers and writers with the protocol's actual encoding and terminator rules.
+6. Test representative minimum, maximum, malformed/truncated, cannot-send, and client-version paths; compare emitted bytes with a known-good fixture or capture.
 
-## How to Report Issues
+## Safety gates
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+- Reject migration when the wire contract is ambiguous; request evidence instead of guessing.
+- Preserve fixed vs variable packet framing and all reserved bytes.
+- Validate lengths before reads and validate user-controlled indices, strings, and entity references.
+- Keep game-state work on the event loop; do not introduce background networking callbacks.
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+## Verification/self-check
 
-## See Also
-- `dev-docs/runuo-migration-docs/05-packets-networking.md` -- detailed migration reference
-- `dev-docs/networking-packets.md` -- complete ModernUO networking system
-- `plugins/modernuo/skills/modernuo-networking/SKILL.md` -- ModernUO networking skill
+Compare the complete emitted/consumed byte layout with a known-good fixture or capture and exercise malformed/truncated and cannot-send paths. Recheck every ID, length, width, encoding, and client gate.
+
+## Output contract
+
+Return the migrated registration/create/send code, a byte-level field map, call-site changes, fixture or capture evidence, verification results, and any unverified client compatibility.
+
+## Reference routing
+
+- Read [modernuo-networking](../modernuo-networking/SKILL.md) for current local packet APIs.
+- Read [modernuo-string-handling](../modernuo-string-handling/SKILL.md) only for packet text encoding/formatting.

@@ -1,8 +1,6 @@
 ---
 name: migrate-items-mobiles
-description: >
-  Use when converting RunUO Item, Mobile, or BaseCreature subclasses to ModernUO.
-  Covers complete item/creature conversion across serialization, timers, lifecycle cleanup, properties, and naming.
+description: Use when converting RunUO Item, Mobile, or BaseCreature subclasses to ModernUO and coordinating their serialization, construction, timers, properties, ownership, and deletion lifecycle. Do not use for a subsystem-only migration or for designing brand-new content from scratch.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -24,50 +22,38 @@ metadata:
       - modernuo-code-audit
 ---
 
-# RunUO -> ModernUO Item/Mobile/Creature Migration
+# RunUO to ModernUO Item and Mobile Migration
 
-## When to Use
-- Converting any `Item` subclass from RunUO
-- Converting any `Mobile`/`BaseCreature` subclass
-- This is the most common migration task -- combines all other systems
+## Boundary
 
-## Item Conversion Checklist
-1. [ ] Foundation: file-scoped namespace, `using ModernUO.Serialization;`
-2. [ ] Class: add `[SerializationGenerator(N, false)]` (N = old version + 1, `false` if old `Deserialize` used `ReadInt()`), add `partial`
-3. [ ] Fields: `m_X` -> `[SerializableField(N)] _x` with `[SerializedCommandProperty]`
-4. [ ] Add `[InvalidateProperties]` where RunUO setter called `InvalidateProperties()`
-5. [ ] Delete: Serial constructor, Serialize, Deserialize
-6. [ ] `[Constructable]` -> `[Constructible]`
-7. [ ] `Name = "text"` -> `public override string DefaultName => "text";`
-8. [ ] Timers: nested class -> `Timer.StartTimer()` + `TimerExecutionToken` + `[AfterDeserialization]` + deletion-path cancellation; use `modernuo-lifecycle-cleanup` for hook choice
-9. [ ] Properties: `GetProperties(ObjectPropertyList)` -> `GetProperties(IPropertyList)`, apply string hole rule
-10. [ ] Context menus: `List<ContextMenuEntry>` -> `ref PooledRefList<ContextMenuEntry>`
+Own whole-entity migration for existing items, mobiles, and creatures. Route isolated save, timer, tooltip, or gump work to the narrower migration skill.
 
-## Creature-Specific Changes
-- `[CorpseName("...")]` attribute -> `public override string CorpseName => "...";`
-- `BaseCreature(AI, Fight, 10, 1, 0.2, 0.4)` -> `BaseCreature(AI, Fight)` (extra params default)
-- `Name = "text"` -> `public override string DefaultName => "text";`
-- Expression-bodied overrides: `public override int Meat { get { return 1; } }` -> `public override int Meat => 1;`
+## Workflow
 
-## Anti-Patterns
-- Using `_field--` instead of `Property--` (bypasses MarkDirty tracking)
-- Forgetting `[AfterDeserialization]` for timer restoration
-- Forgetting lifecycle cleanup/cancellation for timers, owned children, or dynamic registrations
+1. Apply [migrate-foundation](../migrate-foundation/SKILL.md) and inventory constructors, serialized fields/order, command properties, timers, owned entities, deletion hooks, property lists, context menus, loot, and era gates.
+2. Choose the exact [serialization mode](../migrate-serialization/SKILL.md). Preserve old type identity and old-save reads before deleting manual methods or `Serial` constructors.
+3. Convert the class to local generated-serialization conventions, including `partial`, `[Constructible]` where appropriate, and generated setters for persistent mutations.
+4. Route runtime timers through [migrate-timers](../migrate-timers/SKILL.md); restore only runtime state after deserialization and cancel/clear owned state on deletion.
+5. Convert tooltips with [migrate-property-lists](../migrate-property-lists/SKILL.md), context menus to the local pooled-list signature, and legacy names/corpse names to current overrides when supported.
+6. Preserve AI, fight mode, stats, skills, loot, taming, access, and era behavior unless the request changes them.
+7. Generate schemas when required, build the owning project, and test construct/add, save-load, property display, timer cleanup, and delete paths.
 
-## How to Report Issues
+## Safety gates
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+- Mutate generated persistent properties, not backing fields, so dirty tracking runs.
+- Never serialize `TimerExecutionToken` or other runtime-only handles.
+- Do not start world-dependent restoration before the appropriate post-load phase.
+- Do not change loot, economy, combat, or era behavior as incidental modernization.
+- Verify base-call ordering in deletion hooks against the local hierarchy.
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+## Verification/self-check
 
-## See Also
-- `dev-docs/runuo-migration-docs/09-items-mobiles-creatures.md` -- detailed migration with before/after examples
-- `dev-docs/content-patterns.md` -- ModernUO content templates
-- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` -- ModernUO content skill
-- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` -- serialization patterns
-- `plugins/modernuo/skills/modernuo-timers/SKILL.md` -- timer patterns
-- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` -- deletion-path cleanup for timers, owned children, regions, and references
+Trace every saved field and owned runtime resource, run schema/build plus construct/save-load/delete tests, and compare player-visible stats/loot/behavior with the source contract.
+
+## Output contract
+
+Return the migrated entity files, serialization/identity decision, lifecycle ownership map, behavior-preservation notes, schema changes, verification evidence, and any old-save or era risk.
+
+## Reference routing
+
+- Use [modernuo-content-patterns](../modernuo-content-patterns/SKILL.md) only for local entity conventions and [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) for ambiguous ownership.

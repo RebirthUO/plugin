@@ -1,0 +1,1 @@
+Use when writing, modifying, or reviewing .cs files under Projects/. Audits code for ModernUO convention, safety, serialization, lifecycle, and performance issues; reports findings by severity and asks before fixing unless fixes were explicitly requested.

@@ -1,6 +1,10 @@
 ---
 name: modernuo-world-saves-archives
-description: Use when working with ModernUO world save backups, archive rollups, archive restore flows, ArchiveJournal state transitions, local archive destinations, save snapshot post-events, crash backups, backup pruning, archive verification, or operator-facing save/restore commands. Use before editing Projects/UOContent/World Saves, EventSink.WorldSavePostSnapshot backup behavior, AutoArchive configuration, .archive-journal.json recovery, managed archive formats, or restore prompts.
+description: >
+  Use when changing ModernUO world-save backups, archive rollups/destinations,
+  ArchiveJournal recovery, restore prompts, verification, retention, pruning, or
+  post-snapshot events. Do not use for entity field serialization; route that to
+  modernuo-serialization.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -20,75 +24,62 @@ metadata:
       - modernuo-test-workflow
 ---
 
-# ModernUO World Saves & Archives
+# ModernUO World Saves and Archives
 
-## Purpose
+## Boundary
 
-Use this skill to protect shard data when changing automatic backups, archive rollups, restore prompts, archive destinations, or journaled recovery paths around ModernUO world saves.
+Protect operator-critical shard data from snapshot through backup, archive,
+distribution, retention, recovery, and restore. Prefer additive/reversible
+changes and prove restore, not merely archive creation.
 
-## When to Use
+## Workflow
 
-- Editing `Projects/UOContent/World Saves/`, `Projects/Server/World/`, crash backup handling, save commands, or archive tests.
-- Changing `AutoArchive`, `ArchiveJournal`, `LocalArchiveDestination`, `ArchiveDestinationRegistry`, `ManagedArchive`, or restore/prune commands.
-- Adding archive destinations, retention policies, verification steps, compression formats, or startup restore behavior.
-- Debugging missing saves, interrupted archives, broken restore menus, or archive cleanup behavior.
+1. Map the current data flow and failure boundaries: active `Saves`, rotated old
+   save, completed snapshot event, backup directory, temp/final archive,
+   destinations, journal, retention, and restore selection.
+2. Keep automatic backup work after `WorldSavePostSnapshot`; never archive or
+   prune a directory that lacks the completion marker.
+3. Start a journal operation before archive work and advance only through the
+   real states: `Started`, `Archived`, `Distributed`, `Completed`, or `Failed`.
+4. Write a temporary archive, verify format/entry count/content policy, then move
+   it atomically to the final location. Record destination results and failures.
+5. Prune source backups only after archive verification and required distribution
+   succeed under the configured retention semantics.
+6. Exercise interruption at each state and restore the newest valid backup/archive
+   into an isolated destination before claiming safety.
 
-## Key Rules
+## Guardrails
 
-- Treat world-save data as operator-critical. Prefer additive, reversible changes and verify restore paths, not just archive creation.
-- `AutoArchive.Configure()` can run before normal gameplay starts; interactive restore prompting only belongs where console input is still safe.
-- `AutoArchive.Initialize()` subscribes to `EventSink.WorldSavePostSnapshot`; do not move backup logic earlier than a completed snapshot.
-- Use the journal state machine (`Started`, `Archived`, `Distributed`, `Completed`, `Failed`) to make interrupted archive operations visible and recoverable.
-- Do not archive incomplete backup directories. The `.backup-complete` marker exists so rollups can skip partially moved saves.
-- Keep archive verification, temp-file cleanup, and failure recording together; a failed archive must not look complete.
+- `.backup-complete` distinguishes complete rotated saves from partial moves.
+- A failed or interrupted archive must remain visible in the journal and must not
+  look `Completed`.
+- Restore prompting belongs only in the safe startup/console phase and must not
+  block headless operation unexpectedly.
+- Do not delete source data before verification/distribution are durable.
+- Remote destinations require explicit retry/failure/retention semantics; a local
+  success must not hide remote failure.
+- Keep temp cleanup and failure recording in the same control path.
+- World-save serialization workers and archive I/O have distinct threading
+  boundaries; neither permits arbitrary live-world mutation.
 
-## Patterns
+## Output Contract
 
-### Snapshot Backup Flow
+Return the before/after flow, journal transitions, completion/verification rules,
+destination/retention behavior, rollback and restore procedure, changed paths,
+tests, and any operator-visible migration or residual data-loss risk.
 
-`World.Save()` snapshots the world, `EventSink.WorldSavePostSnapshot` fires with old/new save paths, and `AutoArchive.Backup` moves the old save directory into automatic backups before invoking archive rollup.
+## Verification
 
-### Journaled Archive Flow
+- Tests cover success plus interruption/failure at every changed journal state.
+- Partial backups and invalid archives are excluded from rollup/restore.
+- Restore reproduces expected save contents from a real generated artifact.
+- Retention never removes the last valid recovery point prematurely.
+- Focused archive tests and manual restore smoke evidence are reported separately.
 
-Start an `ArchiveJournal` operation before archive creation, move from temp file to final file only after success, record archive metrics, record destination results, then complete or fail the journal entry.
+## Reference Routing
 
-### Restore Flow
-
-On startup with no valid save data, collect complete backup directories and archive files, present newest restore points first, extract archives to a temp directory, then copy selected save contents into the configured `Saves` path.
-
-## Anti-Patterns
-
-- Deleting or pruning source backups before archive creation, verification, and distribution are recorded.
-- Treating an archive file as valid without checking entry count, format support, and verification settings.
-- Ignoring interrupted `Started` or `Distributed` journal states on startup.
-- Mixing ad-hoc filesystem writes with world save snapshot timing.
-- Prompting for restore after console handling/logging has moved into normal runtime behavior.
-- Adding remote archive destinations without explicit failure reporting and retention semantics.
-
-## Real Examples
-
-- `Projects/UOContent/World Saves/AutoArchive.cs` configures archive paths, retention, restore prompting, post-snapshot backup, rollups, verification, and pruning.
-- `Projects/UOContent/World Saves/ArchiveJournal.cs` persists archive operations and recovers interrupted states on startup.
-- `Projects/Server/World/World.cs` invokes `EventSink.InvokeWorldSavePostSnapshot(...)` after save snapshot rotation.
-- `Projects/UOContent.Tests/Tests/WorldSaves/ArchiveJournalTests.cs` covers state transitions, persistence, and interrupted-operation recovery.
-- `Projects/UOContent.Tests/Tests/WorldSaves/AutoArchiveHelperTests.cs` covers destination registration, retention counts, and event argument storage.
-
-## How to Report Issues
-
-Report world-save/archive findings with data-loss risk first:
-
-```text
-[WORLD-SAVE] {severity}: {backup/archive/restore issue}
-  File: {path}:{line}
-  Risk: {data loss, incomplete backup, failed restore, operator confusion, or cleanup drift}
-  Evidence: {journal state, archive file, test, command output, or restore repro}
-  Suggested check: {ArchiveJournalTests, AutoArchiveHelperTests, restore smoke, or dotnet test}
-```
-
-## See Also
-
-- `dev-docs/threading-model.md` - world save threading and main-thread snapshot boundary.
-- `plugins/modernuo/skills/modernuo-server-lifecycle/SKILL.md` - startup, prompt, and post-snapshot event boundaries.
-- `plugins/modernuo/skills/modernuo-events/SKILL.md` - `EventSink` subscription patterns.
-- `plugins/modernuo/skills/modernuo-configuration/SKILL.md` - `ServerConfiguration.GetOrUpdateSetting` patterns.
-- `plugins/modernuo/skills/modernuo-code-audit/SKILL.md` - review rules for high-risk `.cs` changes.
+- Read current `AutoArchive`, `ArchiveJournal`, `World.Save`, and archive tests
+  before changing the state machine.
+- Load `modernuo-server-lifecycle` for prompt/event placement,
+  `modernuo-threading` for snapshot workers, `modernuo-configuration` for
+  settings, and `modernuo-events` for post-snapshot subscription semantics.

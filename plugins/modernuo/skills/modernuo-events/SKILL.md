@@ -1,7 +1,6 @@
 ---
 name: modernuo-events
-description: >
-  Use when subscribing to or creating game events, working with EventSink or generated events, or hooking into player login, death, speech, or other game events.
+description: Use when subscribing to, handling, or defining ModernUO EventSink or generated events, including connection, speech, movement, combat, world, death, or deletion hooks. Covers event choice, signatures, lifetime, pooling, cleanup, and tests. Do not use for calendar schedules or short delayed callbacks.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,194 +21,39 @@ metadata:
       - migrate-commands-events
 ---
 
-# ModernUO Events System
+# ModernUO Events
 
-## When to Use
-- Subscribing to game events (login, logout, death, speech)
-- Creating new events
-- Working with `EventSink` static events
-- Using `[GeneratedEvent]` / `[OnEvent]` attributes
+## Boundary
 
-## Key Rules
+Own game/lifecycle event surfaces. Calendar recurrence belongs to [modernuo-event-scheduler](../modernuo-event-scheduler/SKILL.md); elapsed callbacks belong to timers. RunUO conversions use [migrate-commands-events](../migrate-commands-events/SKILL.md).
 
-1. **Subscribe process-lifetime static `EventSink` handlers in `Configure()`** so startup registration is deterministic
-2. **EventSink events are `static event Action<T>`** -- subscribe with `+=`; pair instance, temporary, reloadable, or disableable subscriptions with `-=` cleanup
-3. **Generated `[OnEvent]` handlers are attribute-driven** and do not need manual `Configure()` subscription
-4. **Event handlers must match the delegate signature**
-5. **Unsubscribe if your system can be disabled** (prevent leaks); use `modernuo-lifecycle-cleanup` for lifetime/ownership decisions
+## Workflow
 
-## EventSink Events
+1. Define the producer, subscriber, exact semantic moment, payload, cancellation/handled behavior, lifetime, ordering, frequency, and failure policy.
+2. Read [event-surfaces.md](references/event-surfaces.md), then inspect the actual local event declaration, invoker, and nearest subscriber. Never choose an event by name alone.
+3. For process-lifetime static EventSink handlers, subscribe deterministically in `Configure()`. For instance, reloadable, temporary, or disableable systems, store ownership and unsubscribe.
+4. Use `[OnEvent]` only for an existing/generated event contract; do not also add a manual EventSink subscription.
+5. Match the exact signature, validate payload/entity state, honor handled/blocked semantics, and keep the handler bounded on the game loop.
+6. If defining an event, prefer the repository's generated-event/pooling conventions and document invocation ownership and ordering.
+7. Test registration once, event firing, filters, handled/cancel flow, disable/unsubscribe, deletion/stale payload, and repeated initialization.
 
-Subscribe in `Configure()`:
-```csharp
-public static void Configure()
-{
-    EventSink.Connected += OnPlayerConnected;
-    EventSink.Disconnected += OnPlayerDisconnected;
-    EventSink.Logout += OnLogout;
-    EventSink.ServerStarted += OnServerStarted;
-}
-```
+## Safety gates
 
-### Available Events
+- Connection, disconnect, logout, death, deletion, world save, and shutdown are not interchangeable cleanup points.
+- Do not retain pooled EventArgs or other borrowed payload state after the callback.
+- If code creates pooled args manually, return them on every path, including exceptions.
+- Event handlers must not block, start unsafe background game logic, or scan the full world without a bounded reason.
+- Make side effects idempotent when an event can fire more than once.
 
-#### Core Lifecycle
-```csharp
-EventSink.ServerStarted      // Action              -- Server fully started
-EventSink.Shutdown            // Action              -- Server shutting down
-EventSink.WorldLoad           // Action              -- World loaded from saves
-EventSink.WorldSave           // Action              -- World save triggered
-EventSink.WorldSavePostSnapshot // Action<WorldSavePostSnapshotEventArgs>
-```
+## Verification/self-check
 
-#### Player Connection
-```csharp
-EventSink.Connected           // Action<Mobile>      -- Player connected
-EventSink.BeforeDisconnected  // Action<Mobile>      -- About to disconnect
-EventSink.Disconnected        // Action<Mobile>      -- Player disconnected
-EventSink.Logout              // Action<Mobile>      -- Player logged out
-```
+Prove registration count, semantic firing point, filters/handled behavior, pooled cleanup, disable/unsubscribe, and duplicate delivery. Re-read the actual declaration/invoker rather than relying on the event map.
 
-#### Account
-```csharp
-EventSink.AccountLogin        // Action<AccountLoginEventArgs>
-// AccountLoginEventArgs: .State (NetState), .Username, .Password, .Accepted (set), .RejectReason (set)
-```
+## Output contract
 
-#### Communication
-```csharp
-EventSink.Speech              // Action<SpeechEventArgs>
-// SpeechEventArgs: .Mobile, .Speech, .Type, .Hue, .Keywords, .Handled (set), .Blocked (set)
-```
+Return selected event and semantic rationale, subscription/invocation changes, lifetime and cleanup owner, changed files, verification results, and ordering or coverage risks.
 
-#### Combat
-```csharp
-EventSink.AggressiveAction    // Action<AggressiveActionEventArgs>
-// AggressiveActionEventArgs: .Aggressed, .Aggressor, .Criminal
-```
+## Reference routing
 
-#### Movement
-```csharp
-EventSink.Movement            // Action<MovementEventArgs>
-// MovementEventArgs: .Mobile, .Direction, .Blocked (set)
-```
-
-#### Network
-```csharp
-EventSink.SocketConnect       // Action<SocketConnectEventArgs>
-// SocketConnectEventArgs: .Address, .AllowConnection (set)
-
-EventSink.ServerCrashed       // Action<ServerCrashedEventArgs>
-// ServerCrashedEventArgs: .Exception, .Close (set)
-```
-
-#### UI
-```csharp
-EventSink.PaperdollRequest    // Action<Mobile, Mobile>  -- (beholder, beheld)
-```
-
-## Event Handler Pattern
-
-```csharp
-public static class MyEventSystem
-{
-    public static void Configure()
-    {
-        EventSink.Connected += OnConnected;
-        EventSink.Speech += OnSpeech;
-    }
-
-    private static void OnConnected(Mobile m)
-    {
-        if (m is PlayerMobile pm)
-        {
-            pm.SendMessage("Welcome back!");
-        }
-    }
-
-    private static void OnSpeech(SpeechEventArgs e)
-    {
-        if (e.Speech.InsensitiveContains("help"))
-        {
-            e.Mobile.SendMessage("How can I help you?");
-            e.Handled = true;  // Prevent further processing
-        }
-    }
-}
-```
-
-## Generated Events (Code-Generated)
-
-For custom events on game entities, use the CodeGeneratedEvents package:
-
-### Defining Events
-```csharp
-// On the class that fires the event:
-[GeneratedEvent(nameof(PlayerLoginEvent))]
-public static partial void PlayerLoginEvent(PlayerMobile player);
-```
-
-### Subscribing to Events
-```csharp
-// On the handler class:
-[OnEvent(nameof(PlayerMobile.PlayerLoginEvent))]
-public static void HandleLogin(PlayerMobile player)
-{
-    // Handle the event
-}
-```
-
-### Known Generated Events
-- `PlayerMobile.PlayerLoginEvent`
-- `PlayerMobile.PlayerDeathEvent`
-- `BaseCreature.CreatureDeathEvent`
-
-External reference: https://github.com/modernuo/CodeGeneratedEvents
-
-## EventArgs Pool Pattern
-
-Some EventArgs use object pooling to avoid allocation:
-```csharp
-// Movement uses pooling:
-var args = MovementEventArgs.Create(mobile, dir);
-EventSink.InvokeMovement(args);
-args.Free();  // Return to pool
-
-// AggressiveAction uses pooling:
-var args = AggressiveActionEventArgs.Create(aggressed, aggressor, criminal);
-EventSink.InvokeAggressiveAction(args);
-args.Free();
-```
-
-## Anti-Patterns
-
-- **Missing startup registration for process-lifetime `EventSink` handlers**: subscribe static global hooks in `Configure()`; do not rely on instance constructors for global startup hooks
-- **Treating generated events like manual `EventSink` hooks**: `[OnEvent]` handlers are discovered by the generated-event system, not registered with `+=` in `Configure()`
-- **Not checking player type**: `EventSink.Connected` fires for all mobiles, cast to `PlayerMobile` if needed
-- **Blocking in event handlers**: Event handlers run on the game loop -- keep them fast
-- **Not unsubscribing**: If system can be disabled, unsubscribe to prevent leaks
-
-## Real Examples
-- EventSink core: `Projects/Server/Events/EventSink.cs`
-- Speech events: `Projects/Server/Events/SpeechEvent.cs`
-- Movement events: `Projects/Server/Events/MovementEvent.cs`
-- Account events: `Projects/Server/Events/AccountLoginEvent.cs`
-- World events: `Projects/Server/Events/EventSink.cs` (WorldLoad, WorldSave, ServerStarted, Shutdown)
-- Connection events: `Projects/Server/Events/SocketConnectionEvent.cs`
-- GumpSystem subscription: `Projects/UOContent/Gumps/Base/GumpSystem.cs`
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/events.md` - Complete events documentation
-- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` - Static process-lifetime vs instance/temporary event subscription cleanup
-- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content hooks
-- `plugins/modernuo/skills/modernuo-configuration/SKILL.md` - Configure() pattern
+- Always read [event-surfaces.md](references/event-surfaces.md).
+- Read [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) for lifetime decisions and [modernuo-server-lifecycle](../modernuo-server-lifecycle/SKILL.md) for startup/shutdown ordering.

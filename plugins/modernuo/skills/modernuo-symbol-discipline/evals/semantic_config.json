@@ -1,0 +1,51 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Symbol Discipline",
+    "inputs": [
+      "modernuo symbol discipline"
+    ],
+    "trigger_actions": [
+      "Review this modernuo symbol discipline task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo symbol discipline in the configured ModernUO-based repository.",
+      "Help me implement a modernuo symbol discipline change and identify the focused verification.",
+      "Audit this modernuo symbol discipline diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo no publish prefix names",
+      "modernuo test naming"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo symbol discipline"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

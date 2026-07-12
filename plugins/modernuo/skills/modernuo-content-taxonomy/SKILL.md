@@ -1,7 +1,6 @@
 ---
 name: modernuo-content-taxonomy
-description: >
-  Use when planning content, scoping features, migrating RunUO scripts, auditing parity, or deciding where to implement facets, regions, items, mobiles, quests, loot, spawns, or client presentation. Classifies Ultima Online game content into the 9-domain inventory and maps taxonomy concepts to ModernUO types, data files, and workflows.
+description: Use when classifying a UO feature into World, Entity, ItemSystem, MobileSystem, Progression, EconomyCrafting, QuestNarrative, Encounter, or ClientPresentation, or when a user explicitly requests a cross-domain parity inventory. Routes concepts to ModernUO code/data. Do not use for ordinary implementation or deep single-mechanic review.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -14,243 +13,57 @@ metadata:
     tags: [modernuo, taxonomy, content, parity, planning]
     related_skills:
       - modernuo-content-patterns
-      - modernuo-content-taxonomy
       - modernuo-era-change-gate
       - uo-living-world-review
-      - uo-modernuo-workflow
+      - uo-official-evidence
 ---
 
 # ModernUO Content Taxonomy
 
-## When to Use
+## Boundary and branch
 
-- Planning new game content or scoping a feature request
-- Classifying where a piece of content belongs in the codebase
-- Migrating RunUO scripts and deciding which ModernUO system to target
-- Cross-referencing era docs (`dev-docs/eras/`) with implementation locations
-- Answering "where do I implement X?" for any UO content type
-- Parity audit or inventory against official UO (UO.com, UOGuide)
-- Comparing ModernUO implementation status to OSI for any taxonomy domain
+Choose one branch:
 
-## Mandatory Output Contract
+- **Classification/scoping:** answer “where does this belong?” or decompose a feature across domains. Do not force a full parity inventory.
+- **Parity inventory:** only when the user asks for parity, gaps, implementation status, or a 9-domain inventory. Requires a target era/profile and [parity-check.md](parity-check.md).
 
-**Every activation** must emit the full report from [parity-check.md](parity-check.md):
+Use [modernuo-content-patterns](../modernuo-content-patterns/SKILL.md) for implementation after classification. Use a narrow UO domain skill for deep mechanic review.
 
-1. **Bestandsaufnahme** — 9-domain matrix (World through ClientPresentation)
-2. **Fehlend (Gap)** — missing or unwired OSI content
-3. **Unvollständig** — `Partial`, `SourceLocked`, or `RuntimeBlocked` items
-4. **Enhanced** — intentional RebirthUO deviations from OSI
-5. **Fokus dieser Anfrage** — taxonomy classification and implementation paths
-6. **Offene Punkte / Recherche** — unresolved conflicts or items needing web search
+## Nine domains
 
-7. **Issue Slice Options** - Markdown follow-up option to turn findings into single sliced issues
+`World`, `Entity`, `ItemSystem`, `MobileSystem`, `Progression`, `EconomyCrafting`, `QuestNarrative`, `Encounter`, and `ClientPresentation`. Read the matching section of [mappings.md](mappings.md) for concepts and code/data anchors.
 
-Run the parity workflow **before** classification advice. Use web search only when UO.com and UOGuide do not resolve open points.
+These are design vocabulary, not guaranteed C# types; ModernUO commonly uses subclasses, data rows, enums/tables, and virtual profiles.
 
-## Parity Check
+## Workflow: classification
 
-Full workflow, source hierarchy, status legend, domain URLs, and report template:
+1. State the user outcome and target era/profile if behavior depends on it.
+2. Identify the primary domain, then direct dependencies. A placed boss may span Entity, MobileSystem, Encounter, loot, World, and ClientPresentation.
+3. Read only the matching sections of [mappings.md](mappings.md), then verify every proposed path/type in the current repository.
+4. Separate definition/data, runtime instance, registration/bootstrap, persistence, and presentation surfaces.
+5. Return the smallest implementation map; mark absent or unverified anchors explicitly.
 
-→ [parity-check.md](parity-check.md)
+## Parity workflow
 
-Primary external sources: **UO.com** wiki and **UOGuide**. Repo parity claims live in `dev-docs/eras/`; ML URLs in `Projects/UOContent/Misc/MondainsLegacySourceReferences.cs`.
+When the parity branch triggers, read [parity-check.md](parity-check.md) and [uo-official-evidence](../uo-official-evidence/SKILL.md). Do not claim `Present` or `Gap` without era-scoped official evidence plus current repository evidence.
 
-## Markdown Delivery and Issue Slicing
+## Safety gates
 
-Deliver the final parity report as Markdown. End every report with `## Issue Slice Options` and offer to turn findings into single sliced issues.
+- Distinguish `Gap`, `Partial`, `SourceLocked`, `RuntimeBlocked`, and intentional `Custom` behavior.
+- Repository code is implementation evidence, not proof of official UO history.
+- Client asset fidelity cannot be inferred from server-side numeric IDs alone.
+- Do not create issues or mutate trackers unless the user explicitly asks; issue slicing is a draft/report operation by default.
 
-Only create issue drafts or tracker issues when the user asks. When slicing is requested, create one independently actionable Markdown issue per gap, partial implementation, runtime blocker, enhanced-deviation decision, or unresolved research decision. Each issue slice should include:
+## Verification/self-check
 
-- Title.
-- Source report row, taxonomy domain, or stable decision ID.
-- Expected OSI behavior with cited source.
-- ModernUO evidence with file path, line, or search evidence.
-- Impact/risk category.
-- Proposed decision direction, without code patches unless already approved.
-- Acceptance criteria and suggested validation.
-- Open questions or source conflicts.
+Verify every proposed path/type in the current repository and every parity status against the stated era/profile and cited source class. Re-scan for implementation already present, unverified claims, and cross-domain dependencies.
 
-Do not bundle unrelated findings into one issue just because they belong to the same domain.
+## Output contract
 
-## Taxonomy Tree
+For classification, return primary/dependent domains, verified ModernUO types/paths, integration order, era assumptions, and open evidence. For parity, return the full English Markdown contract in [parity-check.md](parity-check.md), with citations and confidence. In either branch, identify checks performed and unresolved paths/source conflicts.
 
-- **World**
-  - Facet
-  - Region
-  - Dungeon
-  - Town
-  - StaticPlacement
-  - MultiDefinition
-  - TeleportLink
-  - HousingArea
-  - ResourceArea
-- **Entity**
-  - ItemDefinition
-  - ItemInstance
-  - MobileDefinition
-  - MobileInstance
-  - SpawnerDefinition
-  - ControllerDefinition
-- **ItemSystem**
-  - ItemCategory
-  - ItemPropertyDefinition
-  - MaterialDefinition
-  - DurabilityRule
-  - LootType
-  - EquipmentLayer
-  - ArtifactDefinition
-  - SetItemDefinition
-- **MobileSystem**
-  - MobileCategory
-  - AIProfile
-  - CreatureAbility
-  - TamingProfile
-  - VendorProfile
-  - TrainerProfile
-  - LootProfile
-  - CorpseProfile
-- **Progression**
-  - SkillDefinition
-  - StatDefinition
-  - SpellDefinition
-  - AbilityDefinition
-  - MasteryDefinition
-  - VirtueDefinition
-  - StatusEffectDefinition
-  - TitleDefinition
-- **EconomyCrafting**
-  - ResourceDefinition
-  - HarvestRule
-  - CraftRecipe
-  - ToolDefinition
-  - BulkOrderTemplate
-  - VendorInventory
-  - RewardStore
-  - CurrencyOrToken
-- **QuestNarrative**
-  - QuestDefinition
-  - QuestStep
-  - QuestObjective
-  - QuestGiver
-  - QuestItemRequirement
-  - DialogueNode
-  - RewardTable
-  - AccessUnlock
-- **Encounter**
-  - SpawnTable
-  - LootTable
-  - TreasureMapTemplate
-  - TreasureChestTemplate
-  - ChampionSpawnDefinition
-  - BossEncounter
-  - EventDefinition
-- **ClientPresentation**
-  - ArtAsset
-  - AnimationAsset
-  - SoundAsset
-  - Hue
-  - Gump
-  - ClilocString
-  - Icon
+## Reference routing
 
-## Core ModernUO Pattern
-
-Taxonomy names are **design vocabulary** — they do not exist as C# types in this repo.
-
-```mermaid
-flowchart LR
-  subgraph definition [Definition layer]
-    TypeSubclass["C# Type subclass"]
-    DataJSON["JSON/cfg data"]
-    EnumsTables["Enums and static tables"]
-  end
-  subgraph instance [Instance layer]
-    Item["Item world entity"]
-    Mobile["Mobile world entity"]
-    SpawnerItem["Spawner Item on map"]
-  end
-  TypeSubclass --> Item
-  TypeSubclass --> Mobile
-  DataJSON --> SpawnerItem
-```
-
-- **Definition** ≈ `System.Type` + ctor defaults, or JSON/cfg rows
-- **Instance** ≈ `Item` / `Mobile` registered in `World`
-- **Profiles** (loot, AI, vendor, taming) ≈ virtual overrides on `BaseCreature` / `BaseVendor`, not separate definition types
-
-ModernUO uses **type-per-content**: each sword, creature, or quest line is typically its own C# subclass plus shared enums and base classes.
-
-## Classification Workflow
-
-Use this checklist before writing code:
-
-0. **Emit Bestandsaufnahme report** — full 9-domain parity matrix + Gap / Partial / Enhanced lists ([parity-check.md](parity-check.md))
-1. **Spatial / world rules?** → World
-2. **New thing placed in the world?** → Entity first, then the domain system
-3. **Item mechanics / properties / gear rules?** → ItemSystem
-4. **Creature behavior / NPC roles?** → MobileSystem
-5. **Player growth (skills, spells, virtues)?** → Progression
-6. **Gathering / crafting / vendors / economy?** → EconomyCrafting
-7. **Story / quests / dialogue?** → QuestNarrative
-8. **Spawns, bosses, scheduled events?** → Encounter
-9. **Client IDs, UI, strings, icons?** → ClientPresentation
-
-When multiple domains apply, start with **Entity** (what exists in the world), then layer domain systems (e.g. a new boss = MobileDefinition + BossEncounter + LootProfile + ArtAsset).
-
-## World Bootstrap Order
-
-Relevant when placing content that depends on map/region data (`dev-docs/server-lifecycle.md`):
-
-1. `MapLoader` → `Distribution/Data/map-definitions.json`
-2. `TileMatrixLoader` → client map/static files
-3. `RegionJsonSerializer` → `Distribution/Data/regions.json`
-4. `MultiData.Configure()` → client multi files
-5. Decoration, teleporters, spawns → **manual** (`[Decorate]`, `[TelGen]`, spawner import)
-
-## Cross-Links
-
-| Domain | Primary skill / doc |
-|---|---|
-| World | `modernuo-regions.md`, `dev-docs/regions.md` |
-| Entity + items / mobiles | `modernuo-content-patterns.md` |
-| Item properties | `modernuo-property-lists.md` |
-| Progression spells | `modernuo-content-patterns.md` |
-| Quest engines | `Projects/UOContent/Engines/ML Quests/`, `Projects/UOContent/Engines/Quests/` |
-| Encounter events | `modernuo-event-scheduler.md`, `modernuo-timers.md` |
-| ClientPresentation gumps | `modernuo-gump-system.md` |
-| Strings / cliloc | `modernuo-string-handling.md` |
-| Era scoping | `modernuo-era-expansion.md`, `dev-docs/eras/README.md` |
-| Parity / inventory | [parity-check.md](parity-check.md), `dev-docs/eras/`, `MondainsLegacySourceReferences.cs` |
-| Serialization | `modernuo-serialization.md` |
-| RunUO migration | `migrate-from-runuo/migrate-foundation.md` |
-
-## Concept → Code Mappings
-
-Full per-concept tables with ModernUO equivalents, key paths, and gap notes:
-
-→ [mappings.md](mappings.md)
-
-## Quick Reference (Common Tasks)
-
-| Task | Start here |
-|---|---|
-| Add a dungeon zone | World → Region / Dungeon; `regions.json` + `DungeonRegion` |
-| Place static decor | World → StaticPlacement; `Data/Decoration/**/*.cfg` + `[Decorate]` |
-| Add a creature | Entity → MobileDefinition; new class under `Mobiles/` |
-| Configure spawns | Entity → SpawnerDefinition; `Data/Spawns/**/*.json` |
-| Add loot to a mob | MobileSystem → LootProfile; `GenerateLoot()` + `LootPack` |
-| Add a craftable item | EconomyCrafting → CraftRecipe; `Engines/Craft/Def*.cs` |
-| Add an ML quest | QuestNarrative → QuestDefinition; `Engines/ML Quests/Definitions/` |
-| Add a peerless boss | Encounter → BossEncounter; `Engines/Peerless/` |
-| Add a champion spawn | Encounter → ChampionSpawnDefinition; `ChampionSpawnInfo` |
-| Show a dialog UI | ClientPresentation → Gump; `Gumps/` + `modernuo-gump-system.md` |
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+- Read [mappings.md](mappings.md) only for the domains in scope.
+- Read [parity-check.md](parity-check.md) only for explicit parity/inventory work.
+- Read [modernuo-era-change-gate](../modernuo-era-change-gate/SKILL.md) when ownership or behavior moves between eras/profiles.

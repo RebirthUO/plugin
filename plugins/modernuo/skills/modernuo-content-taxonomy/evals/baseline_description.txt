@@ -1,0 +1,1 @@
+Use when planning content, scoping features, migrating RunUO scripts, auditing parity, or deciding where to implement facets, regions, items, mobiles, quests, loot, spawns, or client presentation. Classifies Ultima Online game content into the 9-domain inventory and maps taxonomy concepts to ModernUO types, data files, and workflows.

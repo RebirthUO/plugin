@@ -2,64 +2,52 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Create a custom ModernUO content module for my shard and register it with the server.",
-      "family": "custom_module_setup"
+      "text": "Review this modernuo custom module task and give me the repository-specific checks.",
+      "family": "owned_job"
     },
     {
-      "text": "Set up CUOContent and CUOContent.Tests beside UOContent.",
-      "family": "default_cuo_setup"
+      "text": "I need an evidence-backed plan for modernuo custom module in the configured ModernUO-based repository.",
+      "family": "owned_job"
     },
     {
-      "text": "I need a separate content project loaded from assemblies.json at runtime.",
-      "family": "runtime_registration"
+      "text": "Help me implement a modernuo custom module change and identify the focused verification.",
+      "family": "owned_job"
     },
     {
-      "text": "Add AVContent for the Avalon server and wire it into ModernUO.slnx.",
-      "family": "explicit_shortcut"
-    },
-    {
-      "text": "The user did not give a shard name; make the default custom module and tests.",
-      "family": "omitted_name_defaults_to_cuo"
-    },
-    {
-      "text": "Maintain our custom content assembly and verify AssemblyHandler loads it.",
-      "family": "module_maintenance"
+      "text": "Audit this modernuo custom module diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
     }
   ],
   "should_not_trigger": [
     {
-      "text": "Add a new sword under Projects/UOContent/Items.",
-      "family": "ordinary_content_edit"
+      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
+      "family": "out_of_scope"
     },
     {
-      "text": "Migrate this RunUO gump into the existing UOContent project.",
-      "family": "migration_without_module_boundary"
+      "text": "Review generic C# in an unrelated application.",
+      "family": "out_of_scope"
     },
     {
-      "text": "Check Flamestrike spell parity against UO.com.",
-      "family": "spell_parity"
-    },
-    {
-      "text": "Review this serialization version bump in BaseWeapon.",
-      "family": "serialization_review"
-    },
-    {
-      "text": "Explain how ModernUO loads assemblies without changing anything.",
-      "family": "explain_only"
+      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
+      "family": "out_of_scope"
     }
   ],
   "near_neighbor": [
     {
-      "text": "Create folders under UOContent for a new feature, but keep everything in the existing project.",
-      "family": "same_project_feature"
+      "text": "Review this modernuo content patterns task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     },
     {
-      "text": "Update Application.csproj for a dependency that is not a content module.",
-      "family": "generic_project_reference"
+      "text": "Review this modernuo server lifecycle task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     },
     {
-      "text": "Add a test project for existing UOContent code only.",
-      "family": "test_project_only"
+      "text": "Review this modernuo configuration task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo test workflow task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     }
   ]
 }

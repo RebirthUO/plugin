@@ -1,0 +1,1 @@
+Use when converting RunUO Packet subclasses, PacketWriter/PacketReader, or packet handler registration to ModernUO span-based packets. Covers outgoing packet conversion, incoming handler conversion, SpanWriter/SpanReader, and packet text handling.

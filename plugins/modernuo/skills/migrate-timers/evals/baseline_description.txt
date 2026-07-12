@@ -1,0 +1,1 @@
+Use when converting RunUO Timer subclasses, Timer.DelayCall patterns, or TimerPriority usage to ModernUO fire-and-forget timers. Covers Timer subclass elimination, TimerExecutionToken, callback patterns, cleanup, and post-load restoration.

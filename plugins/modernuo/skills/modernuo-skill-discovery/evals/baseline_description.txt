@@ -1,0 +1,1 @@
+Use when asked to analyze the ModernUO codebase, inspect installed or attached skills, compare repository patterns against existing skill coverage, and discover missing or under-covered skills that would improve development, review, migration, onboarding, or automation quality.

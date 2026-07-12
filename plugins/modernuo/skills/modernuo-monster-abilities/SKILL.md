@@ -1,6 +1,10 @@
 ---
 name: modernuo-monster-abilities
-description: Use when adding, migrating, or reviewing ModernUO/RebirthUO creature special attacks as reusable MonsterAbility classes under Projects/UOContent/Mobiles/Abilities instead of inline monster hook logic.
+description: >
+  Use when adding, migrating, or reviewing reusable ModernUO-based creature
+  combat specials implemented as MonsterAbility classes. Do not route boss phase
+  orchestration or WeaponAbility work here; keep those in encounter code or the
+  weapon-ability system.
 version: 1.2.0
 author: Hermes Agent
 license: MIT
@@ -11,211 +15,77 @@ metadata:
     workflow_phase: none
     workflow_tier: support
     tags:
-    - modernuo
-    - rebirthuo
-    - mobiles
-    - monster-abilities
-    - combat
+      - modernuo
+      - rebirthuo
+      - mobiles
+      - monster-abilities
+      - combat
     related_skills:
-    - modernuo-content-patterns
-    - uo-combat-pipeline
-    - modernuo-timers
-    - modernuo-serialization
-    - modernuo-code-audit
+      - modernuo-content-patterns
+      - uo-combat-pipeline
+      - modernuo-timers
+      - modernuo-serialization
+      - modernuo-code-audit
 ---
+
 # ModernUO Monster Abilities
 
-## Overview
+## Boundary
 
-Use this skill to keep creature combat specials reusable, testable, and outside individual monster files. A monster should wire abilities through `GetMonsterAbilities()`; the ability class owns trigger rules, cooldowns, target selection, effects, and debuff helper items.
+Combat procs, debuffs, counters, breaths, area effects, and summons-on-hit belong
+in reusable classes under `Projects/UOContent/Mobiles/Abilities/`. A creature
+should normally only expose them through `GetMonsterAbilities()`. Keep encounter
+phases, altar/retinue ownership, and HP-threshold orchestration with the owning
+encounter. `WeaponAbility` remains a separate engine slot.
 
-Keep boss encounter orchestration in the boss/altar code, but extract combat specials such as debuffs, counters, breath attacks, area effects, and summons-on-hit into `MonsterAbility` classes.
+## Workflow
 
-## When to Use
+1. Search the creature for `GetMonsterAbilities()`, `GetWeaponAbility()`, and
+   inline combat hooks such as `OnGaveMeleeAttack`, `OnGotMeleeAttack`,
+   `OnDamagedBySpell`, `OnDamage`, and `OnHarmfulSpell`.
+2. Classify the behavior as reusable combat special, weapon ability, or encounter
+   orchestration before moving code.
+3. Reuse an existing ability or select the narrowest base class. Keep tunable
+   constants, trigger, chance, cooldown, targeting, and effect ownership on the
+   ability.
+4. Add a `MonsterAbilityType` value only when typed lookup is needed; register the
+   ability in `MonsterAbilities.cs`, then wire the creature.
+5. Preserve era gates, target eligibility, damage/debuff semantics, and cooldown
+   tracking. Do not manually dispatch logic already reached by trigger flags.
+6. Add focused tests for creature registration and the player-visible effect.
 
-- Adding or refactoring a creature special attack, debuff, proc, counter, breath, or summon
-- Implementing peerless boss combat abilities
-- Migrating RunUO inline special logic into ModernUO
-- Reviewing monster code for ability architecture
+## Guardrails
 
-## Default Rule
+- Call `base.Trigger(...)` where the selected base contract records cooldown.
+- Parameterize shared effects instead of cloning one class per creature.
+- Debuff/helper items must use ModernUO serialization, cancel owned timers on
+  deletion, and restore or delete transient state safely after load.
+- Use spatial queries and pooled collections on area-effect hot paths; do not scan
+  `World.Mobiles` or add allocating LINQ chains.
+- An absent registration does not prove a missing special: record discovered
+  inline hooks as migration candidates before changing behavior.
+- Audit both `MonsterAbility` and `WeaponAbility`; a creature may use both.
 
-Every **combat special** is implemented as its own `MonsterAbility` class under `Projects/UOContent/Mobiles/Abilities/` — **not** as inline logic in `OnGaveMeleeAttack`, `OnThink`, `OnDamage`, or as a nested private class inside the monster file.
+## Output Contract
 
-Monsters only **wire** abilities via `GetMonsterAbilities()`. The ability class owns trigger rules, cooldown, effect payload, and debuff items.
+Implementation output names the ability class, base/trigger, registry and creature
+wiring, preserved source behavior, tests, and any inline-hook follow-up. Review
+output names the exact path/line, architecture mismatch, gameplay risk, and
+focused verification.
 
-**Good:** `RuneBeetle` → `MonsterAbilities.RuneCorruption`  
-**Bad:** `LadyMelisande.TriggerNauseaDebuff()` with nested `NauseaDebuffItem` in the monster file
+## Verification
 
-## Implementation Workflow
+- Creature exposes the expected ability without duplicate inline dispatch.
+- Chance, cooldown, target filters, era gate, and effect values are exercised.
+- Helper items clean timers and do not survive load incorrectly.
+- The owning project builds and focused ability tests pass; label any remaining
+  runtime/manual check explicitly.
 
-Copy this checklist and track progress:
+## Reference Routing
 
-```
-Task Progress:
-- [ ] Step 1: Confirm this is a combat special (not boss orchestration)
-- [ ] Step 2: Create ability class in Mobiles/Abilities/
-- [ ] Step 3: Pick base class and configure trigger/chance/cooldown
-- [ ] Step 4: Add MonsterAbilityType enum value if lookup needed
-- [ ] Step 5: Register singleton in MonsterAbilities.cs
-- [ ] Step 6: Wire monster via GetMonsterAbilities()
-- [ ] Step 7: Add ability test under UOContent.Tests
-```
-
-### Step 1 — Combat special vs boss orchestration
-
-| Combat special → extract to `MonsterAbility` | Boss orchestration → keep in monster |
-|---|---|
-| Debuffs, procs, breath, counters, summons-on-hit | Phase spawns at HP thresholds |
-| Area effects, life drain, equipment destroy | Peerless altar / encounter lifecycle |
-| Mana-cost specials, movement slows | Retinue ownership, altar cleanup |
-
-Combat effects belong in `MonsterAbility` **even on peerless bosses** (see `MonstrousInterredGrizzle` + `HowlOfCacophony`).
-
-### Step 2–3 — Create the ability class
-
-File: `Projects/UOContent/Mobiles/Abilities/{AbilityName}.cs`
-
-Pick a base class (details in [reference.md](references/reference.md)):
-
-| Base | Use when |
-|---|---|
-| `MonsterAbility` | Custom trigger logic, passives, damage modifiers |
-| `MonsterAbilitySingleTarget` | Single-target proc on melee/spell hit |
-| `MonsterAbilitySingleTargetDoT` | Timed debuff / DoT (resist mods, ticking damage) |
-| `AreaEffectMonsterAbility` | Hits all valid targets in range |
-| `MonsterAbilityGroup` | Weighted random pick from multiple abilities |
-
-Configure overrides:
-
-```csharp
-public override MonsterAbilityType AbilityType => MonsterAbilityType.MyAbility;
-public override MonsterAbilityTrigger AbilityTrigger => MonsterAbilityTrigger.GiveMeleeDamage;
-public override double ChanceToTrigger => 0.10;
-public override TimeSpan MinTriggerCooldown => TimeSpan.FromSeconds(30);
-public override TimeSpan MaxTriggerCooldown => TimeSpan.FromSeconds(30);
-```
-
-Put tunable constants on the ability as `public const` / `public static readonly` — not duplicated on the monster.
-
-For parameterized variants (different creatures, same effect), use constructor parameters like `FanningFire(chance, resistMod, minDmg, maxDmg)`.
-
-### Step 4 — MonsterAbilityType enum
-
-Add a value to `MonsterAbilityType.cs` when `GetAbility(MonsterAbilityType.X)` or tests need typed lookup.
-
-### Step 5 — Register singleton
-
-Add to `MonsterAbilities.cs`:
-
-```csharp
-public static MyAbility MyAbility => new();
-```
-
-For parameterized abilities, expose factory methods or named instances:
-
-```csharp
-public static FanningFire FanningFire => new(0.05, -10, 35, 45);
-```
-
-### Step 6 — Wire the monster
-
-Monster file stays thin:
-
-```csharp
-private static MonsterAbility[] _abilities = { MonsterAbilities.MyAbility };
-public override MonsterAbility[] GetMonsterAbilities() => _abilities;
-```
-
-Multiple abilities:
-
-```csharp
-private static MonsterAbility[] _abilities =
-{
-    MonsterAbilities.FireBreath,
-    MonsterAbilities.PoisonGasCounter
-};
-```
-
-Weighted random group:
-
-```csharp
-private static MonsterAbility[] _abilities =
-{
-    new MonsterAbilityGroup(
-        new(0.6, MonsterAbilities.EnergyBoltCounter),
-        new(0.4, MonsterAbilities.ThrowHatchetCounter)
-    )
-};
-```
-
-Do **not** call ability logic manually from monster hooks when `TriggerAbility` already handles it via `BaseCreature` combat events.
-
-### Step 7 — Tests
-
-Location: `Projects/UOContent.Tests/Tests/Mobiles/Abilities/{AbilityName}Tests.cs`
-
-Minimum coverage:
-- Monster registers the expected ability via `GetMonsterAbilities()`
-- Effect applies with correct resist/damage/debuff values
-- Era-conditional behavior if applicable (`Core.ML`, `Core.AOS`, etc.)
-
-See [reference.md](references/reference.md) for templates.
-
-## Common Pitfalls
-
-Do **not**:
-
-- Put special-attack logic in `OnGaveMeleeAttack`, `OnTakeMeleeDamage`, `OnThink` when a trigger flag covers it
-- Nest `MonsterAbility` subclasses or debuff `Item` classes inside monster files
-- Duplicate ability constants on the monster (read from the ability class instead)
-- Copy-paste an ability for each creature — parameterize or reuse the singleton
-- Store per-creature cooldown on the monster — `MonsterAbility` tracks cooldown per `BaseCreature` internally
-- Assume a monster that lacks a `GetMonsterAbilities()` registration has no abilities. SE-era monsters (`Yamandon`, `Serado`, `KazeKemono.FlurryOfTwigs`/`ChlorophyllBlast`, `LadyOfTheSnow.ColdWind`, `Kappa.SpillAcid`, the three `YomotsuX` Laugh-stun paths, `FireBeetle.OnHarmfulSpell` speed boost) all use inline `OnGaveMeleeAttack` / `OnGotMeleeAttack` / `OnDamagedBySpell` / `OnDamage` hooks instead. Always `grep` the file for inline hooks before claiming a special is missing, and add it to the **Migrate-to-MonsterAbility** follow-up list when you find one.
-- Mistake `WeaponAbility.X` for `MonsterAbility.X`. `WeaponAbility` is the engine damage-ability slot (e.g. `WeaponAbility.Dismount`, `WeaponAbility.BleedAttack`, `WeaponAbility.CrushingBlow`, `WeaponAbility.DoubleStrike`) wired through `GetWeaponAbility()`. `MonsterAbility` lives under `Projects/UOContent/Mobiles/Abilities/` and is wired through `GetMonsterAbilities()`. The same monster can carry one of each; audit hooks for both before reporting.
-
-## Code Audit Hooks
-
-When editing ability `.cs` files, also apply `modernuo-code-audit` rules:
-
-- Cancel `_timerToken` in debuff item `OnAfterDelete()`
-- Use `[SerializationGenerator]` on serializable debuff items; delete stale effects in `[AfterDeserialization]`
-- No LINQ on hot paths; use `PooledRefList` / `PooledRefQueue` for target collection
-- No `Console.WriteLine` — use `LogFactory.GetLogger`
-- PropertyList string literals must be holes (`$"{"Label"}\t{value}"`)
-
-
-## Verification Checklist
-
-- [ ] Combat special behavior lives in a `MonsterAbility` class, not inline monster hook code.
-- [ ] The monster wires abilities through `GetMonsterAbilities()` and does not call ability internals manually.
-- [ ] Cooldown, chance, constants, debuff items, and cleanup live with the ability or its helper item.
-- [ ] Serialized debuff/helper items use ModernUO serialization and cleanup patterns.
-- [ ] Tests or focused verification prove registration plus the player-visible effect.
-- [ ] When auditing existing monsters for `MonsterAbility` parity, every inline `OnGaveMeleeAttack` / `OnGotMeleeAttack` / `OnDamagedBySpell` / `OnDamage` / `OnHarmfulSpell` body that fires a damage burst, debuff, or DOT is recorded on the **Migrate-to-MonsterAbility** follow-up list (see `uo-research-docs-parity` skill, `references/monster-ability-bulk-extraction.md`).
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## Related Skills
-
-| Task | Skills |
-|---|---|
-| New monster + ability | `modernuo-monster-abilities`, `modernuo-content-patterns`, `modernuo-timers` |
-| Era-conditional ability | `modernuo-era-expansion` |
-| Debuff items with timers | `modernuo-timers`, `modernuo-serialization` |
-| Code review | `modernuo-code-audit` |
-
-## Additional Resources
-
-- Base class matrix, trigger reference, code templates, review checklist → [reference.md](references/reference.md)
-- uo.com creature/pet ability audit workflow and master-list caveats → [uo-com-creature-ability-audit.md](references/uo-com-creature-ability-audit.md)
-- Ability system source → `Projects/UOContent/Mobiles/Abilities/`
-- Creature patterns hub → `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md`
+- Read [ability bases, triggers, templates, and registry checklist](references/reference.md)
+  when selecting a base class or implementing a new ability.
+- Read [uo.com creature ability audit notes](references/uo-com-creature-ability-audit.md)
+  only for official pet/creature ability parity research.
+- Load `uo-combat-pipeline` for damage-hook ordering and `modernuo-timers` /
+  `modernuo-serialization` for stateful helper items.

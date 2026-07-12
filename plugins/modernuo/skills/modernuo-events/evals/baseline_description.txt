@@ -1,0 +1,1 @@
+Use when subscribing to or creating game events, working with EventSink or generated events, or hooking into player login, death, speech, or other game events.

@@ -1,8 +1,6 @@
 ---
 name: migrate-persistence
-description: >
-  Use when converting RunUO EventSink.WorldSave/WorldLoad manual binary persistence to ModernUO GenericPersistence.
-  Covers GenericPersistence subclassing, IGenericWriter/IGenericReader, MarkDirty pattern, and save/load lifecycle.
+description: Use when replacing RunUO WorldSave/WorldLoad handlers or custom binary files with ModernUO GenericPersistence for global, non-entity system state. Covers schema/version preservation, IGenericWriter/IGenericReader, dirty tracking, and load restoration. Do not use for Item/Mobile fields; use serialization migration.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,49 +20,39 @@ metadata:
       - modernuo-code-audit
 ---
 
-# RunUO -> ModernUO Persistence Migration
+# RunUO to ModernUO Persistence Migration
 
-## When to Use
-- Converting `EventSink.WorldSave`/`EventSink.WorldLoad` patterns
-- Converting manual `BinaryFileWriter`/`BinaryFileReader` persistence
-- Systems that save custom data outside of Item/Mobile serialization
+## Boundary
 
-## Conversion Steps
-1. Create class inheriting `GenericPersistence`: `class MySystem : GenericPersistence`
-2. Add static instance + `Configure()`: `_instance = new MySystem();`
-3. Call `base("SaveName", 10)` in constructor
-4. Move save logic to `override Serialize(IGenericWriter writer)`
-5. Move load logic to `override Deserialize(IGenericReader reader)`
-6. Remove `EventSink.WorldSave`/`WorldLoad` subscriptions
-7. Remove all file management code (Directory.Create, File.Exists, FileStream)
-8. Add `_instance.MarkDirty()` wherever data changes
-9. Replace `writer.Write(mobile.Serial.Value)` -> `writer.Write(mobile)`
-10. Replace `World.FindMobile(reader.ReadInt32())` -> `reader.ReadEntity<Mobile>()`
+Use `GenericPersistence` for global system data that does not belong to an `Item` or `Mobile`. Entity fields belong in [migrate-serialization](../migrate-serialization/SKILL.md).
 
-## Template
-```csharp
-public class MySystem : GenericPersistence
-{
-    private static MySystem _instance;
-    public static void Configure() => _instance = new MySystem();
-    public MySystem() : base("MySystem", 10) { }
-    public override void Serialize(IGenericWriter writer) { /* save */ }
-    public override void Deserialize(IGenericReader reader) { /* load */ }
-}
-```
+## Workflow
 
-## How to Report Issues
+1. Load [migrate-foundation](../migrate-foundation/SKILL.md). Inventory file paths, version markers, field order/types, entity references, mutation sites, missing-file behavior, and startup/save hooks.
+2. Inspect a current local `GenericPersistence` implementation and the exact reader/writer APIs.
+3. Define a stable persistence name and versioned read/write contract. Preserve the legacy read path or provide an explicit one-time migration when existing saves matter.
+4. Replace file management and WorldSave/WorldLoad subscriptions with a registered `GenericPersistence` instance.
+5. Write entity references with supported entity methods and read them with typed entity APIs; handle deleted or missing references.
+6. Call `MarkDirty()` on every state mutation that must persist. Rebuild runtime-only indexes, timers, and registrations only in the correct post-load phase.
+7. Test empty state, legacy load, current round trip, corrupt/unsupported version behavior, deletion/null references, and dirty/no-dirty saves.
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+## Safety gates
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+- Never reorder or reinterpret legacy fields without a versioned migration.
+- Do not delete legacy files or loaders before a backup/rollback boundary and successful migration test exist.
+- Fail safely on unsupported versions; do not silently read misaligned data.
+- Keep runtime handles and caches out of serialized state.
 
-## See Also
-- `dev-docs/runuo-migration-docs/08-persistence.md` -- detailed migration reference with before/after
-- `dev-docs/serialization.md` -- ModernUO serialization system (IGenericWriter/IGenericReader)
-- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` -- ModernUO serialization skill
-- `plugins/modernuo/skills/modernuo-lifecycle-cleanup/SKILL.md` -- runtime restoration and cleanup around persisted systems
+## Verification/self-check
+
+Test legacy and current round trips, unsupported/corrupt versions, entity deletion/nulls, and dirty tracking. Re-read the schema in write order and confirm the rollback boundary before removing old code.
+
+## Output contract
+
+Return the persistence class and registration changes, a schema/version table, legacy migration and rollback decision, dirty-tracking audit, verification evidence, and unresolved save-compatibility risks.
+
+## Reference routing
+
+- Read [modernuo-serialization](../modernuo-serialization/SKILL.md) for current reader/writer patterns.
+- Read [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) when loaded state owns timers, events, entities, or other runtime resources.
+- Consult the official [ModernUO serialization guide](https://modernuo.com/docs/development/serialization/) for a repository-independent cross-check.

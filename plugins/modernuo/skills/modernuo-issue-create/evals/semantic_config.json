@@ -1,0 +1,57 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Issue Create",
+    "inputs": [
+      "modernuo issue create",
+      "create an intake issue",
+      "live issue template",
+      "intakepacket"
+    ],
+    "trigger_actions": [
+      "Create an intake issue from the live template after resolving the exact GitHub repository only from project AGENTS.md.",
+      "I need an evidence-backed plan for modernuo issue create in the configured ModernUO-based repository.",
+      "Help me implement a modernuo issue create change and identify the focused verification.",
+      "Audit this modernuo issue create diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo issue research",
+      "modernuo issue implement",
+      "uo official evidence"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo issue create",
+        "create an intake issue",
+        "live issue template",
+        "intakepacket"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

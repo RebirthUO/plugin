@@ -1,61 +1,49 @@
 {
-  "recommended_threshold": 0.32,
+  "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Rename the publish81-prefixed xUnit tests so the class and methods match what they actually test.",
-      "family": "publish_prefix_cleanup"
+      "text": "Review this modernuo test naming task and give me the repository-specific checks.",
+      "family": "owned_job"
     },
     {
-      "text": "AI added our branch name to several ModernUO test methods; normalize the names without changing the assertions.",
-      "family": "branch_noise_cleanup"
+      "text": "I need an evidence-backed plan for modernuo test naming in the configured ModernUO-based repository.",
+      "family": "owned_job"
     },
     {
-      "text": "Review these new RebirthUO tests and fix any file, class, or method names that are just task labels.",
-      "family": "new_test_name_review"
+      "text": "Help me implement a modernuo test naming change and identify the focused verification.",
+      "family": "owned_job"
     },
     {
-      "text": "Clean up generated tests named FeatureMlPeerlessArtifacts_* and keep only the tested object or area in the names.",
-      "family": "generated_prefix_cleanup"
-    },
-    {
-      "text": "The tests are good but the names start with SamuraiEmpire and Publish 81 even when they test TreasuresOfTokuno; fix that.",
-      "family": "era_publish_mislabel"
+      "text": "Audit this modernuo test naming diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
     }
   ],
   "should_not_trigger": [
     {
-      "text": "Implement the missing Publish 81 Treasures of Tokuno reward behavior.",
-      "family": "ordinary_implementation"
+      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
+      "family": "out_of_scope"
     },
     {
-      "text": "Run an era parity report for Samurai Empire content gaps.",
-      "family": "era_parity_report"
+      "text": "Review generic C# in an unrelated application.",
+      "family": "out_of_scope"
     },
     {
-      "text": "Review this code for unnecessary constants and PolicySe names.",
-      "family": "symbol_discipline"
-    },
-    {
-      "text": "Set up CUOContent and CUOContent.Tests beside UOContent.",
-      "family": "custom_module_setup"
-    },
-    {
-      "text": "Add missing assertions for MLQuestConfigResolutionTests.",
-      "family": "test_behavior_change"
+      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
+      "family": "out_of_scope"
     }
   ],
   "near_neighbor": [
     {
-      "text": "Keep MLPeerlessArtifactsTests as-is because MLPeerlessArtifacts is the production object under test.",
-      "family": "legitimate_ml_object"
+      "text": "Review this modernuo test workflow task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     },
     {
-      "text": "PublishWindow_SchedulesDropAndRewardEras should keep PublishWindow because that is the tested type.",
-      "family": "legitimate_publish_object"
+      "text": "Review this modernuo regression testing task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     },
     {
-      "text": "EraProfileManagerTests uses Era in the class name because EraProfileManager is the object under test.",
-      "family": "legitimate_era_object"
+      "text": "Review this modernuo no publish-prefix symbol names task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     }
   ]
 }

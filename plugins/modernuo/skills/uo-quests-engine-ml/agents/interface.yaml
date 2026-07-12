@@ -1,0 +1,26 @@
+interface:
+  display_name: UO ML Quests Engine
+  short_description: UO ML Quests Engine
+  default_prompt: Use $uo-quests-engine-ml to apply UO ML Quests Engine guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+compatibility:
+  canonical_format: agent-skills
+  adapter_targets:
+  - openai
+  - claude
+  - generic
+  - vscode
+  activation:
+    mode: implicit
+    paths: []
+  execution:
+    context: inline
+    shell: powershell
+  trust:
+    source_tier: plugin
+    remote_inline_execution: forbid
+    remote_metadata_policy: allow-metadata-only
+  degradation:
+    openai: Use the canonical SKILL.md and load references on demand.
+    claude: Use the neutral Agent Skills source and preserve explicit safety gates.
+    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.

@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Regions",
+    "inputs": [
+      "modernuo regions"
+    ],
+    "trigger_actions": [
+      "Review this modernuo regions task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo regions in the configured ModernUO-based repository.",
+      "Help me implement a modernuo regions change and identify the focused verification.",
+      "Audit this modernuo regions diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo performance hot paths",
+      "modernuo content patterns",
+      "modernuo serialization",
+      "modernuo timers",
+      "modernuo lifecycle cleanup",
+      "modernuo era expansion",
+      "uo world facets regions"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo regions"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

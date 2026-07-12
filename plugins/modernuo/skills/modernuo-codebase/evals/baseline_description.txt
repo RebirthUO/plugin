@@ -1,0 +1,1 @@
+Use when locating project ownership, repository instructions, source, configuration, data, build, or test anchors in a confirmed ModernUO-based checkout. Resolve the repository from project instructions and map the local layout before planning work. Do not use as official UO mechanics evidence or as authorization for issue, code, git, or GitHub mutation.

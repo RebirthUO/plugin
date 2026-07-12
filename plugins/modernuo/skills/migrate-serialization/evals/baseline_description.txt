@@ -1,0 +1,1 @@
+Use when converting RunUO Serialize/Deserialize methods, adding [SerializableField], converting [Constructable] to [Constructible], or migrating manual serialization code. Covers source-generated serialization, field conversion, version handling, TypeAlias, and post-load restoration.

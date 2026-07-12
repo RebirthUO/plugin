@@ -1,4 +1,4 @@
-# Weapon-Buff Spell Pattern (ModernUO/RebirthUO)
+# Weapon-Buff Spell Pattern
 
 This is the canonical reference for temporary weapon enchantment spells. Use it whenever
 you implement or review a spell that buffs a `BaseWeapon` for a duration and must clean

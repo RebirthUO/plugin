@@ -5,14 +5,14 @@
     "email": "jsiems87@gmail.com"
   },
   "metadata": {
-    "description": "Cursor plugins for RebirthUO development.",
-    "version": "1.21.0"
+    "description": "Official-UO research and repository-portable ModernUO engineering plugins.",
+    "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "modernuo",
       "source": "./plugins/modernuo",
-      "description": "ModernUO and Ultima Online development guidance for RebirthUO."
+      "description": "Official-UO research and repository-portable ModernUO engineering workflows."
     }
   ]
 }

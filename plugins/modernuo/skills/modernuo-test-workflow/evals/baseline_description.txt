@@ -1,0 +1,1 @@
+Use when writing, modifying, validating, or preparing PRs for ModernUO/RebirthUO xUnit tests, especially UOContent tests that instantiate game entities, isolated issue branches/worktrees, focused `dotnet test` validation, and PR readiness checks.

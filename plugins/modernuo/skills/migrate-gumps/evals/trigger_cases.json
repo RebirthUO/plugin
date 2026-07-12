@@ -1,0 +1,53 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Migrate this RunUO runuo to modernuo gump migration code to current ModernUO conventions.",
+      "family": "owned_job"
+    },
+    {
+      "text": "I need an evidence-backed plan for runuo to modernuo gump migration in the configured ModernUO-based repository.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Help me implement a runuo to modernuo gump migration change and identify the focused verification.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Audit this runuo to modernuo gump migration diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Review generic C# in an unrelated application.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Migrate this RunUO runuo to modernuo migration foundation code to current ModernUO conventions.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo gump system task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo string handling task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo code audit task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    }
+  ]
+}

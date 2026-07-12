@@ -1,6 +1,7 @@
 # Artifact Rarity Audit Notes
 
-Use this reference when asked whether Artifact Rarity is implemented or complete in RebirthUO/ModernUO.
+Use this reference when asked whether Artifact Rarity is implemented or
+complete in the configured ModernUO-based repository.
 
 ## What to check
 

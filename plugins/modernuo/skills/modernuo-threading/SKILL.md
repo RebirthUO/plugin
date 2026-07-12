@@ -1,7 +1,10 @@
 ---
 name: modernuo-threading
 description: >
-  Use when discussing async patterns, world saves, game loop, reviewing code for threading issues, or using await, Task, or any concurrency-related code in game logic.
+  Use when reviewing ModernUO async/await, Task/thread usage, game-loop ownership,
+  concurrent collections, pooling, network/server infrastructure, or parallel
+  world-save serialization. Do not use for ordinary delayed gameplay actions;
+  route scheduling to modernuo-timers.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,184 +25,64 @@ metadata:
       - modernuo-test-workflow
 ---
 
-# ModernUO Threading & Event Loop
+# ModernUO Threading and Event Loop
 
-## When to Use
-- Reviewing code for threading issues
-- Discussing async/await patterns
-- Working with world saves
-- Any mention of `Task.Run`, `Thread`, `lock`, `ConcurrentDictionary`
-- Understanding the game loop
+## Boundary
 
-## CRITICAL RULE: Single-Threaded Game Logic
+Normal game-state mutation belongs to the single game-loop thread. Explicit
+server infrastructure may use worker threads for networking, pool maintenance,
+and world-save serialization, but those boundaries do not make entities, timers,
+maps, or `NetState` generally thread-safe.
 
-ModernUO uses a **single-threaded game loop**. All game logic runs on one thread. There are NO exceptions for game code.
+## Workflow
 
-## Forbidden in Game Code
+1. Identify the current thread/context, continuation target, state touched, and
+   whether the code is gameplay or reviewed server infrastructure.
+2. Trace how work enters and returns to `EventLoopContext`. For delayed gameplay,
+   use timer/event-loop primitives rather than offloading state mutation.
+3. Remove unnecessary `Task.Run`, raw threads, locks, atomics, volatile fields, or
+   concurrent collections from single-threaded game code.
+4. For real worker-thread code, snapshot immutable data, bound ownership, and
+   marshal any game-state mutation back to the event loop.
+5. Audit serialization callbacks separately: entity `Serialize()` runs on
+   background workers during parallel world saves and must be pure.
+6. Test ordering/cancellation/shutdown behavior and use stress/diagnostic evidence
+   for infrastructure concurrency changes.
 
-```csharp
-// ALL of these are WRONG in Projects/UOContent/ code:
-Task.Run(() => ProcessItems());           // Background thread
-new Thread(BackgroundWork).Start();       // Manual thread
-ThreadPool.QueueUserWorkItem(Work);       // Thread pool
-lock (_syncObj) { ... }                   // Locking
-Monitor.Enter(obj);                       // Monitor
-volatile int _counter;                    // Volatile
-ConcurrentDictionary<int, Item> _items;   // Concurrent collections
-ConcurrentQueue<T> _queue;               // Concurrent collections
-Interlocked.Increment(ref _count);        // Atomics
-Mutex mutex;                              // OS mutex
-Semaphore sem;                            // Semaphore
-ReaderWriterLockSlim rwl;                 // RW lock
-```
+## Guardrails
 
-**Why**: The game loop is single-threaded. Concurrency primitives add overhead for no benefit, and background threads would cause data races with game state.
+- Do not touch `Item`, `Mobile`, `World`, `Map`, timer APIs, or `NetState` from
+  arbitrary worker threads.
+- `await Timer.Pause(...)` is safe when the captured ModernUO synchronization
+  context posts continuation back to the event loop. Do not suppress that context
+  without proving the new ownership boundary.
+- Never use `Thread.Sleep()` on the game loop.
+- Game code normally uses `Dictionary`, `PooledRefList<T>.Create()`, and
+  `STArrayPool<T>.Shared`; multi-threaded variants belong only to proven worker
+  contexts.
+- `Serialize()` may read stable fields and write its `IGenericWriter`; it must not
+  create/delete/move entities, start/stop timers, send packets, or mutate shared
+  state.
+- A lock does not make a game entity safe to mutate off-thread.
 
-## Why await Is Safe
+## Output Contract
 
-`EventLoopContext` implements `SynchronizationContext` and routes all `await` continuations back to the main thread:
+Return the execution-context map, state ownership, unsafe crossing or redundant
+primitive, chosen event-loop handoff, shutdown/cancellation behavior, and
+verification. Distinguish static reasoning from stress/profile evidence.
 
-```csharp
-// This is SAFE in game code:
-await Timer.Pause(TimeSpan.FromMilliseconds(100));
-// Continuation runs on the game thread, not a thread pool thread
-```
+## Verification
 
-The flow:
-1. `await` captures `EventLoopContext` as the synchronization context
-2. When the awaited task completes, the continuation is posted to `EventLoopContext._queue`
-3. `LoopContext.ExecuteTasks()` runs those continuations on the main thread during the next game loop tick
+- Continuations that mutate game state execute on the event loop.
+- Worker code cannot retain/mutate live entities after cancellation or shutdown.
+- Serialization callbacks are pure under parallel workers.
+- Ordering and cleanup tests pass; performance/concurrency claims have measured
+  evidence where material.
 
-## Game Loop Structure
+## Reference Routing
 
-```csharp
-// Simplified from Projects/Server/Main.cs
-while (!Closing)
-{
-    _tickCount = GetTimestamp();
-    _now = DateTime.UtcNow;
-
-    Mobile.ProcessDeltaQueue();    // Send mobile state changes to clients
-    Item.ProcessDeltaQueue();      // Send item state changes to clients
-    Timer.Slice(_tickCount);       // Execute due timers
-    NetState.Slice();              // Process network I/O
-    LoopContext.ExecuteTasks();     // Run async continuations (Timer.Pause, etc.)
-    Timer.CheckTimerPool();        // Refill timer pool if needed
-}
-```
-
-## EventLoopContext Details
-
-```csharp
-public sealed class EventLoopContext : SynchronizationContext
-{
-    private readonly ConcurrentQueue<Action> _queue;          // Normal tasks
-    private readonly ConcurrentQueue<Action> _priorityQueue;  // High priority
-    private readonly int _maxPerFrame;                         // Default: 128
-
-    // Posts run on next ExecuteTasks() call
-    public void Post(Action d, Priority priority = Priority.Normal);
-
-    // Send blocks if called from another thread, immediate if on game thread
-    public override void Send(SendOrPostCallback d, object state);
-
-    // Called once per game loop tick
-    public void ExecuteTasks();
-}
-```
-
-## Memory: STArrayPool vs ArrayPool
-
-In game code, use `STArrayPool<T>.Shared` (single-threaded, no locks):
-```csharp
-// GOOD - no locking overhead
-var buffer = STArrayPool<byte>.Shared.Rent(1024);
-try { /* use buffer */ }
-finally { STArrayPool<byte>.Shared.Return(buffer); }
-```
-
-`ArrayPool<T>.Shared` uses locks for thread safety -- unnecessary overhead in single-threaded context.
-
-## Memory: PooledRefList
-
-```csharp
-// Stack-allocated list using pooled arrays
-using var list = PooledRefList<Mobile>.Create();
-list.Add(mobile);
-// Automatically returns array to pool on Dispose
-
-// For multi-threaded contexts (rare):
-using var list = PooledRefList<Mobile>.CreateMT();
-```
-
-## World Saves
-
-World saves use **parallel serialization threads**. This is critical to understand:
-
-1. **Preserialize**: Allocates heaps and wakes serialization thread workers (background)
-2. **Snapshot**: Main thread calls `Persistence.SerializeAll()` which pushes entities into `SerializationThreadWorker` queues (round-robin). Workers call `Serialize(writer)` on **their own background threads** in parallel.
-3. **Write snapshot**: Disk I/O on background threads after serialization completes
-
-```csharp
-// From World.cs -- save flow:
-World.Save();
-→ Preserialize() on thread pool (allocate heaps, wake serialization workers)
-→ Snapshot() on main thread (queues entities to workers, workers serialize in parallel)
-  → SerializationThreadWorker.Execute() calls e.Serialize(writer) on background thread
-→ PauseSerializationThreads() (wait for workers to finish)
-→ WriteSnapshot() on thread pool (disk I/O only)
-```
-
-### Serialize() runs on background threads
-Because `SerializationThreadWorker` calls `Serialize()` on its own thread, **`Serialize()` must be pure**:
-- **NO** creating/destroying Items or Mobiles
-- **NO** starting/stopping timers (not thread-safe)
-- **NO** sending packets or modifying NetState
-- **NO** mutating shared game state
-- **ONLY** read fields and write to `IGenericWriter`
-
-See `modernuo-serialization.md` for full purity rules.
-
-## Exceptions: Server Infrastructure
-
-These files MAY use threading (they're server infrastructure, not game logic):
-- `Projects/Server/Main.cs` - Event loop, thread setup
-- `Projects/Server/World/World.cs` - World save I/O
-- `Projects/Server/Network/` - Network I/O
-- `Projects/Server/Timer/Timer.Pool.cs` - Pool refill
-
-## Anti-Patterns
-
-| Pattern | Problem | Solution |
-|---|---|---|
-| `Task.Run(...)` | Runs on thread pool, races with game state | Use `Timer.StartTimer()` |
-| `new Thread(...)` | Same as above | Use `Timer.StartTimer()` |
-| `lock(obj)` | Unnecessary overhead, no contention exists | Remove lock, use plain code |
-| `ConcurrentDictionary` | Lock-free but still overhead | Use `Dictionary<K,V>` |
-| `volatile` | Memory barriers not needed on single thread | Use plain field |
-| `Thread.Sleep()` | Blocks entire game loop | Use `await Timer.Pause()` |
-| `ArrayPool<T>.Shared` | Uses locks | Use `STArrayPool<T>.Shared` |
-
-## Real Examples
-- Game loop: `Projects/Server/Main.cs` (RunEventLoop)
-- EventLoopContext: `Projects/Server/EventLoopTasks.cs`
-- STArrayPool: `Projects/Server/Buffers/STArrayPool.cs`
-- PooledRefList: `Projects/Server/Collections/PooledRefList.cs`
-- World save: `Projects/Server/World/World.cs`
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/threading-model.md` - Complete threading documentation
-- `plugins/modernuo/skills/modernuo-code-audit/SKILL.md` - Threading audit rules
-- `plugins/modernuo/skills/modernuo-timers/SKILL.md` - Timer-based scheduling
-- `plugins/modernuo/skills/modernuo-pathfinding/SKILL.md` - Main-thread pathfinding cost and cache behavior
-- `plugins/modernuo/skills/modernuo-world-saves-archives/SKILL.md` - World save snapshot and archive boundaries
+- Read `dev-docs/threading-model.md` and current `EventLoopContext`/world-save
+  implementations before changing infrastructure.
+- Load `modernuo-timers` for delayed actions, `modernuo-serialization` for save
+  callback purity, and `modernuo-world-saves-archives` for snapshot/archive
+  boundaries.

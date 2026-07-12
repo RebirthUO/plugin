@@ -1,0 +1,1 @@
+Use when creating custom regions, dynamic item-controlled areas, dungeon sub-zones, travel restrictions, housing blocks, spawn control, or any spatial gameplay rule. Covers Region, BaseRegion, GuardedRegion, DungeonRegion, HouseRegion, and CheckTravel.

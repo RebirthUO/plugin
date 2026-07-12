@@ -1,19 +1,26 @@
 interface:
-  display_name: "ModernUO Custom Module"
-  short_description: "Set up custom ModernUO content modules"
-  default_prompt: "Use $modernuo-custom-module to set up a CUOContent custom module and test project for this ModernUO repository."
+  display_name: ModernUO Custom Module
+  short_description: ModernUO Custom Module
+  default_prompt: Use $modernuo-custom-module to apply ModernUO Custom Module guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
 compatibility:
-  canonical_format: "codex-skill"
+  canonical_format: agent-skills
   adapter_targets:
-    - "codex"
+  - openai
+  - claude
+  - generic
+  - vscode
   activation:
-    mode: "implicit"
+    mode: implicit
+    paths: []
   execution:
-    context: "inline"
-    shell: "powershell"
+    context: inline
+    shell: powershell
   trust:
-    source_tier: "plugin"
-    remote_inline_execution: "forbid"
-    remote_metadata_policy: "local only"
+    source_tier: plugin
+    remote_inline_execution: forbid
+    remote_metadata_policy: allow-metadata-only
   degradation:
-    codex: "Use SKILL.md plus references."
+    openai: Use the canonical SKILL.md and load references on demand.
+    claude: Use the neutral Agent Skills source and preserve explicit safety gates.
+    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.

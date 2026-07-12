@@ -1,6 +1,10 @@
 ---
 name: modernuo-string-handling
-description: Use when working on ModernUO string construction, interpolation handlers, ValueStringBuilder, packet/gump/message text, or replacing System.Text.StringBuilder in game code.
+description: >
+  Use when constructing ModernUO runtime strings with interpolation handlers,
+  ValueStringBuilder, message/gump/packet APIs, or replacing StringBuilder in
+  repeated game code. Use modernuo-property-lists for IPropertyList's distinct
+  literal-as-delimiter semantics.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -20,172 +24,64 @@ metadata:
       - modernuo-content-patterns
 ---
 
-# ModernUO String Handling Skill
+# ModernUO String Handling
 
-## Overview
+## Boundary
 
-## When to Use
-- Any code that builds strings dynamically (concatenation, formatting, interpolation)
-- Converting `System.Text.StringBuilder` to `ValueStringBuilder`
-- Packet string construction
-- Gump/message text building
+Choose the lowest-allocation repository-native text path without obscuring
+correctness. Handler-aware APIs should receive interpolation directly; assembled
+or reusable text should use `Server.Text.ValueStringBuilder`. This skill does not
+define tooltip delimiter semantics.
 
-## Core Rule
-In ModernUO server/runtime string-building code, do not use `System.Text.StringBuilder`; use `Server.Text.ValueStringBuilder`. For tooltip/property-list output, follow `modernuo-property-lists` because `IPropertyList` uses its own interpolation handler rather than a `ValueStringBuilder` call site, and its literal-as-delimiter rule is unique to property lists. Do not apply the property-list hole rule to normal message/gump handler APIs, where literal text in `$"..."` is correct.
+## Workflow
 
-## Quick Reference
+1. Identify the consumer and path class: handler-aware message/gump/property/
+   packet call, span consumer, stored `string`, or cold tooling output.
+2. For one direct call, keep the `$"..."` literal in argument position so the
+   interpolated-string-handler overload binds.
+3. For multi-step assembly, use a bounded stack-backed `ValueStringBuilder` when
+   the maximum is known; use `ValueStringBuilder.Create()` when growth is
+   unbounded and dispose it reliably.
+4. Pass `AsSpan()` when the consumer accepts spans; call `ToString()` only at a
+   boundary that truly requires an owned string.
+5. Compare allocations/behavior with the prior implementation and cover culture,
+   casing, escaping, encoding, and maximum-length cases relevant to the caller.
 
-### Construction
-```csharp
-// Bounded output (preferred): zero heap allocation
-using var sb = new ValueStringBuilder(stackalloc char[128]);
+## Guardrails
 
-// Unbounded output: rents from STArrayPool
-using var sb = ValueStringBuilder.Create(256);
-using var sb = ValueStringBuilder.Create(); // default 64 chars
-```
+- Do not use `System.Text.StringBuilder` in ModernUO runtime/game string assembly.
+- A ternary/switch expression of interpolated branches, pre-built interpolated
+  local, `string.Format`, concatenation inside a hole, `.ToString()` inside a
+  hole, or LINQ aggregation usually creates intermediate strings.
+- Branch the call itself when text differs so each branch retains direct handler
+  binding.
+- Use the `:L` format specifier where the ModernUO handler supports lowercase;
+  do not allocate via `ToLowerInvariant()`.
+- `using var` is appropriate unless a helper takes the builder by `ref`; in that
+  case use explicit `try/finally`/`Dispose()` because a using variable cannot be
+  passed by ref.
+- `Reset()` reuses one builder; `Append` returns `void` and is not chainable.
+- Culture-sensitive output must be intentional and tested; do not silently force
+  invariant formatting.
 
-### String Interpolation
-Works with stackalloc — writes directly into the builder's buffer:
-```csharp
-using var sb = new ValueStringBuilder(stackalloc char[64]);
-sb.Append($"Player {name} has {kills} kills");
-```
+## Output Contract
 
-### Reuse via Reset
-Use `Reset()` instead of creating a new builder:
-```csharp
-using var sb = new ValueStringBuilder(stackalloc char[128]);
-foreach (var item in items)
-{
-    sb.Reset();
-    sb.Append($"{item.Name}: {item.Value}");
-    Process(sb.ToString());
-}
-```
+Return the consumer/overload selected, allocation boundary, capacity strategy,
+format/culture decisions, changed paths, and verification. Performance claims
+must identify whether allocations were measured or only inferred statically.
 
-### Reading Results
-- `sb.ToString()` — when you need a string (allocates)
-- `sb.AsSpan()` — when consumer accepts `ReadOnlySpan<char>` (zero-alloc)
+## Verification
 
-## Common Mistakes
+- Confirm the intended overload binds and no unnecessary intermediate `string`
+  remains.
+- Test maximum expected length/growth and disposal on exceptional paths.
+- Test culture/casing/escaping/encoding cases that affect visible output.
+- Report focused tests and allocation measurements separately.
 
-### 1. Using StringBuilder
-```csharp
-// BAD
-var sb = new StringBuilder();
-sb.Append(name);
-return sb.ToString();
+## Reference Routing
 
-// GOOD
-using var sb = new ValueStringBuilder(stackalloc char[64]);
-sb.Append(name);
-return sb.ToString();
-```
-
-### 2. Forgetting `using var`
-```csharp
-// BAD: pooled array may leak if Grow() happened
-var sb = ValueStringBuilder.Create();
-return sb.ToString(); // never disposed!
-
-// GOOD
-using var sb = ValueStringBuilder.Create();
-return sb.ToString();
-```
-
-### 3. Chaining Append calls
-```csharp
-// BAD: VSB Append returns void, not this
-sb.Append("a").Append("b");
-
-// GOOD
-sb.Append("a");
-sb.Append("b");
-
-// BETTER: use interpolation
-sb.Append($"a{value}b");
-```
-
-### 4. Reassigning a using variable
-```csharp
-// BAD: can't reassign using var
-using var sb = ValueStringBuilder.Create();
-sb = ValueStringBuilder.Create(); // CS1656!
-
-// GOOD: use Reset()
-using var sb = ValueStringBuilder.Create();
-sb.Reset();
-```
-
-### 5. `using var` with `ref` extension methods
-```csharp
-// BAD: CS1657 — using var can't be passed by ref
-using var sb = new ValueStringBuilder(stackalloc char[64]);
-sb.AppendSpaceWithArticle(text, articleAn); // takes ref VSB
-
-// GOOD: manual Dispose
-var sb = new ValueStringBuilder(stackalloc char[64]);
-sb.AppendSpaceWithArticle(text, articleAn);
-var result = sb.ToString();
-sb.Dispose();
-```
-
-### 6. No AppendFormat — use `$"..."` interpolation
-```csharp
-// BAD: AppendFormat doesn't exist on VSB (no object[] params equivalent)
-sb.AppendFormat("{0:N0} points, {1:N0} kills", score, kills);
-
-// GOOD: use interpolation with format specifiers (zero boxing, zero intermediate strings)
-sb.Append($"{score:N0} points, {kills:N0} kills");
-```
-
-## Interpolation Anti-Patterns (handler-aware APIs)
-
-Many APIs accept `ref RawInterpolatedStringHandler` (messages on `Mobile`/`Item`, `IPropertyList.Add`, `SpanWriter.WriteAscii`/`WriteLatin1`, gump `AddLabel`/`AddHtml`, `Html.Center`/`Color`/`Right`, etc.). The handler overload renders the interpolation directly into a pooled buffer with zero `string` allocation — but **only when the call-site argument is a `$"..."` literal directly in position**. These patterns silently defeat that selection. Flag any of them in messaging/gump/OPL code.
-
-| Pattern | Why bad | Fix |
-|---|---|---|
-| `Send(cond ? $"a" : $"b")` | Ternary unifies branches as `string` | `if/else` with two calls |
-| `Send(thing switch { 1 => $"a", _ => $"b" })` | Switch expr unifies as `string` | `switch` statement, call per arm |
-| `var s = $"foo {x}"; Send(s);` | Local typed `string`; ROS overload picked | Inline at call site |
-| `Send($"x {value.ToString()}")` | `.ToString()` allocates a `string` per call | Drop `.ToString()` — handler formats directly |
-| `Send($"x {td.String()}")` | `TextDefinition.String` allocates | Drop `.String()` (or pass `td` directly if API supports it) |
-| `Send($"x {a + b}")` | `string + string` allocates | Multiple holes: `Send($"x {a}{b}")` |
-| `Send(string.Format("x {0}", v))` | Format allocates | `Send($"x {v}")` |
-| `Send($"x {items.Aggregate(...)}")` | LINQ string ops allocate | `ValueStringBuilder` + pass span |
-
-For lowercase output, use the `:L` format specifier instead of `value.ToString().ToLowerInvariant()`:
-
-```csharp
-mob.SendMessage($"You earned a {rank:L} trophy!");          // "gold" not "Gold"
-```
-
-`:L` is recognized by `RawInterpolatedStringHandler.AppendFormatted<T>(T, string?)` and the `(ROS<char>, int, string?)` overload. Case-sensitive — use uppercase `:L`.
-
-## Capacity Sizing Guide
-
-| Content | Recommended |
-|---|---|
-| Version strings, coordinates | `stackalloc char[32-48]` |
-| Player names, short messages | `stackalloc char[64]` |
-| Item descriptions, titles | `stackalloc char[128]` |
-| Paragraph text, HTML snippets | `stackalloc char[256]` |
-| Large HTML, gump content | `Create(512)` or `Create()` |
-| Unbounded (logs, file paths) | `Create()` |
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## Related Docs
-- `dev-docs/string-handling.md` — full reference (incl. interpolation anti-patterns + `:L` spec)
-- `dev-docs/code-standards.md` — memory management rules
-- `dev-docs/property-lists.md` — IPropertyList string interpolation (different handler)
-- `dev-docs/networking-packets.md` — player-facing message APIs and their handler overloads
+- Read [interpolation and ValueStringBuilder patterns](references/interpolation-patterns.md)
+  when converting complex branches, capacity sizing, or ref extensions.
+- Load `modernuo-property-lists` for tooltip arguments, `modernuo-networking` for
+  packet encodings, and `modernuo-gump-system` for layout/HTML behavior.
+- Read `dev-docs/string-handling.md` for the current handler inventory.

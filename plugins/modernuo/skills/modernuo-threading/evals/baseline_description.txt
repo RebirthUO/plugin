@@ -1,0 +1,1 @@
+Use when discussing async patterns, world saves, game loop, reviewing code for threading issues, or using await, Task, or any concurrency-related code in game logic.

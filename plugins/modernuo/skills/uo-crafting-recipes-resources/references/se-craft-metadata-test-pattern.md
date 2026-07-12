@@ -1,6 +1,8 @@
 # Samurai Empire Craft Metadata Test Pattern
 
-Use this when resolving Samurai Empire craft coverage tickets or any ModernUO/RebirthUO craft parity issue that asks for recipe `skill/resource/category/output/era gate` coverage.
+Use this when resolving Samurai Empire craft coverage tickets in a
+ModernUO-based repository that require
+`skill/resource/category/output/era gate` coverage.
 
 ## Key lesson
 
@@ -76,7 +78,7 @@ private static void AssertCraftResource(CraftItem craftItem, Type resourceType, 
 }
 ```
 
-## SE rows observed during issue #76-#100 discovery
+## SE metadata rows
 
 Useful anchors from `Def*` craft systems:
 

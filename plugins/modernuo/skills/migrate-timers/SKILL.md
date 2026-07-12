@@ -1,8 +1,6 @@
 ---
 name: migrate-timers
-description: >
-  Use when converting RunUO Timer subclasses, Timer.DelayCall patterns, or TimerPriority usage to ModernUO fire-and-forget timers.
-  Covers Timer subclass elimination, TimerExecutionToken, callback patterns, cleanup, and post-load restoration.
+description: Use when converting RunUO Timer subclasses, DelayCall patterns, TimerPriority, or post-load timer restoration to ModernUO timer callbacks and TimerExecutionToken lifecycle. Do not use for wall-clock/calendar scheduling; use modernuo-event-scheduler.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,50 +20,40 @@ metadata:
       - modernuo-code-audit
 ---
 
-# RunUO -> ModernUO Timer Migration
+# RunUO to ModernUO Timer Migration
 
-## When to Use
-- Converting nested `Timer` subclasses with `OnTick()`
-- Converting `Timer.DelayCall()` patterns
-- Removing `TimerPriority` usage
-- Restoring timers after deserialization
+## Boundary
 
-## Conversion Steps
-1. Move `OnTick()` logic to a method on the parent class
-2. Replace `new InternalTimer(this).Start()` with `Timer.StartTimer(..., callback, out _token)`
-3. Add `private TimerExecutionToken _token;` (NOT serialized)
-4. Cancel in the deletion path: usually `OnDelete()` when callbacks can touch owner state; follow existing class hierarchy/base-call convention. Use `modernuo-lifecycle-cleanup` for hook choice.
-5. Restore in `[AfterDeserialization]`: re-call `Timer.StartTimer(...)`
-6. Delete the nested Timer class entirely
-7. Remove all `TimerPriority` references
+Convert game-time delays and recurring callbacks. Calendar events such as “every Monday at 09:00” belong to [modernuo-event-scheduler](../modernuo-event-scheduler/SKILL.md).
 
-## Quick Mapping
-| RunUO | ModernUO |
-|---|---|
-| `new Timer(delay).Start()` | `Timer.StartTimer(delay, callback)` |
-| `new Timer(delay, interval).Start()` | `Timer.StartTimer(delay, interval, callback, out token)` |
-| `timer.Stop()` | `token.Cancel()` |
-| `Timer.DelayCall(delay, callback)` | `Timer.StartTimer(delay, callback)` |
-| `Timer.DelayCall(delay, stateCallback, state)` | `Timer.DelayCall(delay, callback, state)` |
-| `TimerPriority.XXX` | Remove -- timer wheel auto-schedules |
-| Timer started in `Deserialize()` | `[AfterDeserialization]` method |
+## Workflow
 
-## Anti-Patterns
-- Serializing `TimerExecutionToken` -- it's a struct tracking a pooled timer
-- Starting timers directly in `Deserialize()` -- restore runtime timers in `[AfterDeserialization]`; use `[AfterDeserialization(false)]` when setup depends on the fully loaded world or affects game state
-- Lambda closures on hot paths -- use `Timer.DelayCall` with state parameters instead
+1. Load [migrate-foundation](../migrate-foundation/SKILL.md). Inventory start sites, delay/interval/count, callback state, restart behavior, owner lifetime, cancellation, and persistence semantics.
+2. Inspect the current local `Timer.StartTimer` or stateful `DelayCall` overload; choose the least-allocating pattern that preserves behavior.
+3. Move nested `OnTick` logic to the owning type and replace timer objects with callbacks plus `TimerExecutionToken` only when cancellation is required.
+4. Remove `TimerPriority`; do not invent a replacement.
+5. Cancel tokens at every owner disable/delete boundary before callback state can be invalid, using the local base-call convention.
+6. Keep tokens runtime-only. Persist durable progress/deadlines separately and restore the timer in the correct after-deserialization phase.
+7. Test exact timing boundaries through deterministic seams, repeated start/cancel, deletion, save-load restoration, and callback idempotence.
 
-## How to Report Issues
+## Safety gates
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+- Never serialize `TimerExecutionToken`.
+- Do not start world-dependent timers inside the raw deserialize read.
+- Avoid closure allocations on hot/repeating paths; use supported state parameters.
+- Make cancellation and expiry safe when both race through adjacent lifecycle paths on the event loop.
+- Preserve remaining-duration versus reset-on-load semantics explicitly.
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+## Verification/self-check
 
-## See Also
-- `dev-docs/runuo-migration-docs/03-timers.md` -- detailed migration reference
-- `dev-docs/timers.md` -- complete ModernUO timer system
-- `plugins/modernuo/skills/modernuo-timers/SKILL.md` -- ModernUO timer skill
+Exercise exact deterministic timing boundaries, repeated start/cancel, delete/disable, and save-load restoration. Re-scan for serialized tokens, orphan callbacks, closures on repeating hot paths, and calendar misuse.
+
+## Output contract
+
+Return the timer ownership matrix, converted callbacks/tokens, persistence/restoration policy, cleanup hooks, deterministic test evidence, and any real-time/manual timing check still required.
+
+## Reference routing
+
+- Read [modernuo-timers](../modernuo-timers/SKILL.md) for exact overloads and deterministic test seams.
+- Read [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) when the owning hook is ambiguous.
+- Read [modernuo-event-scheduler](../modernuo-event-scheduler/SKILL.md) only for wall-clock recurrence.

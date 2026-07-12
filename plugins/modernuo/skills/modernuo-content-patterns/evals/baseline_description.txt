@@ -1,0 +1,1 @@
+Use when creating new items, mobiles, creatures, spells, skills, loot tables, or any game content under Projects/UOContent/. This hub skill connects to the other ModernUO skills.

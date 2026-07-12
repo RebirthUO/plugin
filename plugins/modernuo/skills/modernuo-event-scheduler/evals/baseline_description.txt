@@ -1,0 +1,1 @@
+Use when creating holiday events, seasonal content, scheduled maintenance, daily/weekly resets, or any wall-clock/calendar-based scheduling. Covers EventScheduler, ScheduledEvent, YearlyScheduledEvent, and IRecurrencePattern.

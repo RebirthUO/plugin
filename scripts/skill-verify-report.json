@@ -1,5 +1,1083 @@
 {
-  "skill_count": 75,
-  "errors": [],
-  "ok": true
+  "skill_count": 66,
+  "portfolio_errors": [],
+  "error_count": 0,
+  "warning_count": 0,
+  "ok": true,
+  "skills": [
+    {
+      "name": "migrate-commands-events",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "modernuo-commands-targeting",
+        "modernuo-events",
+        "modernuo-configuration",
+        "modernuo-code-audit",
+        "migrate-persistence"
+      ],
+      "description_length": 319,
+      "skill_chars": 3419,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-foundation",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-serialization",
+        "migrate-items-mobiles",
+        "migrate-timers",
+        "migrate-gumps",
+        "migrate-packets",
+        "migrate-property-lists",
+        "migrate-commands-events",
+        "migrate-persistence",
+        "migrate-systems",
+        "modernuo-code-audit",
+        "modernuo-serialization",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-threading",
+        "modernuo-performance-hot-paths"
+      ],
+      "description_length": 304,
+      "skill_chars": 3912,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-gumps",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "modernuo-gump-system",
+        "modernuo-string-handling",
+        "modernuo-code-audit",
+        "modernuo-content-patterns"
+      ],
+      "description_length": 280,
+      "skill_chars": 2915,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-items-mobiles",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "migrate-serialization",
+        "migrate-timers",
+        "migrate-property-lists",
+        "modernuo-content-patterns",
+        "modernuo-serialization",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-code-audit"
+      ],
+      "description_length": 276,
+      "skill_chars": 3338,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-packets",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "modernuo-networking",
+        "modernuo-string-handling",
+        "modernuo-code-audit",
+        "modernuo-threading"
+      ],
+      "description_length": 297,
+      "skill_chars": 2851,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-persistence",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "migrate-serialization",
+        "modernuo-serialization",
+        "modernuo-events",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-code-audit"
+      ],
+      "description_length": 315,
+      "skill_chars": 3304,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-property-lists",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "modernuo-property-lists",
+        "modernuo-string-handling",
+        "modernuo-code-audit",
+        "modernuo-content-patterns"
+      ],
+      "description_length": 288,
+      "skill_chars": 2829,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-serialization",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "modernuo-serialization",
+        "modernuo-code-audit",
+        "modernuo-timers",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-content-patterns"
+      ],
+      "description_length": 338,
+      "skill_chars": 3747,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-systems",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "migrate-persistence",
+        "migrate-serialization",
+        "migrate-commands-events",
+        "modernuo-configuration",
+        "modernuo-events",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-code-audit"
+      ],
+      "description_length": 291,
+      "skill_chars": 3208,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "migrate-timers",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "migrate-foundation",
+        "modernuo-timers",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-serialization",
+        "modernuo-threading",
+        "modernuo-code-audit"
+      ],
+      "description_length": 249,
+      "skill_chars": 3116,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-code-audit",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-serialization",
+        "modernuo-timers",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-threading",
+        "modernuo-performance-hot-paths",
+        "modernuo-string-handling",
+        "modernuo-property-lists",
+        "modernuo-gump-system",
+        "modernuo-content-patterns",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 339,
+      "skill_chars": 3835,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-codebase",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 356,
+      "skill_chars": 2928,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-commands-targeting",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-gump-system",
+        "modernuo-content-patterns",
+        "modernuo-threading",
+        "modernuo-test-workflow",
+        "migrate-commands-events"
+      ],
+      "description_length": 294,
+      "skill_chars": 3488,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-configuration",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-server-lifecycle",
+        "modernuo-events",
+        "modernuo-era-expansion",
+        "modernuo-code-audit",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 293,
+      "skill_chars": 3275,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-content-patterns",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-serialization",
+        "modernuo-timers",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-performance-hot-paths",
+        "modernuo-era-expansion",
+        "modernuo-property-lists",
+        "modernuo-gump-system",
+        "modernuo-commands-targeting",
+        "modernuo-events",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 311,
+      "skill_chars": 3864,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-content-taxonomy",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-content-patterns",
+        "modernuo-era-change-gate",
+        "uo-living-world-review",
+        "uo-official-evidence"
+      ],
+      "description_length": 337,
+      "skill_chars": 3903,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-custom-module",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-content-patterns",
+        "modernuo-server-lifecycle",
+        "modernuo-configuration",
+        "modernuo-test-workflow",
+        "modernuo-code-audit"
+      ],
+      "description_length": 336,
+      "skill_chars": 2816,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-era-change-gate",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-content-taxonomy",
+        "modernuo-era-expansion",
+        "uo-official-evidence",
+        "uo-living-world-review",
+        "modernuo-issue-research"
+      ],
+      "description_length": 324,
+      "skill_chars": 3530,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-era-expansion",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-era-change-gate",
+        "modernuo-content-taxonomy",
+        "modernuo-content-patterns",
+        "modernuo-code-audit",
+        "uo-official-evidence"
+      ],
+      "description_length": 303,
+      "skill_chars": 3538,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-event-scheduler",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-timers",
+        "modernuo-code-audit",
+        "modernuo-threading",
+        "modernuo-content-patterns",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 317,
+      "skill_chars": 3309,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-events",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-server-lifecycle",
+        "modernuo-configuration",
+        "modernuo-threading",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-content-patterns",
+        "migrate-commands-events"
+      ],
+      "description_length": 301,
+      "skill_chars": 3396,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-gump-system",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-string-handling",
+        "modernuo-commands-targeting",
+        "modernuo-content-patterns",
+        "modernuo-test-workflow",
+        "migrate-gumps"
+      ],
+      "description_length": 309,
+      "skill_chars": 3206,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-issue-create",
+      "skill_group": "modernuo",
+      "workflow_phase": "create",
+      "related_skills": [
+        "modernuo-issue-research",
+        "modernuo-issue-implement",
+        "uo-official-evidence"
+      ],
+      "description_length": 371,
+      "skill_chars": 4024,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-issue-implement",
+      "skill_group": "modernuo",
+      "workflow_phase": "implement",
+      "related_skills": [
+        "modernuo-issue-create",
+        "modernuo-issue-research",
+        "modernuo-codebase",
+        "modernuo-code-audit",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 399,
+      "skill_chars": 4180,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-issue-research",
+      "skill_group": "modernuo",
+      "workflow_phase": "research",
+      "related_skills": [
+        "modernuo-issue-create",
+        "modernuo-issue-implement",
+        "uo-official-evidence",
+        "uo-living-world-review"
+      ],
+      "description_length": 412,
+      "skill_chars": 4216,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-lifecycle-cleanup",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-content-patterns",
+        "modernuo-timers",
+        "modernuo-events",
+        "modernuo-regions",
+        "modernuo-serialization",
+        "modernuo-threading",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 299,
+      "skill_chars": 3948,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-lootpack-preservation",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-loot-generation-artifacts",
+        "modernuo-content-patterns",
+        "modernuo-code-audit",
+        "modernuo-era-expansion"
+      ],
+      "description_length": 310,
+      "skill_chars": 3671,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-monster-abilities",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-content-patterns",
+        "uo-combat-pipeline",
+        "modernuo-timers",
+        "modernuo-serialization",
+        "modernuo-code-audit"
+      ],
+      "description_length": 253,
+      "skill_chars": 3827,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-networking",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-threading",
+        "modernuo-performance-hot-paths",
+        "modernuo-string-handling",
+        "modernuo-test-workflow",
+        "migrate-packets"
+      ],
+      "description_length": 255,
+      "skill_chars": 3772,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-no-publish-prefix-names",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-codebase",
+        "modernuo-era-expansion"
+      ],
+      "description_length": 293,
+      "skill_chars": 3129,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-pathfinding",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-performance-hot-paths",
+        "modernuo-threading",
+        "modernuo-spatial-range-geometry",
+        "modernuo-server-lifecycle",
+        "modernuo-test-workflow",
+        "modernuo-code-audit"
+      ],
+      "description_length": 286,
+      "skill_chars": 3608,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-performance-hot-paths",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-threading",
+        "modernuo-string-handling",
+        "modernuo-regions",
+        "modernuo-pathfinding",
+        "modernuo-spatial-range-geometry",
+        "modernuo-networking",
+        "modernuo-content-patterns",
+        "migrate-foundation",
+        "modernuo-codebase"
+      ],
+      "description_length": 302,
+      "skill_chars": 3954,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-property-lists",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-serialization",
+        "modernuo-string-handling",
+        "modernuo-era-expansion",
+        "modernuo-content-patterns",
+        "migrate-property-lists"
+      ],
+      "description_length": 284,
+      "skill_chars": 3773,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-regions",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-performance-hot-paths",
+        "modernuo-content-patterns",
+        "modernuo-serialization",
+        "modernuo-timers",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-era-expansion",
+        "uo-world-facets-regions",
+        "modernuo-spatial-range-geometry"
+      ],
+      "description_length": 264,
+      "skill_chars": 3930,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-regression-testing",
+      "skill_group": "modernuo",
+      "workflow_phase": "implement",
+      "related_skills": [
+        "modernuo-test-workflow",
+        "modernuo-test-naming",
+        "modernuo-code-audit",
+        "modernuo-era-expansion"
+      ],
+      "description_length": 264,
+      "skill_chars": 3556,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-serialization",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-content-patterns",
+        "modernuo-timers",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-property-lists",
+        "migrate-serialization"
+      ],
+      "description_length": 272,
+      "skill_chars": 3978,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-server-lifecycle",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-threading",
+        "modernuo-events",
+        "modernuo-configuration",
+        "modernuo-world-saves-archives",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 275,
+      "skill_chars": 3552,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-skill-discovery",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-codebase",
+        "modernuo-code-audit",
+        "modernuo-content-patterns",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-performance-hot-paths",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 295,
+      "skill_chars": 3929,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-spatial-range-geometry",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-performance-hot-paths",
+        "modernuo-code-audit",
+        "modernuo-regions",
+        "modernuo-content-patterns",
+        "modernuo-era-expansion",
+        "modernuo-pathfinding"
+      ],
+      "description_length": 275,
+      "skill_chars": 3502,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-string-handling",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-performance-hot-paths",
+        "modernuo-property-lists",
+        "modernuo-gump-system",
+        "modernuo-networking",
+        "modernuo-content-patterns"
+      ],
+      "description_length": 260,
+      "skill_chars": 3747,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-symbol-discipline",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-no-publish-prefix-names",
+        "modernuo-test-naming"
+      ],
+      "description_length": 290,
+      "skill_chars": 3608,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-test-naming",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-test-workflow",
+        "modernuo-regression-testing",
+        "modernuo-no-publish-prefix-names"
+      ],
+      "description_length": 294,
+      "skill_chars": 3167,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-test-workflow",
+      "skill_group": "modernuo",
+      "workflow_phase": "implement",
+      "related_skills": [
+        "modernuo-codebase",
+        "modernuo-code-audit",
+        "modernuo-regression-testing",
+        "modernuo-test-naming",
+        "modernuo-verification-guard"
+      ],
+      "description_length": 301,
+      "skill_chars": 2985,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-threading",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-timers",
+        "modernuo-serialization",
+        "modernuo-world-saves-archives",
+        "modernuo-performance-hot-paths",
+        "modernuo-pathfinding",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 269,
+      "skill_chars": 3683,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-timers",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-serialization",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-threading",
+        "modernuo-content-patterns",
+        "modernuo-event-scheduler",
+        "modernuo-test-workflow",
+        "migrate-timers"
+      ],
+      "description_length": 299,
+      "skill_chars": 3578,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-verification-guard",
+      "skill_group": "modernuo",
+      "workflow_phase": "implement",
+      "related_skills": [
+        "modernuo-test-workflow"
+      ],
+      "description_length": 276,
+      "skill_chars": 2682,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-world-saves-archives",
+      "skill_group": "modernuo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-code-audit",
+        "modernuo-threading",
+        "modernuo-server-lifecycle",
+        "modernuo-events",
+        "modernuo-configuration",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 258,
+      "skill_chars": 3692,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-aos-item-properties",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-official-evidence",
+        "uo-item-property-review",
+        "uo-items-foundation",
+        "uo-combat-pipeline",
+        "uo-loot-generation-artifacts"
+      ],
+      "description_length": 313,
+      "skill_chars": 4094,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-bulk-orders-bod",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-crafting-recipes-resources",
+        "uo-items-foundation",
+        "uo-loot-generation-artifacts"
+      ],
+      "description_length": 250,
+      "skill_chars": 3313,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-champions-cannedevil-treasures",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-world-facets-regions",
+        "uo-loot-generation-artifacts",
+        "uo-combat-pipeline"
+      ],
+      "description_length": 295,
+      "skill_chars": 3527,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-combat-pipeline",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-aos-item-properties",
+        "uo-magic-spells",
+        "modernuo-spatial-range-geometry",
+        "modernuo-performance-hot-paths"
+      ],
+      "description_length": 338,
+      "skill_chars": 3468,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-crafting-recipes-resources",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-bulk-orders-bod",
+        "uo-harvest-gathering-resources",
+        "uo-items-foundation",
+        "uo-aos-item-properties"
+      ],
+      "description_length": 310,
+      "skill_chars": 3691,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-game-docs-canonical-authoring",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-official-evidence",
+        "modernuo-era-expansion",
+        "uo-living-world-review"
+      ],
+      "description_length": 299,
+      "skill_chars": 4011,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-harvest-gathering-resources",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-crafting-recipes-resources",
+        "uo-world-facets-regions",
+        "uo-skills-stats-races"
+      ],
+      "description_length": 287,
+      "skill_chars": 3233,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-housing-houses-multis",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-world-facets-regions",
+        "uo-items-foundation",
+        "uo-living-world-review",
+        "modernuo-regions"
+      ],
+      "description_length": 303,
+      "skill_chars": 3329,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-item-property-review",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-official-evidence",
+        "uo-aos-item-properties",
+        "uo-sa-item-property-implementation",
+        "uo-items-foundation"
+      ],
+      "description_length": 331,
+      "skill_chars": 3038,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-items-foundation",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-aos-item-properties",
+        "uo-loot-generation-artifacts",
+        "modernuo-serialization",
+        "modernuo-property-lists"
+      ],
+      "description_length": 309,
+      "skill_chars": 3702,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-living-world-review",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-official-evidence",
+        "modernuo-era-expansion",
+        "modernuo-era-change-gate"
+      ],
+      "description_length": 318,
+      "skill_chars": 2989,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-loot-generation-artifacts",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-lootpack-preservation",
+        "uo-aos-item-properties",
+        "uo-champions-cannedevil-treasures",
+        "uo-quests-engine-ml"
+      ],
+      "description_length": 333,
+      "skill_chars": 3706,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-magic-spells",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-official-evidence",
+        "uo-combat-pipeline",
+        "uo-skills-stats-races",
+        "modernuo-regions"
+      ],
+      "description_length": 324,
+      "skill_chars": 3627,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-official-evidence",
+      "skill_group": "uo",
+      "workflow_phase": "research",
+      "related_skills": [
+        "modernuo-issue-research",
+        "modernuo-era-expansion",
+        "modernuo-era-change-gate",
+        "uo-living-world-review"
+      ],
+      "description_length": 402,
+      "skill_chars": 2882,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-quests-engine-ml",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-loot-generation-artifacts",
+        "uo-magic-spells",
+        "modernuo-gump-system",
+        "uo-skills-stats-races"
+      ],
+      "description_length": 316,
+      "skill_chars": 3539,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-sa-item-property-implementation",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-aos-item-properties",
+        "uo-combat-pipeline",
+        "modernuo-serialization",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 337,
+      "skill_chars": 3660,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-samurai-empire-skills",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-magic-spells",
+        "uo-skills-stats-races",
+        "uo-combat-pipeline",
+        "modernuo-era-expansion"
+      ],
+      "description_length": 325,
+      "skill_chars": 3380,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-skills-stats-races",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-skill-discovery",
+        "uo-magic-spells",
+        "uo-combat-pipeline",
+        "uo-crafting-recipes-resources"
+      ],
+      "description_length": 327,
+      "skill_chars": 3406,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-world-facets-regions",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-regions",
+        "uo-housing-houses-multis",
+        "uo-champions-cannedevil-treasures",
+        "uo-official-evidence"
+      ],
+      "description_length": 324,
+      "skill_chars": 3537,
+      "errors": [],
+      "warnings": []
+    }
+  ]
 }

@@ -1,0 +1,1 @@
+Use when writing era-conditional code, using Core.AOS/SE/ML/etc., or when the user has not specified a target era. Always ask which expansion to target if not specified.

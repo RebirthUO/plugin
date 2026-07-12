@@ -1,0 +1,58 @@
+{
+  "optimizer_hints": {
+    "capability": "RunUO to ModernUO Item and Mobile Migration",
+    "inputs": [
+      "runuo to modernuo item and mobile migration",
+      "migrate items mobiles"
+    ],
+    "trigger_actions": [
+      "Migrate this RunUO runuo to modernuo item and mobile migration code to current ModernUO conventions.",
+      "I need an evidence-backed plan for runuo to modernuo item and mobile migration in the configured ModernUO-based repository.",
+      "Help me implement a runuo to modernuo item and mobile migration change and identify the focused verification.",
+      "Audit this runuo to modernuo item and mobile migration diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "migrate foundation",
+      "migrate serialization",
+      "migrate timers",
+      "migrate property lists",
+      "modernuo content patterns",
+      "modernuo serialization",
+      "modernuo lifecycle cleanup",
+      "modernuo code audit"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "runuo to modernuo item and mobile migration",
+        "migrate items mobiles"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

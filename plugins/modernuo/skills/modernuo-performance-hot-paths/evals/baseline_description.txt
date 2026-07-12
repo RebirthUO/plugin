@@ -1,0 +1,1 @@
+Use when reviewing or changing ModernUO hot-path performance: AI ticks, combat loops, spatial scans, packet/message sends, region hooks, timers, pathfinding, allocation-heavy strings, LINQ, pooled collections, buffers, and game-loop cost decisions.

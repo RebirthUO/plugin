@@ -198,7 +198,7 @@ Structural gaps that span multiple taxonomy domains. Era-specific detail: `dev-d
 **Enhanced examples** (intentional, not gaps):
 
 - Deterministic test seams on ML peerless bosses (`TriggerAreaLethalPoison`, etc.) — wired for tests, not live combat until doc status changes
-- RebirthUO `EraProfiles/` tuning vs. raw OSI publish defaults
+- Configured-project era-profile tuning versus official publish behavior
 - `RuntimeBlocked` mechanics documented in era docs before live hook wiring
 
 See [parity-check.md](parity-check.md) for report template and workflow.

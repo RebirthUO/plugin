@@ -1,0 +1,54 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Gump System",
+    "inputs": [
+      "modernuo gump system"
+    ],
+    "trigger_actions": [
+      "Review this modernuo gump system task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo gump system in the configured ModernUO-based repository.",
+      "Help me implement a modernuo gump system change and identify the focused verification.",
+      "Audit this modernuo gump system diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo string handling",
+      "modernuo commands targeting",
+      "modernuo content patterns",
+      "modernuo test workflow",
+      "migrate gumps"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo gump system"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1 @@
+Use when creating or modifying gumps (UI dialogs), or working with BaseGump, StaticGump, DynamicGump, or GumpSystem.

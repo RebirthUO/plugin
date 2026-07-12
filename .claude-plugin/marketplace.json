@@ -4,13 +4,13 @@
     "name": "Jan Siems",
     "email": "jsiems87@gmail.com"
   },
-  "description": "Claude Code plugins for RebirthUO development.",
+  "description": "Official-UO research and repository-portable ModernUO engineering plugins.",
   "plugins": [
     {
       "name": "modernuo",
       "displayName": "ModernUO",
       "source": "./plugins/modernuo",
-      "description": "ModernUO and Ultima Online development guidance for RebirthUO.",
+      "description": "Official-UO research and repository-portable ModernUO engineering workflows.",
       "category": "developer-tools",
       "tags": [
         "modernuo",

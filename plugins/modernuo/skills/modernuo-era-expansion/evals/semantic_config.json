@@ -1,0 +1,55 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Era and Expansion Behavior",
+    "inputs": [
+      "modernuo era and expansion behavior",
+      "modernuo era expansion"
+    ],
+    "trigger_actions": [
+      "Review this modernuo era and expansion behavior task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo era and expansion behavior in the configured ModernUO-based repository.",
+      "Help me implement a modernuo era and expansion behavior change and identify the focused verification.",
+      "Audit this modernuo era and expansion behavior diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo era change gate",
+      "modernuo content taxonomy",
+      "modernuo content patterns",
+      "modernuo code audit",
+      "uo official evidence"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo era and expansion behavior",
+        "modernuo era expansion"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

@@ -1,6 +1,7 @@
 # uo.com Creature / Monster Ability Audit Notes
 
-Use this reference when auditing RebirthUO/ModernUO monster abilities against official uo.com creature/pet ability documentation.
+Use this reference when auditing the configured ModernUO-based repository's
+monster abilities against current official UO creature or pet documentation.
 
 ## Official source shape
 
@@ -19,7 +20,7 @@ Use this reference when auditing RebirthUO/ModernUO monster abilities against of
 
 1. Verify the official page live via WP search/API or HTML fetch; do not assume an old copied list is complete.
 2. Try obvious dedicated `monster-abilities` / `creature-abilities` slugs only as a discovery check. If they 404, record that and use Animal Training Abilities as the official master list.
-3. Extract RebirthUO in three layers, not one:
+3. Extract the configured repository in three layers, not one:
    - `Projects/UOContent/Mobiles/Abilities/MonsterAbilities.cs` factory properties.
    - Recursive `Projects/UOContent/Mobiles/Abilities/**/*.cs` concrete classes, including subfolders such as `Fire Breath/` and `Summon Undead/`.
    - `Projects/UOContent/Items/Weapons/Abilities/**/*.cs` for official Special Moves.

@@ -1,0 +1,58 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Official Evidence",
+    "inputs": [
+      "uo official evidence",
+      "official osi ea behavior",
+      "official evidence",
+      "unresolved official evidence"
+    ],
+    "trigger_actions": [
+      "Establish the official OSI/EA behavior for this claim and keep community or emulator evidence separate.",
+      "I need an evidence-backed plan for uo official evidence in the configured ModernUO-based repository.",
+      "Help me implement a uo official evidence change and identify the focused verification.",
+      "Audit this uo official evidence diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo issue research",
+      "modernuo era expansion",
+      "modernuo era change gate",
+      "uo living world review"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo official evidence",
+        "official osi ea behavior",
+        "official evidence",
+        "unresolved official evidence"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

@@ -1,8 +1,6 @@
 ---
 name: migrate-foundation
-description: >
-  Use when migrating any RunUO code to ModernUO. Load this foundation skill before specialized migrate-* skills.
-  Covers namespace changes, naming conventions, attribute renames, logging, threading, and performance.
+description: Use when starting any RunUO-to-ModernUO migration or applying cross-cutting namespace, naming, logging, time, pooling, threading, and performance conventions. Load before specialized migrate-* skills. Do not use alone for serialization, timers, gumps, packets, persistence, or other subsystem migrations.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -30,70 +28,48 @@ metadata:
       - modernuo-performance-hot-paths
 ---
 
-# RunUO -> ModernUO Foundation Migration
+# RunUO to ModernUO Migration Foundation
 
-## When to Use
-- Converting ANY RunUO 2.7 script to ModernUO
-- Always apply these changes FIRST before system-specific migration
+## Boundary
 
-## Migration Chain
+This is the required cross-cutting pass for RunUO migrations. It establishes local conventions and routes subsystem work; it does not replace a specialized migration skill.
 
-For any RunUO migration, apply skills in this order:
+## Workflow
 
-1. `migrate-foundation` — universal syntax, naming, threading, logging, and performance changes.
-2. `migrate-serialization` — when the script has `Serialize`/`Deserialize`, save data, `[Constructable]`, `Serial` constructors, or old-save compatibility risk.
-3. System-specific migration skill — items/mobiles, timers, gumps, packets, commands/events, property lists, persistence, or multi-file systems.
-4. Relevant `modernuo-*` runtime skill — serialization, timers, gumps, property lists, content patterns, threading, or other runtime behavior.
-5. `modernuo-code-audit` — final convention, safety, and hot-path pass.
-6. `modernuo-test-workflow` — build/test/validation where available.
+1. Inventory source files, type names, namespaces, registrations, serialized state, timers, persistence, UI, packets, and cross-file dependencies.
+2. Inspect the nearest current ModernUO implementation before changing an API. Record which specialized skills apply.
+3. Apply only proven cross-cutting changes: file-scoped namespaces where locally standard, `[Constructable]` to `[Constructible]`, new private fields as `_camelCase`, structured logging, and `Core.Now` for server-time semantics.
+4. In game-loop code, replace global world scans with map/sector queries and avoid new locks, tasks, threads, concurrent collections, or general `ArrayPool<T>`; route infrastructure concurrency to [modernuo-threading](../modernuo-threading/SKILL.md).
+5. Classify hot, warm, and cold paths before replacing collections or LINQ. Prefer local precedent and measurement; do not mechanically rewrite cold code.
+6. Apply subsystem migrations, then run [modernuo-code-audit](../modernuo-code-audit/SKILL.md) and the repository's focused build/test workflow.
 
-Completion criterion: every migrated script names which chain entries applied and why skipped entries were not needed.
+## Required migration chain
 
-## Universal Changes Checklist
-1. File-scoped namespace: `namespace X { ... }` -> `namespace X;`
-2. `using ModernUO.Serialization;` -- add for any serializable type
-3. Rename fields: `m_FieldName` -> `_fieldName`
-4. `[Constructable]` -> `[Constructible]`
-5. `Console.WriteLine` -> `LogFactory.GetLogger(typeof(X))` -> `logger.Information(...)`
-6. `DateTime.UtcNow` -> `Core.Now`
-7. `World.Mobiles`/`World.Items` iteration -> spatial queries (`map.GetMobilesInRange<T>()`)
-8. Remove `lock`, `volatile`, `ConcurrentDictionary`, `Mutex` -- server is single-threaded
-9. Remove `Task.Run`, `new Thread` -- use `Timer.StartTimer()` instead
-10. `ArrayPool<T>.Shared` -> `STArrayPool<T>.Shared`
-11. `new List<T>()` on hot paths -> `PooledRefList<T>.Create()`
-12. Modernize property syntax: `{ get { return x; } }` -> `{ get => x; }`
-13. Delete `MyType(Serial serial) : base(serial)` constructor -- auto-generated
-14. `Name = "text"` in constructor -> `public override string DefaultName => "text";`
+Use, in order:
 
-## Quick Reference
-| RunUO | ModernUO |
-|---|---|
-| `[Constructable]` | `[Constructible]` |
-| `m_Field` | `_field` |
-| `Console.WriteLine(...)` | `logger.Information(...)` |
-| `DateTime.UtcNow` | `Core.Now` |
-| `MyItem(Serial serial) : base(serial)` | DELETE |
-| `lock (_obj) { }` | Remove entirely |
-| `ConcurrentDictionary` | `Dictionary` |
-| `ArrayPool<T>.Shared` | `STArrayPool<T>.Shared` |
+1. this foundation;
+2. [migrate-serialization](../migrate-serialization/SKILL.md) when saved state or old-save identity exists;
+3. each applicable subsystem `migrate-*` skill;
+4. the corresponding `modernuo-*` runtime skill;
+5. code audit and focused verification.
 
-## Anti-Patterns
-- Don't rename existing `m_` fields in code you're not otherwise migrating
-- Don't add threading constructs -- everything is single-threaded
-- Don't use allocating LINQ (`.ToList()`, `.GroupBy()`, etc.) on hot paths
+## Safety gates
 
-## How to Report Issues
+- Do not rename untouched legacy fields merely for style.
+- Do not delete `Serial` constructors or manual serialization until the serialization mode and old-save path are proven.
+- Do not remove synchronization from server infrastructure without tracing its thread ownership.
+- Preserve type identity with aliases when old saves encode a moved or renamed type.
+- Treat era-dependent mechanics as unresolved until the target era/profile is known.
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+## Verification/self-check
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+Account for every inventory item and selected/omitted chain step, then run the scoped build/tests and code audit. Re-read the diff for incidental behavior changes and unsupported API assumptions.
 
-## See Also
-- `dev-docs/runuo-migration-docs/01-foundation-changes.md` -- complete foundation changes reference
-- `dev-docs/code-standards.md` -- ModernUO coding standards and LINQ tiers
-- `plugins/modernuo/skills/modernuo-performance-hot-paths/SKILL.md` -- Hot/warm/cold path classification for migration performance choices
-- `dev-docs/threading-model.md` -- Why single-threaded, what's allowed
+## Output contract
+
+Return a migration inventory, selected chain with skip reasons, changed files, compatibility decisions, build/test evidence, and residual risks. A completed migration must account for every saved field, registration, timer, owned reference, and user-visible behavior in scope.
+
+## Reference routing
+
+- Read the relevant sibling `migrate-*` skill only when its subsystem appears.
+- Use [modernuo-performance-hot-paths](../modernuo-performance-hot-paths/SKILL.md) for allocation or query decisions and [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) for ownership cleanup.

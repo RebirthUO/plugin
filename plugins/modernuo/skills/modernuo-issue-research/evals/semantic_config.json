@@ -1,0 +1,58 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Issue Research",
+    "inputs": [
+      "modernuo issue research",
+      "research this issue",
+      "official osi ea sources",
+      "researchpacket"
+    ],
+    "trigger_actions": [
+      "Research this issue against official OSI/EA sources and the configured repository; stop and ask me about every unresolved behavior decision.",
+      "I need an evidence-backed plan for modernuo issue research in the configured ModernUO-based repository.",
+      "Help me implement a modernuo issue research change and identify the focused verification.",
+      "Audit this modernuo issue research diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo issue create",
+      "modernuo issue implement",
+      "uo official evidence",
+      "uo living world review"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo issue research",
+        "research this issue",
+        "official osi ea sources",
+        "researchpacket"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

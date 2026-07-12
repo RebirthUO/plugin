@@ -1,8 +1,6 @@
 ---
 name: migrate-serialization
-description: >
-  Use when converting RunUO Serialize/Deserialize methods, adding [SerializableField], converting [Constructable] to [Constructible], or migrating manual serialization code.
-  Covers source-generated serialization, field conversion, version handling, TypeAlias, and post-load restoration.
+description: Use when migrating RunUO Serialize/Deserialize methods, Serial constructors, Constructable attributes, or saved fields to ModernUO generated serialization. Covers new types, generated version bumps, legacy manual saves, TypeAlias identity, schemas, and post-load restoration. Do not use for global system files; use persistence migration.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -22,84 +20,47 @@ metadata:
       - modernuo-content-patterns
 ---
 
-# RunUO -> ModernUO Serialization Migration
+# RunUO to ModernUO Serialization Migration
 
-## When to Use
-- Converting `Serialize(GenericWriter)`/`Deserialize(GenericReader)` overrides
-- Converting `[Constructable]` to `[Constructible]`
-- Adding `[SerializableField]` attributes
-- Handling save compatibility with `[TypeAlias]`
+## Boundary
 
-## Migration Mode Decision
+Own entity/type save compatibility. Use [migrate-persistence](../migrate-persistence/SKILL.md) for global non-entity data.
 
-Before editing serialization, classify the task. Do not mix these modes casually:
+## Mode gate
 
-1. **New ModernUO class**
-   - Use `[SerializationGenerator(0)]`.
-   - Omit the `encoded` argument.
-   - Add `partial` to the class.
-   - Add `[Constructible]` where the type should be addable/constructible in game.
+Choose exactly one mode before editing:
 
-2. **Existing generated ModernUO class version bump**
-   - Increment `[SerializationGenerator(N)]`.
-   - Add `private void MigrateFrom(VXContent content)` for the previous version.
-   - Do **not** edit legacy `Deserialize(reader, version)` for normal generated-code bumps.
-   - Regenerate and commit migration schema JSON.
+1. **New generated type:** `[SerializationGenerator(0)]`, `partial`, indexed persistent fields, and `[Constructible]` when appropriate.
+2. **Generated version bump:** increment the version, implement the required `MigrateFrom(VXContent)`, regenerate the schema, and keep prior schemas.
+3. **Legacy manual migration:** read old write/read order and version encoding first; retain a compatible legacy reader, use the correct encoded-version setting, and add `TypeAlias` when saved type identity changed.
 
-3. **Pre-codegen RunUO/manual serialization migration**
-   - Read old `Serialize()` first and preserve the old field write/read order exactly.
-   - Convert old `Deserialize(GenericReader)` to `private void Deserialize(IGenericReader reader, int version)` only for old-save compatibility.
-   - If old `Serialize()` wrote the version with `writer.Write(version)` / `reader.ReadInt()`, use `[SerializationGenerator(N, false)]`.
-   - Add `[TypeAlias]` when the namespace or class name changed and old saves may still reference the old type.
-   - Keep legacy compatibility code only as long as old saves need to load.
+## Workflow
 
-Completion criterion: the migration notes identify which mode is being used and how old saves will load after the change.
+1. Load [migrate-foundation](../migrate-foundation/SKILL.md). Record type identity, inheritance, every version branch, exact field order/type, defaults, deleted fields, and runtime-only state.
+2. Inspect the current generator attributes and a nearby migration in the repository.
+3. Convert persistent members with stable indices. Preserve command-property access and property invalidation attributes.
+4. Use generated setters or `this.MarkDirty()` for custom persistent mutations.
+5. Remove manual methods and `Serial` constructors only after the selected mode provides an old-save path.
+6. Restore timers/caches/registrations in the appropriate after-deserialization phase; never serialize execution tokens.
+7. Run the repository schema generator when required, then test new round trip, each supported old version, renamed types, deleted/null references, and unsupported versions.
 
-## Conversion Steps
-1. Add `using ModernUO.Serialization;`
-2. Read the old `Serialize()` to find the version number it writes. Bump it by 1 for `[SerializationGenerator]`
-3. If old `Deserialize()` used `reader.ReadInt()` (not `ReadEncodedInt()`), pass `false` as second parameter: `[SerializationGenerator(N, false)]`
-4. Add `partial` to class declaration
-5. Convert each serialized field: `private int m_X` -> `[SerializableField(N)] private int _x`
-6. Add `[SerializedCommandProperty(AccessLevel.X)]` if RunUO had `[CommandProperty]`
-7. Add `[InvalidateProperties]` if setter called `InvalidateProperties()`
-8. DELETE the `Serial` constructor
-9. DELETE the `Serialize()` override
-10. Convert `Deserialize()` to `private void Deserialize(IGenericReader reader, int version)` to handle pre-codegen saves (remove `override`, `base.Deserialize()`, and version read line). Delete entirely if no existing saves.
-11. Change `[Constructable]` to `[Constructible]`
-12. Timer fields and other runtime-only state: leave unserialized and restore in `[AfterDeserialization]`; use `[AfterDeserialization(false)]` when setup depends on fully loaded cross-entity/world state or affects game state
+## Safety gates
 
-## Quick Mapping
-| RunUO | ModernUO |
-|---|---|
-| `public class Foo : Item` | `[SerializationGenerator(N, false)] public partial class Foo : Item` (N = old version + 1) |
-| `private int m_X` + manual Serialize | `[SerializableField(0)] private int _x` |
-| `[CommandProperty(GM)]` on property | `[SerializedCommandProperty(GM)]` on field |
-| `Foo(Serial serial) : base(serial)` | DELETE |
-| `Serialize(GenericWriter)` | DELETE -- auto-generated |
-| `Deserialize(GenericReader)` | Convert to `private void Deserialize(IGenericReader reader, int version)` for old saves |
-| Custom setter with InvalidateProperties() | `[InvalidateProperties]` attribute |
-| Custom setter logic | `[SerializableProperty(N)]` with `this.MarkDirty()` |
-| `reader.ReadMobile()` | `reader.ReadEntity<Mobile>()` |
-| `reader.ReadItem()` | `reader.ReadEntity<Item>()` |
+- Never infer legacy field order from declarations; read `Serialize` and `Deserialize`.
+- Do not reuse a field index for different meaning.
+- Do not assign migrated data back to obsolete backing fields when generated setters carry dirty/invalidation behavior.
+- Preserve generated schema files and document rollback/backup implications.
 
-## Anti-Patterns
-- Missing `partial` keyword -> build error
-- Serializing `TimerExecutionToken` -> build error
-- Missing `this.MarkDirty()` in `[SerializableProperty]` setter -> changes not saved
-- Wrong field prefix (`m_` instead of `_`)
+## Verification/self-check
 
-## How to Report Issues
+Compare every supported old version with the migration map, run schema generation/build and round-trip tests, and inspect the final diff for missing schemas, reused indices, or serialized runtime handles.
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+## Output contract
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+Return the selected mode, field/version/identity map, code and schema changes, old-save and rollback plan, verification commands/results, and any unsupported legacy version.
 
-## See Also
-- `dev-docs/runuo-migration-docs/02-serialization.md` -- detailed migration reference with before/after
-- `dev-docs/serialization.md` -- complete ModernUO serialization system
-- `plugins/modernuo/skills/modernuo-serialization/SKILL.md` -- ModernUO serialization skill (patterns, attributes, examples)
+## Reference routing
+
+- Read [modernuo-serialization](../modernuo-serialization/SKILL.md) for local attributes and generator commands.
+- Read [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) when post-load state owns timers or references.
+- Cross-check with the official [ModernUO serialization guide](https://modernuo.com/docs/development/serialization/) and [SerializationGenerator repository](https://github.com/modernuo/SerializationGenerator) when local behavior is unclear.

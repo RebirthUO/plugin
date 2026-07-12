@@ -1,0 +1,52 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Combat Pipeline",
+    "inputs": [
+      "uo combat pipeline"
+    ],
+    "trigger_actions": [
+      "Review this uo combat pipeline task and give me the repository-specific checks.",
+      "Compare the requested uo combat pipeline behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo combat pipeline change and identify the focused verification.",
+      "Audit this uo combat pipeline diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo aos item properties",
+      "uo magic spells",
+      "modernuo spatial range geometry",
+      "modernuo performance hot paths"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo combat pipeline"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1 @@
+Use when converting RunUO Item, Mobile, or BaseCreature subclasses to ModernUO. Covers complete item/creature conversion across serialization, timers, lifecycle cleanup, properties, and naming.

@@ -1,0 +1,1 @@
+Use when converting RunUO command registration, EventSink handlers, or event delegate patterns to ModernUO. Covers event name changes, delegate removal, Configure vs Initialize, and generated event handlers.

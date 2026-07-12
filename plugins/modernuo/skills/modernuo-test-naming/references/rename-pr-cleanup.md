@@ -1,6 +1,7 @@
 # Rename-Only Test Cleanup PR Workflow
 
-Use this reference when normalizing RebirthUO/ModernUO test names after generated branches or AI-assisted work introduced noisy prefixes.
+Use this reference when normalizing test names in a ModernUO-based repository
+after generated branches or AI-assisted work introduced noisy prefixes.
 
 ## Scope discipline
 

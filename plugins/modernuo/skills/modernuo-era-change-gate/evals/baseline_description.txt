@@ -1,0 +1,1 @@
+Use when a ModernUO/RebirthUO content change, parity finding, implementation plan, diff, issue, or review crosses Ultima Online era boundaries or changes which expansion/profile owns behavior. Requires affected era checks to be involved, especially modernuo-content-taxonomy.

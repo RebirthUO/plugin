@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Networking and Packets",
+    "inputs": [
+      "modernuo networking and packets",
+      "modernuo networking"
+    ],
+    "trigger_actions": [
+      "Review this modernuo networking and packets task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo networking and packets in the configured ModernUO-based repository.",
+      "Help me implement a modernuo networking and packets change and identify the focused verification.",
+      "Audit this modernuo networking and packets diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo threading",
+      "modernuo performance hot paths",
+      "modernuo string handling",
+      "modernuo test workflow",
+      "migrate packets"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo networking and packets",
+        "modernuo networking"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

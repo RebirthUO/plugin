@@ -1,0 +1,1 @@
+Use when writing or repairing ModernUO/RebirthUO regression tests for gameplay mechanics, spells, special moves, timers, summons, combat hooks, and UOContent fixture pitfalls. Complements modernuo-test-workflow with concrete runtime-test patterns.

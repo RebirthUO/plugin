@@ -1,7 +1,7 @@
 {
   "name": "modernuo",
-  "version": "1.21.0",
-  "description": "ModernUO plugin",
+  "version": "2.0.0",
+  "description": "Official-UO research and ModernUO engineering workflows",
   "author": {
     "name": "Jan Siems",
     "email": "jsiems87@gmail.com"
@@ -10,8 +10,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "ModernUO",
-    "shortDescription": "ModernUO and Ultima Online development guidance for RebirthUO.",
-    "longDescription": "ModernUO is a filtered plugin mirror of the Hermes profile skills used for Ultima Online, ModernUO, and RebirthUO work. It provides source-synced guidance for RebirthUO server development, including codebase navigation, issue implementation, issue triage and review, implementation checkpoints, test workflow and regression testing, migration guidance, cross-era change routing, LootPack source preservation, symbol and naming discipline, performance and lifecycle reviews, named Ultima Online skill, spell, and item-property parity checks, evidence-backed era parity reports with expected-vs-actual data deltas, content taxonomy, subsystem audits, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, skills, stats, and related Ultima Online domain research.",
+    "shortDescription": "Official UO evidence, ModernUO engineering, and strict issue delivery.",
+    "longDescription": "A repository-portable Agent Skills portfolio for official OSI/EA/Broadsword research, ModernUO engineering, RunUO migration, testing, and a strict create-research-implement GitHub workflow. Issue skills resolve the exact repository from the consuming project's AGENTS.md and stop whenever official evidence or user policy is incomplete.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -20,22 +20,13 @@
     ],
     "brandColor": "#7A2F1A",
     "defaultPrompt": [
-      "Audit this ModernUO subsystem.",
-      "Plan this RebirthUO migration.",
-      "Implement this RebirthUO GitHub issue as a tested PR.",
-      "Triage this GitHub issue into a source-backed implementation plan.",
-      "Verify this RebirthUO triage ticket for human review.",
-      "Check this Ultima Online content parity with source-backed data deltas.",
-      "Author canonical RebirthUO game-docs for this mechanic.",
-      "Review this content change for cross-era parity impact.",
-      "Run a ModernUO test workflow and regression plan.",
-      "Review this source-derived loot change before replacing LootPack calls.",
-      "Review this code for unnecessary constants, locals, fields, properties, and Policy* symbols.",
-      "Check Magery skill parity against ModernUO.",
-      "Check Flamestrike spell parity against ModernUO.",
-      "Check Spell Damage item property parity against ModernUO.",
-      "Normalize these ModernUO test file, class, and method names.",
-      "Set up a CUOContent custom module for this ModernUO server."
+      "Create an intake issue using the repository and live template declared by this project's AGENTS.md.",
+      "Research this issue against official OSI/EA sources and stop to ask me about unresolved decisions.",
+      "Implement this issue from its current READY research handoff and run focused verification.",
+      "Establish the official UO behavior for this mechanic and compare it with the configured repository.",
+      "Audit this ModernUO subsystem for persistence, lifecycle, performance, and regression risks.",
+      "Migrate this RunUO code to current ModernUO conventions.",
+      "Design focused ModernUO behavior tests and report their exact scope."
     ],
     "composerIcon": "./assets/rebirthuo-logo.png",
     "logo": "./assets/rebirthuo-logo.png",

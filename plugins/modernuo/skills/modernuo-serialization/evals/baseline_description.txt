@@ -1,0 +1,1 @@
+Use when creating or modifying classes inheriting Item, Mobile, BaseCreature, or any type with [SerializationGenerator], adding serialized fields, or discussing migration/version bumps.

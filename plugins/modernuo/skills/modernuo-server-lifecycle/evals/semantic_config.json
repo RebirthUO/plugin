@@ -1,0 +1,54 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Server Lifecycle",
+    "inputs": [
+      "modernuo server lifecycle"
+    ],
+    "trigger_actions": [
+      "Review this modernuo server lifecycle task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo server lifecycle in the configured ModernUO-based repository.",
+      "Help me implement a modernuo server lifecycle change and identify the focused verification.",
+      "Audit this modernuo server lifecycle diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo threading",
+      "modernuo events",
+      "modernuo configuration",
+      "modernuo world saves archives",
+      "modernuo test workflow"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo server lifecycle"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

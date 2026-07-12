@@ -1,7 +1,6 @@
 ---
 name: modernuo-era-expansion
-description: >
-  Use when writing era-conditional code, using Core.AOS/SE/ML/etc., or when the user has not specified a target era. Always ask which expansion to target if not specified.
+description: Use when implementing or reviewing era-conditional ModernUO behavior, Core.AOS/SE/ML/etc. checks, Expansion values, or an unspecified target era that changes mechanics. Establishes cumulative versus exact gates and test coverage. Do not use for broad era-ownership changes; use modernuo-era-change-gate.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -17,144 +16,50 @@ metadata:
       - modernuo-content-taxonomy
       - modernuo-content-patterns
       - modernuo-code-audit
-      - uo-era-product-timeline
+      - uo-official-evidence
 ---
 
-# ModernUO Era & Expansion Support
+# ModernUO Era and Expansion Behavior
 
-## When to Use
-- Writing code that depends on game era (damage formulas, skill caps, mechanics)
-- Using `Core.AOS`, `Core.SE`, `Core.ML`, etc.
-- User asks for a feature without specifying era
-- Implementing mechanics that changed across expansions
+## Boundary
 
-## CRITICAL RULE
-**Never assume era.** If the user hasn't specified which expansion to target, ASK before writing era-dependent code.
+Own a concrete era-conditioned implementation or review. Use [modernuo-era-change-gate](../modernuo-era-change-gate/SKILL.md) when behavior ownership moves between eras/profiles, and taxonomy/parity skills for broad inventories.
 
-## Expansion Enum
+## Era gate
 
-```csharp
-public enum Expansion
-{
-    None,    // 0 - Pre-T2A
-    T2A,     // 1 - The Second Age
-    UOR,     // 2 - Renaissance
-    UOTD,    // 3 - Third Dawn
-    LBR,     // 4 - Blackthorn's Revenge
-    AOS,     // 5 - Age of Shadows (major overhaul)
-    SE,      // 6 - Samurai Empire
-    ML,      // 7 - Mondain's Legacy
-    SA,      // 8 - Stygian Abyss
-    HS,      // 9 - High Seas
-    TOL,     // 10 - Time of Legends
-    EJ       // 11 - Endless Journey
-}
-```
+If the target era/profile materially changes behavior and is neither stated nor discoverable from configuration, ask before editing or claiming parity. Do not default silently to AoS, latest-era, or shard policy.
 
-## Era Check Properties
+## Workflow
 
-Each returns `true` when `Core.Expansion >= that era`:
+1. Read [expansion-map.md](references/expansion-map.md), then inspect `ExpansionInfo`, `Core.Expansion`, active expansion/profile configuration, and the nearest local mechanic.
+2. State the target era/profile and whether the requirement is:
+   - cumulative (`Core.AOS`: AoS and later);
+   - exact (`Core.Expansion == Expansion.AOS`);
+   - profile/config-specific;
+   - intentionally custom/Enhanced.
+3. Gather source evidence for values and introduction/changes; distinguish current official behavior, historical publish behavior, repo precedent, and shard policy.
+4. Place the branch at the narrowest stable behavior boundary. Preserve earlier and later behavior explicitly and avoid scattering equivalent checks.
+5. Test at least the immediately earlier era, target era, and a later era for cumulative gates; test exact/profile behavior separately.
+6. Audit side effects on combat, stats, loot/economy, skills, housing, persistence, client presentation, and registration/data loading as applicable.
 
-```csharp
-Core.T2A   // >= The Second Age
-Core.UOR   // >= Renaissance
-Core.UOTD  // >= Third Dawn
-Core.LBR   // >= Blackthorn's Revenge
-Core.AOS   // >= Age of Shadows
-Core.SE    // >= Samurai Empire
-Core.ML    // >= Mondain's Legacy
-Core.SA    // >= Stygian Abyss
-Core.HS    // >= High Seas
-Core.TOL   // >= Time of Legends
-Core.EJ    // >= Endless Journey
-```
+## Safety gates
 
-For exact expansion: `Core.Expansion == Expansion.AOS`
+- Later expansions satisfy cumulative convenience properties; this may intentionally or accidentally inherit behavior.
+- Era-specific APIs/data must not be invoked before their gate.
+- Stored fields can still leak behavior through runtime aggregation or tooltips even if one special hook is gated.
+- Do not encode publish numbers in symbol names; keep evidence in comments/docs/tests.
+- Update matching profile/data/docs only when the requested behavior requires it.
 
-## Key Era Boundaries
+## Verification/self-check
 
-### AOS (Age of Shadows) -- Most Significant Change
-- Complete combat overhaul: resistance-based damage system
-- Property-based item system (magic properties)
-- New damage formula: `GetNewAosDamage()` vs flat `Utility.Random()`
-- Luck system for loot
-- Insurance system
+Run the earlier-target-later/profile matrix and inspect both display and runtime behavior where stored values exist. Recheck cumulative versus exact semantics against current `Core` implementation.
 
-### SE (Samurai Empire)
-- Bushido / Ninjitsu skills
-- Samurai/Ninja classes
-- Loot pack adjustments
+## Output contract
 
-### ML (Mondain's Legacy)
-- Spellweaving
-- Adjusted skill gain chances
-- Container weight display changes
+Return the target era/profile, evidence class, cumulative/exact decision, changed gates/paths, earlier-target-later behavior matrix, tests/results, and unresolved parity or policy decisions.
 
-## Pattern: Era-Conditional Code
+## Reference routing
 
-```csharp
-// Ternary for simple values
-var delay = Core.SE ? 250 : Core.AOS ? 500 : 1000;
-
-// If/else for logic branches
-if (Core.AOS)
-{
-    damage = GetNewAosDamage(10, 1, 4, target);
-}
-else
-{
-    damage = Utility.Random(4, 4);
-    if (CheckResisted(target))
-        damage *= 0.75;
-}
-
-// Property display varies by era
-if (Core.ML)
-{
-    list.Add(1072241, $"{TotalItems}\t{MaxItems}\t{TotalWeight}\t{MaxWeight}");
-}
-else
-{
-    list.Add(1050044, $"{TotalItems}\t{TotalWeight}");
-}
-```
-
-## Pattern: Era-Dependent Loot
-
-`LootPack` properties auto-select based on expansion:
-```csharp
-// These automatically pick the right era variant
-LootPack.Poor       // OldPoor / AosPoor / SePoor
-LootPack.Average    // OldAverage / AosAverage / SeAverage
-LootPack.Rich       // OldRich / AosRich / SeRich
-LootPack.FilthyRich // OldFilthyRich / AosFilthyRich / SeFilthyRich
-LootPack.UltraRich  // OldUltraRich / AosUltraRich / SeUltraRich
-```
-
-## Anti-Patterns
-
-- **Hardcoding mechanics for one era** without conditional checks
-- **Assuming AOS** when the user might want pre-AOS
-- **Using era-specific APIs** without checking (e.g., `GetNewAosDamage()` pre-AOS)
-
-## Real Examples
-- Era-conditional damage: `Projects/UOContent/Spells/First/MagicArrow.cs`
-- Era-conditional properties: `Projects/Server/Items/Container.cs` (`GetProperties`)
-- Era-conditional values: `Projects/UOContent/Items/Weapons/Ranged/BaseRanged.cs`
-- Expansion enum: `Projects/Server/ExpansionInfo.cs`
-- Stat config by era: `Projects/UOContent/Skills/SkillCheck.cs`
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/era-expansion.md` - Complete expansion documentation
-- `plugins/modernuo/skills/modernuo-content-patterns/SKILL.md` - Content templates
-- `plugins/modernuo/skills/modernuo-configuration/SKILL.md` - Configuration system
+- Always read [expansion-map.md](references/expansion-map.md).
+- Read [modernuo-era-change-gate](../modernuo-era-change-gate/SKILL.md) when ownership/profile activation changes.
+- Read [modernuo-content-taxonomy](../modernuo-content-taxonomy/SKILL.md) only for an explicit cross-domain parity inventory.

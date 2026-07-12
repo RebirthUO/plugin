@@ -1,0 +1,54 @@
+{
+  "optimizer_hints": {
+    "capability": "Samurai Empire Skills",
+    "inputs": [
+      "samurai empire skills",
+      "uo samurai empire skills"
+    ],
+    "trigger_actions": [
+      "Review this samurai empire skills task and give me the repository-specific checks.",
+      "Compare the requested samurai empire skills behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a samurai empire skills change and identify the focused verification.",
+      "Audit this samurai empire skills diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo magic spells",
+      "uo skills stats races",
+      "uo combat pipeline",
+      "modernuo era expansion"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "samurai empire skills",
+        "uo samurai empire skills"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

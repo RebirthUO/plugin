@@ -1,0 +1,1 @@
+Use when converting RunUO GetProperties(ObjectPropertyList) overrides to ModernUO GetProperties(IPropertyList). Covers IPropertyList interpolation, the property-list-specific string hole rule, and cliloc arguments.

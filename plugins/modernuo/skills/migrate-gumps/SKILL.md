@@ -1,8 +1,6 @@
 ---
 name: migrate-gumps
-description: >
-  Use when converting RunUO Gump classes, OnResponse handlers, or gump UI code to ModernUO DynamicGump/StaticGump.
-  Covers builder pattern, DisplayTo, response handling, and empty-gump safety.
+description: Use when converting RunUO Gump subclasses, layout calls, SendGump patterns, or OnResponse handlers to ModernUO DynamicGump or StaticGump. Covers type selection, builders, placeholders, DisplayTo validation, and response safety. Do not use for new UI design unrelated to migration.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -21,51 +19,38 @@ metadata:
       - modernuo-content-patterns
 ---
 
-# RunUO -> ModernUO Gump Migration
+# RunUO to ModernUO Gump Migration
 
-## When to Use
-- Converting `Gump` subclasses
-- Converting `OnResponse(NetState, RelayInfo)` handlers
-- Updating gump sending/closing patterns
+## Boundary
 
-## Conversion Steps
-1. Choose type: `DynamicGump` (variable layout) or `StaticGump<T>` (fixed layout)
-2. Change class declaration: `class X : Gump` -> `class X : DynamicGump`
-3. Add `public override bool Singleton => true;` if only one per player
-4. Make constructor private, add static `DisplayTo()` method
-5. Move all `AddXxx()` calls from constructor to `BuildLayout(ref DynamicGumpBuilder builder)`
-6. Prefix each call with `builder.`: `AddLabel(...)` -> `builder.AddLabel(...)`
-7. Convert properties: `Closable = false` -> `builder.SetNoClose()`
-8. Update OnResponse: `OnResponse(NetState, RelayInfo)` -> `OnResponse(NetState, in RelayInfo)`
-9. Update text entries: `info.TextEntries[i].Text` -> `info.GetTextEntry(id)`
-10. For StaticGump: extract variable text into placeholders + `BuildStrings`
+Convert an existing gump without changing its player-facing behavior unless requested. Use [modernuo-gump-system](../modernuo-gump-system/SKILL.md) for new UI architecture.
 
-## Quick Mapping
-| RunUO | ModernUO |
-|---|---|
-| `class X : Gump` | `class X : DynamicGump` or `StaticGump<X>` |
-| `AddPage(0)` | `builder.AddPage()` |
-| `Closable = false` | `builder.SetNoClose()` |
-| `Dragable = false` | `builder.SetNoMove()` |
-| `OnResponse(NetState, RelayInfo)` | `OnResponse(NetState, in RelayInfo)` |
-| `info.TextEntries[i].Text` | `info.GetTextEntry(id)` |
-| `from.SendGump(new X(...))` | `X.DisplayTo(from, ...)` |
-| `from.CloseGump(typeof(X))` | `from.CloseGump<X>()` |
+## Workflow
 
-## Critical: Empty Gump Rule
-Never create a gump with no visual elements. Use the `DisplayTo()` pattern -- validate before constructing.
+1. Load [migrate-foundation](../migrate-foundation/SKILL.md). Inventory pages, controls, button/text-entry IDs, state, validation, and callers.
+2. Choose `StaticGump<T>` for fixed layout with per-instance placeholders; choose `DynamicGump` when control count or structure varies.
+3. Move layout calls into the matching `BuildLayout(ref ...Builder)`; use `BuildStrings` for static-layout dynamic text.
+4. Replace legacy flags with builder methods and update responses to `OnResponse(NetState, in RelayInfo)`. Preserve stable button, switch, and entry IDs; button `0` remains close/cancel.
+5. Put prerequisite checks in a static `DisplayTo` method before construction. Make the constructor private when that prevents invalid instances.
+6. Replace send/close calls with the local generic gump APIs and add `Singleton` only when stacking is not intended.
+7. Verify at least success, cancel, invalid/stale response, and prerequisite-failure paths.
 
-## How to Report Issues
+## Safety gates
 
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
+- Never send an empty gump; a client may be unable to dismiss it.
+- Revalidate authority, ownership, range, and object state in `OnResponse`; displayed state may be stale.
+- Keep handler-aware interpolated strings at the call site and do not invent cliloc IDs.
+- Remove temporary `Cached => false` overrides before delivery.
 
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
+## Verification/self-check
 
-## See Also
-- `dev-docs/runuo-migration-docs/04-gumps.md` -- detailed migration reference
-- `dev-docs/gump-system.md` -- complete ModernUO gump system
-- `plugins/modernuo/skills/modernuo-gump-system/SKILL.md` -- ModernUO gump skill
+Prove no constructed path is empty, IDs remain stable, responses revalidate stale state, and success/cancel/invalid paths pass focused tests. Record any visual client check still manual.
+
+## Output contract
+
+Return the migrated class/call sites, chosen gump type and rationale, an ID/state mapping, validation evidence, and remaining client-data or manual-UI checks.
+
+## Reference routing
+
+- Read [modernuo-gump-system](../modernuo-gump-system/SKILL.md) for builder APIs, empty-gump rules, and response validation.
+- Read [modernuo-string-handling](../modernuo-string-handling/SKILL.md) only when interpolation, HTML, or localization changes.

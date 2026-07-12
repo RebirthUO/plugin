@@ -1,98 +1,50 @@
 {
+  "optimizer_hints": {
+    "capability": "ModernUO Test Naming",
+    "inputs": [
+      "modernuo test naming"
+    ],
+    "trigger_actions": [
+      "Review this modernuo test naming task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo test naming in the configured ModernUO-based repository.",
+      "Help me implement a modernuo test naming change and identify the focused verification.",
+      "Audit this modernuo test naming diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo test workflow",
+      "modernuo regression testing",
+      "modernuo no publish prefix names"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
   "fallback_positive_concepts": [
-    "test_name_cleanup",
-    "noisy_prefixes"
+    "owned_job"
   ],
   "positive_concepts": {
-    "test_name_cleanup": {
-      "weight": 0.34,
+    "owned_job": {
+      "weight": 1.0,
       "phrases": [
-        "test names",
-        "rename tests",
-        "normalize tests",
-        "class and method names",
-        "file, class, or method names",
-        "xunit tests",
-        "generated tests"
-      ]
-    },
-    "noisy_prefixes": {
-      "weight": 0.3,
-      "phrases": [
-        "publish81",
-        "publish 81",
-        "branch name",
-        "task label",
-        "issue id",
-        "feature prefix",
-        "ai added",
-        "generated prefix"
-      ]
-    },
-    "modernuo_tests": {
-      "weight": 0.2,
-      "phrases": [
-        "modernuo test",
-        "rebirthuo test",
-        "uocontent.tests",
-        "server.tests",
-        "c# tests",
-        "xunit"
-      ]
-    },
-    "object_or_area": {
-      "weight": 0.16,
-      "phrases": [
-        "tested object",
-        "tested area",
-        "what they actually test",
-        "match what they test",
-        "without changing assertions"
+        "modernuo test naming"
       ]
     }
   },
   "negative_concepts": {
-    "implementation": {
-      "weight": 0.34,
-      "exclusive": true,
-      "phrases": [
-        "implement",
-        "add missing behavior",
-        "fix runtime",
-        "production code",
-        "reward behavior"
-      ]
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
     },
-    "parity": {
-      "weight": 0.34,
+    "explicit_no_action": {
+      "weight": 0.5,
       "exclusive": true,
       "phrases": [
-        "era parity",
-        "parity report",
-        "content gaps",
-        "source-backed",
-        "expected-vs-actual"
-      ]
-    },
-    "symbol_discipline": {
-      "weight": 0.34,
-      "exclusive": true,
-      "phrases": [
-        "constants",
-        "policyse",
-        "policy names",
-        "unnecessary locals",
-        "symbol discipline"
-      ]
-    },
-    "custom_module": {
-      "weight": 0.34,
-      "exclusive": true,
-      "phrases": [
-        "custom module",
-        "cuocontent",
-        "assemblies.json",
-        "content project"
+        "do not modify",
+        "advice only",
+        "unrelated repository"
       ]
     }
   }

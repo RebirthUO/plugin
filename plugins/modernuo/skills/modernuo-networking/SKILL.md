@@ -1,7 +1,10 @@
 ---
 name: modernuo-networking
 description: >
-  Use when creating or modifying packets, working with NetState, SpanWriter, SpanReader, or implementing network protocol handlers.
+  Use when creating or modifying ModernUO packet encoders, incoming handlers,
+  NetState sends, SpanWriter/SpanReader protocol code, or client message fan-out.
+  Do not use for ordinary gameplay text alone; route formatting concerns to
+  modernuo-string-handling.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -21,325 +24,66 @@ metadata:
       - migrate-packets
 ---
 
-# ModernUO Networking & Packets
+# ModernUO Networking and Packets
 
-## When to Use
-- Creating new packets (outgoing or incoming)
-- Modifying existing packet handlers
-- Working with `NetState`, `SpanWriter`, `SpanReader`
-- Implementing network protocol features
+## Boundary
 
-## Key Rules
+Own packet layout, registration, validation, send eligibility, and protocol-safe
+buffer use. Preserve client compatibility and game-thread ownership. Prefer the
+existing `Mobile`, `Item`, and `NetState` message APIs over hand-built packets
+when the task is only player-facing text.
 
-1. **Outgoing packets**: Static `Create*` method fills `Span<byte>`, extension `Send*` method on `NetState`
-2. **Incoming packets**: Register with function pointers in `Configure()`
-3. **Use `stackalloc`** for small fixed-size outgoing packets
-4. **Always check `ns.CannotSendPackets()`** before sending
-5. **Big-endian by default** -- use `WriteLE()` for little-endian
+## Workflow
 
-## Outgoing Packet Pattern
+1. Find the protocol specification and nearest current packet implementation.
+   Record packet/subcommand ID, fixed or variable length, endianness, encoding,
+   client/expansion gate, and authorization assumptions.
+2. For outgoing packets, expose a `NetState` send helper and a deterministic
+   `Create*` encoder. Check `CannotSendPackets()` before building or sending.
+3. Use `stackalloc` for small bounded packets and `SpanWriter`/the repository pool
+   for variable or larger payloads. Initialize the packet and finalize variable
+   lengths exactly once.
+4. Register incoming handlers in `Configure()` with the correct length and
+   in-game gate. Validate remaining input, entity lookup, state, permissions,
+   range/ownership, and value bounds before mutation.
+5. Compare encoded bytes and handler behavior with a neighboring packet; add a
+   focused round-trip, byte-layout, or handler test when practical.
 
-### Step 1: Create Extension Method on NetState
-```csharp
-public static class OutgoingMyPackets
-{
-    public const int MyPacketLength = 12;
+## Guardrails
 
-    public static void SendMyPacket(this NetState ns, Serial target, int value)
-    {
-        if (ns.CannotSendPackets())
-            return;
+- UO packet integers are big-endian unless the protocol explicitly requires a
+  `WriteLE`/`Read*LE` variant.
+- Never trust client serials, lengths, indexes, strings, or enum values. A
+  successful read is not authorization.
+- Fixed buffers must match the declared length; variable packets must write the
+  actual packet length after the payload.
+- Avoid `new byte[]` in repeated sends and avoid pre-building strings when a
+  handler-aware message API can format at the call site.
+- Do not move game-state mutation to network worker threads. Follow the existing
+  incoming dispatch boundary and `modernuo-threading` rules.
+- Preserve safe string decoders and control-character filtering where the
+  neighboring handler uses them.
 
-        var buffer = stackalloc byte[MyPacketLength].InitializePacket();
-        CreateMyPacket(buffer, target, value);
-        ns.Send(buffer);
-    }
+## Output Contract
 
-    public static void CreateMyPacket(Span<byte> buffer, Serial target, int value)
-    {
-        if (buffer[0] != 0)  // Already initialized check
-            return;
+Return the packet contract (ID/sub-ID, direction, length, fields, endianness,
+encoding, gates), changed paths, validation decisions, and verification evidence.
+For review findings, include the affected byte offset or input field and the
+client/security consequence.
 
-        var writer = new SpanWriter(buffer);
-        writer.Write((byte)0xBF);       // Packet ID
-        writer.Write((ushort)12);       // Length
-        writer.Write((ushort)0x99);     // Sub-command
-        writer.Write(target);           // Serial (4 bytes)
-        writer.Write((short)value);     // Value (2 bytes)
-    }
-}
-```
+## Verification
 
-### Step 2: Call from Game Code
-```csharp
-mobile.NetState.SendMyPacket(target.Serial, 42);
+- Exact byte layout and declared length match the protocol.
+- Truncated, oversized, invalid-serial, unauthorized, and disconnected cases fail
+  safely where relevant.
+- Existing client/era behavior and neighboring packet tests remain green.
+- State whether validation used tests, captured bytes, a client smoke check, or
+  static reasoning only.
 
-// Or for all nearby players:
-foreach (var ns in mobile.GetClientsInRange(18))
-{
-    ns.SendMyPacket(target.Serial, 42);
-}
-```
+## Reference Routing
 
-### Variable-Length Outgoing Packets
-```csharp
-public static void SendMyDynamicPacket(this NetState ns, string name)
-{
-    if (ns.CannotSendPackets())
-        return;
-
-    var writer = new SpanWriter(stackalloc byte[64]);  // Or use pooled buffer for large packets
-    writer.Write((byte)0x99);          // Packet ID
-    writer.Write((ushort)0);           // Placeholder for length
-    writer.WriteBigUniNull(name);      // Unicode string with null terminator
-    writer.WritePacketLength();        // Fill in actual length
-
-    ns.Send(writer.Span);
-}
-```
-
-## Incoming Packet Pattern
-
-### Step 1: Register Handler in Configure()
-```csharp
-public static class IncomingMyPackets
-{
-    public static unsafe void Configure()
-    {
-        IncomingPackets.Register(0x99, 12, true, &MyPacketHandler);
-        //                       ^ID   ^len ^inGameOnly  ^handler
-        // len=0 for variable-length packets
-    }
-
-    public static void MyPacketHandler(NetState state, SpanReader reader)
-    {
-        var from = state.Mobile;
-        if (from == null)
-            return;
-
-        var targetSerial = (Serial)reader.ReadUInt32();
-        var value = reader.ReadInt16();
-
-        var target = World.FindMobile(targetSerial);
-        if (target != null)
-        {
-            // Process packet
-        }
-    }
-}
-```
-
-### Encoded Packet Registration
-```csharp
-public static unsafe void Configure()
-{
-    IncomingPackets.RegisterEncoded(0x28, true, &GuildGumpRequest);
-    //                              ^subID  ^inGame  ^handler
-}
-
-public static void GuildGumpRequest(NetState state, IEntity target, EncodedReader reader)
-{
-    // Handle encoded packet
-}
-```
-
-## SpanWriter Reference
-
-```csharp
-// Constructors
-var writer = new SpanWriter(Span<byte> buffer);
-var writer = new SpanWriter(stackalloc byte[64]);
-var writer = new SpanWriter(int capacity, bool resize = false);
-
-// Integer writes (big-endian by default)
-writer.Write(bool value);
-writer.Write(byte value);
-writer.Write(sbyte value);
-writer.Write(short value);      // Big-endian
-writer.Write(ushort value);     // Big-endian
-writer.Write(int value);        // Big-endian
-writer.Write(uint value);       // Big-endian
-writer.Write(long value);
-writer.Write(Serial serial);    // 4 bytes, big-endian
-
-// Little-endian variants
-writer.WriteLE(short value);
-writer.WriteLE(ushort value);
-writer.WriteLE(int value);
-writer.WriteLE(uint value);
-
-// String writes
-writer.WriteAscii(string value);
-writer.WriteAsciiNull(string value);      // Null-terminated
-writer.WriteAscii(string value, int fixedLength);
-writer.WriteLatin1(string value);
-writer.WriteLatin1Null(string value);
-writer.WriteBigUni(string value);         // UTF-16 big-endian
-writer.WriteBigUniNull(string value);
-writer.WriteLittleUni(string value);      // UTF-16 little-endian
-writer.WriteLittleUniNull(string value);
-writer.WriteUTF8(string value);
-writer.WriteUTF8Null(string value);
-
-// Utilities
-writer.Write(ReadOnlySpan<byte> data);
-writer.Clear(int count);                   // Write zeros
-writer.Seek(int offset, SeekOrigin origin);
-writer.WritePacketLength();                // Fill in length at position 1-2
-writer.EnsureCapacity(int capacity);
-writer.Dispose();                          // Return pooled buffer if any
-
-// Properties
-writer.Position;    // Current write position
-writer.Capacity;    // Buffer size
-writer.Span;        // ReadOnlySpan<byte> of written data
-```
-
-## SpanReader Reference
-
-```csharp
-// Constructor
-var reader = new SpanReader(ReadOnlySpan<byte> data);
-
-// Integer reads (big-endian by default)
-reader.ReadByte();
-reader.ReadBoolean();     // byte > 0
-reader.ReadSByte();
-reader.ReadInt16();       // Big-endian
-reader.ReadUInt16();      // Big-endian
-reader.ReadInt32();       // Big-endian
-reader.ReadUInt32();      // Big-endian
-reader.ReadInt64();
-reader.ReadUInt64();
-
-// Little-endian variants
-reader.ReadInt16LE();
-reader.ReadUInt16LE();
-reader.ReadUInt32LE();
-
-// String reads
-reader.ReadAscii(int fixedLength = -1);
-reader.ReadAsciiSafe(int fixedLength = -1);  // Filters control chars
-reader.ReadLatin1(int fixedLength = -1);
-reader.ReadLatin1Safe(int fixedLength = -1);
-reader.ReadBigUni(int fixedLength = -1);
-reader.ReadBigUniSafe(int fixedLength = -1);
-reader.ReadLittleUni(int fixedLength = -1);
-reader.ReadUTF8(int fixedLength = -1);
-
-// Utilities
-reader.Seek(int offset, SeekOrigin origin);
-reader.Read(Span<byte> destination);
-
-// Properties
-reader.Position;     // Current read position
-reader.Length;        // Total data length
-reader.Remaining;    // Bytes remaining
-```
-
-## Player-Facing Message APIs
-
-This section is about chat/system/overhead text APIs, not low-level packet serialization. For packet payload strings, use `SpanWriter` string methods, spans, or `ValueStringBuilder` where appropriate.
-
-For chat / system messages / overhead text, use the convenience methods on `Mobile` and `Item` rather than building packets manually. They handle stackalloc sizing, spatial queries, and visibility filtering, and each has a `ref RawInterpolatedStringHandler` overload for zero-allocation interpolation.
-
-### Mobile
-
-```csharp
-// Self-message
-mob.SendMessage(int hue, ROS<char> text);
-mob.SendLocalizedMessage(int number, ROS<char> args = default, int hue = 0x3B2);
-mob.SendAsciiMessage(int hue, ROS<char> text);
-
-// Speech (broadcast in range)
-mob.Say(ROS<char> text);                       // SpeechHue
-mob.Emote(ROS<char> text);                     // EmoteHue
-mob.Whisper(ROS<char> text);                   // WhisperHue, short range
-mob.Yell(ROS<char> text);                      // YellHue, long range
-
-// Overhead (3 visibility variants × text/localized × affix)
-mob.PublicOverheadMessage(MessageType, int hue, bool ascii, ROS<char> text, ...);
-mob.PrivateOverheadMessage(MessageType, int hue, int number, ROS<char> args, NetState);
-mob.LocalOverheadMessage(MessageType, int hue, bool ascii, ROS<char> text);
-mob.NonlocalOverheadMessage(MessageType, int hue, int number, ROS<char> args = default);
-```
-
-### Item
-
-```csharp
-item.PublicOverheadMessage(MessageType, int hue, bool ascii, ROS<char> text);
-item.PublicOverheadMessage(MessageType, int hue, int number, ROS<char> args = default);
-item.SendLocalizedMessageTo(Mobile to, int number, ROS<char> args = default);
-item.SendLocalizedMessageTo(Mobile to, int number, int hue, ROS<char> args = default);
-item.SendMessageTo(Mobile to, ROS<char> text, int hue = 0x3B2);
-```
-
-### Zero-allocation interpolation
-
-```csharp
-// Compiler picks the handler overload — no string allocated
-mob.SendMessage($"You have {gold:N0} gold");
-mob.Say($"Hello, {target.Name}!");
-item.SendLocalizedMessageTo(player, cliloc, $"{a}\t{b}");
-```
-
-Several call-site shapes (ternaries with interpolated branches, `.ToString()` inside holes, pre-built `var msg = $"..."` locals, etc.) silently defeat handler binding and allocate a `string`. See `dev-docs/string-handling.md` § "Interpolation Anti-Patterns" for the list and fixes.
-
-For lowercase output, use `:L`:
-```csharp
-mob.SendMessage($"You earned a {rank:L} trophy!");          // "gold" not "Gold"
-```
-
-### Implementation note
-
-The 7 spatial-broadcast variants (`Public/NonlocalOverheadMessage` × text/localized/affix) route through generic `OutgoingMessagePackets.Broadcast*<TFilter>` helpers parameterized over a `private readonly struct` filter that encapsulates the visibility predicate. The `where TFilter : struct, IBroadcastFilter` constraint specializes per filter type and keeps dispatch zero-alloc. If you add a new spatial-message API, add a filter struct and call the existing helper rather than duplicating the loop.
-
----
-
-## Common Packet Patterns
-
-### Sound Effect
-```csharp
-ns.SendSoundEffect(0x1E5, target);
-```
-
-### Mobile Animation
-```csharp
-ns.SendMobileAnimation(mobile.Serial, action, frameCount, repeatCount, forward, repeat, delay);
-```
-
-### Damage
-```csharp
-ns.SendDamage(target.Serial, amount);
-```
-
-## Anti-Patterns
-
-- **Not checking `CannotSendPackets()`**: Player may have disconnected
-- **Using `new byte[]` for packets**: Use `stackalloc` for fixed-size, `SpanWriter` for variable
-- **Wrong endianness**: UO protocol is big-endian; only use `WriteLE` when spec requires it
-- **Not calling `InitializePacket()`**: Required for `Create*` pattern with static buffer reuse
-
-## Real Examples
-- Mobile packets: `Projects/Server/Network/Packets/OutgoingMobilePackets.cs`
-- Item packets: `Projects/Server/Network/Packets/OutgoingItemPackets.cs`
-- Damage packets: `Projects/Server/Network/Packets/OutgoingDamagePackets.cs`
-- Effect packets: `Projects/Server/Network/Packets/OutgoingEffectPackets.cs`
-- Incoming registration: `Projects/UOContent/Network/Packets/IncomingPlayerPackets.cs`
-- Movement handler: `Projects/UOContent/Network/Packets/IncomingMovementPackets.cs`
-- SpanWriter: `Projects/Server/Buffers/SpanWriter.cs`
-- SpanReader: `Projects/Server/Buffers/SpanReader.cs`
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/networking-packets.md` - Complete networking documentation
-- `plugins/modernuo/skills/modernuo-threading/SKILL.md` - Network I/O threading context
+- Read [packet and message patterns](references/packet-patterns.md) when choosing
+  writer/reader methods, allocation strategy, or message fan-out helpers.
+- Read `dev-docs/networking-packets.md` for the current repository API surface.
+- Load `modernuo-string-handling` for interpolated text and
+  `modernuo-threading` for dispatch ownership.

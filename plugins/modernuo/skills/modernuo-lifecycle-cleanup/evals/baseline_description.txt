@@ -1,0 +1,1 @@
+Use when creating, modifying, or reviewing ModernUO object lifecycle cleanup, including OnDelete and OnAfterDelete, timer cancellation, event unsubscription, dynamic region unregister, owned Item/Mobile cleanup, dangling references, callbacks against deleted objects, and AfterDeserialization restoration.

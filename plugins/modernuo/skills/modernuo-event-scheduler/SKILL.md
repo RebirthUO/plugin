@@ -1,7 +1,6 @@
 ---
 name: modernuo-event-scheduler
-description: >
-  Use when creating holiday events, seasonal content, scheduled maintenance, daily/weekly resets, or any wall-clock/calendar-based scheduling. Covers EventScheduler, ScheduledEvent, YearlyScheduledEvent, and IRecurrencePattern.
+description: Use when implementing or reviewing wall-clock/calendar scheduling such as daily resets, weekly activities, seasonal windows, or maintenance. Covers recurrence selection, time zones, DST/restart policy, ownership, cancellation, and tests. Do not use for short game-time delays or sub-second ticks; use modernuo-timers.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
@@ -20,157 +19,39 @@ metadata:
       - modernuo-test-workflow
 ---
 
-# ModernUO EventScheduler (Wall-Clock / Calendar Scheduling)
+# ModernUO Event Scheduler
 
-## When to Use
-- Creating holiday or seasonal events (Halloween, Christmas, etc.)
-- Scheduling daily/weekly/monthly resets or activities
-- Any event that must fire at a real-world time or date
-- Working with `EventScheduler`, `ScheduledEvent`, `YearlyScheduledEvent`, `CallbackScheduledEvent`
-- Working with `IRecurrencePattern`, `AllowedDays`, `AllowedMonths`, `MonthDay`
+## Boundary
 
-## Key Rules
+Use EventScheduler for civil/calendar time (“Monday at 09:00”, annual seasonal window). Use [modernuo-timers](../modernuo-timers/SKILL.md) for elapsed game time (“five seconds later”), combat ticks, and sub-second work.
 
-1. **EventScheduler for wall-clock/calendar, Timer for game-tick delays** — if the event is "at 9 AM every Monday," use EventScheduler; if it's "5 seconds from now," use Timer
-2. **Always specify timezone** for local-time events — omitting defaults to UTC
-3. **Prefer `CallbackScheduledEvent` (via static methods)** for simple recurring actions
-4. **Use `YearlyScheduledEvent`** for seasonal windows (e.g., Oct 15 - Nov 1 each year)
-5. **Cancel events on cleanup** — call `Cancel()` when disabling or shutting down
-6. **1-second granularity** — EventScheduler ticks every second, not suitable for sub-second precision
+## Workflow
 
-## Timer vs EventScheduler Decision
+1. Define the civil schedule, named time zone, recurrence/window, first-run, missed-run/catch-up, duplicate-run, disable, restart, and operator override policy.
+2. Read [schedule-patterns.md](references/schedule-patterns.md) and inspect the current local scheduler/recurrence APIs plus an existing event of the same lifetime.
+3. Choose the simplest recurrence that exactly expresses the requirement. Use a callback event for a simple static action and a custom event class only when state/behavior warrants it.
+4. Store and cancel the returned event according to its owner. Make registration idempotent across reload/enable paths.
+5. Make `OnEvent` fast and safe on the game loop; queue/batch bounded work through repository-supported mechanisms rather than blocking.
+6. Test schedule calculation around time-zone conversion, DST gaps/overlaps, month/year/leap boundaries, restart/missed runs, duplicate initialization, cancellation, and disabled state.
 
-| Need | Use |
-|---|---|
-| "Every 5 seconds" | `Timer.StartTimer` |
-| "At 6:00 AM daily" | `EventScheduler.DailyAt` |
-| "Delete after 10 seconds" | `Timer.StartTimer` |
-| "Every Monday at noon" | `EventScheduler.WeeklyAt` |
-| "Combat tick every 250ms" | `Timer.StartTimer` |
-| "Oct 15 - Nov 1 each year" | `YearlyScheduledEvent` |
-| "First Tuesday of each month" | `MonthlyOrdinalRecurrencePattern` |
+## Safety gates
 
-## Quick Patterns
+- Never rely on the host's implicit local time zone; use an explicit reviewed `TimeZoneInfo`.
+- Decide whether a seasonal end is inclusive/exclusive and how invalid month-days behave.
+- Calendar scheduling has coarse granularity and is not a combat timer.
+- Do not issue duplicate rewards, resets, or spawns after restart; define idempotency keys/state when side effects are not naturally idempotent.
+- Persist durable progress separately when a restart must not reset event state.
 
-### Daily Event at a Specific Time
-```csharp
-var eastern = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-var startOn = new DateTime(2025, 1, 1, 6, 0, 0); // 6:00 AM
-EventScheduler.DailyAt(startOn, ResetDailyQuests, eastern);
-```
+## Verification/self-check
 
-### Weekly Event
-```csharp
-var startOn = new DateTime(2025, 1, 6, 18, 0, 0); // Monday 6:00 PM
-EventScheduler.WeeklyAt(startOn, StartWeeklyTournament, eastern);
-```
+Calculate next occurrences across DST/month/year/leap/restart boundaries, verify duplicate registration and cancellation, and test idempotent side effects without sleeping on wall-clock time.
 
-### Monthly Event on a Specific Day
-```csharp
-var startOn = new DateTime(2025, 1, 15, 12, 0, 0); // 15th at noon
-EventScheduler.MonthlyAt(startOn, MonthlyRewards, eastern);
-```
+## Output contract
 
-### Yearly Seasonal Event (with Window)
-```csharp
-var halloween = new YearlyCallbackScheduledEvent(
-    new TimeOnly(0, 0),
-    new MonthDay(2025, 10, 15),   // Start: Oct 15
-    new MonthDay(2025, 11, 1),    // End: Nov 1
-    SpawnHalloweenContent,
-    EventScheduler.Daily
-);
-halloween.Schedule(DateTime.UtcNow, eastern);
-```
+Return the schedule specification (zone, recurrence, window, catch-up/idempotency), owner/cancellation path, changed files, deterministic verification evidence, and remaining environment/manual clock checks.
 
-### Filtered Weekly (Specific Days/Months)
-```csharp
-var pattern = new WeeklyRecurrencePattern(
-    intervalWeeks: 1,
-    allowedMonths: AllowedMonths.June | AllowedMonths.July | AllowedMonths.August,
-    allowedDays: AllowedDays.Friday | AllowedDays.Saturday
-);
-var evt = new CallbackScheduledEvent(new TimeOnly(20, 0), SummerWeekendEvent, pattern);
-evt.Schedule(DateTime.UtcNow, eastern);
-```
+## Reference routing
 
-### Ordinal Monthly (e.g., "Second Tuesday")
-```csharp
-var pattern = new MonthlyOrdinalRecurrencePattern(
-    OrdinalDayOccurrence.Second,
-    DayOfWeek.Tuesday
-);
-var evt = new CallbackScheduledEvent(new TimeOnly(12, 0), MonthlyMeeting, pattern);
-evt.Schedule(DateTime.UtcNow, eastern);
-```
-
-## Custom Event Class Template
-
-```csharp
-using System;
-using Server.Engines.Events;
-
-public class MyScheduledEvent : ScheduledEvent
-{
-    public MyScheduledEvent(TimeOnly time, IRecurrencePattern recurrence)
-        : base(time, recurrence)
-    {
-    }
-
-    public override void OnEvent()
-    {
-        // Your event logic here
-    }
-}
-
-// Schedule it:
-var evt = new MyScheduledEvent(new TimeOnly(9, 0), EventScheduler.Daily);
-evt.Schedule(DateTime.UtcNow, timeZone);
-
-// Cancel it:
-evt.Cancel();
-```
-
-### Custom Yearly Seasonal Event Template
-
-```csharp
-public class MySeasonalEvent : YearlyScheduledEvent
-{
-    protected MySeasonalEvent(
-        TimeOnly time,
-        MonthDay yearlyStart,
-        MonthDay yearlyEnd,
-        IRecurrencePattern recurrence
-    ) : base(time, yearlyStart, yearlyEnd, recurrence)
-    {
-    }
-
-    public override void OnEvent()
-    {
-        // Only fires when date is within [yearlyStart, yearlyEnd]
-    }
-}
-```
-
-## Anti-Patterns
-
-- **Using `Timer.StartTimer` for calendar events**: Timers drift across restarts and have no timezone support — use EventScheduler
-- **Forgetting to specify timezone**: Event fires at UTC instead of expected local time — always pass `TimeZoneInfo`
-- **Not cancelling events on cleanup**: Scheduled events keep firing after the system is disabled — call `Cancel()`
-- **Using EventScheduler for sub-second timing**: 1-second granularity is too coarse — use `Timer.StartTimer`
-- **Constructing `MonthDay` with invalid day**: Throws `ArgumentOutOfRangeException` — validate against `DateTime.DaysInMonth`
-
-## How to Report Issues
-
-When this skill finds a problem or leaves an uncertainty, report the smallest reproducible evidence:
-
-- Task or trigger that activated the skill.
-- Relevant repository path and line, or external source URL/date when parity research is involved.
-- Risk category: save compatibility, client behavior, performance, economy, security, era parity, or operator workflow.
-- Validation performed, including commands run or why a runtime/manual check is still needed.
-- Open questions or source conflicts that need user judgment.
-
-## See Also
-- `dev-docs/event-scheduler.md` — Complete EventScheduler documentation
-- `dev-docs/timers.md` — Game-tick timer system (Timer.StartTimer, TimerExecutionToken)
-- `plugins/modernuo/skills/modernuo-timers/SKILL.md` — Timer skill for game-tick delays
+- Always read [schedule-patterns.md](references/schedule-patterns.md).
+- Read [modernuo-timers](../modernuo-timers/SKILL.md) if the requirement mixes calendar activation with elapsed in-event delays.
+- Read [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) when ownership/disable cleanup is ambiguous.

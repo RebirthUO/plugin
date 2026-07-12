@@ -1,0 +1,1 @@
+Use when working on ModernUO string construction, interpolation handlers, ValueStringBuilder, packet/gump/message text, or replacing System.Text.StringBuilder in game code.

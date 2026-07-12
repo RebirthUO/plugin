@@ -1,112 +1,52 @@
 {
+  "optimizer_hints": {
+    "capability": "ModernUO Custom Module",
+    "inputs": [
+      "modernuo custom module"
+    ],
+    "trigger_actions": [
+      "Review this modernuo custom module task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo custom module in the configured ModernUO-based repository.",
+      "Help me implement a modernuo custom module change and identify the focused verification.",
+      "Audit this modernuo custom module diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo content patterns",
+      "modernuo server lifecycle",
+      "modernuo configuration",
+      "modernuo test workflow",
+      "modernuo code audit"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
   "fallback_positive_concepts": [
-    "custom_module",
-    "module_wiring"
+    "owned_job"
   ],
   "positive_concepts": {
-    "custom_module": {
-      "weight": 0.36,
+    "owned_job": {
+      "weight": 1.0,
       "phrases": [
-        "custom module",
-        "content module",
-        "custom content assembly",
-        "separate content project",
-        "custom content project",
-        "custom content module",
-        "cuocontent",
-        "avcontent",
-        "shard content project"
-      ]
-    },
-    "module_wiring": {
-      "weight": 0.28,
-      "phrases": [
-        "assemblies.json",
-        "runtime loading",
-        "loads with the server",
-        "loaded from assemblies.json",
-        "application.csproj",
-        "modernuo.slnx",
-        "wire it into",
-        "register it with the server",
-        "assemblyhandler"
-      ]
-    },
-    "module_tests": {
-      "weight": 0.18,
-      "phrases": [
-        "test project",
-        "tests project",
-        "smoke test",
-        "assembly load",
-        "assembly is loaded",
-        "present in assemblyhandler",
-        "cuocontent.tests"
-      ]
-    },
-    "default_naming": {
-      "weight": 0.18,
-      "phrases": [
-        "cuo",
-        "cuocontent",
-        "default custom module",
-        "no shard name",
-        "did not give a shard name",
-        "no shortcut"
+        "modernuo custom module"
       ]
     }
   },
   "negative_concepts": {
-    "ordinary_content_edit": {
-      "weight": 0.36,
-      "exclusive": true,
-      "phrases": [
-        "new sword",
-        "under projects/uocontent",
-        "existing uocontent project",
-        "keep everything in the existing project",
-        "single-feature edits",
-        "ordinary content edit"
-      ]
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
     },
-    "migration_only": {
-      "weight": 0.26,
-      "exclusive": true,
-      "phrases": [
-        "runuo gump",
-        "runuo system",
-        "migrate this",
-        "existing uocontent project"
-      ]
-    },
-    "parity_or_review": {
-      "weight": 0.3,
-      "exclusive": true,
-      "phrases": [
-        "parity",
-        "spell parity",
-        "serialization version bump",
-        "baseweapon",
-        "review this"
-      ]
-    },
-    "explain_only": {
-      "weight": 0.42,
-      "exclusive": true,
-      "phrases": [
-        "explain how",
-        "without changing anything",
-        "tell me how",
-        "documentation only"
-      ]
-    },
-    "generic_reference": {
+    "explicit_no_action": {
       "weight": 0.5,
       "exclusive": true,
       "phrases": [
-        "not a content module",
-        "dependency that is not",
-        "test project for existing"
+        "do not modify",
+        "advice only",
+        "unrelated repository"
       ]
     }
   }

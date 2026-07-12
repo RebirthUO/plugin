@@ -1,0 +1,1 @@
+Use when adding server settings, reading config values, or working with modernuo.json or JsonConfig.

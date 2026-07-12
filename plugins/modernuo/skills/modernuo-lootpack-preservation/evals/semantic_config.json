@@ -1,0 +1,52 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO LootPack Preservation",
+    "inputs": [
+      "modernuo lootpack preservation"
+    ],
+    "trigger_actions": [
+      "Review this modernuo lootpack preservation task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo lootpack preservation in the configured ModernUO-based repository.",
+      "Help me implement a modernuo lootpack preservation change and identify the focused verification.",
+      "Audit this modernuo lootpack preservation diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo loot generation artifacts",
+      "modernuo content patterns",
+      "modernuo code audit",
+      "modernuo era expansion"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo lootpack preservation"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

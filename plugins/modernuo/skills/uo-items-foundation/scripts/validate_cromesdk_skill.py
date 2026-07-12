@@ -21,6 +21,7 @@ Usage:
 
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -79,13 +80,16 @@ def validate(path: Path) -> list[str]:
     return errors
 
 
-def main(argv: list[str]) -> int:
-    if not argv:
-        print(__doc__, file=sys.stderr)
-        return 2
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("skill_md", nargs="+", type=Path)
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
     rc = 0
-    for raw in argv:
-        path = Path(raw)
+    for path in args.skill_md:
         errs = validate(path)
         if errs:
             rc = 1
@@ -98,4 +102,4 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    sys.exit(main())

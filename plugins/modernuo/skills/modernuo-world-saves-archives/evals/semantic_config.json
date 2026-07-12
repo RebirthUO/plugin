@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO World Saves and Archives",
+    "inputs": [
+      "modernuo world saves and archives",
+      "modernuo world saves archives"
+    ],
+    "trigger_actions": [
+      "Review this modernuo world saves and archives task and give me the repository-specific checks.",
+      "I need an evidence-backed plan for modernuo world saves and archives in the configured ModernUO-based repository.",
+      "Help me implement a modernuo world saves and archives change and identify the focused verification.",
+      "Audit this modernuo world saves and archives diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "modernuo code audit",
+      "modernuo threading",
+      "modernuo server lifecycle",
+      "modernuo events",
+      "modernuo configuration",
+      "modernuo test workflow"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "modernuo world saves and archives",
+        "modernuo world saves archives"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

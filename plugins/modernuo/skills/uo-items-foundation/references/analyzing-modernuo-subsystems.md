@@ -1,4 +1,4 @@
-# Analyzing a ModernUO/RebirthUO Subsystem
+# Analyzing a ModernUO-Based Subsystem
 
 A reproducible reading recipe for turning a ModernUO/ModernUO-style UO server
 codebase into a class-level skill. Validated against the Items subsystem

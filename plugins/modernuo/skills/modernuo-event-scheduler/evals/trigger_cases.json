@@ -1,0 +1,53 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Review this modernuo event scheduler task and give me the repository-specific checks.",
+      "family": "owned_job"
+    },
+    {
+      "text": "I need an evidence-backed plan for modernuo event scheduler in the configured ModernUO-based repository.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Help me implement a modernuo event scheduler change and identify the focused verification.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Audit this modernuo event scheduler diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Review generic C# in an unrelated application.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Review this modernuo timers and scheduling task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo code audit task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo threading and event loop task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo content patterns task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    }
+  ]
+}

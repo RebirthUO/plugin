@@ -1,27 +1,37 @@
 # Skill Catalog
 
-Curated index for the ModernUO plugin skill payload (75 skills). Skills stay in a flat `skills/<name>/` layout; grouping is via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
+Curated index for the ModernUO plugin skill payload (66 skills). Skills stay in a flat `skills/<name>/` layout; grouping is via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
 
-See [README.md](../../README.md) for sync contract and [uo-modernuo-workflow/SKILL.md](uo-modernuo-workflow/SKILL.md) for routing.
+See [README.md](../../../README.md) for repository resolution, evidence policy, and workflow routing.
 
 ## Agentic Workflow (Primary)
 
-| Phase | Skill | Repository | Notes |
+| Phase | Skill | Repository | Stop condition |
 |---|---|---|---|
-| Create | `rebirthuo-issue-create` | `RebirthUO/rebirthuo` | Label `needs-review` |
-| Review | `rebirthuo-issue-review` | `RebirthUO/rebirthuo` | Use with `rebirthuo-review-patterns` |
-| Implement | `rebirthuo-implement` | `RebirthUO/ModernUO` | Canonical implementation skill |
+| Create | `modernuo-issue-create` | Exact repository from project `AGENTS.md` | Stop after `IntakePacket` |
+| Research | `modernuo-issue-research` | Same verified repository | Ask and stop on unresolved behavior |
+| Implement | `modernuo-issue-implement` | Same verified repository and push remote | Require current `READY` research |
 
-**Companion skills:** `rebirthuo-implementation-checkpoints`, `modernuo-test-workflow`, `modernuo-code-audit`, `modernuo-verification-guard`.
-
-**Escape hatch (direct ModernUO issues):** `modernuo-issue-create`, `modernuo-issue-review`, `modernuo-issue-implement`, `modernuo-issue-template-gate` (`workflow_tier: direct-modernuo`).
+**Companion skills:** `uo-official-evidence`, `uo-living-world-review`, `modernuo-codebase`, `modernuo-test-workflow`, `modernuo-code-audit`, and `modernuo-verification-guard`.
 
 ## Removed / Deprecated
 
 | Skill | Action | Redirect |
 |---|---|---|
-| `ultima-online-product-model` | removed | `uo-product-model` |
-| `rebirthuo-implementation` | removed | `rebirthuo-implement` |
+| `rebirthuo-issue-create` | absorbed | `modernuo-issue-create` |
+| `rebirthuo-issue-review` | absorbed | `modernuo-issue-research` |
+| `rebirthuo-review-patterns` | absorbed | `modernuo-issue-research` |
+| `modernuo-issue-review` | absorbed | `modernuo-issue-research` |
+| `modernuo-issue-template-gate` | absorbed | `modernuo-issue-create` |
+| `rebirthuo-implementation-checkpoints` | absorbed | `modernuo-issue-research` / `modernuo-issue-implement` |
+| `rebirthuo-implement` | absorbed | `modernuo-issue-implement` |
+| `rebirthuo-modernuo-codebase` | absorbed | `modernuo-codebase` |
+| `uo-era-publish-source-gate` | absorbed | `uo-official-evidence` |
+| `uo-era-product-timeline` | absorbed | `uo-official-evidence` / `uo-living-world-review` |
+| `uo-product-model` | absorbed | `uo-living-world-review` |
+| `uo-modernuo-workflow` | absorbed | README and this catalog |
+| `ultima-online-product-model` | removed | `uo-living-world-review` |
+| `rebirthuo-implementation` | removed | `modernuo-issue-implement` |
 
 ## migrate-* → modernuo-* Pairs
 
@@ -40,30 +50,29 @@ See [README.md](../../README.md) for sync contract and [uo-modernuo-workflow/SKI
 
 ## UO (Game Mechanics)
 
-**Count:** 20
+**Count:** 19
 
 | Skill | Subgroup | Workflow phase | Description |
 |---|---|---|---|
-| `uo-aos-item-properties` | domain | none | Use when working with the Age of Shadows (AoS) item property system in ModernUO/RebirthUO servers -  |
-| `uo-bulk-orders-bod` | domain | none | Use when working with the UO Bulk Order Deed (BOD) system in ModernUO/RebirthUO servers - SmallBOD,  |
-| `uo-champions-cannedevil-treasures` | domain | none | Use when working with the UO Champion Spawn system and Treasures events in ModernUO/RebirthUO server |
-| `uo-combat-pipeline` | domain | none | Use when working with the UO combat pipeline in ModernUO/RebirthUO servers - the BaseWeapon swing li |
-| `uo-crafting-recipes-resources` | domain | none | Use when working with the UO crafting engine in ModernUO/RebirthUO servers - CraftSystem, CraftItem, |
-| `uo-era-product-timeline` | domain | none | Use when mapping Ultima Online eras, expansions, or publishes to product side effects, local Expansi |
-| `uo-era-publish-source-gate` | gate | none | Require official sources for UO eras and publishes. |
-| `uo-harvest-gathering-resources` | domain | none | Use when working with the UO resource gathering system in ModernUO/RebirthUO servers - the HarvestSy |
-| `uo-housing-houses-multis` | domain | none | Use when working with the UO housing system in ModernUO/RebirthUO servers - BaseHouse, HouseSign, Ho |
-| `uo-items-foundation` | domain | none | Use when working with the UO item entity model in ModernUO/RebirthUO servers - Item base class, Cons |
-| `uo-living-world-review` | gate | none | Use when reviewing UO/RebirthUO changes for era/ruleset, facet/map, player-loop, economy, housing, P |
-| `uo-loot-generation-artifacts` | domain | none | Use when working with the UO loot generation system in ModernUO/RebirthUO servers - LootPack, LootPa |
-| `uo-magic-spells` | domain | none | Use when working with the UO magic system in ModernUO/RebirthUO servers - the Spell base class lifec |
-| `uo-modernuo-workflow` | meta | none | Use when working on Ultima Online or ModernUO projects, shared UO/ModernUO agent instructions, or co |
-| `uo-product-model` | domain | none | Use when reasoning about Ultima Online as a product/living sandbox before gameplay, economy, housing |
-| `uo-quests-engine-ml` | domain | none | Use when working with the UO ML Quest engine in ModernUO/RebirthUO servers - MLQuestSystem, MLQuest  |
-| `uo-sa-item-property-implementation` | domain | none | Use when implementing Stygian Abyss-era item properties in RebirthUO/ModernUO, especially SA weapon/ |
-| `uo-samurai-empire-skills` | domain | none | Use when explaining, documenting, auditing, or implementing Samurai Empire skill mechanics such as B |
-| `uo-skills-stats-races` | domain | none | Use when working with the UO skill/stat/race system in ModernUO/RebirthUO servers - the 58 Skills, t |
-| `uo-world-facets-regions` | domain | none | Use when working with the UO world structure in ModernUO/RebirthUO servers - the 7 Facets (Felucca,  |
+| `uo-aos-item-properties` | domain | none | Use when adding, debugging, or reviewing AoS-style item-property storage, OPL rows, equipped-value aggregation, gameplay hooks, or era gates in a ModernUO-based repository. Do not  |
+| `uo-bulk-orders-bod` | domain | none | Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor turn-ins, bribery, material matching, or BOD reward selection. Do not u |
+| `uo-champions-cannedevil-treasures` | domain | none | Use when adding, debugging, or auditing Champion Spawn/CannedEvil altars, candle progression, champions, Harrower skulls, Doom or Treasures event integration, and facet-specific re |
+| `uo-combat-pipeline` | domain | none | Use when tracing or changing ModernUO-based melee/ranged hit checks, parry, weapon abilities, special moves, slayers, damage modifiers, elemental splits, resist application, or com |
+| `uo-crafting-recipes-resources` | domain | none | Use when adding, debugging, or auditing ModernUO-based CraftSystem/CraftItem registrations, recipe scrolls, subresources, expansion gates, tools, exceptional outcomes, or ICraftabl |
+| `uo-game-docs-canonical-authoring` | domain | none | Use when a configured project asks to create or audit official-era UO documentation in its game-docs canonical tree with one file per mechanic, Knot-schema sections, linked indexes |
+| `uo-harvest-gathering-resources` | domain | none | Use when adding, debugging, or auditing ModernUO-based Mining, Lumberjacking, Fishing, HarvestDefinition banks/veins, bonus or mutate resources, respawn, race bonuses, and facet/er |
+| `uo-housing-houses-multis` | domain | none | Use when adding, debugging, or auditing ModernUO-based house placement, BaseHouse/multi ownership, HouseRegion permissions, lockdowns/secures, customization, addons, transfer/demol |
+| `uo-item-property-review` | domain | none | Use when reviewing or planning a named official Ultima Online item property for a ModernUO-based repository, including official evidence, era/container placement, tooltip or cliloc |
+| `uo-items-foundation` | domain | none | Use when creating, debugging, or reviewing a ModernUO-based Item type, construction, ownership/parent movement, equipment hooks, OPL, decay, LootType, deletion, duplication, or ser |
+| `uo-living-world-review` | gate | none | Use when a proposed ModernUO or UO change has a concrete cross-system effect on progression, PvP/PvM, economy, housing/storage, travel, social systems, client experience, or player |
+| `uo-loot-generation-artifacts` | domain | none | Use when adding, debugging, or auditing ModernUO-based creature loot packs, drop probabilities, artifact sources, Paragon bonuses, treasure maps/chests, or boss/event reward distri |
+| `uo-magic-spells` | domain | none | Use when adding, debugging, or auditing a ModernUO-based spell, spell-school registration, cast/fizzle/resource sequence, targeting, delayed/field/summon behavior, AI casting, or t |
+| `uo-official-evidence` | gate | research | Use when a ModernUO or Ultima Online task must establish official OSI/EA/Broadsword behavior, chronology, era, publish, formula, restriction, or source authority before comparison  |
+| `uo-quests-engine-ml` | domain | none | Use when adding, debugging, or auditing ModernUO-based MLQuest definitions, quest-giver offers, objectives, chains, per-player context/flags, config registration, quest gumps, pers |
+| `uo-sa-item-property-implementation` | domain | none | Use when an implementation-ready task adds or fixes an official Stygian Abyss item property in a ModernUO-based repository across storage, OPL, gameplay hooks, transient contexts,  |
+| `uo-samurai-empire-skills` | domain | none | Use when explaining, documenting, auditing, or implementing Samurai Empire Bushido or Ninjitsu mechanics, abilities, passives, equipment hooks, template impact, or SE-era reachabil |
+| `uo-skills-stats-races` | domain | none | Use when adding, debugging, or auditing ModernUO-based skill registration/use/gain, skill/stat caps and locks, stat gain, scroll modifiers, race definitions/bonuses, character crea |
+| `uo-world-facets-regions` | domain | none | Use when adding, debugging, or auditing ModernUO-based maps/facets, Region definitions/lifecycle hooks, overlap priority, travel restrictions, guarded/dungeon/champion/house zones, |
 
 ## ModernUO (Engine & Dev)
 
@@ -71,65 +80,50 @@ See [README.md](../../README.md) for sync contract and [uo-modernuo-workflow/SKI
 
 | Skill | Subgroup | Workflow phase | Description |
 |---|---|---|---|
-| `migrate-commands-events` | migration | none | > |
-| `migrate-foundation` | migration | none | > |
-| `migrate-gumps` | migration | none | > |
-| `migrate-items-mobiles` | migration | none | > |
-| `migrate-packets` | migration | none | > |
-| `migrate-persistence` | migration | none | > |
-| `migrate-property-lists` | migration | none | > |
-| `migrate-serialization` | migration | none | > |
-| `migrate-systems` | migration | none | > |
-| `migrate-timers` | migration | none | > |
-| `modernuo-code-audit` | domain | none | > |
-| `modernuo-commands-targeting` | domain | none | > |
-| `modernuo-configuration` | domain | none | > |
-| `modernuo-content-patterns` | domain | none | > |
-| `modernuo-content-taxonomy` | domain | none | > |
-| `modernuo-custom-module` | domain | none | Use when creating, registering, reviewing, or maintaining a custom ModernUO/RebirthUO content module |
-| `modernuo-era-change-gate` | gate | none | Use when a ModernUO/RebirthUO content change, parity finding, implementation plan, diff, issue, or r |
-| `modernuo-era-expansion` | domain | none | > |
-| `modernuo-event-scheduler` | domain | none | > |
-| `modernuo-events` | domain | none | > |
-| `modernuo-gump-system` | domain | none | > |
-| `modernuo-issue-create` | agentic | create | Use when the user explicitly asks to draft or create a GitHub issue only in https://github.com/Rebir |
-| `modernuo-issue-implement` | agentic | implement | Use when the user explicitly asks to implement a GitHub issue only in https://github.com/RebirthUO/M |
-| `modernuo-issue-review` | agentic | review | Use when the user explicitly asks to research, triage, or update a GitHub issue only in https://gith |
-| `modernuo-issue-template-gate` | agentic | create | Use when an explicitly requested GitHub issue draft or update must conform to the current template o |
-| `modernuo-lifecycle-cleanup` | domain | none | > |
-| `modernuo-lootpack-preservation` | domain | none | Use when editing or migrating ModernUO/RebirthUO creature loot, especially GenerateLoot() and AddLoo |
-| `modernuo-monster-abilities` | domain | none | Use when adding, migrating, or reviewing ModernUO/RebirthUO creature special attacks as reusable Mon |
-| `modernuo-networking` | domain | none | > |
-| `modernuo-no-publish-prefix-names` | domain | none | Use when naming ModernUO/RebirthUO functions, variables, constants, fields, helpers, tests, or other |
-| `modernuo-pathfinding` | domain | none | > |
-| `modernuo-performance-hot-paths` | domain | none | > |
-| `modernuo-property-lists` | domain | none | > |
-| `modernuo-regions` | domain | none | > |
-| `modernuo-regression-testing` | domain | implement | Use when writing or repairing ModernUO/RebirthUO regression tests for gameplay mechanics, spells, sp |
-| `modernuo-serialization` | domain | none | > |
-| `modernuo-server-lifecycle` | domain | none | Use when changing or reviewing ModernUO startup, bootstrap phases, reflection lifecycle hooks, first |
-| `modernuo-skill-discovery` | meta | none | Use when asked to analyze the ModernUO codebase, inspect installed or attached skills, compare repos |
-| `modernuo-spatial-range-geometry` | domain | none | Use when calculating exact in-game tile coverage for ModernUO/RebirthUO AoE and spatial range querie |
-| `modernuo-string-handling` | domain | none | Use when working on ModernUO string construction, interpolation handlers, ValueStringBuilder, packet |
-| `modernuo-symbol-discipline` | domain | none | Use when writing, reviewing, or refactoring ModernUO/RebirthUO C# code involving constants, local va |
-| `modernuo-test-naming` | domain | none | Use when writing, reviewing, or cleaning up ModernUO/RebirthUO C# xUnit tests whose file, class, or  |
-| `modernuo-test-workflow` | domain | implement | Use when writing, modifying, validating, or preparing PRs for ModernUO/RebirthUO xUnit tests, especi |
-| `modernuo-threading` | domain | none | > |
-| `modernuo-timers` | domain | none | > |
-| `modernuo-verification-guard` | gate | implement | Use when Hermes reports edited ModernUO/RebirthUO files lack fresh verification evidence and asks fo |
-| `modernuo-world-saves-archives` | domain | none | Use when working with ModernUO world save backups, archive rollups, archive restore flows, ArchiveJo |
-
-## RebirthUO (Project-Specific)
-
-**Count:** 8
-
-| Skill | Subgroup | Workflow phase | Description |
-|---|---|---|---|
-| `rebirthuo-implement` | agentic | implement | Use when implementing RebirthUO GitHub issues: read each ticket, check for sufficient data, skip und |
-| `rebirthuo-implementation-checkpoints` | agentic | implement | Use during RebirthUO implementation sessions when issue analysis exposes unresolved gameplay/product |
-| `rebirthuo-issue-create` | agentic | create | Turn RebirthUO ideas into review-ready issues. |
-| `rebirthuo-issue-review` | agentic | review | Review RebirthUO needs-review issues fachlich. |
-| `rebirthuo-modernuo-codebase` | agentic | none | 'Use when navigating the RebirthUO ModernUO codebase: repository layout, Projects/Server vs Projects |
-| `rebirthuo-review-patterns` | agentic | review | Reusable review patterns for RebirthUO GitHub issues: mechanics source framing, repo anchors, implem |
-| `uo-game-docs-canonical-authoring` | domain | none | Use when authoring canonical-era RebirthUO game-docs under game-docs/GameDocs/01_Broadsword with one |
-| `uo-item-property-review` | domain | none | Review and plan Ultima Online item-property tickets in RebirthUO/ModernUO, including source classifi |
+| `migrate-commands-events` | migration | none | Use when converting RunUO command registration, EventSink subscriptions, event delegates, or handler signatures to ModernUO. Covers startup registration, renamed connection events, |
+| `migrate-foundation` | migration | none | Use when starting any RunUO-to-ModernUO migration or applying cross-cutting namespace, naming, logging, time, pooling, threading, and performance conventions. Load before specializ |
+| `migrate-gumps` | migration | none | Use when converting RunUO Gump subclasses, layout calls, SendGump patterns, or OnResponse handlers to ModernUO DynamicGump or StaticGump. Covers type selection, builders, placehold |
+| `migrate-items-mobiles` | migration | none | Use when converting RunUO Item, Mobile, or BaseCreature subclasses to ModernUO and coordinating their serialization, construction, timers, properties, ownership, and deletion lifec |
+| `migrate-packets` | migration | none | Use when converting RunUO Packet subclasses, PacketWriter/PacketReader code, or packet-handler registration to ModernUO span-based networking. Covers outgoing buffers, incoming rea |
+| `migrate-persistence` | migration | none | Use when replacing RunUO WorldSave/WorldLoad handlers or custom binary files with ModernUO GenericPersistence for global, non-entity system state. Covers schema/version preservatio |
+| `migrate-property-lists` | migration | none | Use when converting RunUO GetProperties(ObjectPropertyList) overrides or tooltip arguments to ModernUO IPropertyList. Covers interpolation arguments, cliloc formatting, and the pro |
+| `migrate-serialization` | migration | none | Use when migrating RunUO Serialize/Deserialize methods, Serial constructors, Constructable attributes, or saved fields to ModernUO generated serialization. Covers new types, genera |
+| `migrate-systems` | migration | none | Use when converting a multi-file RunUO engine or system with interdependent entities, persistence, commands, gumps, packets, configuration, or lifecycle hooks. Covers dependency ma |
+| `migrate-timers` | migration | none | Use when converting RunUO Timer subclasses, DelayCall patterns, TimerPriority, or post-load timer restoration to ModernUO timer callbacks and TimerExecutionToken lifecycle. Do not  |
+| `modernuo-code-audit` | domain | none | Use when reviewing new or modified C# under Projects/ for ModernUO correctness, serialization, lifecycle, event-loop safety, performance, strings, UI, and era conventions. Report e |
+| `modernuo-codebase` | domain | none | Use when locating project ownership, repository instructions, source, configuration, data, build, or test anchors in a confirmed ModernUO-based checkout. Resolve the repository fro |
+| `modernuo-commands-targeting` | domain | none | Use when creating or changing ModernUO in-game commands, access levels, CommandEventArgs parsing, Target subclasses, or command-to-target flows. Covers registration, validation, st |
+| `modernuo-configuration` | domain | none | Use when adding or changing ModernUO server settings, modernuo.json keys, custom JsonConfig files, configuration defaults, or startup reads. Covers key ownership, persistence, vali |
+| `modernuo-content-patterns` | domain | none | Use when implementing new ModernUO items, mobiles, creatures, spells, skill handlers, loot, context menus, or other Projects/UOContent gameplay content. Routes to entity, serializa |
+| `modernuo-content-taxonomy` | domain | none | Use when classifying a UO feature into World, Entity, ItemSystem, MobileSystem, Progression, EconomyCrafting, QuestNarrative, Encounter, or ClientPresentation, or when a user expli |
+| `modernuo-custom-module` | domain | none | Use when creating, registering, reviewing, renaming, or testing a separate ModernUO-based content assembly beside Projects/UOContent. Covers project/test wiring, solution/applicati |
+| `modernuo-era-change-gate` | gate | none | Use when a ModernUO-based request, diff, issue, plan, or parity finding moves behavior, evidence, data, registration, or profile activation across Ultima Online eras. Identifies th |
+| `modernuo-era-expansion` | domain | none | Use when implementing or reviewing era-conditional ModernUO behavior, Core.AOS/SE/ML/etc. checks, Expansion values, or an unspecified target era that changes mechanics. Establishes |
+| `modernuo-event-scheduler` | domain | none | Use when implementing or reviewing wall-clock/calendar scheduling such as daily resets, weekly activities, seasonal windows, or maintenance. Covers recurrence selection, time zones |
+| `modernuo-events` | domain | none | Use when subscribing to, handling, or defining ModernUO EventSink or generated events, including connection, speech, movement, combat, world, death, or deletion hooks. Covers event |
+| `modernuo-gump-system` | domain | none | Use when creating or changing ModernUO StaticGump, DynamicGump, builders, placeholders, SendGump/CloseGump flows, or response handling. Covers layout choice, non-empty construction |
+| `modernuo-issue-create` | agentic | create | Use when the user explicitly asks to draft or create a ModernUO or UO GitHub issue from the target repository's live issue template. Resolve the exact repository only from applicab |
+| `modernuo-issue-implement` | agentic | implement | Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision. Resolve the exact repos |
+| `modernuo-issue-research` | agentic | research | Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.m |
+| `modernuo-lifecycle-cleanup` | domain | none | Use when implementing or reviewing ModernUO object-lifetime cleanup for timers, event subscriptions, dynamic regions, owned entities, callbacks, and restored runtime state. Do not  |
+| `modernuo-lootpack-preservation` | domain | none | Use when editing or migrating ModernUO-based creature loot that contains GenerateLoot, AddLoot(LootPack.*), PackGold, PackItem, or loot-policy helpers. Preserve source-derived pack |
+| `modernuo-monster-abilities` | domain | none | Use when adding, migrating, or reviewing reusable ModernUO-based creature combat specials implemented as MonsterAbility classes. Do not route boss phase orchestration or WeaponAbil |
+| `modernuo-networking` | domain | none | Use when creating or modifying ModernUO packet encoders, incoming handlers, NetState sends, SpanWriter/SpanReader protocol code, or client message fan-out. Do not use for ordinary  |
+| `modernuo-no-publish-prefix-names` | domain | none | Use when naming ModernUO-based symbols for mechanics sourced from an Ultima Online publish. Keep publish numbers in evidence comments, tests, docs, issues, or PR text, not in runti |
+| `modernuo-pathfinding` | domain | none | Use when changing or diagnosing ModernUO AI movement, PathFollower, MovementPath, bounded A*, StepCache, .swb caches, prebake, PathCache commands, or pathfinding tests and tuning.  |
+| `modernuo-performance-hot-paths` | domain | none | Use when reviewing or changing ModernUO game-loop hot paths such as AI, combat, spatial scans, packet fan-out, region hooks, timers, pathfinding, pooling, LINQ, or dynamic text. Do |
+| `modernuo-property-lists` | domain | none | Use when implementing or reviewing ModernUO GetProperties, AddNameProperties, IPropertyList/ObjectPropertyList tooltip entries, cliloc arguments, property ordering, or invalidation |
+| `modernuo-regions` | domain | none | Use when creating or changing ModernUO static or dynamic regions, dungeon or town sub-zones, travel/housing/spawn rules, region JSON, parent inheritance, or region lifecycle. Do no |
+| `modernuo-regression-testing` | domain | implement | Use when designing or repairing focused ModernUO-based regression tests for gameplay formulas, entities, combat hooks, timers, summons, or fixture state. Use modernuo-test-workflow |
+| `modernuo-serialization` | domain | none | Use when adding or changing ModernUO generated serialization, persistent fields/properties, version migrations, legacy readers, GenericPersistence, or save/load restoration. Treat  |
+| `modernuo-server-lifecycle` | domain | none | Use when changing or reviewing ModernUO startup/shutdown phases, ConfigurePrompts/Configure/Initialize ordering, CallPriority, world load/save events, networking startup, or the ev |
+| `modernuo-skill-discovery` | meta | none | Use when auditing or curating ModernUO skill-library coverage against current repository patterns, installed skills, developer docs, and source domains. Prefer evidence-backed patc |
+| `modernuo-spatial-range-geometry` | domain | none | Use when proving exact ModernUO tile coverage for GetMobilesInRange, GetItemsInRange, GetClientsInRange, Get*InBounds, AoE radii, rings, or Rectangle2D conversions. Do not use for  |
+| `modernuo-string-handling` | domain | none | Use when constructing ModernUO runtime strings with interpolation handlers, ValueStringBuilder, message/gump/packet APIs, or replacing StringBuilder in repeated game code. Use mode |
+| `modernuo-symbol-discipline` | domain | none | Use when deciding whether ModernUO-based C# values should be inline, locals, constants, static readonly objects, fields, properties, or explicit Policy* surfaces. Report overexposu |
+| `modernuo-test-naming` | domain | none | Use when auditing or normalizing ModernUO-based xUnit file, class, or method names polluted by publish, era-context, branch, issue, task, AI, regression, coverage, or smoke prefixe |
+| `modernuo-test-workflow` | domain | implement | Use when executing or validating tests in a ModernUO-based repository, especially entity fixtures, process-global state, client data, isolated worktrees, focused versus broad evide |
+| `modernuo-threading` | domain | none | Use when reviewing ModernUO async/await, Task/thread usage, game-loop ownership, concurrent collections, pooling, network/server infrastructure, or parallel world-save serializatio |
+| `modernuo-timers` | domain | none | Use when implementing ModernUO delayed, recurring, cancellable, decay, expiry, or awaitable time-based behavior with Timer.StartTimer, Timer.DelayCall, TimerExecutionToken, or Time |
+| `modernuo-verification-guard` | gate | implement | Use when an explicit post-edit guard requires a fresh, auditable ModernUO verification bundle beyond ordinary test output. Re-run scoped evidence from the exact worktree and prove  |
+| `modernuo-world-saves-archives` | domain | none | Use when changing ModernUO world-save backups, archive rollups/destinations, ArchiveJournal recovery, restore prompts, verification, retention, pruning, or post-snapshot events. Do |

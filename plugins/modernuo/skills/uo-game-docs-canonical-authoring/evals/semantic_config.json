@@ -1,0 +1,53 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Canonical-Era Game Docs",
+    "inputs": [
+      "uo canonical-era game docs",
+      "uo game docs canonical authoring"
+    ],
+    "trigger_actions": [
+      "Review this uo canonical-era game docs task and give me the repository-specific checks.",
+      "Compare the requested uo canonical-era game docs behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo canonical-era game docs change and identify the focused verification.",
+      "Audit this uo canonical-era game docs diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo official evidence",
+      "modernuo era expansion",
+      "uo living world review"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo canonical-era game docs",
+        "uo game docs canonical authoring"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

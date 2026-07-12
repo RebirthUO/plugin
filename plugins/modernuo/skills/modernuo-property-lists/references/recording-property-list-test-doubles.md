@@ -1,6 +1,8 @@
 # RecordingPropertyList test doubles after IPropertyList interface changes
 
-When `IPropertyList` gains new members, older RebirthUO/UOContent tests with private `RecordingPropertyList : IPropertyList` doubles can fail at compile time before any assertions run.
+When `IPropertyList` gains new members, existing content tests with private
+`RecordingPropertyList : IPropertyList` doubles can fail at compile time before
+any assertions run.
 
 Typical symptom:
 
@@ -31,7 +33,8 @@ This is correct for tests that only assert emitted cliloc/argument entries; `Opl
 Validation pattern:
 
 ```bash
-export MODERNUO_TEST_DATA_DIR='C:/Program Files (x86)/Electronic Arts/Ultima Online Classic'
+export MODERNUO_TEST_DATA_DIR='<client-data-directory-containing-tiledata.mul>'
+export MODERNUO_CLIENT_PATH="$MODERNUO_TEST_DATA_DIR"
 export MODERNUO_CLIENT_PATH="$MODERNUO_TEST_DATA_DIR"
 MSBUILDDISABLENODEREUSE=1 dotnet test Projects/UOContent.Tests/UOContent.Tests.csproj \
   --filter 'FullyQualifiedName~PropertiesTests' --no-restore --nologo --verbosity quiet \

@@ -1,0 +1,49 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Review this uo bulk order deeds task and give me the repository-specific checks.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Compare the requested uo bulk order deeds behavior with official evidence for the named UO era and the configured repository.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Help me implement a uo bulk order deeds change and identify the focused verification.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Audit this uo bulk order deeds diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Refactor this unrelated ASP.NET service; no Ultima Online or ModernUO code is involved.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Create a marketing image for our shard announcement.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Manage a GitHub issue without researching any UO mechanic or repository source.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Review this uo crafting, recipes, and resources task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this uo items foundation task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this uo loot generation and artifacts task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Use when Hermes reports edited ModernUO/RebirthUO files lack fresh verification evidence and asks for a temporary hermes-verify script, especially committed PR branches where prior direct build/test output is not accepted by the guard.

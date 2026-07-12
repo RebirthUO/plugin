@@ -1,0 +1,1 @@
+Use when editing or migrating ModernUO/RebirthUO creature loot, especially GenerateLoot() and AddLoot(LootPack.*) calls. Preserves source-derived loot entries unless the user explicitly approves an economy-changing replacement.

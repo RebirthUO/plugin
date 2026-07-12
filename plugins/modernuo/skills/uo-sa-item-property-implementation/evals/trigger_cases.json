@@ -1,0 +1,53 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Review this uo sa item property implementation task and give me the repository-specific checks.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Compare the requested uo sa item property implementation behavior with official evidence for the named UO era and the configured repository.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Help me implement a uo sa item property implementation change and identify the focused verification.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Audit this uo sa item property implementation diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Refactor this unrelated ASP.NET service; no Ultima Online or ModernUO code is involved.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Create a marketing image for our shard announcement.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Give general advice only; do not create, edit, push, or update any GitHub artifact.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Review this uo aos item properties task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this uo combat pipeline task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo serialization task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo test workflow task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    }
+  ]
+}
