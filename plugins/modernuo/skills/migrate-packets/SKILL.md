@@ -8,6 +8,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: migration
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, runuo, migration, packets, networking]
     related_skills:
       - migrate-foundation

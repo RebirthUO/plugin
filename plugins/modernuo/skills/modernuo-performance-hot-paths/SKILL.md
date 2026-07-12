@@ -9,6 +9,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, performance, hot-paths, allocations, game-loop]
     related_skills:
       - modernuo-code-audit

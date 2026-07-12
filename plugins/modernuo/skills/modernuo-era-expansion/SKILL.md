@@ -7,10 +7,14 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, era, expansion, core-flags, parity]
     related_skills:
       - modernuo-era-change-gate
-      - modernuo-era-parity-check
+      - modernuo-content-taxonomy
       - modernuo-content-patterns
       - modernuo-code-audit
       - uo-era-product-timeline

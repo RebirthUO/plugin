@@ -52,7 +52,14 @@ Cover:
 Validation pattern:
 
 ```bash
-git diff --check
+# For pre-PR branch review, compare the feature branch against its target base.
+# Do not treat a clean working tree as proof there is nothing to review.
+git fetch origin --quiet
+base=$(git merge-base HEAD origin/main)
+git diff --stat "$base"...HEAD
+git diff --name-status "$base"...HEAD
+git diff --check "$base"...HEAD
+
 MSBUILDDISABLENODEREUSE=1 dotnet build ModernUO.slnx --nologo --verbosity quiet -m:1
 dotnet test Projects/UOContent.Tests/UOContent.Tests.csproj \
   --filter "FullyQualifiedName~MassiveItemPropertyTests" \
@@ -62,6 +69,13 @@ dotnet test Projects/UOContent.Tests/UOContent.Tests.csproj \
   --no-build --no-restore --nologo --verbosity quiet \
   --logger "console;verbosity=minimal"
 ```
+
+Pre-PR review checklist learned from issue #12:
+
+- Read the live GitHub issue body (`gh issue view 12 --repo RebirthUO/ModernUO --json title,body,labels,state,url,comments`) before final verdict so the review maps directly to acceptance criteria, not just the local reference notes.
+- Review the merge-base diff (`base...HEAD`) for committed branch contents even when `git status` is clean.
+- For Massive, explicitly confirm no distribution paths changed by searching for `Massive`, `NegativeAttributes`, `ApplyAttributesTo`, and tooltip clilocs `1060435`/`1061170` in changed and adjacent files.
+- Focused test proof is `MassivePropertyTests`; report the exact pass count and avoid claiming broad-suite coverage unless the full suite was actually run.
 
 ## Pitfalls
 

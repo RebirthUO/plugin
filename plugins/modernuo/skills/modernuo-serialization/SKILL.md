@@ -7,6 +7,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, serialization, saves, migration, codegen]
     related_skills:
       - modernuo-code-audit

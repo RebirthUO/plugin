@@ -29,7 +29,7 @@ In RebirthUO, if there is no publish-specific gate, prefer treating Sparks as a 
 
 ## RebirthUO implementation shape
 
-Do **not** add Sparks to `SaWeaponAttributes` just because RebirthUO already has `HitCurse`, `HitFatigue`, and `HitManaDrain` there. A better shape is a separate modern/extended weapon-property container, e.g. `ExtendedWeaponAttribute.HitSparks` / `ExtendedWeaponAttributes`, so Publish 96 properties such as Sparks, Swarm, Bone Breaker, Bane, etc. do not become misleadingly `Core.SA` content.
+Do **not** add Sparks to `SaWeaponAttributes` just because a branch may have true-SA hit effects such as `HitCurse`, `HitFatigue`, and `HitManaDrain` there. A better target shape is a separate modern/extended weapon-property container, e.g. `ExtendedWeaponAttribute.HitSparks` / `ExtendedWeaponAttributes`, so Publish 96 properties such as Sparks, Swarm, and Bone Breaker do not become misleadingly `Core.SA` content. If the current branch already has a one-off later-era weapon property in `AosWeaponAttributes` (for example Bane), surface the container choice explicitly in review/issue text instead of treating either shape as automatic: extended container is cleaner for the Publish 96 cluster; Bane-style AoS extension may be lower-scope but risks more mixed-era bits in the base weapon enum.
 
 Suggested implementation slices:
 

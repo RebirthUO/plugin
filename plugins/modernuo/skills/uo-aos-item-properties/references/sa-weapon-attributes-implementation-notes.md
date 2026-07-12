@@ -4,13 +4,13 @@ Session-derived notes for adding Stygian Abyss weapon-hit properties to RebirthU
 
 ## Recommended architecture
 
-For SA-specific weapon properties, prefer a separate `SaWeaponAttribute` enum and `SaWeaponAttributes : BaseAttributes` container instead of extending `AosWeaponAttribute` when the work is the beginning of a broader SA property family.
+AoS should remain the technical umbrella for the item-property system. For post-AoS weapon properties that do not fit safely into the existing `AosWeaponAttribute` bitmask, prefer a neutral AoS overflow container such as `AosExtendedWeaponAttribute` / `AosExtendedWeaponAttributes : BaseAttributes` instead of era-named live containers like `SaWeaponAttributes`.
 
 Minimal first slice:
 
 ```csharp
 [Flags]
-public enum SaWeaponAttribute
+public enum AosExtendedWeaponAttribute
 {
     HitCurse = 0x00000001,
     HitFatigue = 0x00000002,
@@ -18,20 +18,23 @@ public enum SaWeaponAttribute
 }
 ```
 
-`SaWeaponAttributes.GetValue(Mobile m, SaWeaponAttribute attribute)` should return `0` unless `Core.SA` is active, then aggregate equipped `BaseWeapon.SaWeaponAttributes` similarly to `AosWeaponAttributes.GetValue`.
+`AosExtendedWeaponAttributes.GetValue(Mobile m, AosExtendedWeaponAttribute attribute)` should apply per-property era gates: SA properties return `0` before `Core.SA`, TOL properties return `0` before `Core.TOL`, etc. The container name stays AoS-centric because AoS is the property-system feature; the expansion only controls availability/display/effects.
+
+Keep any old `SaWeaponAttributes`/old `ExtendedWeaponAttributes` types internal and migration-only when refactoring existing save schemas.
 
 ## BaseWeapon integration checklist
 
-When adding `SaWeaponAttributes` to `BaseWeapon`:
+When adding `AosExtendedWeaponAttributes` to `BaseWeapon`:
 
 1. Bump `[SerializationGenerator]` version.
-2. Add a new `[SerializableField]` after current fields, with `SerializedIgnoreDupe`, `SerializedCommandProperty(canModify: true)`, save flag, and default factory.
+2. Add or reuse a `[SerializableField]` with `SerializedIgnoreDupe`, `SerializedCommandProperty(canModify: true)`, and a default factory. Reusing an old field number can be valid when merging an era-named container into the neutral AoS overflow container, but preserve old migration JSON.
 3. Initialize the container in the constructor.
 4. Initialize the container in legacy/pre-codegen `Deserialize` as an empty default, because old save flags cannot include the new field.
-5. Add a migration JSON for the new version and a `MigrateFrom(VNContent content)` method if the project pattern requires copying old generated content into new fields.
-6. Add OPL rows in `GetProperties` under `Core.SA` only.
-7. Add combat hooks in `OnHit` under `Core.SA` only.
-8. Do not add these properties to Runic/Loot/Imbuing generators in the first patch unless the task explicitly asks for distribution changes.
+5. Add a migration JSON for the new version and a `MigrateFrom(VNContent content)` method that copies legacy `SaWeaponAttributes`/old `ExtendedWeaponAttributes` values into the new `AosExtendedWeaponAttributes` container.
+6. Add OPL rows in `GetProperties` under the correct per-property era gate (`Core.SA`, `Core.TOL`, etc.).
+7. Add combat hooks under the correct era gate only.
+8. Copy the container in `OnAfterDuped`; missing this is an easy bug when adding new `BaseWeapon` attribute containers.
+9. Do not add these properties to Runic/Loot/Imbuing generators in the first patch unless the task explicitly asks for distribution changes.
 
 ## Effect semantics found during research
 

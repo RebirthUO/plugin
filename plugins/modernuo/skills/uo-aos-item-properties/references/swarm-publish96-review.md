@@ -17,9 +17,13 @@ Use this reference when implementing or reviewing UO.com `Swarm` magic-item-prop
 - Exclusions: if `WeaponAbility` or `SpecialMove` is active, do not trigger Swarm.
 - Runtime context: keep Swarm contexts transient/static; do not serialize timers or active DoT state.
 - Damage: apply physical damage through `AOS.Damage(defender, attacker, damage, 100, 0, 0, 0, 0)` so physical resistance and combat pipeline behavior apply.
-- Fire removal: remove active Swarm only when the post-resist fire component is positive; fully resisted fire should not clear it.
-- Torch counterplay: a burning equipped `Torch` should remove/neutralize active Swarm and prevent tick damage. Hook both the tick path and torch equip/ignite path so player counterplay works immediately.
+- Fire removal: remove active Swarm only when the post-resist fire component is positive; fully resisted fire should not clear it. In RebirthUO `AOS.Damage`, remember the generic damage pipeline floors total damage to at least 1 after resistance, so a fully resisted pure-fire hit may still apply 1 point of generic damage. Track the fire component separately (for example from the pre-division fire numerator) and clear Swarm only when that fire component is positive, not merely when total applied damage is positive.
+- Torch counterplay: a burning equipped `Torch` should remove/neutralize active Swarm and prevent tick damage. Hook both the tick path and torch equip/ignite path so player counterplay works immediately; tests can equip an unlit torch, proc Swarm, then set `Burning = true` to exercise tick-path neutralization without the `Ignite()` cleanup hook pre-clearing the context.
 - Distribution remains a separate economy decision: do not add Swarm to loot, runic, reforging, imbuing, artifact drops, or Doom rewards unless a ticket explicitly scopes that rollout.
+
+## ServUO comparison notes
+
+ServUO is useful for implementation clues but conflicts with UO.com on damage type. Its `ExtendedWeaponAttribute.HitSwarm` bit, `ExtendedWeaponAttributes.HitSwarm` wrapper, `BaseWeapon` normal-hit trigger, and tooltip cliloc `1157325` support the storage/presentation shape. Its `SwarmContext` suggests `BuffIcon.Swarm`, buff clilocs `1157328`/`1157362`, target effect IDs around `2331-2339`, sounds `0x00E` and `0x1BC`, and torch removal hooks. However, ServUO tick damage currently uses direct damage (`AOS.Damage(... direct: 100)`), while UO.com says Swarm causes physical damage. Prefer UO.com physical damage for RebirthUO unless a maintainer explicitly chooses ServUO direct-damage behavior.
 
 ## Focused tests to add
 

@@ -6,6 +6,10 @@ author: Crome696
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - modernuo
     - spatial

@@ -6,6 +6,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: implement
+    workflow_tier: support
     tags: [modernuo, rebirthuo, tests, regression, xunit]
     related_skills:
       - modernuo-test-workflow

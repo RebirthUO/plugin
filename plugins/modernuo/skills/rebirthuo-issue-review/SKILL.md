@@ -1,21 +1,34 @@
 ---
-name: rebirthuo-github-review
+name: rebirthuo-issue-review
 description: Review RebirthUO needs-review issues fachlich.
 version: 0.1.0
 author: Hermes
 license: MIT
 metadata:
   hermes:
-    tags: [GitHub, RebirthUO, Review, Triage, ModernUO]
-    related_skills: [github-issues, rebirthuo-implement, uo-modernuo-workflow, uo-living-world-review, rebirthuo-modernuo-codebase]
+    tags:
+    related_skills:
+    skill_group: rebirthuo
+    skill_subgroup: agentic
+    workflow_phase: review
+    workflow_tier: primary
 ---
 # RebirthUO GitHub Review
+
+## Mandatory Repository Gate (Overrides All Later Examples)
+
+This explicit gate overrides every conflicting placeholder, mixed-repository statement, remote-derived target, or historical example later in this skill. Activation is explicit and the only permitted repository is `https://github.com/RebirthUO/rebirthuo` (`RebirthUO/rebirthuo`).
+
+Before **any issue or pull-request read or write**, require an explicit repository URL or `owner/repository` from the current user request. An issue number alone is insufficient. Never infer the target from cwd, `origin`, another remote, organization membership, repository content, or conversation history. Resolve `gh api repos/RebirthUO/rebirthuo` and require successful access plus exact `.full_name == "RebirthUO/rebirthuo"`, `.html_url == "https://github.com/RebirthUO/rebirthuo"`, and `.fork == false`. Reject `RebirthUO/ModernUO`, every other organization repository, fork, and lookalike.
+
+If repository context is missing, request it. If resolution is inaccessible or mismatched, return exactly `BLOCKED: repository identifier requires correction` and stop before reading or mutating issues/PRs. Every `gh issue` and `gh pr` command must pass `-R RebirthUO/rebirthuo`; never substitute another repository.
+
 
 Dieser Skill erstellt ein fachliches, implementierungsnahes Review für RebirthUO-GitHub-Issues mit dem Label `needs-review`. Er implementiert keinen Code und öffnet keine PRs; er entscheidet, ob alle Voraussetzungen für eine sichere Code-Implementierung erfüllt sind. Er nutzt `gh` über das `terminal`-Tool sowie `read_file`, `search_files`, `browser_navigate`/`browser_snapshot` (oder `web_extract`, falls in der aktuellen Tool-Oberfläche verfügbar) und `skill_view`; zusätzliche Pakete sind nicht erforderlich.
 
 ## When to Use
 
-- "rebirthuo-github-review" oder "fachliches Review für RebirthUO #123".
+- "rebirthuo-issue-review" oder "fachliches Review für RebirthUO #123".
 - "prüfe das nächste needs-review Ticket".
 - "review das nächste Issue mit needs-review".
 - Wenn ein RebirthUO-Ticket vor der Implementierung auf Quellen, Repo-Anker, Akzeptanzkriterien und Testbarkeit geprüft werden soll.
@@ -40,6 +53,16 @@ printf '%s\n' "$ISSUE"
 ```
 
 Mit explizitem Ticket setze `ISSUE=<number>` oder nutze die Nummer aus der Issue-URL. Erstelle den Reviewtext mit `write_file`, poste ihn mit `terminal`, und entferne `needs-review` nur bei Entscheidung `Implementierungsreif`.
+
+Wenn der User **alle** Tickets mit `needs-review` verlangt, arbeite die komplette Queue in stabiler Reihenfolge ab, statt nur das niedrigste Ticket zu nehmen:
+
+```bash
+OWNER_REPO=${OWNER_REPO:-$(git remote get-url origin | sed -E 's|.*github\.com[:/]||; s|\.git$||')}
+gh issue list --repo "$OWNER_REPO" --state open --label "needs-review" --limit 1000 \
+  --json number,title,url,updatedAt --jq 'sort_by(.number)[] | [.number,.title,.url,.updatedAt] | @tsv'
+```
+
+Für Bulk-Reviews: prüfe pro Issue zuerst, ob ein vollständiger `## Fachliches Review — #N` oder ein neueres `## Fachliches Re-Review — #N` bereits existiert. Poste keinen zweiten Review, wenn das vorhandene Review aktueller ist als Body/Kommentare; verifiziere dann nur Label-Status und melde `Kommentar-Status: bereits vorhanden`. Für alle neu geprüften Issues erst Reviewdateien schreiben, dann posten, dann **nur** bei `Implementierungsreif` das Label entfernen und am Ende mit einer Queue-Übersicht verifizieren.
 
 ## Quick Reference
 
@@ -146,6 +169,7 @@ Bei `Nicht implementierungsreif` bleibt `needs-review` erhalten, damit das Ticke
 ## Pitfalls
 
 - `gh issue list` ohne explizites Sortieren ist nicht der gewünschte Modus; für "aufsteigend" immer nach `.number` sortieren.
+- Bei Shell-Checks nach Markdown-Zeilen, die mit `-` beginnen, `grep -- "- Entscheidung: Implementierungsreif"` nutzen oder besser direkt mit `gh --jq`/`jq` prüfen. Ohne `--` interpretiert `grep` den Pattern-Anfang als Option; dadurch können label-removal Schritte fälschlich übersprungen werden.
 - In Repos mit `upstream` kann `gh repo view` ohne `--repo` auf das falsche Repository zeigen. Für RebirthUO-Reviews `OWNER_REPO` aus `git remote get-url origin` ableiten oder das Issue-URL-Repo explizit setzen, und danach jedes `gh issue ...` mit `--repo "$OWNER_REPO"` ausführen.
 - Wenn der User eine vollständige Issue-URL nennt, parse `OWNER_REPO` aus der URL und verwende genau dieses Repo. Verlasse dich dann nicht auf `gh repo view` im lokalen Checkout: RebirthUO-Worktrees können `origin`/Default-Repo auf `modernuo/ModernUO` zeigen, obwohl das Ticket in `RebirthUO/service` liegt.
 - Bei kombinierten Bash+Python-Helfern auf Windows/MSYS keine `/tmp/...`-Dateien zwischen Shell und Python voraussetzen. Nutze besser ein natives `C:/Users/Jsiem/AppData/Local/Temp/...` oder gib JSON direkt an Python/stdout weiter, damit Review-Notizen nicht durch MSYS/Python-Pfadmapping verloren gehen.

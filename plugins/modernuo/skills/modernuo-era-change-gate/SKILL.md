@@ -1,18 +1,22 @@
 ---
 name: modernuo-era-change-gate
-description: Use when a ModernUO/RebirthUO content change, parity finding, implementation plan, diff, issue, or review crosses Ultima Online era boundaries or changes which expansion/profile owns behavior. Requires affected era checks to be involved, especially modernuo-era-parity-check.
+description: Use when a ModernUO/RebirthUO content change, parity finding, implementation plan, diff, issue, or review crosses Ultima Online era boundaries or changes which expansion/profile owns behavior. Requires affected era checks to be involved, especially modernuo-content-taxonomy.
 version: 1.1.0
 author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: gate
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, rebirthuo, era, parity, gate]
     related_skills:
-      - modernuo-era-parity-check
+      - modernuo-content-taxonomy
       - modernuo-era-expansion
       - uo-era-product-timeline
       - uo-living-world-review
-      - modernuo-ticket-triage
+      - rebirthuo-issue-review
 ---
 
 # ModernUO Era Change Gate
@@ -21,11 +25,11 @@ metadata:
 
 Use this skill to catch content changes that can silently break expansion parity. The job is to identify the affected eras, require the era parity workflow for those eras, and produce a Markdown routing report before implementation or issue slicing continues.
 
-This skill is a gate. It does not replace `modernuo-era-parity-check`; it decides when that skill must be involved and which eras or profiles it must cover.
+This skill is a gate. It does not replace `modernuo-content-taxonomy`; it decides when that skill must be involved and which eras or profiles it must cover.
 
 ## Hard Rule
 
-If content behavior, ownership, source evidence, code gates, data placement, profile activation, or documentation moves from one era/profile to another, always involve `modernuo-era-parity-check` for the affected era set before calling the work complete.
+If content behavior, ownership, source evidence, code gates, data placement, profile activation, or documentation moves from one era/profile to another, always involve `modernuo-content-taxonomy` for the affected era set before calling the work complete.
 
 Do not treat a named skill, spell, item property, quest, mobile, loot, spawn, region, crafting, or combat check as complete when an era delta is present but no era parity check has been run, requested, or explicitly listed as blocked.
 
@@ -76,7 +80,7 @@ Example: if Bushido content changes from Samurai Empire behavior to Time of Lege
 1. **Read the change** - Identify the content object, old behavior, new behavior, source era, target era, code gates, profile gates, and evidence paths.
 2. **Normalize eras** - Convert aliases to display name, enum, `Core.*`, era doc path, and optional profile.
 3. **Build the affected era set** - Use the rules above. If the set is ambiguous, list candidate eras and the missing evidence.
-4. **Involve era parity** - Run, request, or explicitly block `modernuo-era-parity-check` for every affected era/profile before final implementation advice.
+4. **Involve era parity** - Run, request, or explicitly block `modernuo-content-taxonomy` for every affected era/profile before final implementation advice.
 5. **Coordinate related checks** - If a named skill, spell, item property, or content taxonomy check triggered the finding, keep it involved but subordinate final decisions to the era-impact result.
 6. **Emit Markdown** - Produce the report structure below. End with issue slice options when the output contains findings.
 
@@ -101,8 +105,8 @@ Use this structure for every final gate report:
 
 | Era/profile | Why required | Required skill | Status |
 |---|---|---|---|
-| Samurai Empire (`SE`) | Original behavior/source owner | `modernuo-era-parity-check` | Required / Done / Blocked |
-| Time of Legends (`TOL`) | New behavior/source owner | `modernuo-era-parity-check` | Required / Done / Blocked |
+| Samurai Empire (`SE`) | Original behavior/source owner | `modernuo-content-taxonomy` | Required / Done / Blocked |
+| Time of Legends (`TOL`) | New behavior/source owner | `modernuo-content-taxonomy` | Required / Done / Blocked |
 
 ## Related Parity Checks
 
@@ -164,7 +168,7 @@ Do not bundle unrelated eras or independent gates into one issue because they me
 
 ## Related Skills
 
-- `modernuo-era-parity-check` for the mandatory era-wide parity report.
+- `modernuo-content-taxonomy` for the mandatory era-wide parity report.
 - `modernuo-era-expansion` for `Core.*`, `Expansion.*`, and era-conditional implementation rules.
 - `modernuo-content-taxonomy` for broad content inventory and domain mapping.
 - `modernuo-skill-parity-check`, `modernuo-spell-parity-check`, and `modernuo-item-property-parity-check` for named behavior checks that discovered or depend on the era delta.

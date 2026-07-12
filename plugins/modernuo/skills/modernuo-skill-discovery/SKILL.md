@@ -6,6 +6,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: meta
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, skills, discovery, coverage, learning]
     related_skills:
       - hermes-agent-skill-authoring

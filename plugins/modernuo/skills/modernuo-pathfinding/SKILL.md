@@ -12,6 +12,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, pathfinding, ai, movement, performance]
     related_skills:
       - modernuo-performance-hot-paths

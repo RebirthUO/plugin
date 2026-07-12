@@ -4,6 +4,10 @@ description: Use when working with the UO Bulk Order Deed (BOD) system in Modern
 license: MIT
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - ultima-online
     - modernuo

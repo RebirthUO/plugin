@@ -6,6 +6,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: meta
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - ultima-online
     - modernuo
@@ -32,13 +36,18 @@ metadata:
     - migrate-serialization
     - modernuo-skill-discovery
     - uo-living-world-review
-    - ultima-online-product-model
+    - uo-product-model
     - uo-era-product-timeline
     - modernuo-lootpack-preservation
     - modernuo-monster-abilities
     - modernuo-regression-testing
     - modernuo-custom-module
     - modernuo-no-publish-prefix-names
+    - rebirthuo-issue-create
+    - rebirthuo-issue-review
+    - rebirthuo-implement
+    - rebirthuo-review-patterns
+    - rebirthuo-implementation-checkpoints
 ---
 # UO ModernUO Workflow
 
@@ -55,6 +64,18 @@ This is a thin coordinator. Its job is to route to the smallest useful child ski
 - You are unsure which specialized UO/ModernUO skill should own the next step.
 
 Do not use this as a replacement for a domain skill. Once the owning domain is clear, load the child skill and work from that narrower checklist.
+
+## Agentic Issue Workflow (Primary)
+
+Use this three-step path for RebirthUO feature work unless the user explicitly targets a ModernUO-only issue:
+
+| Phase | User intent | Load first | Then |
+|---|---|---|---|
+| Create | Idea → review-ready ticket | `rebirthuo-issue-create` | `uo-living-world-review`, `uo-era-publish-source-gate`, domain UO skills |
+| Review | `needs-review` fachlich prüfen | `rebirthuo-issue-review` | `rebirthuo-review-patterns`, domain UO skills, `rebirthuo-modernuo-codebase` |
+| Implement | Ticket → Branch/Tests/PR in ModernUO | `rebirthuo-implement` | `rebirthuo-implementation-checkpoints`, `modernuo-test-workflow`, `modernuo-code-audit`, `modernuo-verification-guard` |
+
+**Escape hatch — direct ModernUO issues:** When the ticket already lives in `RebirthUO/ModernUO` without rebirthuo intake, use `modernuo-issue-create`, `modernuo-issue-review`, or `modernuo-issue-implement` instead. Prefer `rebirthuo-implement` for implementation unless the user explicitly names the direct-modernuo skill.
 
 ## Skill Routing
 
@@ -106,7 +127,7 @@ Completion criterion: after this routing step, every high-risk domain in the req
 - After changing the plugin structure, run the Codex plugin validator before reporting completion.
 - If no canonical plugin validator/test exists or the guard asks for fresh evidence, create an OS-temp `hermes-verify-*.py` ad-hoc script with `tempfile`, assert the changed manifest behavior and synced skill counts/content, run it, delete it when possible, and label the result as ad-hoc verification rather than suite-green.
 - For multi-worktree RebirthUO validation, use `references/rebirthuo-worktree-validation.md`: durable per-worktree logs, `MSBUILDDISABLENODEREUSE=1`, single-worker builds, and `--no-build --no-restore` test reruns after a successful build.
-- For **expansion parity epics** (feature inventory + GitHub Epic + `dev-docs/eras/*.md`), use `modernuo-era-parity-check` and its `references/ml-expansion-epic-workflow.md` — anchor `Documents/GitHub/RebirthUO/service`, not `workspace/service`. **Same-turn verification:** grep + focused `dotnet test` before any review row; see `modernuo-era-parity-check/references/review-verification-standard.md` (no deliverable that only says Partial/unsicher/Tests fehlen).
+- For **expansion parity epics** (feature inventory + GitHub Epic + `dev-docs/eras/*.md`), use `modernuo-content-taxonomy`, `uo-living-world-review`, and `uo-era-product-timeline`. Anchor `Documents/GitHub/RebirthUO/service`, not `workspace/service`. **Same-turn verification:** grep + focused `dotnet test` before any review row (no deliverable that only says Partial/unsicher/Tests fehlen).
 - For isolated Ninjitsu/UOContent test slices, use `references/rebirthuo-ninjitsu-test-fixtures.md`: process-global Movement/Poison initializers, Animal Form fixture traps, and Mirror Image runtime-test anchors. Watch for startup registries that are normally initialized by server boot. Movement-delay assertions need `Server.Movement.Movement.Configure()` before comparing mounted/foot delays; poison assertions may need `PoisonKinds.Configure()` when `Poison.GetPoison("Lesser") == null`. Mirror Image tests belong in runtime Ninjitsu/UOContent tests, not pure formula tests, because follower slots, clone cleanup, timers, and radius interception depend on real `Mobile`/`Clone`/map-sector state.
 
 ## ModernUO PR Communication
@@ -137,8 +158,9 @@ When this skill finds a problem or leaves an uncertainty, report the smallest re
 
 1. **Staying in the coordinator too long.** This skill should route; detailed work belongs to the child skill.
 2. **Loading only code skills for gameplay changes.** For UO work, also name era/ruleset, facet/map, player loops, economy/housing/PvP/PvM side effects, and source evidence.
-3. **Treating child skills as permanent sediment.** If a child skill only repeats this coordinator and adds no distinct completion criteria, mark it as a consolidation candidate instead of polishing no-op prose.
+3. **Treating child skills as permanent sediment.** If a child skill only repeats this coordinator and adds no distinct completion criteria, mark it as a consolidation candidate instead of polishing no-op prose. Use these curation actions: **keep** (distinct completion criteria), **patch** (fix references/overlap), **absorb** (merge into parent/canonical skill), **delete-with-confirmation** (exact duplicate or deprecated redirect).
 4. **Calling focused validation broad validation.** Use `modernuo-test-workflow` and label focused test filters honestly.
+5. **Skipping the rebirthuo intake path.** Default agentic flow is rebirthuo create → review → ModernUO implement; do not jump to `modernuo-issue-implement` unless the ticket is already scoped to `RebirthUO/ModernUO`.
 
 ## Verification Checklist
 

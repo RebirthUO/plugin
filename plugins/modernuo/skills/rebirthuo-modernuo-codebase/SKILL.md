@@ -5,6 +5,10 @@ version: 0.1.0
 author: Hermes
 metadata:
   hermes:
+    skill_group: rebirthuo
+    skill_subgroup: agentic
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - ModernUO
     - RebirthUO

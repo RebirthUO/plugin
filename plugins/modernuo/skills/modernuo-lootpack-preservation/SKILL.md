@@ -6,6 +6,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, rebirthuo, loot, lootpack, economy]
     related_skills:
       - uo-loot-generation-artifacts

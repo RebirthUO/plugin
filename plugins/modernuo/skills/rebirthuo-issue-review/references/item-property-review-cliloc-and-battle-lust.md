@@ -71,7 +71,7 @@ When a review needs exact tooltip/cliloc strings and the repo has a local UO cli
 Modern UO client cliloc files may be BWT-compressed. RebirthUO has the decompressor algorithm in `Projects/Server/Client/BwtDecompress.cs` and the loader shape in `Projects/Server/Localization/Localization.cs`. Use the reusable script `scripts/extract-cliloc-ids.py` when you need selected IDs:
 
 ```bash
-python C:/Users/Jsiem/AppData/Local/hermes/profiles/ultima-online/skills/github/rebirthuo-github-review/scripts/extract-cliloc-ids.py \
+python C:/Users/Jsiem/AppData/Local/hermes/profiles/ultima-online/skills/github/rebirthuo-issue-review/scripts/extract-cliloc-ids.py \
   "C:/Users/Jsiem/Documents/GitHub/RebirthUO/clients/UOAlive_Package/UOAlive 7.0.114.2/Cliloc.enu" \
   1151541 1151542 1152435
 ```

@@ -4,6 +4,10 @@ description: Use when working with the Age of Shadows (AoS) item property system
 license: MIT
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - ultima-online
     - modernuo

@@ -1,15 +1,22 @@
 # Changelog
 
-## 1.20.0 - 2026-07-06
+## 1.21.0 - 2026-07-12
 
-- Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile using name/frontmatter UO, ModernUO, RebirthUO, RunUO/ServUO, UOGuide, and Stratics scope.
-- Added Hermes-used skills that were missing from the plugin: `modernuo-verification-guard`, `rebirthuo-implementation-checkpoints`, `rebirthuo-request`, `uo-item-property-review`, and `uo-sa-item-property-implementation`.
-- Removed no-longer-selected plugin-only payloads such as `uo-game-docs-canonical-authoring` and refreshed existing skill directories from Hermes so the plugin does not carry divergent local copies.
+- Rebased the plugin onto `origin/main`, superseding the outdated automated 1.20.0 Hermes sync with the authoritative local skill-portfolio overhaul.
+- Reorganized the 75-skill portfolio into UO, ModernUO, and RebirthUO groups via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
+- Added [`plugins/modernuo/skills/SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md) with agent workflow tables, migrate pairs, and deprecated-skill redirects.
+- Documented the primary agentic path: `rebirthuo-issue-create` → `rebirthuo-issue-review` → `rebirthuo-implement` on `RebirthUO/ModernUO`.
+- Removed duplicate `ultima-online-product-model` and deprecated `rebirthuo-implementation`; merged implementation guidance into `rebirthuo-implement`.
+- Fixed ghost references to removed skills (`modernuo-ticket-triage`, `uo-domain-research`, `modernuo-era-parity-check`).
+- Extended `uo-modernuo-workflow` with agentic routing and direct-modernuo escape hatch for `modernuo-issue-*` skills.
+- Removed legacy duplicate skills `rebirthuo-github-review` and `rebirthuo-request` superseded by `rebirthuo-issue-review` and `rebirthuo-issue-create`.
+- Added maintenance scripts under `scripts/` for metadata injection, catalog generation, portfolio verification, and Hermes sync.
 
-## 1.19.0 - 2026-07-04
+## 1.20.0 - 2026-07-12
 
-- Synced `plugins/modernuo/skills/` 1:1 from the active Hermes `ultima-online` profile for Ultima Online, ModernUO, and RebirthUO themed skills.
-- Auto-pushed the synchronized plugin update from the daily Hermes cron job.
+- Synchronized the relevant Hermes ModernUO/RebirthUO/UO skills into the plugin, including newly available migration, issue, implementation, era-gate, source-gate, item-property, product-model, and verification workflows.
+- Added the ModernUO/RebirthUO GitHub issue and review skill set while excluding unrelated general-purpose Hermes skills.
+- Updated all plugin manifests and documented the filtered sync boundary.
 
 ## 1.18.0 - 2026-07-03
 

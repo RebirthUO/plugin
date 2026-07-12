@@ -1,10 +1,14 @@
 ---
-name: ultima-online-product-model
+name: uo-product-model
 description: Use when reasoning about Ultima Online as a product/living sandbox before gameplay, economy, housing, PvP/PvM, or era-policy decisions.
 version: 0.1.0
 author: Hermes
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - UltimaOnline
     - Product
@@ -14,7 +18,7 @@ metadata:
     related_skills:
     - uo-living-world-review
     - uo-era-product-timeline
-    - uo-domain-research
+    - uo-era-publish-source-gate
 license: MIT
 ---
 # Ultima Online Product Model
@@ -35,7 +39,7 @@ This skill gives a product-first mental model for Ultima Online so code work sta
 
 - Local repo, when available: `C:\Users\Jsiem\Documents\GitHub\RebirthUO\service`.
 - Source hierarchy: official `uo.com` for live product wording, UOGuide for mechanics tables/history, Stratics for historical era context, then repo anchors for implementation state.
-- Load `uo-domain-research` for canonical-source discipline, `rebirthuo-modernuo-codebase` for local repo navigation, and `modernuo-content-taxonomy` when mapping product concepts to code domains.
+- Load `uo-era-publish-source-gate` for canonical-source discipline, `rebirthuo-modernuo-codebase` for local repo navigation, and `modernuo-content-taxonomy` when mapping product concepts to code domains.
 - No credentials or environment variables are required.
 
 ## How to Run
@@ -73,13 +77,13 @@ Use `browser_navigate` or `web_extract` for UO product pages, `read_file` for lo
 3. **Lock the era before mechanics.** Use `read_file` on `Distribution/Data/expansions.json` and, for history, the UOGuide expansion table. Era boundaries change maps, skills, item properties, insurance, housing flags, account policy, and PvP risk. Key pivots: UOR creates Trammel, AoS is the item-property/insurance/resist divide, SE adds Tokuno/Bushido/Ninjitsu, ML adds Elves/Spellweaving/peerless/quests, SA adds Gargoyles/Ter Mur/Mysticism/Imbuing/Throwing, ToL adds Eodon/Shadowguard/masteries, EJ adds free-account constraints.
 
 4. **Map the world facet.** Use the UOGuide Facets page for product behavior and `Distribution/Data/map-definitions.json` for local implementation. Official product vocabulary has seven facets:
-   - **Felucca** — original world, non-consensual PvP and stealing, double resources, Power Scroll champion rewards.
-   - **Trammel** — Renaissance mirror of Felucca with non-consensual PvP and player stealing disabled.
-   - **Ilshenar** — Third Dawn land, no housing, moongate entry, travel restrictions, paragons/artifacts.
-   - **Malas** — Age of Shadows land with Luna, Umbra, Doom, housing, and AoS systems.
-   - **Tokuno** — Samurai Empire islands with Zento, Bushido/Ninjitsu context, dungeon travel restrictions.
-   - **Ter Mur** — Stygian Abyss gargoyle homeland, tied to SA systems and Abyss access.
-   - **Eodon** — Time of Legends valley; verify local support before planning because this RebirthUO map file currently lists Felucca, Trammel, Ilshenar, Malas, Tokuno, TerMur, and Internal.
+   - **Felucca** ÔÇö original world, non-consensual PvP and stealing, double resources, Power Scroll champion rewards.
+   - **Trammel** ÔÇö Renaissance mirror of Felucca with non-consensual PvP and player stealing disabled.
+   - **Ilshenar** ÔÇö Third Dawn land, no housing, moongate entry, travel restrictions, paragons/artifacts.
+   - **Malas** ÔÇö Age of Shadows land with Luna, Umbra, Doom, housing, and AoS systems.
+   - **Tokuno** ÔÇö Samurai Empire islands with Zento, Bushido/Ninjitsu context, dungeon travel restrictions.
+   - **Ter Mur** ÔÇö Stygian Abyss gargoyle homeland, tied to SA systems and Abyss access.
+   - **Eodon** ÔÇö Time of Legends valley; verify local support before planning because this RebirthUO map file currently lists Felucca, Trammel, Ilshenar, Malas, Tokuno, TerMur, and Internal.
 
 5. **Inventory player-loop impact.** Classify the feature into one or more product loops before code placement:
    - **Progression:** 58 skills, 720 total skill cap, stats, races, scrolls, masteries.

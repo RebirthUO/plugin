@@ -5,15 +5,19 @@ version: 0.1.0
 author: Hermes
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: gate
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - UltimaOnline
     - RebirthUO
     - Product
     - Parity
     related_skills:
-    - ultima-online-product-model
+    - uo-product-model
     - uo-era-product-timeline
-    - uo-domain-research
+    - uo-era-publish-source-gate
     - uo-modernuo-workflow
 license: MIT
 ---

@@ -6,10 +6,13 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
-    tags: [rebirthuo, modernuo, github, implementation, review, decision-matrix]
-    related_skills: [rebirthuo-implement, uo-living-world-review, modernuo-era-change-gate, modernuo-test-workflow]
+    tags:
+    related_skills:
+    skill_group: rebirthuo
+    skill_subgroup: agentic
+    workflow_phase: implement
+    workflow_tier: support
 ---
-
 # RebirthUO Implementation Checkpoints
 
 ## Overview

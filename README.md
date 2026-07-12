@@ -1,6 +1,6 @@
 # ModernUO Plugin
 
-This repository packages the `modernuo` plugin metadata for Codex, Claude Code, Cursor, and Hermes-adjacent RebirthUO development workflows. The plugin's skill payload is a 1:1 mirror of the active Hermes `ultima-online` profile skills that are thematically used for Ultima Online, ModernUO, and RebirthUO work.
+This repository packages the `modernuo` plugin metadata for Codex, Claude Code, Cursor, and Hermes-adjacent RebirthUO development workflows. The plugin's skill payload is a filtered mirror of the active Hermes `ultima-online` profile skills that are thematically used for Ultima Online, ModernUO, and RebirthUO work.
 
 The plugin should not carry local-only or hand-edited ModernUO skill variants. When Hermes learns or updates a UO/ModernUO/RebirthUO skill, sync the matching skill directory from the Hermes profile into `plugins/modernuo/skills/` so the plugin and Hermes use the same guidance.
 
@@ -12,7 +12,7 @@ The plugin should not carry local-only or hand-edited ModernUO skill variants. W
 - `.cursor-plugin/marketplace.json` defines the Cursor marketplace catalog.
 - `plugins/modernuo/.cursor-plugin/plugin.json` defines the Cursor plugin manifest.
 - `plugins/modernuo/assets/rebirthuo-logo.png` provides the plugin logo and composer icon.
-- `plugins/modernuo/skills/` contains the Hermes-synced Ultima Online, ModernUO, and RebirthUO skills, including migration, code audit, codebase navigation, issue implementation, issue request drafting, issue triage, GitHub review, implementation checkpoints, verification guards, test workflow, regression testing, era parity, skill/spell/item-property parity, Stygian Abyss item-property implementation, subsystem/domain research, lifecycle, performance, serialization, timers, networking, regions, combat, crafting, loot, quests, housing, and related workflows.
+- `plugins/modernuo/skills/` contains 75 curated Ultima Online, ModernUO, and RebirthUO skills in a flat layout. See [`plugins/modernuo/skills/SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md) for grouping, agent workflow, and migrate pairs.
 - `AGENTS.md` contains repository-level maintenance instructions for plugin changes.
 - `CHANGELOG.md` records plugin-version changes.
 
@@ -24,9 +24,25 @@ The ModernUO plugin is sourced from:
 C:\Users\Jsiem\AppData\Local\hermes\profiles\ultima-online\skills\
 ```
 
-The synced set is every Hermes skill in that profile skills tree whose name or frontmatter description is scoped to Ultima Online, ModernUO, RebirthUO, RunUO/ServUO migration, UOGuide research, or closely related RebirthUO implementation/review/triage workflows. Non-UO general software-development skills such as generic planning, TDD, debugging, code-review, or Hermes skill-authoring guidance are intentionally excluded.
-
 After changing the plugin skill payload, bump the plugin version, update this README if the purpose/usage changed, and add a `CHANGELOG.md` entry.
+
+## Skill Groups and Agent Workflow
+
+Skills are grouped by frontmatter (`skill_group`: `uo`, `modernuo`, `rebirthuo`) rather than physical subfolders:
+
+- **UO** — game mechanics, era/product model, living-world review gates.
+- **ModernUO** — engine, migration (`migrate-*`), tests, code audit, direct-modernuo issue escape hatch.
+- **RebirthUO** — project-specific intake/review/implement workflow extending ModernUO.
+
+**Primary agentic path:**
+
+1. **Create** — `rebirthuo-issue-create` on `RebirthUO/rebirthuo` (`needs-review`).
+2. **Review** — `rebirthuo-issue-review` with `rebirthuo-review-patterns`.
+3. **Implement** — `rebirthuo-implement` on `RebirthUO/ModernUO` (branch, tests, PR).
+
+Start from `uo-modernuo-workflow` for routing. Full tables: [`plugins/modernuo/skills/SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md).
+
+The synced set is every Hermes skill whose name matches `uo-*`, `modernuo-*`, `rebirthuo-*`, or `migrate-*` under the active profile's `software-development` and `github` trees. Non-UO general skills are excluded.
 
 ## Usage
 
@@ -36,12 +52,10 @@ For Codex, install or load the plugin through the configured local marketplace, 
 - implementing a sufficiently specified RebirthUO GitHub issue as an isolated tested PR;
 - verifying a `Triage required` ticket for `Human Review` promotion;
 - producing a German RebirthUO implementation plan;
-- turning RebirthUO ideas into review-ready GitHub issues;
-- running implementation checkpoint or verification-guard workflows when evidence is missing;
+- authoring canonical RebirthUO game-docs for an era mechanic;
 - planning or reviewing ModernUO migrations from RunUO/ServUO patterns;
 - auditing code for ModernUO lifecycle, performance, serialization, string, packet, gump, timer, threading, or region risks;
 - checking named Ultima Online skill, spell, item-property, or era parity against ModernUO/RebirthUO source and approved web sources;
-- planning or implementing Stygian Abyss item-property slices;
 - reviewing UO living-world side effects across era/ruleset, facets, economy, housing, PvP, PvM, and player trust;
 - normalizing generated xUnit test names and planning focused or broad validation.
 

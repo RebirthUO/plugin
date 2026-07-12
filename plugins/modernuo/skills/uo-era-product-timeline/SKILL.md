@@ -5,6 +5,10 @@ version: 0.1.0
 author: Hermes
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - UltimaOnline
     - Era
@@ -12,10 +16,10 @@ metadata:
     - Product
     - RebirthUO
     related_skills:
-    - ultima-online-product-model
+    - uo-product-model
     - uo-living-world-review
     - modernuo-era-expansion
-    - modernuo-era-parity-check
+    - modernuo-content-taxonomy
 license: MIT
 ---
 # UO Era Product Timeline
@@ -35,7 +39,7 @@ This skill frames Ultima Online eras as product realities, not just `Expansion` 
 ## Prerequisites
 
 - Local repo: `C:\Users\Jsiem\Documents\GitHub\RebirthUO\service`.
-- Load `ultima-online-product-model` first for the product-loop lens.
+- Load `uo-product-model` first for the product-loop lens.
 - Load `modernuo-era-expansion` before editing era-conditional code.
 - Source hierarchy: UO.com for current product wording, UOGuide for era tables/history, Stratics for historical mechanics, then repo anchors for implementation.
 - No credentials or environment variables are required.
@@ -63,7 +67,7 @@ When the user asks for a per-era overview document (e.g. "erstelle eine Era Übe
 
 1. **Engine metadata first** — `Distribution/Data/expansions.json` (Id, ClientFlags, FeatureFlags, MapSelectionFlags, HousingFlags per era).
 2. **Facet metadata** — `Distribution/Data/map-definitions.json` (per-era facets: Tokuno for SE, Malas for AoS, Ter Mur for SA, Eodon for ToL, etc.).
-3. **Skill content** — `uo.com/wiki/ultima-online-wiki/skills/<skill>/` pages. For SE these are exactly two skills: `bushido/` and `ninjitsu/`. Extract per-ability tables via the `browser_console` recipe in `uo-domain-research/references/uo-source-tiers.md` ("uo.com Wiki Table Extraction via Browser Console"). This bypasses the `web_extract` summarizer and the `browser_snapshot` truncation that drop per-row data.
+3. **Skill content** — `uo.com/wiki/ultima-online-wiki/skills/<skill>/` pages. For SE these are exactly two skills: `bushido/` and `ninjitsu/`. Extract per-ability tables via the `browser_console` recipe in `uo-era-publish-source-gate/references/uo-source-tiers.md` ("uo.com Wiki Table Extraction via Browser Console"). This bypasses the `web_extract` summarizer and the `browser_snapshot` truncation that drop per-row data.
 4. **Facet overviews** — `uo.com/wiki/.../worlds/<facet>/` URLs **404** (Broadsword has not migrated world overview pages). Reconstruct from per-skill/per-item/per-mob pages plus `map-definitions.json`; flag Tokuno-style overviews as `Needs source confirmation`.
 
 ## Procedure
@@ -94,7 +98,7 @@ When the user asks for a per-era overview document (e.g. "erstelle eine Era Übe
 
 6. **Write the side-effect row.** Before recommending a change, record: era, facet/map, player loop, PvP impact, PvM impact, economy/faucet/sink impact, housing/storage impact, new-player impact, veteran impact, client/save compatibility, and whether behavior is canonical, partial, or custom.
 
-7. **Escalate to parity research when needed.** If the task asks whether behavior is correct, load `uo-domain-research` and use UO.com/UOGuide/Stratics before treating repo behavior as canonical. You are done when every mechanic claim has a source URL or is marked `Needs source confirmation`.
+7. **Escalate to parity research when needed.** If the task asks whether behavior is correct, load `uo-era-publish-source-gate` and use UO.com/UOGuide/Stratics before treating repo behavior as canonical. You are done when every mechanic claim has a source URL or is marked `Needs source confirmation`.
 
 ## Pitfalls
 

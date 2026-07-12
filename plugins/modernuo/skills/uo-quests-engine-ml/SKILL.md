@@ -4,6 +4,10 @@ description: Use when working with the UO ML Quest engine in ModernUO/RebirthUO 
 license: MIT
 metadata:
   hermes:
+    skill_group: uo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags:
     - ultima-online
     - modernuo

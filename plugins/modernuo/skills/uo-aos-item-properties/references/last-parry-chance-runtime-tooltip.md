@@ -1,6 +1,6 @@
 # Last Parry Chance Runtime Tooltip
 
-Session source: RebirthUO issue #18 (`Item Property: Last Parry Chance`) review on 2026-07-03.
+Session source: RebirthUO issue #19 (`Item Property: Last Parry Chance`) review/implementation context; earlier notes may have used a stale issue number.
 
 ## Classification
 

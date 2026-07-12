@@ -10,6 +10,10 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
+    skill_group: modernuo
+    skill_subgroup: domain
+    workflow_phase: none
+    workflow_tier: support
     tags: [modernuo, lifecycle, cleanup, deletion, timers, references]
     related_skills:
       - modernuo-code-audit

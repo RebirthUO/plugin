@@ -7,11 +7,19 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
+    skill_group: rebirthuo
+    skill_subgroup: agentic
+    workflow_phase: implement
+    workflow_tier: primary
     tags: [rebirthuo, modernuo, github, issues, pull-requests, implementation, triage, testing]
-    related_skills: [github-issues, github-pr-workflow, github-code-review, modernuo-ticket-triage, uo-modernuo-workflow, modernuo-test-workflow, modernuo-code-audit]
+    related_skills: [github-issues, github-pr-workflow, github-code-review, rebirthuo-issue-review, rebirthuo-review-patterns, rebirthuo-implementation-checkpoints, uo-modernuo-workflow, modernuo-test-workflow, modernuo-code-audit, modernuo-verification-guard]
 ---
 
 # RebirthUO Issue to Tested Pull Request
+
+## Canonical Implementation Skill
+
+This is the **canonical** RebirthUO implementation skill for `RebirthUO/ModernUO`. Prefer this over `modernuo-issue-implement` unless the user explicitly names the direct-modernuo skill. The deprecated `rebirthuo-implementation` skill (wrong repo gate) was merged into this skill.
 
 ## Overview
 
@@ -38,7 +46,7 @@ Core loop:
 
 Do not use for:
 
-- Pure triage-only planning with no implementation request; use `modernuo-ticket-triage`.
+- Pure triage-only planning with no implementation request; use `rebirthuo-issue-review`.
 - Updating existing PRs after review; use `github-pr-workflow` and PR-update guidance.
 - Public exploit writeups. For exploit/security issues, preserve logs, minimize public details, and ask for a safe handling path if scope is unclear.
 
@@ -47,8 +55,10 @@ Do not use for:
 Load companion skills before acting:
 
 - Always: `github-issues` and `github-pr-workflow`.
-- RebirthUO/ModernUO issue planning: `modernuo-ticket-triage` and `uo-modernuo-workflow`.
-- Tests: `modernuo-test-workflow`.
+- RebirthUO issue planning/review: `rebirthuo-issue-review`, `rebirthuo-review-patterns`, and `uo-modernuo-workflow`.
+- Decision gaps during implementation: `rebirthuo-implementation-checkpoints`.
+- Tests: `modernuo-test-workflow` and `modernuo-regression-testing`.
+- Stale verification evidence: `modernuo-verification-guard` and `references/ad-hoc-focused-verification.md`.
 - `.cs` changes: `modernuo-code-audit` before commit.
 - Subsystem-specific skills when obvious: content, combat, crafting, loot, housing, regions, serialization, timers, gumps, packets, quests, skills, spells, or item properties.
 
@@ -395,6 +405,17 @@ Never claim a test, push, PR, or comment happened unless verified with tool outp
 11. **Post-edit verification guard false negatives.** In multi-worktree batches, Hermes may still flag recently edited paths after PR creation. Do not argue with the guard or cite old logs only. Create a temporary `C:/Users/Jsiem/AppData/Local/Temp/hermes-verify-*.sh` script that enters the exact flagged worktrees, prints repo/branch/head/status, runs changed-path `git diff --check`, builds the owning test project, runs focused test filters, removes the script, and report the result explicitly as ad-hoc/focused verification rather than broad suite green.
 12. **UOContent focused tests after project-only builds.** If a newly added UOContent test class fails before assertions in fixture setup (for example `SkillsInfo.Configure()` / `AOS.DisableStatInfluences()` nulls) after only `dotnet build Projects/UOContent.Tests/UOContent.Tests.csproj`, do not debug the gameplay change first. Run a solution build from the exact issue worktree (`MSBUILDDISABLENODEREUSE=1 dotnet build ModernUO.slnx --nologo --verbosity quiet -m:1`) so the `Distribution/Data` copy step populates the test output, then rerun the focused `--no-build --no-restore` filter. Record the initial failure as a validation-environment/setup-order symptom, not a product regression, if the solution-build rerun passes.
 13. **Test-gap implementation waves and no-op issues.** When a Human Review issue's acceptance criterion is explicitly test-only (for example “add property/table/guard tests”), a test-only PR is a valid implementation if it adds durable regression coverage and no gameplay behavior change. If `origin/live` already has equivalent tests, do **not** open a duplicate/comment-only PR; verify the existing tests in a clean worktree and post a no-op/closure comment with repo anchors and validation. For adjacent issues that touch the same test file, minimize merge conflicts by using a new focused test file when appropriate. See `references/test-gap-and-noop-issue-waves.md`.
+
+## References
+
+- `references/ad-hoc-focused-verification.md` — Disposable focused build/test harness when verification evidence is stale.
+- `references/test-gap-and-noop-issue-waves.md` — Test-only and no-op issue waves.
+- `references/item-property-review-ticket-analysis.md` — Item-property ticket patterns from review work.
+
+14. **Stopping at a local branch.** Completion requires commit, push, PR, and remote verification.
+15. **Implementing gameplay from memory.** When the issue cites an authoritative source, fetch or inspect the source and use it to correct formulas before commit.
+16. **Post-damage multipliers outside cap paths.** Put bonuses in the same formula/cap path as the existing mechanic.
+17. **Persistent stat mutation for temporary effects.** Use runtime state and cleanup/clamping unless the issue explicitly requires save-visible mutation.
 
 ## Verification Checklist
 

@@ -1,16 +1,14 @@
 # SA Defensive Item Properties: Next Implementation Slices
 
-Session-derived planning notes after RebirthUO merged the first SA weapon-hit property slice (`HitCurse`, `HitFatigue`, `HitManaDrain`). Use this when deciding the next item-property implementation order or drafting the next PR.
+Session-derived planning notes for Stygian Abyss defensive item-property slices. Use this when deciding implementation order or drafting the next PR, but re-check the canonical branch before relying on a planned property container.
 
 ## Source and repo anchors checked
 
 - Official source: UO.com Magic Item Properties table, `https://uo.com/wiki/ultima-online-wiki/items/magic-item-properties/`.
-- First SA weapon-hit slice is present locally:
-  - `Projects/UOContent/Misc/AOS.cs` has `SaWeaponAttribute` / `SaWeaponAttributes` for `HitCurse`, `HitFatigue`, `HitManaDrain`.
-  - `Projects/UOContent/Items/Weapons/BaseWeapon.cs` owns `SaWeaponAttributes`, OPL rows, and `ApplySaWeaponHitEffects`.
-  - `Projects/UOContent.Tests/Tests/Items/Weapons/SaWeaponAttributesTests.cs` covers aggregation, OPL, SA gate, fatigue/mana drain, and curse cooldown.
-- Parry/block anchor for `Reactive Paralyze`:
-  - `Projects/UOContent/Items/Weapons/BaseWeapon.cs:1512-1661` (`CheckParry`, `AbsorbDamageAOS`).
+- **Current RebirthUO/ModernUO `origin/main` (reviewed 2026-07-11) does not contain** `SaWeaponAttribute`, `SaWeaponAttributes`, `ApplySaWeaponHitEffects`, or `SaWeaponAttributesTests` for `HitCurse`, `HitFatigue`, or `HitManaDrain`. Do not use this historical first-slice shape as a current-container precedent.
+- `Projects/UOContent/Misc/AOS.cs` instead contains the neutral `ExtendedWeaponAttribute` / `ExtendedWeaponAttributes` overflow container; inspect its current free bit and the property’s own host/era before adding a new value.
+- Parry/block anchor for `Reactive Paralyze` on current `origin/main`:
+  - `Projects/UOContent/Items/Weapons/BaseWeapon.cs:1609-1713` (`CheckParry`) and `:1715-1779` (`AbsorbDamageAOS`).
   - `Projects/UOContent/Items/Shields/BaseShield.cs` handles shield durability on block/hit.
 - Damage pipeline anchor for `Soul Charge` and eater-style properties:
   - `Projects/UOContent/Misc/AOS.cs:115-240`, after elemental resist calculation and before/around final `m.Damage(totalDamage, from)`.

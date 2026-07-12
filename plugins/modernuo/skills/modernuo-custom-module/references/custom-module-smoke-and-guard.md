@@ -34,15 +34,18 @@ Keep the fixture lightweight: set `Core.ApplicationAssembly`, load mocked `Serve
 
 ## Post-commit Hermes guard script shape
 
-When the branch is already committed and pushed, validate the committed delta rather than an empty worktree diff. Create a temporary script under `C:/Users/Jsiem/AppData/Local/Temp` with prefix `hermes-verify-`, run it, then remove it.
+When the branch is already committed and pushed, validate the committed delta rather than an empty worktree diff. Create a temporary script under `C:/Users/Jsiem/AppData/Local/Temp` with prefix `hermes-verify-`, run it, then remove it. If Hermes repeats the guard after a successful run, treat it as a request for a **fresh evidence bundle**, not something to debate: create a new `hermes-verify-*` script and rerun the committed-path checks with a visible timestamp.
 
 The script should print:
 
+- UTC run timestamp (especially for repeated guard prompts)
 - repo path, branch, local head
 - remote branch head, and assert it equals local head
-- `git status --short --untracked-files=all`
+- PR head, and assert it equals local head when a PR exists
+- `git status --short --branch --untracked-files=all`
 - `git diff --check HEAD~1..HEAD -- <changed paths>`
 - `git diff --stat HEAD~1..HEAD -- <changed paths>`
+- PR check summary (`gh pr view ... --json statusCheckRollup`) when the PR is already open
 
 Then run the focused verification for the module:
 
