@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.2.0 - 2026-07-12
+
+- Restored `modernuo-issue-template-gate` as a first-class, zero-mutation live
+  Issue Template selection gate and added `modernuo-issue-workflow` for the
+  complete template-to-PR orchestration path.
+- Made the new workflow invoke the template gate before `modernuo-issue-create`,
+  skip issue creation when the user points to an existing issue, and loop through
+  focused interviews until a current research-ready handoff has complete
+  official-evidence clarity.
+- Required isolated implementation worktrees, scoped branch push, and verified
+  PR read-back after a `READY` research handoff; newly discovered unknowns return
+  to research rather than defaulting.
+- Added portfolio checks, cataloging, inventory, synchronization, and trigger
+  fixtures that keep the four workflow skills connected and prevent retirement
+  metadata from silently dropping the template gate.
+
 ## 2.1.0 - 2026-07-12
 
 - Added source-backed `uo-spawners-world-population`,

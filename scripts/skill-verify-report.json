@@ -1,5 +1,5 @@
 {
-  "skill_count": 70,
+  "skill_count": 72,
   "portfolio_errors": [],
   "error_count": 0,
   "warning_count": 0,
@@ -437,6 +437,35 @@
       ],
       "description_length": 412,
       "skill_chars": 4216,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-issue-template-gate",
+      "skill_group": "modernuo",
+      "workflow_phase": "gate",
+      "related_skills": [
+        "modernuo-issue-create",
+        "modernuo-issue-workflow"
+      ],
+      "description_length": 366,
+      "skill_chars": 2704,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "modernuo-issue-workflow",
+      "skill_group": "modernuo",
+      "workflow_phase": "workflow",
+      "related_skills": [
+        "modernuo-issue-template-gate",
+        "modernuo-issue-create",
+        "modernuo-issue-research",
+        "modernuo-issue-implement",
+        "uo-official-evidence"
+      ],
+      "description_length": 461,
+      "skill_chars": 3772,
       "errors": [],
       "warnings": []
     },

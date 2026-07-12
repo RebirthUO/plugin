@@ -204,6 +204,16 @@ def fallback_prompts(name: str, title: str, group: str) -> list[str]:
             "Implement this issue only from a READY research handoff at the current "
             "revision, then run focused verification."
         )
+    elif name == "modernuo-issue-template-gate":
+        prompts[0] = (
+            "Select the one live GitHub issue template for this ModernUO request, "
+            "or ask me when no current template is an unambiguous fit."
+        )
+    elif name == "modernuo-issue-workflow":
+        prompts[0] = (
+            "Take this ModernUO issue from template-gated intake or an existing issue "
+            "through blocker interviews, an isolated worktree, branch push, and PR."
+        )
     elif name == "uo-official-evidence":
         prompts[0] = (
             "Establish the official OSI/EA behavior for this claim and keep community "
@@ -330,6 +340,19 @@ def semantic_document(record: dict) -> dict:
             "implement this issue",
             "ready research handoff",
             "implementationresult",
+        ],
+        "modernuo-issue-template-gate": [
+            "select the one live github issue template",
+            "select the live issue template",
+            "templatepacket",
+            "no matching issue template",
+        ],
+        "modernuo-issue-workflow": [
+            "take this modernuo issue from template-gated intake or an existing issue",
+            "blocker interviews isolated worktree branch push and pr",
+            "issue to pull request workflow",
+            "existing issue skip creation",
+            "interview until research is ready",
         ],
         "uo-official-evidence": [
             "official osi ea behavior",

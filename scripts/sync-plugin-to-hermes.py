@@ -11,7 +11,6 @@ from pathlib import Path
 
 REMOVED_PLUGIN_SKILLS = {
     "modernuo-issue-review",
-    "modernuo-issue-template-gate",
     "rebirthuo-implement",
     "rebirthuo-implementation",
     "rebirthuo-implementation-checkpoints",

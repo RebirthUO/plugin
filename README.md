@@ -1,8 +1,8 @@
 # ModernUO Plugin
 
-The `modernuo` plugin packages 70 English Agent Skills for official Ultima
+The `modernuo` plugin packages 72 English Agent Skills for official Ultima
 Online research, ModernUO engineering, RunUO migration, testing, and a strict
-three-phase issue workflow. It is distributed for Codex, Claude Code, Cursor,
+template-gated issue-to-PR workflow. It is distributed for Codex, Claude Code, Cursor,
 and compatible Agent Skills runtimes.
 
 ## Purpose
@@ -13,17 +13,23 @@ repository code can locate evidence or prove implementation state, but cannot
 silently define official mechanics. Missing or conflicting official evidence
 remains unresolved until the user supplies an explicit custom-policy decision.
 
-## Three-phase issue workflow
+## Issue-to-PR workflow
 
-1. `modernuo-issue-create` reads the exact GitHub repository from the consuming
-   project's applicable `AGENTS.md`, validates its live issue form, and produces
-   or creates an `IntakePacket`.
-2. `modernuo-issue-research` establishes official behavior, inspects the same
+1. `modernuo-issue-template-gate` snapshots the verified repository's live
+   Issue Templates and asks the user whenever no single form fits.
+2. `modernuo-issue-create` reads the exact GitHub repository from the consuming
+   project's applicable `AGENTS.md`, requires the gate's fresh `TemplatePacket`,
+   and produces or creates an `IntakePacket`.
+3. `modernuo-issue-research` establishes official behavior, inspects the same
    verified repository, and produces a `ResearchPacket`. It asks focused
    questions and stops whenever a behavior-changing fact or policy is unresolved.
-3. `modernuo-issue-implement` accepts only a current `READY` research handoff,
+4. `modernuo-issue-implement` accepts only a current `READY` research handoff,
    verifies the configured repository, checkout, and push remote, then
    implements and tests the smallest approved change.
+5. `modernuo-issue-workflow` coordinates the complete path. A user-identified
+   existing issue bypasses issue creation; the workflow interviews every blocker
+   until research is ready, then uses an isolated worktree, pushes a scoped
+   branch, and creates or updates a PR.
 
 No phase infers a repository from the cwd, remotes, organization, neighboring
 project, issue number, stale documentation, or memory. If project instructions
@@ -41,7 +47,7 @@ implicit workflow.
 - `plugins/modernuo/.claude-plugin/plugin.json` - Claude Code manifest.
 - `plugins/modernuo/.cursor-plugin/plugin.json` - Cursor manifest.
 - `.agents/`, `.claude-plugin/`, and `.cursor-plugin/` - marketplace metadata.
-- `plugins/modernuo/skills/` - 70 flat skill packages, grouped by frontmatter.
+- `plugins/modernuo/skills/` - 72 flat skill packages, grouped by frontmatter.
 - [`SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md) - generated
   workflow and skill index.
 - `scripts/` - deterministic preparation, catalog, verification, Yao, and
@@ -112,6 +118,8 @@ or live telemetry.
 
 - create a template-conformant intake issue in the repository declared by the
   consuming project;
+- take a new request or an existing issue through official research, blocker
+  interviews, isolated implementation, branch push, and pull request creation;
 - deeply research an issue and stop for unresolved official behavior;
 - implement a current research-ready issue with focused tests;
 - audit a ModernUO subsystem, serialization migration, lifecycle, or hot path;

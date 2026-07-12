@@ -48,7 +48,6 @@ MANIFEST_FIELDS = {
 }
 REMOVED = {
     "modernuo-issue-review",
-    "modernuo-issue-template-gate",
     "rebirthuo-implement",
     "rebirthuo-implementation",
     "rebirthuo-implementation-checkpoints",
@@ -68,9 +67,19 @@ GHOSTS = REMOVED | {
     "modernuo-era-parity-check",
 }
 REQUIRED_PHASES = {
+    "modernuo-issue-template-gate": "gate",
     "modernuo-issue-create": "create",
     "modernuo-issue-research": "research",
     "modernuo-issue-implement": "implement",
+    "modernuo-issue-workflow": "workflow",
+}
+REQUIRED_RELATED_SKILLS = {
+    "modernuo-issue-workflow": {
+        "modernuo-issue-template-gate",
+        "modernuo-issue-create",
+        "modernuo-issue-research",
+        "modernuo-issue-implement",
+    },
 }
 
 
@@ -332,6 +341,15 @@ def main() -> None:
             portfolio_errors.append(
                 f"{name}: expected workflow_phase {phase!r}, "
                 f"found {result.get('workflow_phase')!r}"
+            )
+    for name, required_related in REQUIRED_RELATED_SKILLS.items():
+        result = next((item for item in results if item["name"] == name), None)
+        if result is None:
+            continue
+        missing_related = sorted(required_related - set(result.get("related_skills", [])))
+        if missing_related:
+            portfolio_errors.append(
+                f"{name}: missing required related skills: {missing_related}"
             )
     if "uo-official-evidence" not in name_set:
         portfolio_errors.append("missing uo-official-evidence")

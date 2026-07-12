@@ -1,6 +1,6 @@
 # Skill Catalog
 
-Curated index for the ModernUO plugin skill payload (70 skills). Skills stay in a flat `skills/<name>/` layout; grouping is via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
+Curated index for the ModernUO plugin skill payload (72 skills). Skills stay in a flat `skills/<name>/` layout; grouping is via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
 
 See [README.md](../../../README.md) for repository resolution, evidence policy, and workflow routing.
 
@@ -8,9 +8,11 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 
 | Phase | Skill | Repository | Stop condition |
 |---|---|---|---|
+| Template gate | `modernuo-issue-template-gate` | Exact repository from project `AGENTS.md` | Ask when no single live template fits |
 | Create | `modernuo-issue-create` | Exact repository from project `AGENTS.md` | Stop after `IntakePacket` |
 | Research | `modernuo-issue-research` | Same verified repository | Ask and stop on unresolved behavior |
 | Implement | `modernuo-issue-implement` | Same verified repository and push remote | Require current `READY` research |
+| Orchestrate | `modernuo-issue-workflow` | Same verified repository | Existing issue skips create; no completion before a verified PR |
 
 **Companion skills:** `uo-official-evidence`, `uo-living-world-review`, `modernuo-codebase`, `modernuo-test-workflow`, `modernuo-code-audit`, and `modernuo-verification-guard`.
 
@@ -22,7 +24,6 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 | `rebirthuo-issue-review` | absorbed | `modernuo-issue-research` |
 | `rebirthuo-review-patterns` | absorbed | `modernuo-issue-research` |
 | `modernuo-issue-review` | absorbed | `modernuo-issue-research` |
-| `modernuo-issue-template-gate` | absorbed | `modernuo-issue-create` |
 | `rebirthuo-implementation-checkpoints` | absorbed | `modernuo-issue-research` / `modernuo-issue-implement` |
 | `rebirthuo-implement` | absorbed | `modernuo-issue-implement` |
 | `rebirthuo-modernuo-codebase` | absorbed | `modernuo-codebase` |
@@ -80,7 +81,7 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 
 ## ModernUO (Engine & Dev)
 
-**Count:** 47
+**Count:** 49
 
 | Skill | Subgroup | Workflow phase | Description |
 |---|---|---|---|
@@ -109,6 +110,8 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 | `modernuo-issue-create` | agentic | create | Use when the user explicitly asks to draft or create a ModernUO or UO GitHub issue from the target repository's live issue template. Resolve the exact repository only from applicab |
 | `modernuo-issue-implement` | agentic | implement | Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision. Resolve the exact repos |
 | `modernuo-issue-research` | agentic | research | Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.m |
+| `modernuo-issue-template-gate` | agentic | gate | Use when a ModernUO or UO issue workflow must select and validate the exact live GitHub Issue_Template before drafting or creating an issue. Resolve the exact repository only from  |
+| `modernuo-issue-workflow` | agentic | workflow | Use when the user wants a ModernUO or UO GitHub request taken from template-gated intake or a user-identified existing issue through evidence-backed research, an interview for ever |
 | `modernuo-lifecycle-cleanup` | domain | none | Use when implementing or reviewing ModernUO object-lifetime cleanup for timers, event subscriptions, dynamic regions, owned entities, callbacks, and restored runtime state. Do not  |
 | `modernuo-lootpack-preservation` | domain | none | Use when editing or migrating ModernUO-based creature loot that contains GenerateLoot, AddLoot(LootPack.*), PackGold, PackItem, or loot-policy helpers. Preserve source-derived pack |
 | `modernuo-monster-abilities` | domain | none | Use when adding, migrating, or reviewing reusable ModernUO-based creature combat specials implemented as MonsterAbility classes. Do not route boss phase orchestration or WeaponAbil |

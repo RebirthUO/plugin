@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Official-UO research and ModernUO engineering workflows",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "Official UO evidence, ModernUO engineering, and strict issue delivery.",
-    "longDescription": "A repository-portable Agent Skills portfolio for official OSI/EA/Broadsword research, ModernUO engineering, RunUO migration, testing, and a strict create-research-implement GitHub workflow. Issue skills resolve the exact repository from the consuming project's AGENTS.md and stop whenever official evidence or user policy is incomplete.",
+    "longDescription": "A repository-portable Agent Skills portfolio for official OSI/EA/Broadsword research, ModernUO engineering, RunUO migration, testing, and a strict template-gated issue-to-PR workflow. Issue skills resolve the exact repository from the consuming project's AGENTS.md and interview unresolved policy while never substituting for missing official evidence.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -20,6 +20,7 @@
     ],
     "brandColor": "#7A2F1A",
     "defaultPrompt": [
+      "Run a template-gated ModernUO issue workflow from intake or an existing GitHub issue through research, an isolated worktree, branch push, and PR.",
       "Create an intake issue using the repository and live template declared by this project's AGENTS.md.",
       "Research this issue against official OSI/EA sources and stop to ask me about unresolved decisions.",
       "Implement this issue from its current READY research handoff and run focused verification.",
