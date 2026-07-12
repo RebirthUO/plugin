@@ -1,6 +1,6 @@
 ---
 name: uo-world-facets-regions
-description: Use when adding, debugging, or auditing ModernUO-based maps/facets, Region definitions/lifecycle hooks, overlap priority, travel restrictions, guarded/dungeon/champion/house zones, spatial queries, or spawn-package reachability. Do not use for combat, spells, housing, or encounters except at their explicit region boundary.
+description: Use when adding, debugging, or auditing ModernUO-based maps/facets, Region definitions/lifecycle hooks, overlap priority, travel restrictions, guarded/dungeon/champion/house zones, spatial queries, or spawn-package placement/reachability. Do not use for spawner machinery, faction governance, combat, spells, housing, or encounters beyond their region boundary.
 license: MIT
 metadata:
   hermes:
@@ -18,21 +18,23 @@ metadata:
     - modernuo-regions
     - uo-housing-houses-multis
     - uo-champions-cannedevil-treasures
+    - uo-spawners-world-population
+    - uo-factions-towns-sigils
     - uo-official-evidence
-version: 1.0.0
+version: 1.1.0
 author: Crome696
 ---
 # UO World, Facets, and Regions
 
 ## Boundary
 
-Own map registration/spatial indexing, JSON-driven region construction, overlap/priority, lifecycle hooks, travel/resource/harm/entry policies, and spawn-package placement/reachability. Route house aggregate behavior, champion controllers, combat formulas, and spell effects to their owning skills.
+Own map registration/spatial indexing, JSON-driven region construction, overlap/priority, lifecycle hooks, travel/resource/harm/entry policies, and the spatial placement/reachability boundary for spawn packages. Route spawner DTOs/import/timing/cleanup to `uo-spawners-world-population`, faction membership/towns/sigils to `uo-factions-towns-sigils`, and house, encounter, combat, and spell behavior to their owning skills.
 
 ## Core Workflow
 
 1. State ruleset/era, local map/facet, coordinates/area/Z range, region type/priority, affected hooks, travel/resource/combat policy, and canonical versus custom intent.
-2. Inspect current map definitions, region JSON/schema/deserializer, concrete `Region` subclass, parent/overlaps, `SpellHelper` travel matrix, spawn data/loader, registration lifecycle, and focused tests. Verify the map exists locally; product vocabulary is not implementation.
-3. Trace construction and runtime: data -> expansion filter -> typed region -> registration/sector lookup -> enter/exit/priority selection -> hook -> deregistration/reload. For spawns, trace data -> type resolution -> placement -> timer/persistence -> cleanup.
+2. Inspect current map definitions, region JSON/schema/deserializer, concrete `Region` subclass, parent/overlaps, `SpellHelper` travel matrix, registration lifecycle, affected spawn/faction anchors, and focused tests. Verify the map exists locally; product vocabulary is not implementation.
+3. Trace construction and runtime: data -> expansion filter -> typed region -> registration/sector lookup -> enter/exit/priority selection -> hook -> deregistration/reload. For a cross-domain integration, prove the owning spawner, faction, house, or encounter resolves and reaches this region without taking over its internal lifecycle.
 4. Put local policy in the narrow region hook and delegate shared travel checks to the central matrix. Return/block using established APIs; do not scatter `Map ==` checks or throw from normal veto hooks.
 5. Use `Map.GetItemsInRange<T>` / `GetMobilesInRange<T>` and pooled patterns where required; never scan `World.Items`/`World.Mobiles` in spatial gameplay.
 6. Check overlap priority, parent behavior, Min/Max expansion, dynamic cleanup, and data reachability. A region class without a loaded definition is incomplete.
@@ -49,11 +51,11 @@ Return a map/region/overlap diagram or table, hook/travel matrix, JSON/spawn anc
 
 ## Reference Routing
 
-Read [domain-map.md](references/domain-map.md) for detailed facet, sector, hook, travel, JSON, champion/faction/dungeon, spawn, and example notes. Re-check facet counts, region counts, travel claims, and schema casing in current code/data.
+Read [domain-map.md](references/domain-map.md) for detailed facet, sector, hook, travel, JSON, champion/faction/dungeon, spawn-placement, and example notes. Re-check facet counts, region counts, travel claims, and schema casing in current code/data; use the dedicated spawner or Factions skill for those systems' internal state.
 
 ## Verification
 
-- Parse/load data and run focused region/travel/spawn tests plus a startup validation when appropriate.
+- Parse/load data and run focused region/travel tests plus owning-domain integration and startup validation when appropriate.
 - Cover inside/outside/boundary/Z, overlap priority, allowed/blocked travel and harmful/entry cases, pre-era/target-era loading, enter/exit, reload/delete cleanup, and type resolution.
 - Confirm no global spatial scans and no orphan registrations/spawns.
 - Self-check that a facet-wide rule was not used where a nested region owns the policy.

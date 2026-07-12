@@ -1,0 +1,1 @@
+Use when adding, debugging, or auditing ModernUO NPC or player-vendor stock, buy/sell transactions, BaseVendor, GenericBuy/GenericSell, SBInfo, prices, quantities, payment, VendorInventory, vendor gumps, or vendor packet flows. Do not use for BOD turn-ins, quests, crafting registration, faction governance, or housing except at the vendor boundary.

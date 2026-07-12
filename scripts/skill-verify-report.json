@@ -1,5 +1,5 @@
 {
-  "skill_count": 66,
+  "skill_count": 70,
   "portfolio_errors": [],
   "error_count": 0,
   "warning_count": 0,
@@ -266,10 +266,14 @@
         "modernuo-gump-system",
         "modernuo-commands-targeting",
         "modernuo-events",
-        "modernuo-test-workflow"
+        "modernuo-test-workflow",
+        "uo-spawners-world-population",
+        "uo-vendors-commerce",
+        "uo-pets-taming-stables",
+        "uo-factions-towns-sigils"
       ],
-      "description_length": 311,
-      "skill_chars": 3864,
+      "description_length": 292,
+      "skill_chars": 4087,
       "errors": [],
       "warnings": []
     },
@@ -281,10 +285,14 @@
         "modernuo-content-patterns",
         "modernuo-era-change-gate",
         "uo-living-world-review",
-        "uo-official-evidence"
+        "uo-official-evidence",
+        "uo-spawners-world-population",
+        "uo-vendors-commerce",
+        "uo-pets-taming-stables",
+        "uo-factions-towns-sigils"
       ],
       "description_length": 337,
-      "skill_chars": 3903,
+      "skill_chars": 4032,
       "errors": [],
       "warnings": []
     },
@@ -492,10 +500,11 @@
         "modernuo-performance-hot-paths",
         "modernuo-string-handling",
         "modernuo-test-workflow",
-        "migrate-packets"
+        "migrate-packets",
+        "uo-vendors-commerce"
       ],
       "description_length": 255,
-      "skill_chars": 3772,
+      "skill_chars": 4101,
       "errors": [],
       "warnings": []
     },
@@ -821,10 +830,11 @@
       "related_skills": [
         "uo-crafting-recipes-resources",
         "uo-items-foundation",
-        "uo-loot-generation-artifacts"
+        "uo-loot-generation-artifacts",
+        "uo-vendors-commerce"
       ],
-      "description_length": 250,
-      "skill_chars": 3313,
+      "description_length": 274,
+      "skill_chars": 3456,
       "errors": [],
       "warnings": []
     },
@@ -873,6 +883,23 @@
       "warnings": []
     },
     {
+      "name": "uo-factions-towns-sigils",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-world-facets-regions",
+        "uo-combat-pipeline",
+        "uo-vendors-commerce",
+        "modernuo-gump-system",
+        "modernuo-serialization",
+        "uo-living-world-review"
+      ],
+      "description_length": 348,
+      "skill_chars": 4194,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "name": "uo-game-docs-canonical-authoring",
       "skill_group": "uo",
       "workflow_phase": "none",
@@ -908,10 +935,11 @@
         "uo-world-facets-regions",
         "uo-items-foundation",
         "uo-living-world-review",
-        "modernuo-regions"
+        "modernuo-regions",
+        "uo-vendors-commerce"
       ],
-      "description_length": 303,
-      "skill_chars": 3329,
+      "description_length": 304,
+      "skill_chars": 3475,
       "errors": [],
       "warnings": []
     },
@@ -937,11 +965,12 @@
       "related_skills": [
         "uo-aos-item-properties",
         "uo-loot-generation-artifacts",
+        "uo-living-world-review",
         "modernuo-serialization",
         "modernuo-property-lists"
       ],
-      "description_length": 309,
-      "skill_chars": 3702,
+      "description_length": 304,
+      "skill_chars": 3967,
       "errors": [],
       "warnings": []
     },
@@ -1005,6 +1034,23 @@
       "warnings": []
     },
     {
+      "name": "uo-pets-taming-stables",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-skills-stats-races",
+        "modernuo-content-patterns",
+        "modernuo-pathfinding",
+        "modernuo-lifecycle-cleanup",
+        "modernuo-serialization",
+        "uo-vendors-commerce"
+      ],
+      "description_length": 334,
+      "skill_chars": 4124,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "name": "uo-quests-engine-ml",
       "skill_group": "uo",
       "workflow_phase": "none",
@@ -1057,10 +1103,44 @@
         "modernuo-skill-discovery",
         "uo-magic-spells",
         "uo-combat-pipeline",
-        "uo-crafting-recipes-resources"
+        "uo-crafting-recipes-resources",
+        "uo-pets-taming-stables"
       ],
-      "description_length": 327,
-      "skill_chars": 3406,
+      "description_length": 333,
+      "skill_chars": 3702,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-spawners-world-population",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "uo-world-facets-regions",
+        "modernuo-content-patterns",
+        "modernuo-serialization",
+        "modernuo-performance-hot-paths",
+        "modernuo-test-workflow"
+      ],
+      "description_length": 362,
+      "skill_chars": 4128,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "uo-vendors-commerce",
+      "skill_group": "uo",
+      "workflow_phase": "none",
+      "related_skills": [
+        "modernuo-content-patterns",
+        "modernuo-networking",
+        "modernuo-gump-system",
+        "uo-bulk-orders-bod",
+        "uo-housing-houses-multis",
+        "uo-living-world-review"
+      ],
+      "description_length": 349,
+      "skill_chars": 4065,
       "errors": [],
       "warnings": []
     },
@@ -1072,10 +1152,12 @@
         "modernuo-regions",
         "uo-housing-houses-multis",
         "uo-champions-cannedevil-treasures",
+        "uo-spawners-world-population",
+        "uo-factions-towns-sigils",
         "uo-official-evidence"
       ],
-      "description_length": 324,
-      "skill_chars": 3537,
+      "description_length": 361,
+      "skill_chars": 3965,
       "errors": [],
       "warnings": []
     }

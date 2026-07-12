@@ -13,6 +13,7 @@
     "exclusions": [
       "uo aos item properties",
       "uo loot generation artifacts",
+      "uo living world review",
       "modernuo serialization",
       "modernuo property lists"
     ],

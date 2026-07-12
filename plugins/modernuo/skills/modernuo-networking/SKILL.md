@@ -5,7 +5,7 @@ description: >
   NetState sends, SpanWriter/SpanReader protocol code, or client message fan-out.
   Do not use for ordinary gameplay text alone; route formatting concerns to
   modernuo-string-handling.
-version: 1.1.0
+version: 1.2.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -22,6 +22,7 @@ metadata:
       - modernuo-string-handling
       - modernuo-test-workflow
       - migrate-packets
+      - uo-vendors-commerce
 ---
 
 # ModernUO Networking and Packets
@@ -31,7 +32,9 @@ metadata:
 Own packet layout, registration, validation, send eligibility, and protocol-safe
 buffer use. Preserve client compatibility and game-thread ownership. Prefer the
 existing `Mobile`, `Item`, and `NetState` message APIs over hand-built packets
-when the task is only player-facing text.
+when the task is only player-facing text. Domain transaction semantics remain
+with the owning gameplay skill; for example, vendor stock, debit, and delivery
+belong to `uo-vendors-commerce`.
 
 ## Workflow
 
@@ -85,5 +88,7 @@ client/security consequence.
 - Read [packet and message patterns](references/packet-patterns.md) when choosing
   writer/reader methods, allocation strategy, or message fan-out helpers.
 - Read `dev-docs/networking-packets.md` for the current repository API surface.
+- Read `uo-vendors-commerce` when vendor packet fields cross into stock,
+  authorization, price, quantity, payment, delivery, or stale-session behavior.
 - Load `modernuo-string-handling` for interpolated text and
   `modernuo-threading` for dispatch ownership.

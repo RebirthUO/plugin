@@ -1,0 +1,53 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Review this uo spawners and world population task and give me the repository-specific checks.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Compare the requested uo spawners and world population behavior with official evidence for the named UO era and the configured repository.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Help me implement a uo spawners and world population change and identify the focused verification.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Audit this uo spawners and world population diff for era, persistence, lifecycle, and regression risks.",
+      "family": "owned_job"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Refactor this unrelated ASP.NET service; no Ultima Online or ModernUO code is involved.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Create a marketing image for our shard announcement.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Manage a GitHub issue without researching any UO mechanic or repository source.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Review this uo world, facets, and regions task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo content patterns task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo serialization task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Review this modernuo performance hot paths task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: uo-bulk-orders-bod
-description: Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor turn-ins, bribery, material matching, or BOD reward selection. Do not use for ordinary craft recipes, quest rewards, or generic monster loot.
+description: Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor offers/turn-ins, bribery, material matching, or BOD reward selection. Do not use for generic vendor commerce, ordinary craft recipes, quest rewards, or monster loot.
 license: MIT
 metadata:
   hermes:
@@ -18,14 +18,15 @@ metadata:
     - uo-crafting-recipes-resources
     - uo-items-foundation
     - uo-loot-generation-artifacts
-version: 1.0.0
+    - uo-vendors-commerce
+version: 1.1.0
 author: Crome696
 ---
 # UO Bulk Order Deeds
 
 ## Boundary
 
-Own the BOD lifecycle from vendor offer through deed fill/combine, BOB storage/filtering, turn-in, cooldown, and BOD-specific reward calculation. Route recipe metadata to `uo-crafting-recipes-resources`, quest rewards to `uo-quests-engine-ml`, and non-BOD drops to `uo-loot-generation-artifacts`.
+Own the BOD lifecycle from vendor offer through deed fill/combine, BOB storage/filtering, turn-in, cooldown, and BOD-specific reward calculation. Route ordinary stock, prices, buy/sell payment, and player vendors to `uo-vendors-commerce`; route recipe metadata to `uo-crafting-recipes-resources`, quest rewards to `uo-quests-engine-ml`, and non-BOD drops to `uo-loot-generation-artifacts`.
 
 ## Core Workflow
 

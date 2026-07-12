@@ -1,6 +1,6 @@
 # ModernUO Plugin
 
-The `modernuo` plugin packages 66 English Agent Skills for official Ultima
+The `modernuo` plugin packages 70 English Agent Skills for official Ultima
 Online research, ModernUO engineering, RunUO migration, testing, and a strict
 three-phase issue workflow. It is distributed for Codex, Claude Code, Cursor,
 and compatible Agent Skills runtimes.
@@ -41,7 +41,7 @@ implicit workflow.
 - `plugins/modernuo/.claude-plugin/plugin.json` - Claude Code manifest.
 - `plugins/modernuo/.cursor-plugin/plugin.json` - Cursor manifest.
 - `.agents/`, `.claude-plugin/`, and `.cursor-plugin/` - marketplace metadata.
-- `plugins/modernuo/skills/` - 66 flat skill packages, grouped by frontmatter.
+- `plugins/modernuo/skills/` - 70 flat skill packages, grouped by frontmatter.
 - [`SKILL-CATALOG.md`](plugins/modernuo/skills/SKILL-CATALOG.md) - generated
   workflow and skill index.
 - `scripts/` - deterministic preparation, catalog, verification, Yao, and
@@ -51,6 +51,24 @@ implicit workflow.
 Each skill keeps `SKILL.md` focused on trigger boundaries, procedure, output,
 and verification. Conditional detail belongs in `references/`; generated
 adapter metadata lives in `agents/interface.yaml`, `manifest.json`, and `evals/`.
+
+## Source-backed domain coverage
+
+The portfolio includes focused owners for recurring ModernUO source domains:
+
+- `uo-spawners-world-population` - spawner runtime, JSON packages,
+  import/export, identity, persistence, cleanup, and sector caching;
+- `uo-vendors-commerce` - NPC stock and buy/sell transactions plus
+  player-vendor listings, proceeds, recovery, packets, and lifecycle;
+- `uo-pets-taming-stables` - taming, controlled ownership and follower slots,
+  pet orders and transfer, stabling, login/logout, and cleanup;
+- `uo-factions-towns-sigils` - Factions membership/ranks, elections/offices,
+  towns, sigils/monoliths, silver/tax economy, and persistence.
+
+`uo-items-foundation` also owns item-loss transitions through death/corpses,
+stealing, blessing, and insurance. These skills use current ModernUO code,
+data, and tests as implementation evidence while routing official gameplay
+claims through `uo-official-evidence`.
 
 ## Source and synchronization
 

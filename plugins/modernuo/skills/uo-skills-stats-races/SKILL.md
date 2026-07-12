@@ -1,6 +1,6 @@
 ---
 name: uo-skills-stats-races
-description: Use when adding, debugging, or auditing ModernUO-based skill registration/use/gain, skill/stat caps and locks, stat gain, scroll modifiers, race definitions/bonuses, character creation, or era-gated skill availability. Do not use for combat/spell/crafting mechanics except where they invoke the shared skill/stat/race pipeline.
+description: Use when adding, debugging, or auditing ModernUO-based skill registration/use/gain, skill/stat caps and locks, stat gain, scroll modifiers, race definitions/bonuses, character creation, or era-gated skill availability. Do not use for pet/taming lifecycle or combat/spell/crafting mechanics beyond the shared skill/stat/race pipeline.
 license: MIT
 metadata:
   hermes:
@@ -19,14 +19,15 @@ metadata:
     - uo-magic-spells
     - uo-combat-pipeline
     - uo-crafting-recipes-resources
-version: 1.0.0
+    - uo-pets-taming-stables
+version: 1.1.0
 author: Crome696
 ---
 # UO Skills, Stats, and Races
 
 ## Boundary
 
-Own shared skill metadata/availability/use checks, gain and lock/cap behavior, stat gain/caps/mods, race definitions/bonuses/change flow, character-creation validation, and skill-cap scroll effects. Domain actions still belong to combat, spell, crafting, harvest, or other owning skills.
+Own shared skill metadata/availability/use checks, gain and lock/cap behavior, stat gain/caps/mods, race definitions/bonuses/change flow, character-creation validation, and skill-cap scroll effects. Animal Taming registration/gain stays here; the taming action and controlled-pet aggregate belong to `uo-pets-taming-stables`. Other domain actions remain with their owners.
 
 ## Core Workflow
 
@@ -50,6 +51,8 @@ Return a roster/cap/lock or race-bonus matrix, traced gain/use flow, source/repo
 ## Reference Routing
 
 Read [domain-map.md](references/domain-map.md) for the detailed taxonomy, skill/stat/race tables, cap/scroll notes, examples, and historical pitfalls. Treat counts and formulas as targets to confirm, not constants to copy blindly.
+
+Use `uo-pets-taming-stables` when the request crosses from shared Animal Taming checks/gain into creature eligibility, ownership, control slots/orders, transfer, or stabling.
 
 ## Verification
 

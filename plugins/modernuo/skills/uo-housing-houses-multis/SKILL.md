@@ -1,6 +1,6 @@
 ---
 name: uo-housing-houses-multis
-description: Use when adding, debugging, or auditing ModernUO-based house placement, BaseHouse/multi ownership, HouseRegion permissions, lockdowns/secures, customization, addons, transfer/demolition, or decay/IDOC. Do not use for generic region, item, crafting, or vendor logic unless it crosses the house lifecycle.
+description: Use when adding, debugging, or auditing ModernUO-based house placement, BaseHouse/multi ownership, HouseRegion permissions, lockdowns/secures, customization, addons, transfer/demolition, decay/IDOC, or house-side vendor/rental cleanup. Do not use for generic vendor commerce, regions, items, or crafting.
 license: MIT
 metadata:
   hermes:
@@ -19,14 +19,15 @@ metadata:
     - uo-items-foundation
     - uo-living-world-review
     - modernuo-regions
-version: 1.0.0
+    - uo-vendors-commerce
+version: 1.1.0
 author: Crome696
 ---
 # UO Housing, Houses, and Multis
 
 ## Boundary
 
-Own the house aggregate and its trust-critical lifecycle: placement, multi/sign/region creation, access roles, lockdown/secure accounting, customization/addons, ownership transfer, refresh/decay, demolition, and cleanup. Route generic map/region behavior to `uo-world-facets-regions` and base item semantics to `uo-items-foundation`.
+Own the house aggregate and its trust-critical lifecycle: placement, multi/sign/region creation, access roles, lockdown/secure accounting, customization/addons, ownership transfer, refresh/decay, demolition, and house-side vendor/rental cleanup. Route player-vendor listings, purchases, proceeds, and ordinary commerce to `uo-vendors-commerce`, generic map/region behavior to `uo-world-facets-regions`, and base item semantics to `uo-items-foundation`.
 
 ## Core Workflow
 

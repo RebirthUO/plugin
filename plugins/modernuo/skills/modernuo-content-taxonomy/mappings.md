@@ -34,8 +34,8 @@ Paths are relative to the repo root unless noted.
 | ItemInstance | `Item` | `Projects/Server/Items/Item.cs` | Present | Runtime world object. Created via `[Constructible]` ctors, spawners, or loot. Registered with `World.AddEntity`. |
 | MobileDefinition | Mobile `Type` subclass + `Body` | `Projects/UOContent/Mobiles/**`, `Projects/Server/Mobiles/Body.cs`, `Distribution/Data/bodyTable.cfg` | Partial | Definition = creature/NPC class + ctor stat setup. ML named monsters — several `Partial` in `mondains-legacy.md`. |
 | MobileInstance | `Mobile`, `BaseCreature`, `PlayerMobile` | `Projects/Server/Mobiles/Mobile.cs`, `Projects/UOContent/Mobiles/BaseCreature.cs`, `Projects/UOContent/Mobiles/PlayerMobile.cs` | Present | Runtime mobile. Players use `PlayerMobile`; NPCs/monsters use `BaseCreature` subclasses. |
-| SpawnerDefinition | `BaseSpawner`, `Spawner`, `SpawnerEntry` | `Projects/UOContent/Engines/Spawners/`, `Distribution/Data/Spawns/**/*.json` | Partial | Weighted entries: type name, probability, max count. EJ profile may not load all ML spawn packs — see era open gaps. |
-| ControllerDefinition | Engine controller subclasses | `Projects/UOContent/Engines/CannedEvil/ChampionSpawn.cs`, `Projects/UOContent/Engines/Peerless/`, `Projects/UOContent/Engines/Doom/GauntletSpawner.cs` | Partial | No generic controller type. Peerless lifecycle present; key expiration lifecycle is `Gap`. |
+| SpawnerDefinition | `BaseSpawner`, `Spawner`, `SpawnerEntry` | `Projects/UOContent/Engines/Spawners/`, `Distribution/Data/Spawns/**/*.json` | Partial | DTO-driven standard, region, and proximity spawners with focused JSON/import/cache tests. Package selection/reachability remains profile-specific; use `uo-spawners-world-population`. |
+| ControllerDefinition | Engine controller subclasses | `Projects/UOContent/Engines/CannedEvil/ChampionSpawn.cs`, `Projects/UOContent/Engines/Doom/GauntletSpawner.cs` | Partial | No generic controller type. Current main has no coherent `Engines/Peerless` controller/altar implementation; treat Peerless controller claims as research needed. |
 
 ---
 
@@ -58,24 +58,24 @@ Paths are relative to the repo root unless noted.
 
 ## MobileSystem
 
-**Parity summary:** AI, loot, taming, and vendor patterns are mature. ML peerless boss specials often `SourceLocked` + `RuntimeBlocked` — stats may match UOGuide while live combat hooks are unwired.
+**Parity summary:** AI, loot, taming, and vendor patterns are mature. Current main contains ML creature/data surfaces but no coherent Peerless controller tree; do not infer a wired encounter or official boss behavior from creature classes alone.
 
 | Concept | ModernUO equivalent | Key paths | Parity | Notes |
 |---|---|---|---|---|
 | MobileCategory | `BodyType`, `Body` struct | `Projects/Server/Mobiles/Body.cs`, `Distribution/Data/bodyTable.cfg` | Present | `IsAnimal`, `IsMonster`, `IsHuman`, `IsSea` from body table. Creature folders are organizational only. |
 | AIProfile | `AIType`, `BaseAI` subclasses | `Projects/UOContent/Mobiles/AI/BaseAI/AIType.cs`, `MeleeAI`, `MageAI`, `AnimalAI`, `VendorAI` under `Mobiles/AI/` | Present | Set in `BaseCreature` ctor (`AIType`, `FightMode`). `BaseAI` is the runtime behavior profile. |
 | CreatureAbility | `MonsterAbility`, `MonsterAbilityGroup` | `Projects/UOContent/Mobiles/Abilities/MonsterAbility.cs`, concrete abilities (`FireBreath`, `PoisonGasAreaAttack`, etc.) | Partial | Registered via `GetMonsterAbilities()` on `BaseCreature`. ML bosses: many abilities `RuntimeBlocked`. |
-| TamingProfile | Taming fields on `BaseCreature` | `Tamable`, `MinTameSkill`, `ControlSlots`, `FoodType`, `PackInstinct` on `BaseCreature`; `Projects/UOContent/Skills/AnimalTaming.cs` | Present | Per-creature overrides in subclass ctors. Animal trainers: `AnimalTrainer.cs`. |
-| VendorProfile | `BaseVendor`, `SBInfo`, `GenericBuyInfo` | `Projects/UOContent/Mobiles/Vendors/BaseVendor.cs`, `Projects/UOContent/Mobiles/Vendors/SBInfo/SBInfo.cs`, `VendorAI` | Present | Stock = `SBInfos` list; buy/sell behavior + `AIType.AI_Vendor`. |
+| TamingProfile | Taming fields on `BaseCreature` | `Tamable`, `MinTameSkill`, `ControlSlots`, `FoodType`, `PackInstinct` on `BaseCreature`; `Projects/UOContent/Skills/AnimalTaming.cs` | Present | Per-creature overrides in subclass ctors; ownership/orders/stables span `BaseCreature`, `BaseAI`, `AnimalTrainer`, and `PlayerMobile`. Use `uo-pets-taming-stables`. |
+| VendorProfile | `BaseVendor`, `SBInfo`, `GenericBuyInfo` | `Projects/UOContent/Mobiles/Vendors/BaseVendor.cs`, `Projects/UOContent/Mobiles/Vendors/SBInfo/SBInfo.cs`, `VendorAI` | Present | NPC stock and buy/sell behavior are distinct from persistent player-vendor listings/proceeds. Use `uo-vendors-commerce`. |
 | TrainerProfile | `CanTeach`, `CheckTeach`, `Teach` on `BaseCreature` | Overrides on townfolk (`Noble.cs`, `WanderingHealer.cs`, `BaseVendor.cs`) | Present | No `TrainerProfile` type. Skill training is virtual methods + per-NPC overrides. |
-| LootProfile | `LootPack`, `LootPackEntry`, `LootPackItem` | `Projects/UOContent/Misc/LootPack.cs`, `GenerateLoot()` / `AddLoot()` on `BaseCreature` | Partial | Template packs + per-creature overrides. ML peerless artifact tables — `Partial` distribution gaps. |
+| LootProfile | `LootPack`, `LootPackEntry`, `LootPackItem` | `Projects/UOContent/Misc/LootPack.cs`, `GenerateLoot()` / `AddLoot()` on `BaseCreature` | Partial | Template packs + per-creature overrides. Do not infer Peerless reward distribution from named boss or artifact item classes; current-main controller/distribution anchors require research. |
 | CorpseProfile | `Corpse`, death hooks on `BaseCreature` | `Projects/UOContent/Items/Misc/Corpses/Corpse.cs`, `OnDeath`, `DeleteCorpseOnDeath`, `CorpseName` on `BaseCreature` | Present | Corpse creation hooked in `Corpse.Initialize()`. Death loot via `OnDeath(Container c)`. |
 
 ---
 
 ## Progression
 
-**Parity summary:** Core skills and spell schools through ML are present. SA Skill Masteries (TOL) and full Mysticism/Imbuing depend on era profile — `ml-baseline.json` blocks several SA skills.
+**Parity summary:** Core skills and spell schools through ML are present. Current main contains Mysticism spell files, but no coherent Imbuing, Throwing, or TOL Skill Mastery implementation was found; classify those jobs as research needed rather than profile-blocked implementation.
 
 | Concept | ModernUO equivalent | Key paths | Parity | Notes |
 |---|---|---|---|---|
@@ -120,22 +120,22 @@ Paths are relative to the repo root unless noted.
 | QuestItemRequirement | `CollectObjective`, `DeliverObjective`, `QuestItem` | `Projects/UOContent/Engines/Quests/Core/Items/QuestItem.cs`, `Engines/ML Quests/Items/` | Present | Requirements = type + count (+ destination for deliver). `QuestItem` enforces backpack rules. |
 | DialogueNode | `QuestConversation` | `Projects/UOContent/Engines/Quests/Core/QuestConversation.cs`, per-quest `Conversations.cs` | Present | Classic dialogue tree nodes. ML uses `TextDefinition` fields on `MLQuest` + `QuestConversationGump`. |
 | RewardTable | `RewardSystem`, `BaseReward`/`ItemReward` | `Projects/UOContent/Engines/Veteran Rewards/`, `Projects/UOContent/Engines/ML Quests/Rewards/` | Present | Veteran rewards = global categories; quest rewards = per-quest `List<BaseReward>`. |
-| AccessUnlock | `PeerlessKeyDefinition`, `QuestNoEntryRegion` | `Projects/UOContent/Engines/Peerless/`, `Projects/UOContent/Engines/Quests/Regions/` | Partial | Area access via key sets on altars or quest-gated regions. Prism ticket access — `Gap`. |
+| AccessUnlock | Quest context, items, regions, and teleporters | `Projects/UOContent/Engines/ML Quests/`, `Projects/UOContent/Engines/Quests/Regions/`, spawn/teleporter data | Unverified | Current main has no `PeerlessKeyDefinition` or `Engines/Peerless` anchor. Reconstruct each access chain from current quests/items/regions/data and official evidence before assigning status. |
 
 ---
 
 ## Encounter
 
-**Parity summary:** Champion spawns, treasure maps, and peerless encounters are implemented. ML peerless boss combat specials and champion-style encounters (Meraktus) remain `Partial`.
+**Parity summary:** Champion spawns and treasure maps have concrete controllers. Current main has ML boss creatures and dungeon spawn data but no coherent Peerless encounter controller/altar tree; Peerless lifecycle, access, and rewards remain research needed.
 
 | Concept | ModernUO equivalent | Key paths | Parity | Notes |
 |---|---|---|---|---|
-| SpawnTable | `BaseSpawner`, `Spawner`, `SpawnerEntry` | `Projects/UOContent/Engines/Spawners/`, `Distribution/Data/Spawns/**/*.json` | Partial | Weighted entries on world spawner items. Import via `[ImportSpawners]`. Era-profile spawn pack gaps. |
+| SpawnTable | `BaseSpawner`, `Spawner`, `SpawnerEntry` | `Projects/UOContent/Engines/Spawners/`, `Distribution/Data/Spawns/**/*.json` | Partial | DTO-backed weighted entries on world spawner items. Import/export, identity, cleanup, and era-package reachability belong to `uo-spawners-world-population`. |
 | LootTable | `LootPack`, `LootPackEntry`, `LootPackItem` | `Projects/UOContent/Misc/LootPack.cs`, `Projects/UOContent/Misc/Loot.cs` | Present | Static preset tables (`AosSuperBoss`, `Gems`, etc.). Creatures call `AddLoot(...)` in `GenerateLoot()`. |
 | TreasureMapTemplate | `TreasureMap` | `Projects/UOContent/Items/Maps/TreasureMap.cs` | Present | Level-driven: spawn types, chest location generation, guardian spawn. No external JSON template. |
 | TreasureChestTemplate | `TreasureChestLevel1`–`4`, `TreasureMapChest` | `Projects/UOContent/Items/TreasureChests/`, `Projects/UOContent/Items/Containers/TreasureMapChest.cs` | Present | Level chests hardcode trap/lock/loot in ctors. Map chests built when a map is dug up. |
 | ChampionSpawnDefinition | `ChampionSpawnInfo`, `ChampionSpawnType` | `Projects/UOContent/Engines/CannedEvil/ChampionSpawnInfo.cs`, `ChampionSpawn.cs` | Partial | Static `ChampionSpawnInfo.Table[]`: champion type, per-level spawn types, cliloc names. Pre-ML coverage `Partial`. |
-| BossEncounter | `PeerlessEncounter`, `PeerlessAltar` | `Projects/UOContent/Engines/Peerless/`, boss classes (e.g. `LadyMelisande`, `DreadHorn`) | Partial | Lifecycle: `PeerlessEncounterState` (Idle→Active→Looting→Cooldown). Boss specials often `RuntimeBlocked`. |
+| BossEncounter | No generic current-main Peerless controller found | ML boss creature classes plus dungeon spawn/quest/item data | Unverified | Creature classes and spawn data do not establish an encounter state machine. Locate current access, controller, reward, cleanup, and test anchors before claiming implementation. |
 | EventDefinition | `BaseScheduledEvent`, `EventScheduler` | `Projects/UOContent/Engines/Events/`, domain events (e.g. `TreasuresOfTokuno`) | Partial | Wall-clock scheduling with `IRecurrencePattern`. TOL/HS event coverage varies. |
 
 ---
@@ -180,13 +180,13 @@ Structural gaps that span multiple taxonomy domains. Era-specific detail: `dev-d
 | Domain | Concept / topic | Status | Notes | Sources |
 |---|---|---|---|---|
 | Progression | SA Skill Masteries (TOL) | Gap | No Skill Mastery system; only `DefenseMastery` + ML Spellweaving quest | [UO.com Skill Mastery](https://uo.com/2015/08/26/publish-90-part-1-time-of-legends/), UOGuide |
-| Progression | Mysticism, Imbuing, Throwing (SA) | Gap | Blocked in `ml-baseline.json`; needs SA era profile | `dev-docs/eras/stygian-abyss.md` |
+| Progression | Mysticism, Imbuing, Throwing (SA) | Research needed | Mysticism spell files exist; no coherent Imbuing/Throwing implementation found in current main | Current repository scan plus official source required |
 | QuestNarrative | `QuestStep` type | Gap | No dedicated class; objectives/conversations only | — |
 | QuestNarrative | EJ profile ML quest/spawn packs | Gap | Not explicitly loaded in EJ profile | `mondains-legacy.md`, `endless-journey.md` |
-| QuestNarrative | Peerless key expiration / master-key lifecycle | Gap | Access unlock incomplete | UOGuide [Peerless](https://www.uoguide.com/Peerless) |
-| QuestNarrative | Prism of Light ticket access (Lefty) | Gap | Quest exists; runtime access `Partial` | UOGuide [Lefty the Ticket Seller](https://www.uoguide.com/Lefty_the_Ticket_Seller) |
+| QuestNarrative | Peerless key expiration / master-key lifecycle | Research needed | No current-main Peerless key/controller anchor found | Current repository scan plus official source required |
+| QuestNarrative | Prism of Light ticket access | Research needed | Reconstruct quest, item, teleporter, region, and spawn reachability before status | Current repository scan plus official source required |
 | World | ML dungeon access placement | Partial | Grove, Palace, Prism access tests | `MondainsLegacySourceReferences` |
-| MobileSystem | ML peerless boss live specials | Partial / RuntimeBlocked | Stats often `SourceLocked`; combat hooks unwired | Era anchors e.g. `#dread-horn`, `#lady-melisande` |
+| MobileSystem | ML peerless boss live specials | Research needed | Boss creature classes do not prove live encounter hooks or official behavior | Current repository scan plus official source required |
 | MobileSystem | MasterJonath, MasterMikael, CorruptedSoul | Partial | Named ML creatures | UOGuide creature pages |
 | Encounter | ML champion-style (Meraktus, etc.) | Partial | End-to-end encounter flow | UOGuide [Meraktus](https://www.uoguide.com/Meraktus) |
 | EconomyCrafting | Rare recipe / BOD / vendor distribution | Partial | ML crafting economy | UOGuide [Recipe](https://www.uoguide.com/Recipe) |
@@ -197,8 +197,8 @@ Structural gaps that span multiple taxonomy domains. Era-specific detail: `dev-d
 
 **Enhanced examples** (intentional, not gaps):
 
-- Deterministic test seams on ML peerless bosses (`TriggerAreaLethalPoison`, etc.) — wired for tests, not live combat until doc status changes
-- Configured-project era-profile tuning versus official publish behavior
-- `RuntimeBlocked` mechanics documented in era docs before live hook wiring
+- Configured-project era/profile tuning versus official publish behavior
+- Deterministic test seams that are verified in the current branch and clearly separated from live hooks
+- `RuntimeBlocked` mechanics only when concrete implementation and the blocking registration/data/profile surface are both evidenced
 
 See [parity-check.md](parity-check.md) for report template and workflow.

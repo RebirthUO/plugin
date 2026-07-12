@@ -1,6 +1,6 @@
 # Skill Catalog
 
-Curated index for the ModernUO plugin skill payload (66 skills). Skills stay in a flat `skills/<name>/` layout; grouping is via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
+Curated index for the ModernUO plugin skill payload (70 skills). Skills stay in a flat `skills/<name>/` layout; grouping is via frontmatter (`skill_group`, `skill_subgroup`, `workflow_phase`, `workflow_tier`).
 
 See [README.md](../../../README.md) for repository resolution, evidence policy, and workflow routing.
 
@@ -50,28 +50,32 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 
 ## UO (Game Mechanics)
 
-**Count:** 19
+**Count:** 23
 
 | Skill | Subgroup | Workflow phase | Description |
 |---|---|---|---|
 | `uo-aos-item-properties` | domain | none | Use when adding, debugging, or reviewing AoS-style item-property storage, OPL rows, equipped-value aggregation, gameplay hooks, or era gates in a ModernUO-based repository. Do not  |
-| `uo-bulk-orders-bod` | domain | none | Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor turn-ins, bribery, material matching, or BOD reward selection. Do not u |
+| `uo-bulk-orders-bod` | domain | none | Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor offers/turn-ins, bribery, material matching, or BOD reward selection. D |
 | `uo-champions-cannedevil-treasures` | domain | none | Use when adding, debugging, or auditing Champion Spawn/CannedEvil altars, candle progression, champions, Harrower skulls, Doom or Treasures event integration, and facet-specific re |
 | `uo-combat-pipeline` | domain | none | Use when tracing or changing ModernUO-based melee/ranged hit checks, parry, weapon abilities, special moves, slayers, damage modifiers, elemental splits, resist application, or com |
 | `uo-crafting-recipes-resources` | domain | none | Use when adding, debugging, or auditing ModernUO-based CraftSystem/CraftItem registrations, recipe scrolls, subresources, expansion gates, tools, exceptional outcomes, or ICraftabl |
+| `uo-factions-towns-sigils` | domain | none | Use when adding, debugging, or auditing ModernUO Factions membership and ranks, faction towns and strongholds, sigil capture/corruption, elections and offices, silver/taxes, factio |
 | `uo-game-docs-canonical-authoring` | domain | none | Use when a configured project asks to create or audit official-era UO documentation in its game-docs canonical tree with one file per mechanic, Knot-schema sections, linked indexes |
 | `uo-harvest-gathering-resources` | domain | none | Use when adding, debugging, or auditing ModernUO-based Mining, Lumberjacking, Fishing, HarvestDefinition banks/veins, bonus or mutate resources, respawn, race bonuses, and facet/er |
 | `uo-housing-houses-multis` | domain | none | Use when adding, debugging, or auditing ModernUO-based house placement, BaseHouse/multi ownership, HouseRegion permissions, lockdowns/secures, customization, addons, transfer/demol |
 | `uo-item-property-review` | domain | none | Use when reviewing or planning a named official Ultima Online item property for a ModernUO-based repository, including official evidence, era/container placement, tooltip or cliloc |
-| `uo-items-foundation` | domain | none | Use when creating, debugging, or reviewing a ModernUO-based Item type, construction, ownership/parent movement, equipment hooks, OPL, decay, LootType, deletion, duplication, or ser |
+| `uo-items-foundation` | domain | none | Use when creating, debugging, or reviewing ModernUO Item construction, ownership/movement, equipment, OPL, decay, LootType, death/corpse allocation, stealing, blessing, insurance,  |
 | `uo-living-world-review` | gate | none | Use when a proposed ModernUO or UO change has a concrete cross-system effect on progression, PvP/PvM, economy, housing/storage, travel, social systems, client experience, or player |
 | `uo-loot-generation-artifacts` | domain | none | Use when adding, debugging, or auditing ModernUO-based creature loot packs, drop probabilities, artifact sources, Paragon bonuses, treasure maps/chests, or boss/event reward distri |
 | `uo-magic-spells` | domain | none | Use when adding, debugging, or auditing a ModernUO-based spell, spell-school registration, cast/fizzle/resource sequence, targeting, delayed/field/summon behavior, AI casting, or t |
 | `uo-official-evidence` | gate | research | Use when a ModernUO or Ultima Online task must establish official OSI/EA/Broadsword behavior, chronology, era, publish, formula, restriction, or source authority before comparison  |
+| `uo-pets-taming-stables` | domain | none | Use when adding, debugging, or auditing ModernUO animal-taming eligibility, controlled-pet ownership and slots, pet orders, transfer or release, stable/claim/auto-stable behavior,  |
 | `uo-quests-engine-ml` | domain | none | Use when adding, debugging, or auditing ModernUO-based MLQuest definitions, quest-giver offers, objectives, chains, per-player context/flags, config registration, quest gumps, pers |
 | `uo-sa-item-property-implementation` | domain | none | Use when an implementation-ready task adds or fixes an official Stygian Abyss item property in a ModernUO-based repository across storage, OPL, gameplay hooks, transient contexts,  |
 | `uo-samurai-empire-skills` | domain | none | Use when explaining, documenting, auditing, or implementing Samurai Empire Bushido or Ninjitsu mechanics, abilities, passives, equipment hooks, template impact, or SE-era reachabil |
 | `uo-skills-stats-races` | domain | none | Use when adding, debugging, or auditing ModernUO-based skill registration/use/gain, skill/stat caps and locks, stat gain, scroll modifiers, race definitions/bonuses, character crea |
+| `uo-spawners-world-population` | domain | none | Use when adding, migrating, importing, exporting, debugging, or auditing ModernUO BaseSpawner implementations or Distribution/Data/Spawns JSON packs, including entries, bounds, tim |
+| `uo-vendors-commerce` | domain | none | Use when adding, debugging, or auditing ModernUO NPC or player-vendor stock, buy/sell transactions, BaseVendor, GenericBuy/GenericSell, SBInfo, prices, quantities, payment, VendorI |
 | `uo-world-facets-regions` | domain | none | Use when adding, debugging, or auditing ModernUO-based maps/facets, Region definitions/lifecycle hooks, overlap priority, travel restrictions, guarded/dungeon/champion/house zones, |
 
 ## ModernUO (Engine & Dev)
@@ -94,7 +98,7 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 | `modernuo-codebase` | domain | none | Use when locating project ownership, repository instructions, source, configuration, data, build, or test anchors in a confirmed ModernUO-based checkout. Resolve the repository fro |
 | `modernuo-commands-targeting` | domain | none | Use when creating or changing ModernUO in-game commands, access levels, CommandEventArgs parsing, Target subclasses, or command-to-target flows. Covers registration, validation, st |
 | `modernuo-configuration` | domain | none | Use when adding or changing ModernUO server settings, modernuo.json keys, custom JsonConfig files, configuration defaults, or startup reads. Covers key ownership, persistence, vali |
-| `modernuo-content-patterns` | domain | none | Use when implementing new ModernUO items, mobiles, creatures, spells, skill handlers, loot, context menus, or other Projects/UOContent gameplay content. Routes to entity, serializa |
+| `modernuo-content-patterns` | domain | none | Use when implementing new ModernUO items, mobiles, creatures, spells, skill handlers, loot, context menus, or other UOContent types. Routes shared patterns; specialist spawner, ven |
 | `modernuo-content-taxonomy` | domain | none | Use when classifying a UO feature into World, Entity, ItemSystem, MobileSystem, Progression, EconomyCrafting, QuestNarrative, Encounter, or ClientPresentation, or when a user expli |
 | `modernuo-custom-module` | domain | none | Use when creating, registering, reviewing, renaming, or testing a separate ModernUO-based content assembly beside Projects/UOContent. Covers project/test wiring, solution/applicati |
 | `modernuo-era-change-gate` | gate | none | Use when a ModernUO-based request, diff, issue, plan, or parity finding moves behavior, evidence, data, registration, or profile activation across Ultima Online eras. Identifies th |

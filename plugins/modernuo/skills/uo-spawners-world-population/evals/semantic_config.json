@@ -1,0 +1,55 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Spawners and World Population",
+    "inputs": [
+      "uo spawners and world population",
+      "uo spawners world population"
+    ],
+    "trigger_actions": [
+      "Review this uo spawners and world population task and give me the repository-specific checks.",
+      "Compare the requested uo spawners and world population behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo spawners and world population change and identify the focused verification.",
+      "Audit this uo spawners and world population diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo world facets regions",
+      "modernuo content patterns",
+      "modernuo serialization",
+      "modernuo performance hot paths",
+      "modernuo test workflow"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo spawners and world population",
+        "uo spawners world population"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

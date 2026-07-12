@@ -17,7 +17,8 @@
       "modernuo performance hot paths",
       "modernuo string handling",
       "modernuo test workflow",
-      "migrate packets"
+      "migrate packets",
+      "uo vendors commerce"
     ],
     "artifacts": [
       "source evidence",

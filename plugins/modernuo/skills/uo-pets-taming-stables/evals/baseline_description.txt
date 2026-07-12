@@ -1,0 +1,1 @@
+Use when adding, debugging, or auditing ModernUO animal-taming eligibility, controlled-pet ownership and slots, pet orders, transfer or release, stable/claim/auto-stable behavior, or pet persistence and cleanup. Do not use for shared skill gain/caps, ordinary creature design, summoned followers, generic pathfinding, or vendor stock.

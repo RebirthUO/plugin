@@ -44,6 +44,10 @@
     {
       "text": "Review this uo loot generation and artifacts task and give me the repository-specific checks.",
       "family": "near_neighbor"
+    },
+    {
+      "text": "Review this uo vendors and commerce task and give me the repository-specific checks.",
+      "family": "near_neighbor"
     }
   ]
 }

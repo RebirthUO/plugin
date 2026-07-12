@@ -1,7 +1,7 @@
 ---
 name: modernuo-content-patterns
-description: Use when implementing new ModernUO items, mobiles, creatures, spells, skill handlers, loot, context menus, or other Projects/UOContent gameplay content. Routes to entity, serialization, lifecycle, era, UI, and test patterns. Do not use for broad taxonomy/parity inventories or for migrating existing RunUO code.
-version: 1.1.0
+description: Use when implementing new ModernUO items, mobiles, creatures, spells, skill handlers, loot, context menus, or other UOContent types. Routes shared patterns; specialist spawner, vendor, pet, and faction behavior stays with its domain skill. Do not use for taxonomy, parity, or RunUO migration.
+version: 1.2.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -23,19 +23,23 @@ metadata:
       - modernuo-commands-targeting
       - modernuo-events
       - modernuo-test-workflow
+      - uo-spawners-world-population
+      - uo-vendors-commerce
+      - uo-pets-taming-stables
+      - uo-factions-towns-sigils
 ---
 
 # ModernUO Content Patterns
 
 ## Boundary
 
-This is the implementation hub for new UOContent gameplay types. Use [modernuo-content-taxonomy](../modernuo-content-taxonomy/SKILL.md) for classification/parity and the `migrate-*` skills for RunUO conversion.
+This is the implementation hub for new UOContent types. Use `modernuo-content-taxonomy` for classification/parity, `migrate-*` for conversion, and domain skills for spawner, vendor, pet, or Factions state.
 
 ## Workflow
 
 1. Establish the target era/profile, player-visible behavior, authoritative evidence, non-goals, side effects, and owning content domain. If era changes behavior, stop until it is specified.
 2. Inspect the nearest current sibling implementation, its base types, registration, tests, schemas, localization, and data files. Do not guess constructor or hook signatures.
-3. Select the smallest applicable shape from [content-shapes.md](references/content-shapes.md) and load only the matching domain skills.
+3. Select the smallest shape from [content-shapes.md](references/content-shapes.md). Type construction stays here; specialist system behavior routes outward.
 4. Implement the behavior with local conventions: generated serialization for durable entities, `[Constructible]` where staff construction is intended, explicit ownership/cleanup, and bounded game-loop work.
 5. Preserve economy, loot, combat, housing, PvP/PvM, and client-presentation boundaries; do not add adjacent features incidentally.
 6. Add behavior-level tests for success, rejection, era gates, lifecycle, persistence, and exploit boundaries. Generate schemas when required.
@@ -61,4 +65,5 @@ Return changed content/registration/test/schema paths, source and era decisions,
 
 - Always read [content-shapes.md](references/content-shapes.md) for the selected type.
 - For a temporary weapon enchantment, read [weapon-buff-spell-pattern.md](references/weapon-buff-spell-pattern.md).
+- Route spawner, vendor, controlled-pet, and Factions state to their named `uo-*` domain skills.
 - Load [modernuo-serialization](../modernuo-serialization/SKILL.md), [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md), [modernuo-gump-system](../modernuo-gump-system/SKILL.md), or other domain skills only when their surface exists.

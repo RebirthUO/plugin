@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Factions, Towns, and Sigils",
+    "inputs": [
+      "uo factions, towns, and sigils",
+      "uo factions towns sigils"
+    ],
+    "trigger_actions": [
+      "Review this uo factions, towns, and sigils task and give me the repository-specific checks.",
+      "Compare the requested uo factions, towns, and sigils behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo factions, towns, and sigils change and identify the focused verification.",
+      "Audit this uo factions, towns, and sigils diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo world facets regions",
+      "uo combat pipeline",
+      "uo vendors commerce",
+      "modernuo gump system",
+      "modernuo serialization",
+      "uo living world review"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo factions, towns, and sigils",
+        "uo factions towns sigils"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

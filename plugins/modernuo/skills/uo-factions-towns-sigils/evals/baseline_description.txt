@@ -1,0 +1,1 @@
+Use when adding, debugging, or auditing ModernUO Factions membership and ranks, faction towns and strongholds, sigil capture/corruption, elections and offices, silver/taxes, faction guards/vendors/items, notoriety integration, or faction persistence. Do not use for generic regions, guilds, ordinary PvP combat, generic vendors, or champion spawns.

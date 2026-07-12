@@ -1,5 +1,5 @@
 {
-  "skill_count": 66,
+  "skill_count": 70,
   "sync_names": [
     "migrate-commands-events",
     "migrate-foundation",
@@ -53,6 +53,7 @@
     "uo-champions-cannedevil-treasures",
     "uo-combat-pipeline",
     "uo-crafting-recipes-resources",
+    "uo-factions-towns-sigils",
     "uo-game-docs-canonical-authoring",
     "uo-harvest-gathering-resources",
     "uo-housing-houses-multis",
@@ -62,10 +63,13 @@
     "uo-loot-generation-artifacts",
     "uo-magic-spells",
     "uo-official-evidence",
+    "uo-pets-taming-stables",
     "uo-quests-engine-ml",
     "uo-sa-item-property-implementation",
     "uo-samurai-empire-skills",
     "uo-skills-stats-races",
+    "uo-spawners-world-population",
+    "uo-vendors-commerce",
     "uo-world-facets-regions"
   ],
   "ghost_hits": []

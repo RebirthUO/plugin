@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.1.0 - 2026-07-12
+
+- Added source-backed `uo-spawners-world-population`,
+  `uo-vendors-commerce`, `uo-pets-taming-stables`, and
+  `uo-factions-towns-sigils` production skills with conditional architecture,
+  lifecycle, transaction, persistence, and verification references.
+- Extended `uo-items-foundation` with death/corpse disposition, stealing,
+  blessing, insurance, criminality, and player-trust exploit checks instead of
+  creating an overlapping item-loss skill.
+- Tightened routing between world/region, content, skill/stat, BOD, housing,
+  networking, vendor, pet, spawner, and Factions owners and added realistic
+  collision trigger cases.
+- Corrected content-taxonomy claims that referenced Peerless, Imbuing, or
+  Throwing implementation surfaces absent from current ModernUO main; these now
+  remain research-needed until official and repository evidence supports a
+  stronger status.
+- Regenerated the 70-skill catalog and Yao production artifacts.
+
 ## 2.0.0 - 2026-07-12
 
 - Replaced overlapping RebirthUO/direct-ModernUO issue routes with three public

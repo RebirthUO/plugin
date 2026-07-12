@@ -1,7 +1,7 @@
 ---
 name: modernuo-content-taxonomy
 description: Use when classifying a UO feature into World, Entity, ItemSystem, MobileSystem, Progression, EconomyCrafting, QuestNarrative, Encounter, or ClientPresentation, or when a user explicitly requests a cross-domain parity inventory. Routes concepts to ModernUO code/data. Do not use for ordinary implementation or deep single-mechanic review.
-version: 1.1.0
+version: 1.2.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -16,6 +16,10 @@ metadata:
       - modernuo-era-change-gate
       - uo-living-world-review
       - uo-official-evidence
+      - uo-spawners-world-population
+      - uo-vendors-commerce
+      - uo-pets-taming-stables
+      - uo-factions-towns-sigils
 ---
 
 # ModernUO Content Taxonomy

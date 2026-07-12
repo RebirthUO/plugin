@@ -1,0 +1,56 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Pets, Taming, and Stables",
+    "inputs": [
+      "uo pets, taming, and stables",
+      "uo pets taming stables"
+    ],
+    "trigger_actions": [
+      "Review this uo pets, taming, and stables task and give me the repository-specific checks.",
+      "Compare the requested uo pets, taming, and stables behavior with official evidence for the named UO era and the configured repository.",
+      "Help me implement a uo pets, taming, and stables change and identify the focused verification.",
+      "Audit this uo pets, taming, and stables diff for era, persistence, lifecycle, and regression risks."
+    ],
+    "exclusions": [
+      "uo skills stats races",
+      "modernuo content patterns",
+      "modernuo pathfinding",
+      "modernuo lifecycle cleanup",
+      "modernuo serialization",
+      "uo vendors commerce"
+    ],
+    "artifacts": [
+      "source evidence",
+      "implementation plan",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "owned_job"
+  ],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1.0,
+      "phrases": [
+        "uo pets, taming, and stables",
+        "uo pets taming stables"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

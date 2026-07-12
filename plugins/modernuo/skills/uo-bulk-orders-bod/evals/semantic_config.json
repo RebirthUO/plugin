@@ -14,7 +14,8 @@
     "exclusions": [
       "uo crafting recipes resources",
       "uo items foundation",
-      "uo loot generation artifacts"
+      "uo loot generation artifacts",
+      "uo vendors commerce"
     ],
     "artifacts": [
       "source evidence",

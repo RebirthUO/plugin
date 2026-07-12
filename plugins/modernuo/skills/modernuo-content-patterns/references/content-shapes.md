@@ -16,6 +16,7 @@ Read only the sections matching the requested content. Local sibling code is aut
 - Set body/sounds, stats, skills, damage/resists, AI/fight mode, fame/karma, taming, and loot only from target-era evidence or explicit design policy.
 - Use overrides such as `DefaultName`, `CorpseName`, resource yields, and abilities when the base contract supports them.
 - Test spawn/construct, AI-visible behavior, death/loot, tame/control where relevant, persistence, and deletion.
+- Route stock/payment/listing behavior to `uo-vendors-commerce`, controlled ownership/orders/stables to `uo-pets-taming-stables`, and Factions membership/town/sigil behavior to `uo-factions-towns-sigils`.
 
 ## Spell
 
@@ -35,6 +36,13 @@ Read only the sections matching the requested content. Local sibling code is aut
 - Prefer existing `LootPack` or crafting/vendor abstractions that already select era behavior.
 - Treat gold, artifacts, recipes, resources, drop chances, durability, insurance, and blessed status as economy changes requiring explicit evidence and tests.
 - Never add loot or distribution merely because a type exists.
+- Use `uo-vendors-commerce` for buy/sell transactions and player-vendor inventory; use `uo-items-foundation` for insurance and post-death item ownership.
+
+## World population
+
+- Use `uo-spawners-world-population` for `BaseSpawner` subclasses, spawn DTOs, JSON packs, import/export, timing/counts, persistence, sector cache, and child cleanup.
+- Use `uo-world-facets-regions` for whether the selected map, region, bounds, and travel/access policy make that package reachable.
+- A spawned type still follows its item/mobile shape here; do not mix entity construction with spawner lifecycle.
 
 ## Context menus and interactions
 
