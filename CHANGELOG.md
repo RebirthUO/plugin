@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.3.0 - 2026-07-13
+
+- Extended `modernuo-issue-research` so every completed research run publishes
+  findings back to the GitHub issue: a structured `## Research contract` body
+  section plus an append-only research comment per run.
+- Made scoped issue publication implicit for verified issues during research;
+  advice-only requests remain the read-only exception.
+- Updated `modernuo-issue-workflow` and `modernuo-issue-implement` to require
+  post-publication issue revisions and documented contract evidence before
+  implementation may start.
+
 ## 2.2.0 - 2026-07-12
 
 - Restored `modernuo-issue-template-gate` as a first-class, zero-mutation live

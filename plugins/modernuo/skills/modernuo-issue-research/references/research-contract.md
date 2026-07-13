@@ -70,9 +70,24 @@ user_questions:
     answer_needed: one focused response
 ```
 
-Stop after returning blocking questions. Explicit user answers are recorded as
-`Custom policy` if they intentionally differ from official UO; they never
-rewrite the official evidence.
+Stop after returning blocking questions in chat, but still publish the current
+findings to the issue unless the user requested advice-only work. Explicit user
+answers are recorded as `Custom policy` if they intentionally differ from
+official UO; they never rewrite the official evidence.
+
+## Issue publication
+
+Every completed research run publishes to the verified issue unless the user
+explicitly forbids GitHub mutation. Follow
+[issue publication](issue-publication.md) for the body section, comment format,
+read-back rules, and advice-only exception.
+
+Scoped publication implicitly authorizes:
+
+- one `## Research contract` body update;
+- one append-only research comment for the current run.
+
+Label changes and unrelated GitHub mutations remain separately authorized.
 
 ## ResearchPacket
 
@@ -95,12 +110,20 @@ non_blocking_gaps: []
 acceptance_criteria: []
 test_plan: []
 risks: []
-proposed_body_diff: null
+issue_publication:
+  body_update:
+    applied: true
+    sections: [Research contract]
+  comment:
+    url: https://github.com/owner/repository/issues/123#issuecomment-...
+    posted_at: ISO-8601
 mutation:
-  authorized: false
-  performed: []
+  authorized: true
+  performed:
+    - action: issue_body_update
+    - action: issue_comment
 readiness: READY | BLOCKED
 ```
 
-Before handoff, re-read the live issue and update the revision fields. A later
-issue edit invalidates `READY` until the changed contract is reviewed.
+Record `issue.updated_at` and `body_digest` after publication, not before. A
+later issue edit invalidates `READY` until the changed contract is reviewed.

@@ -1,7 +1,7 @@
 ---
 name: modernuo-issue-research
-description: Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.md instructions, establish official OSI/EA behavior, compare the verified repository, and stop to ask focused questions whenever evidence or policy cannot resolve a behavior-changing gap. Do not implement or silently choose defaults.
-version: 2.0.0
+description: Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.md instructions, establish official OSI/EA behavior, compare the verified repository, publish findings back to the issue, and stop to ask focused questions whenever evidence or policy cannot resolve a behavior-changing gap. Do not implement or silently choose defaults.
+version: 2.1.0
 author: RebirthUO
 license: MIT
 metadata:
@@ -23,8 +23,10 @@ metadata:
 ## Boundary
 
 Own Phase 2: turn an intake or existing issue into an evidence-backed,
-implementation-ready contract. Research is read-only; every mutation requires
-explicit authorization.
+implementation-ready contract. Research publishes findings to the identified
+issue unless the user explicitly requests advice-only work with no GitHub
+mutation. Label changes and unrelated mutations still require separate
+authorization.
 
 ## Repository gate
 
@@ -36,7 +38,8 @@ GitHub read or write and pass the repository explicitly to each command.
 
 ## Workflow
 
-1. Read [the research contract](references/research-contract.md) and
+1. Read [the research contract](references/research-contract.md),
+   [issue publication](references/issue-publication.md), and
    [uo-official-evidence](../uo-official-evidence/SKILL.md).
 2. Capture the complete live issue, comments, labels, linked work, updated
    timestamp, and body digest. Reconcile it with any supplied `IntakePacket`.
@@ -51,37 +54,31 @@ GitHub read or write and pass the repository explicitly to each command.
    lifecycle, performance, rollback, acceptance criteria, and test boundaries.
 6. If any missing or conflicting item can change behavior, architecture, era,
    distribution, player impact, persistence, or validation, emit focused
-   `UserQuestions` and stop. Do not recommend or apply a default for a blocking
-   item and do not call the issue ready.
+   `UserQuestions` and mark the run `BLOCKED`. Do not recommend or apply a
+   default for a blocking item and do not call the issue ready.
 7. After answers, re-read the issue revision and repeat the affected evidence
    and repository checks. Return `READY` only when no blocking gap remains.
-8. Prepare an English issue-body diff when useful. Apply it or mutate labels
-   only when explicitly authorized, then read back the complete issue.
+8. Publish findings per [issue publication](references/issue-publication.md),
+   then read back the post-publication issue revision and comment URL.
+9. Mutate labels only when explicitly authorized, then read back the issue.
 
 ## User-question gate
 
 Each blocking question contains a stable ID, missing decision, evidence already
 checked, concrete options only when evidence supports them, risk of guessing,
-and the exact answer needed. The question packet is the final deliverable for
-that turn; no implementation or GitHub mutation follows it.
+and the exact answer needed. For `BLOCKED`, return the packet in chat and
+publish the blockers to the issue. No implementation follows a blocked run.
 
 ## Output contract
 
-Return a `ResearchPacket` containing verified repository and issue revision,
-official evidence ledger, implementation evidence, expected-versus-actual
-delta, resolved user decisions, readiness matrix, blocking/non-blocking gaps,
-acceptance criteria, test plan, risks, proposed body diff, mutation record, and
-`readiness: READY | BLOCKED`.
-
-Only `READY` at the same issue revision may hand off to
+Return a `ResearchPacket` per [the research contract](references/research-contract.md)
+with `issue_publication`, mutation record, and `readiness: READY | BLOCKED`.
+Only `READY` at the post-publication issue revision may hand off to
 `modernuo-issue-implement`.
 
 ## Verification
 
-- Every expected gameplay claim is backed by official evidence or remains a
-  blocker; community/emulator/repo sources never fill that role.
-- All blocking questions received explicit user answers.
-- Repository paths and implementation status were inspected at the reported
-  branch/revision.
+- Official claims are backed by official evidence or remain blockers.
 - `READY` has complete behavior, scope, safety, acceptance, and validation rows.
-- Every authorized write was read back; read-only work changed nothing.
+- Every completed research run left body and comment evidence on the issue.
+- Advice-only requests changed nothing on GitHub.

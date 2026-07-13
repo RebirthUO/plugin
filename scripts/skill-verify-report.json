@@ -421,7 +421,7 @@
         "modernuo-test-workflow"
       ],
       "description_length": 399,
-      "skill_chars": 4180,
+      "skill_chars": 4188,
       "errors": [],
       "warnings": []
     },
@@ -435,8 +435,8 @@
         "uo-official-evidence",
         "uo-living-world-review"
       ],
-      "description_length": 412,
-      "skill_chars": 4216,
+      "description_length": 448,
+      "skill_chars": 4219,
       "errors": [],
       "warnings": []
     },
@@ -465,7 +465,7 @@
         "uo-official-evidence"
       ],
       "description_length": 461,
-      "skill_chars": 3772,
+      "skill_chars": 4056,
       "errors": [],
       "warnings": []
     },
