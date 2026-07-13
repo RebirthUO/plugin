@@ -24,7 +24,7 @@ Own the end-to-end issue-to-PR state machine. Delegate the phase work to the
 named child skills; never weaken their repository, evidence, readiness, or
 publication gates. An explicit full-workflow request authorizes only the scoped
 issue creation on the new-request route, isolated worktree, branch push, and
-PR. It never authorizes a merge, release, deployment, labels, unrelated
+PR. It never authorizes a merge, release, deployment, unrelated labels,
 comments, or other mutations outside the scoped research publication performed
 by `modernuo-issue-research`.
 
@@ -39,10 +39,10 @@ by `modernuo-issue-research`.
    fresh `TemplatePacket`; if it cannot identify one suitable live template,
    ask the user and keep the case pending.
 3. Run `modernuo-issue-research` for the created or existing issue. Each
-   completed research run must publish its findings to the issue body and an
-   append-only research comment. On every `BLOCKED` result, enter interview
-   mode: return only its focused questions, record each answer, and repeat the
-   affected research. Do not treat a user preference as official UO evidence.
+   completed research run must publish its findings to the issue body and toggle
+   the `blocked` label. On every `BLOCKED` result, enter interview mode: return
+   only its focused questions, record each answer, and repeat the affected
+   research. Do not treat a user preference as official UO evidence.
 4. Hand off only a current `READY` `ResearchPacket` with complete EA clarity to
    `modernuo-issue-implement`. Require a newly isolated worktree and scoped
    branch; commit, push, create or update the PR, and read back every mutation.
@@ -73,6 +73,7 @@ requires a verified PR and zero blockers.
   runs create no issue.
 - Every gameplay claim has complete official evidence or remains pending.
 - Research is `READY` at the live post-publication issue revision before edits
-  begin, and every research run left body and comment evidence on the issue.
+  begin, every research run left body evidence on the issue, and `READY` issues
+  do not retain the `blocked` label.
 - The implementation uses an isolated worktree, scoped branch, fresh tests,
   explicit push remote, and read-back PR evidence.

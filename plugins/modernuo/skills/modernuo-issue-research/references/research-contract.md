@@ -79,15 +79,16 @@ official UO; they never rewrite the official evidence.
 
 Every completed research run publishes to the verified issue unless the user
 explicitly forbids GitHub mutation. Follow
-[issue publication](issue-publication.md) for the body section, comment format,
-read-back rules, and advice-only exception.
+[issue publication](issue-publication.md) for the body section, blocked-label
+toggle, read-back rules, and advice-only exception.
 
 Scoped publication implicitly authorizes:
 
 - one `## Research contract` body update;
-- one append-only research comment for the current run.
+- a `blocked` label toggle (`--add-label` when `BLOCKED`, `--remove-label`
+  when `READY`).
 
-Label changes and unrelated GitHub mutations remain separately authorized.
+Unrelated labels and other GitHub mutations remain separately authorized.
 
 ## ResearchPacket
 
@@ -114,14 +115,15 @@ issue_publication:
   body_update:
     applied: true
     sections: [Research contract]
-  comment:
-    url: https://github.com/owner/repository/issues/123#issuecomment-...
-    posted_at: ISO-8601
+  labels:
+    blocked_applied: false
+    blocked_removed: false
 mutation:
   authorized: true
   performed:
     - action: issue_body_update
-    - action: issue_comment
+    - action: issue_label_add
+    - action: issue_label_remove
 readiness: READY | BLOCKED
 ```
 

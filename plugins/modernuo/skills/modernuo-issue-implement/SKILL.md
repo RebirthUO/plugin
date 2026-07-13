@@ -36,9 +36,8 @@ them.
 2. Verify the repository through `gh api`, the checkout identity, intended base,
    and actual push remote. Use explicit repository arguments for all GitHub
    operations.
-3. Re-read the issue and compare its post-publication revision with the `READY`
-   `ResearchPacket`. Missing research or publication evidence returns
-   `RESEARCH_REQUIRED`; do not create a branch or edit code.
+3. Re-read the issue and confirm the `READY` handoff per
+   [implementation contract](references/implementation-workflow.md).
 4. If implementation discovers a new behavior-changing gap, preserve the
    current work, return focused questions, and stop. Never continue with a
    suggested default.
@@ -79,7 +78,8 @@ created. State every omitted publication action.
 
 ## Verification
 
-- Research is `READY` at the live post-publication issue revision.
+- Research is `READY` with body-only publication evidence and no `blocked`
+  label.
 - Repository, checkout, base, and push remote match project instructions.
 - Diff is scoped and maps to acceptance criteria; no unrelated behavior changed.
 - Focused checks ran after the final edit and evidence scope is labeled honestly.

@@ -1,7 +1,7 @@
 ---
 name: modernuo-issue-research
 description: Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.md instructions, establish official OSI/EA behavior, compare the verified repository, publish findings back to the issue, and stop to ask focused questions whenever evidence or policy cannot resolve a behavior-changing gap. Do not implement or silently choose defaults.
-version: 2.1.0
+version: 2.2.0
 author: RebirthUO
 license: MIT
 metadata:
@@ -23,10 +23,9 @@ metadata:
 ## Boundary
 
 Own Phase 2: turn an intake or existing issue into an evidence-backed,
-implementation-ready contract. Research publishes findings to the identified
-issue unless the user explicitly requests advice-only work with no GitHub
-mutation. Label changes and unrelated mutations still require separate
-authorization.
+implementation-ready contract. Research publishes to the issue body unless the
+user requests advice-only work. Scoped publication includes the `blocked` label
+toggle; unrelated labels require separate authorization.
 
 ## Repository gate
 
@@ -58,9 +57,9 @@ GitHub read or write and pass the repository explicitly to each command.
    default for a blocking item and do not call the issue ready.
 7. After answers, re-read the issue revision and repeat the affected evidence
    and repository checks. Return `READY` only when no blocking gap remains.
-8. Publish findings per [issue publication](references/issue-publication.md),
-   then read back the post-publication issue revision and comment URL.
-9. Mutate labels only when explicitly authorized, then read back the issue.
+8. Publish per [issue publication](references/issue-publication.md), then read
+   back the post-publication revision and labels.
+9. Mutate unrelated labels only when explicitly authorized.
 
 ## User-question gate
 
@@ -80,5 +79,6 @@ Only `READY` at the post-publication issue revision may hand off to
 
 - Official claims are backed by official evidence or remain blockers.
 - `READY` has complete behavior, scope, safety, acceptance, and validation rows.
-- Every completed research run left body and comment evidence on the issue.
+- Every completed research run left body evidence and the correct `blocked`
+  label state.
 - Advice-only requests changed nothing on GitHub.

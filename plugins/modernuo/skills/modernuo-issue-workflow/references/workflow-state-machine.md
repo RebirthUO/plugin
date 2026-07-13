@@ -96,15 +96,15 @@ is `READY` or the user explicitly stops the workflow.
 ## Implementation and publication
 
 Before implementation, require the matching live post-publication issue revision
-and `READY` packet with completed issue publication. Create a new isolated
-worktree from the verified intended base and a unique scoped branch. Preserve
-the user's existing checkout and unrelated changes. If the implementation
-discovers an unknown, save the checkpoint and return to research; do not commit
-a guessed solution.
+and `READY` packet with completed body-only issue publication and no `blocked`
+label. Create a new isolated worktree from the verified intended base and a
+unique scoped branch. Preserve the user's existing checkout and unrelated
+changes. If the implementation discovers an unknown, save the checkpoint and
+return to research; do not commit a guessed solution.
 
 After final scoped validation, stage only in-scope paths, commit, push the
 verified remote branch, create or update the PR, and read back its URL, head,
 base, state, remote SHA, body, and checks. A merge, release, deployment,
-unrelated comment, label, or project update is out of scope unless separately
-requested. Scoped research comments and body updates from
+unrelated comment, unrelated label, or project update is out of scope unless
+separately requested. Scoped body updates and `blocked`-label toggles from
 `modernuo-issue-research` are in scope for the research phase.

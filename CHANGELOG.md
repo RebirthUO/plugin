@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.3.1 - 2026-07-13
+
+- Changed `modernuo-issue-research` scoped publication to body-only updates on
+  the `## Research contract` section; research runs no longer post issue
+  comments.
+- Made the `blocked` label a scoped publication action: add on `BLOCKED`,
+  remove on `READY`.
+- Updated `modernuo-issue-workflow`, `modernuo-issue-implement`, and their
+  references to require body-only publication evidence and no `blocked` label
+  before implementation may start.
+
 ## 2.3.0 - 2026-07-13
 
 - Extended `modernuo-issue-research` so every completed research run publishes
