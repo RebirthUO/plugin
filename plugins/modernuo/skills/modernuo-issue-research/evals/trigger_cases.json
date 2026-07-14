@@ -6,15 +6,15 @@
       "family": "owned_job"
     },
     {
-      "text": "Review this ModernUO issue, preserve its current headings and field order, and replace obsolete information with verified findings.",
+      "text": "Review and rewrite this issue while preserving its current headings and field order and replacing obsolete information with verified findings.",
       "family": "owned_job"
     },
     {
-      "text": "Clean this researched issue in place: remove resolved RESEARCH_REQUIRED markers and answered blockers but retain genuinely unresolved items.",
+      "text": "Remove resolved requirements and blockers from this researched issue, including answered RESEARCH_REQUIRED markers, but retain unresolved items.",
       "family": "owned_job"
     },
     {
-      "text": "Make this existing UO issue implementation-ready without changing its title, adding headings, or appending a research contract.",
+      "text": "Rewrite existing issue fields to make this UO issue implementation-ready without changing its title, adding headings, or appending a research contract.",
       "family": "owned_job"
     }
   ],

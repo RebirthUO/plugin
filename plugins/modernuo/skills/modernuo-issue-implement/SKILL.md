@@ -1,6 +1,6 @@
 ---
 name: modernuo-issue-implement
-description: Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision and a clean, format-preserving rewritten body. Resolve the exact repository only from applicable project AGENTS.md instructions, verify the checkout and push remote, and implement the smallest approved tested change. Do not research unresolved mechanics, choose defaults, merge, or deploy.
+description: Use when implementing a ModernUO or UO GitHub issue with a current READY modernuo-issue-research handoff and clean, format-preserving body. Resolve the repository only from applicable project AGENTS.md, verify checkout and push remote, and implement the smallest approved tested change. Do not research unresolved mechanics, choose defaults, merge, or deploy.
 version: 3.0.0
 author: RebirthUO
 metadata:

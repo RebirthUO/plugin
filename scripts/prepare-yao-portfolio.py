@@ -202,16 +202,16 @@ def fallback_prompts(name: str, title: str, group: str) -> list[str]:
                 "remove resolved requirements and blockers, and stop on unresolved behavior."
             ),
             (
-                "Review this ModernUO issue, preserve its current headings and field order, "
-                "and replace obsolete information with verified findings."
+                "Review and rewrite this issue while preserving its current headings and "
+                "field order and replacing obsolete information with verified findings."
             ),
             (
-                "Clean this researched issue in place: remove resolved RESEARCH_REQUIRED "
-                "markers and answered blockers but retain genuinely unresolved items."
+                "Remove resolved requirements and blockers from this researched issue, "
+                "including answered RESEARCH_REQUIRED markers, but retain unresolved items."
             ),
             (
-                "Make this existing UO issue implementation-ready without changing its "
-                "title, adding headings, or appending a research contract."
+                "Rewrite existing issue fields to make this UO issue implementation-ready "
+                "without changing its title, adding headings, or appending a research contract."
             ),
         ]
     elif name == "modernuo-issue-implement":

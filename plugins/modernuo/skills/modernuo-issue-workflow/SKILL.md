@@ -1,6 +1,6 @@
 ---
 name: modernuo-issue-workflow
-description: Use when the user wants a ModernUO or UO GitHub request taken from template-gated intake or a user-identified existing issue through evidence-backed research, format-preserving issue cleanup, an interview for every blocker, isolated implementation, branch push, and pull request. Resolve the exact repository only from applicable project AGENTS.md instructions; an existing issue skips new issue creation. Research rewrites obsolete issue content instead of appending a report. Do not use for one phase alone, advice-only work, or unclear official gameplay behavior.
+description: Use when taking a ModernUO or UO GitHub request from template-gated intake or an identified issue through research, format-preserving issue cleanup, blocker interviews, isolated implementation, branch push, and pull request. Resolve the repository only from applicable project AGENTS.md; existing issues skip creation. Research rewrites obsolete content instead of appending a report. Excludes single-phase, advice-only, or unclear-gameplay work.
 version: 2.0.0
 metadata:
   hermes:
@@ -21,9 +21,9 @@ metadata:
 
 ## Boundary
 
-Own the end-to-end issue-to-PR state machine. Delegate the phase work to the
-named child skills; never weaken their repository, evidence, readiness, or
-publication gates. An explicit full-workflow request authorizes only the scoped
+Own the issue-to-PR state machine. Delegate to the named child skills without
+weakening their repository, evidence, readiness, or publication gates. An
+explicit full-workflow request authorizes only the scoped
 issue creation on the new-request route, isolated worktree, branch push, and
 PR. It never authorizes a merge, release, deployment, unrelated labels,
 comments, or other mutations outside the scoped research publication performed
