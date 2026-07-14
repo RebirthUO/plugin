@@ -21,10 +21,12 @@ remains unresolved until the user supplies an explicit custom-policy decision.
    project's applicable `AGENTS.md`, requires the gate's fresh `TemplatePacket`,
    and produces or creates an `IntakePacket`.
 3. `modernuo-issue-research` establishes official behavior, inspects the same
-   verified repository, publishes findings to the issue body only, toggles the
-   `blocked` label when blockers remain, and produces a `ResearchPacket`. It
-   asks focused questions and stops whenever a behavior-changing fact or policy
-   is unresolved.
+   verified repository, and rewrites the issue body under its existing headings.
+   It replaces obsolete claims, removes resolved `RESEARCH_REQUIRED` markers and
+   blocker text, never appends a research report, toggles the `blocked` label
+   only while blockers remain, and produces a `ResearchPacket`. It asks focused
+   questions and stops whenever a behavior-changing fact or policy is
+   unresolved.
 4. `modernuo-issue-implement` accepts only a current `READY` research handoff,
    verifies the configured repository, checkout, and push remote, then
    implements and tests the smallest approved change.
@@ -122,7 +124,9 @@ or live telemetry.
   consuming project;
 - take a new request or an existing issue through official research, blocker
   interviews, isolated implementation, branch push, and pull request creation;
-- deeply research an issue and stop for unresolved official behavior;
+- deeply research or review an issue, rewrite its existing fields with current
+  findings, clean resolved requirements/blockers, and stop for unresolved
+  official behavior;
 - implement a current research-ready issue with focused tests;
 - audit a ModernUO subsystem, serialization migration, lifecycle, or hot path;
 - migrate RunUO/ServUO code to current ModernUO conventions;

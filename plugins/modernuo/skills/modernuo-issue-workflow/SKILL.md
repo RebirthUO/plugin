@@ -1,6 +1,7 @@
 ---
 name: modernuo-issue-workflow
-description: Use when the user wants a ModernUO or UO GitHub request taken from template-gated intake or a user-identified existing issue through evidence-backed research, an interview for every blocker, isolated implementation, branch push, and pull request. Resolve the exact repository only from applicable project AGENTS.md instructions; an existing issue skips new issue creation. Do not use for one phase alone, advice-only work, or unclear official gameplay behavior.
+description: Use when the user wants a ModernUO or UO GitHub request taken from template-gated intake or a user-identified existing issue through evidence-backed research, format-preserving issue cleanup, an interview for every blocker, isolated implementation, branch push, and pull request. Resolve the exact repository only from applicable project AGENTS.md instructions; an existing issue skips new issue creation. Research rewrites obsolete issue content instead of appending a report. Do not use for one phase alone, advice-only work, or unclear official gameplay behavior.
+version: 2.0.0
 metadata:
   hermes:
     tags: [modernuo, ultima-online, github, issues, workflow, pull-requests]
@@ -39,10 +40,11 @@ by `modernuo-issue-research`.
    fresh `TemplatePacket`; if it cannot identify one suitable live template,
    ask the user and keep the case pending.
 3. Run `modernuo-issue-research` for the created or existing issue. Each
-   completed research run must publish its findings to the issue body and toggle
-   the `blocked` label. On every `BLOCKED` result, enter interview mode: return
-   only its focused questions, record each answer, and repeat the affected
-   research. Do not treat a user preference as official UO evidence.
+   completed research run must rewrite the issue body in its existing format,
+   remove obsolete content and resolved requirements/blockers, and toggle the
+   `blocked` label. On every `BLOCKED` result, enter interview mode: return only
+   its focused questions, record each answer, and repeat the affected research.
+   Do not treat a user preference as official UO evidence.
 4. Hand off only a current `READY` `ResearchPacket` with complete EA clarity to
    `modernuo-issue-implement`. Require a newly isolated worktree and scoped
    branch; commit, push, create or update the PR, and read back every mutation.
@@ -73,7 +75,8 @@ requires a verified PR and zero blockers.
   runs create no issue.
 - Every gameplay claim has complete official evidence or remains pending.
 - Research is `READY` at the live post-publication issue revision before edits
-  begin, every research run left body evidence on the issue, and `READY` issues
-  do not retain the `blocked` label.
+  begin, every research run left one clean current body in the original format,
+  and `READY` issues retain neither unresolved marker/blocker text nor the
+  `blocked` label.
 - The implementation uses an isolated worktree, scoped branch, fresh tests,
   explicit push remote, and read-back PR evidence.

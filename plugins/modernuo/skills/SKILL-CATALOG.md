@@ -10,7 +10,7 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 |---|---|---|---|
 | Template gate | `modernuo-issue-template-gate` | Exact repository from project `AGENTS.md` | Ask when no single live template fits |
 | Create | `modernuo-issue-create` | Exact repository from project `AGENTS.md` | Stop after `IntakePacket` |
-| Research | `modernuo-issue-research` | Same verified repository | Ask and stop on unresolved behavior |
+| Research | `modernuo-issue-research` | Same verified repository | Rewrite the existing body format; ask and stop on unresolved behavior |
 | Implement | `modernuo-issue-implement` | Same verified repository and push remote | Require current `READY` research |
 | Orchestrate | `modernuo-issue-workflow` | Same verified repository | Existing issue skips create; no completion before a verified PR |
 
@@ -108,10 +108,10 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 | `modernuo-events` | domain | none | Use when subscribing to, handling, or defining ModernUO EventSink or generated events, including connection, speech, movement, combat, world, death, or deletion hooks. Covers event |
 | `modernuo-gump-system` | domain | none | Use when creating or changing ModernUO StaticGump, DynamicGump, builders, placeholders, SendGump/CloseGump flows, or response handling. Covers layout choice, non-empty construction |
 | `modernuo-issue-create` | agentic | create | Use when the user explicitly asks to draft or create a ModernUO or UO GitHub issue from the target repository's live issue template. Resolve the exact repository only from applicab |
-| `modernuo-issue-implement` | agentic | implement | Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision. Resolve the exact repos |
+| `modernuo-issue-implement` | agentic | implement | Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision and a clean, format-pres |
 | `modernuo-issue-research` | agentic | research | Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.m |
 | `modernuo-issue-template-gate` | agentic | gate | Use when a ModernUO or UO issue workflow must select and validate the exact live GitHub Issue_Template before drafting or creating an issue. Resolve the exact repository only from  |
-| `modernuo-issue-workflow` | agentic | workflow | Use when the user wants a ModernUO or UO GitHub request taken from template-gated intake or a user-identified existing issue through evidence-backed research, an interview for ever |
+| `modernuo-issue-workflow` | agentic | workflow | Use when the user wants a ModernUO or UO GitHub request taken from template-gated intake or a user-identified existing issue through evidence-backed research, format-preserving iss |
 | `modernuo-lifecycle-cleanup` | domain | none | Use when implementing or reviewing ModernUO object-lifetime cleanup for timers, event subscriptions, dynamic regions, owned entities, callbacks, and restored runtime state. Do not  |
 | `modernuo-lootpack-preservation` | domain | none | Use when editing or migrating ModernUO-based creature loot that contains GenerateLoot, AddLoot(LootPack.*), PackGold, PackItem, or loot-policy helpers. Preserve source-derived pack |
 | `modernuo-monster-abilities` | domain | none | Use when adding, migrating, or reviewing reusable ModernUO-based creature combat specials implemented as MonsterAbility classes. Do not route boss phase orchestration or WeaponAbil |

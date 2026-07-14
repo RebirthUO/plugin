@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.0.0 - 2026-07-14
+
+- Changed `modernuo-issue-research` publication from an appended
+  `## Research contract` to a full in-place rewrite that preserves the live
+  issue's headings, field order, and Markdown format.
+- Research and review now replace obsolete claims in their existing fields,
+  remove resolved `RESEARCH_REQUIRED` markers and blocker/question text, and
+  retain only genuinely unresolved items.
+- Updated `modernuo-issue-create`, `modernuo-issue-workflow`, and
+  `modernuo-issue-implement` handoffs to require a clean current issue body,
+  unchanged title, no appended research report, and no unresolved marker or
+  blocker text before implementation.
+
 ## 2.3.1 - 2026-07-13
 
 - Changed `modernuo-issue-research` scoped publication to body-only updates on

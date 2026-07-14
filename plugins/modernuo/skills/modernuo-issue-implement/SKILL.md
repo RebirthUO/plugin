@@ -1,7 +1,7 @@
 ---
 name: modernuo-issue-implement
-description: Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision. Resolve the exact repository only from applicable project AGENTS.md instructions, verify the checkout and push remote, and implement the smallest approved tested change. Do not research unresolved mechanics, choose defaults, merge, or deploy.
-version: 2.0.0
+description: Use when the user explicitly asks to implement a ModernUO or UO GitHub issue that has a READY modernuo-issue-research handoff at the current issue revision and a clean, format-preserving rewritten body. Resolve the exact repository only from applicable project AGENTS.md instructions, verify the checkout and push remote, and implement the smallest approved tested change. Do not research unresolved mechanics, choose defaults, merge, or deploy.
+version: 3.0.0
 author: RebirthUO
 metadata:
   hermes:
@@ -52,8 +52,8 @@ them.
 3. Isolate conflicting work. Create or reuse a scoped branch/worktree only when
    authorized by the requested deliverable.
 4. Implement the smallest acceptance-mapped slice. Official behavior comes from
-   the frozen research contract; repository code is implementation evidence,
-   not permission to alter that contract.
+   the frozen `ResearchPacket`; repository code is implementation evidence, not
+   permission to alter that packet or the researched issue scope.
 5. Add behavior tests for acceptance and rejection boundaries. Run diff/schema
    checks, the owning build, focused tests after the final edit, and broader
    tests in proportion to risk. Separate baseline/environment failures.
@@ -78,7 +78,8 @@ created. State every omitted publication action.
 
 ## Verification
 
-- Research is `READY` with body-only publication evidence and no `blocked`
+- Research is `READY` with a clean format-preserving body rewrite, no appended
+  research report, no unresolved requirement/blocker text, and no `blocked`
   label.
 - Repository, checkout, base, and push remote match project instructions.
 - Diff is scoped and maps to acceptance criteria; no unrelated behavior changed.

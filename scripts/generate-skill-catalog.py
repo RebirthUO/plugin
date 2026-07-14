@@ -68,7 +68,7 @@ def render(skills_root: Path) -> str:
         "|---|---|---|---|",
         "| Template gate | `modernuo-issue-template-gate` | Exact repository from project `AGENTS.md` | Ask when no single live template fits |",
         "| Create | `modernuo-issue-create` | Exact repository from project `AGENTS.md` | Stop after `IntakePacket` |",
-        "| Research | `modernuo-issue-research` | Same verified repository | Ask and stop on unresolved behavior |",
+        "| Research | `modernuo-issue-research` | Same verified repository | Rewrite the existing body format; ask and stop on unresolved behavior |",
         "| Implement | `modernuo-issue-implement` | Same verified repository and push remote | Require current `READY` research |",
         "| Orchestrate | `modernuo-issue-workflow` | Same verified repository | Existing issue skips create; no completion before a verified PR |",
         "",

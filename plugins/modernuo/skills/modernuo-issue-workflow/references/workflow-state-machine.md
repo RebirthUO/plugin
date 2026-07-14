@@ -31,11 +31,11 @@ EXISTING_ISSUE -> RESEARCH
 `TEMPLATE_GATE` produces `TemplatePacket: TEMPLATE_READY`. `INTAKE` produces
 an `IntakePacket`; it may create one issue when the full workflow request is
 current and explicit. `RESEARCH` produces `ResearchPacket: READY | BLOCKED`
-and requires scoped issue publication on every completed run. `IMPLEMENT`
-produces `ImplementationResult`. Any stale issue revision, template revision,
-repository mismatch, unverified write, missing research publication, test
-regression, or new behavior-changing gap transitions to `INTERVIEW_PENDING` or
-`RESEARCH` rather than forward.
+and requires a scoped format-preserving issue rewrite on every completed run.
+`IMPLEMENT` produces `ImplementationResult`. Any stale issue revision, template
+revision, repository mismatch, unverified write, missing research publication,
+test regression, or new behavior-changing gap transitions to
+`INTERVIEW_PENDING` or `RESEARCH` rather than forward.
 
 ## Template and intake integrity
 
@@ -90,13 +90,15 @@ workflow_checkpoint:
 Do not report success, choose defaults, edit code, or make an unrelated GitHub
 mutation while this packet is open. After an answer, record it, re-read the
 affected live issue/template, repeat only the invalidated research with fresh
-issue publication, and ask again if a blocker remains. Continue until the packet
-is `READY` or the user explicitly stops the workflow.
+issue publication, replace the obsolete text with the answer, remove the
+resolved requirement/blocker, and ask again if a blocker remains. Continue
+until the packet is `READY` or the user explicitly stops the workflow.
 
 ## Implementation and publication
 
 Before implementation, require the matching live post-publication issue revision
-and `READY` packet with completed body-only issue publication and no `blocked`
+and `READY` packet with a completed format-preserving body rewrite, no appended
+research report, no unresolved requirement/blocker text, and no `blocked`
 label. Create a new isolated worktree from the verified intended base and a
 unique scoped branch. Preserve the user's existing checkout and unrelated
 changes. If the implementation discovers an unknown, save the checkpoint and
@@ -106,5 +108,6 @@ After final scoped validation, stage only in-scope paths, commit, push the
 verified remote branch, create or update the PR, and read back its URL, head,
 base, state, remote SHA, body, and checks. A merge, release, deployment,
 unrelated comment, unrelated label, or project update is out of scope unless
-separately requested. Scoped body updates and `blocked`-label toggles from
-`modernuo-issue-research` are in scope for the research phase.
+separately requested. Scoped format-preserving body rewrites and
+`blocked`-label toggles from `modernuo-issue-research` are in scope for the
+research phase.
