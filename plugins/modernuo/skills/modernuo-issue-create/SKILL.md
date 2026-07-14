@@ -1,7 +1,7 @@
 ---
 name: modernuo-issue-create
 description: Use when the user explicitly asks to draft or create a ModernUO or UO GitHub issue from the target repository's live issue template. Resolve the exact repository only from applicable project AGENTS.md instructions, fail closed when it is missing or ambiguous, and stop after producing the intake handoff. Do not perform deep research, readiness review, or implementation.
-version: 2.0.0
+version: 2.1.0
 author: RebirthUO
 metadata:
   hermes:
@@ -50,6 +50,8 @@ or claim implementation readiness.
 4. Fill unavailable research fields with an explicit `RESEARCH_REQUIRED` item
    containing the missing claim and why it matters. Never write a likely
    interpretation, emulator default, or repository behavior as official UO.
+   These intake placeholders are replaced and removed by the research phase
+   when their fields are resolved.
 5. Search open and closed issues for duplicates and verify every requested
    label exists. A duplicate or missing label blocks creation unless the user
    authorizes the appropriate next action.

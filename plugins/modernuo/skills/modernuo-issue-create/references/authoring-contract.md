@@ -34,6 +34,11 @@ RESEARCH_REQUIRED[Rn]: <claim or decision>
 Why it matters: <behavior, era, scope, persistence, economy, client, or test risk>
 ```
 
+These are temporary intake placeholders, not permanent issue history. The
+research phase rewrites each affected field with its verified current content
+and removes the marker plus `Why it matters` line when resolved. It retains a
+marker only while the corresponding gap is genuinely unresolved.
+
 Never substitute a likely interpretation. Community sites, emulator code,
 ModernUO code, and local repository behavior are not official UO evidence.
 

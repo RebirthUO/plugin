@@ -195,10 +195,25 @@ def fallback_prompts(name: str, title: str, group: str) -> list[str]:
             "GitHub repository only from project AGENTS.md."
         )
     elif name == "modernuo-issue-research":
-        prompts[0] = (
-            "Research this issue against official OSI/EA sources and the configured "
-            "repository; stop and ask me about every unresolved behavior decision."
-        )
+        prompts = [
+            (
+                "Research this issue against official OSI/EA sources and the configured "
+                "repository, rewrite its existing fields without appending a report, "
+                "remove resolved requirements and blockers, and stop on unresolved behavior."
+            ),
+            (
+                "Review this ModernUO issue, preserve its current headings and field order, "
+                "and replace obsolete information with verified findings."
+            ),
+            (
+                "Clean this researched issue in place: remove resolved RESEARCH_REQUIRED "
+                "markers and answered blockers but retain genuinely unresolved items."
+            ),
+            (
+                "Make this existing UO issue implementation-ready without changing its "
+                "title, adding headings, or appending a research contract."
+            ),
+        ]
     elif name == "modernuo-issue-implement":
         prompts[0] = (
             "Implement this issue only from a READY research handoff at the current "
@@ -212,7 +227,8 @@ def fallback_prompts(name: str, title: str, group: str) -> list[str]:
     elif name == "modernuo-issue-workflow":
         prompts[0] = (
             "Take this ModernUO issue from template-gated intake or an existing issue "
-            "through blocker interviews, an isolated worktree, branch push, and PR."
+            "through a format-preserving research rewrite, blocker interviews, an "
+            "isolated worktree, branch push, and PR."
         )
     elif name == "uo-official-evidence":
         prompts[0] = (
@@ -333,6 +349,9 @@ def semantic_document(record: dict) -> dict:
         "modernuo-issue-create": ["create an intake issue", "live issue template", "intakepacket"],
         "modernuo-issue-research": [
             "research this issue",
+            "review and rewrite this issue",
+            "rewrite existing issue fields",
+            "remove resolved requirements and blockers",
             "official osi ea sources",
             "researchpacket",
         ],

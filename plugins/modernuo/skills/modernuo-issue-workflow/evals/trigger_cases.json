@@ -2,7 +2,7 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Take this ModernUO issue from template-gated intake or an existing issue through blocker interviews, an isolated worktree, branch push, and PR.",
+      "text": "Take this ModernUO issue from template-gated intake or an existing issue through a format-preserving research rewrite, blocker interviews, an isolated worktree, branch push, and PR.",
       "family": "owned_job"
     },
     {
@@ -42,7 +42,7 @@
       "family": "near_neighbor"
     },
     {
-      "text": "Research this issue against official OSI/EA sources and the configured repository; stop and ask me about every unresolved behavior decision.",
+      "text": "Research this issue against official OSI/EA sources and the configured repository, rewrite its existing fields without appending a report, remove resolved requirements and blockers, and stop on unresolved behavior.",
       "family": "near_neighbor"
     },
     {

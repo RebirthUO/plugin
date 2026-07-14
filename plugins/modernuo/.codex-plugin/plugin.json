@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "2.3.1",
+  "version": "3.0.0",
   "description": "Official-UO research and ModernUO engineering workflows",
   "author": {
     "name": "Jan Siems",
@@ -22,7 +22,7 @@
     "defaultPrompt": [
       "Run a template-gated ModernUO issue workflow from intake or an existing GitHub issue through research, an isolated worktree, branch push, and PR.",
       "Create an intake issue using the repository and live template declared by this project's AGENTS.md.",
-      "Research this issue against official OSI/EA sources, write findings back to the issue, and stop to ask me about unresolved decisions.",
+      "Research or review this issue against official OSI/EA sources, rewrite its existing body fields with current findings, remove resolved requirements and blockers, and stop to ask me about unresolved decisions.",
       "Implement this issue from its current READY research handoff and run focused verification.",
       "Establish the official UO behavior for this mechanic and compare it with the configured repository.",
       "Audit this ModernUO subsystem for persistence, lifecycle, performance, and regression risks.",

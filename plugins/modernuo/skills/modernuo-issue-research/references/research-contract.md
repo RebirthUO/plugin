@@ -79,12 +79,12 @@ official UO; they never rewrite the official evidence.
 
 Every completed research run publishes to the verified issue unless the user
 explicitly forbids GitHub mutation. Follow
-[issue publication](issue-publication.md) for the body section, blocked-label
+[issue publication](issue-publication.md) for the body rewrite, blocked-label
 toggle, read-back rules, and advice-only exception.
 
 Scoped publication implicitly authorizes:
 
-- one `## Research contract` body update;
+- one format-preserving issue body rewrite;
 - a `blocked` label toggle (`--add-label` when `BLOCKED`, `--remove-label`
   when `READY`).
 
@@ -112,20 +112,33 @@ acceptance_criteria: []
 test_plan: []
 risks: []
 issue_publication:
-  body_update:
+  body_rewrite:
     applied: true
-    sections: [Research contract]
+    format_source_digest: pre-publication body digest
+    headings_preserved: []
+    updated_fields: []
+    removed_obsolete_items: []
+    unresolved_items_retained: []
+    appended_sections: []
+    title_changed: false
   labels:
     blocked_applied: false
     blocked_removed: false
 mutation:
   authorized: true
   performed:
-    - action: issue_body_update
+    - action: issue_body_rewrite
     - action: issue_label_add
     - action: issue_label_remove
 readiness: READY | BLOCKED
 ```
 
 Record `issue.updated_at` and `body_digest` after publication, not before. A
-later issue edit invalidates `READY` until the changed contract is reviewed.
+later issue edit invalidates `READY` until the changed body is reviewed.
+
+The evidence ledger, readiness matrix, resolved marker mapping, and answered
+questions stay in the `ResearchPacket`; do not append them as a second issue
+format. The published body contains their current user-facing conclusions in
+the existing issue fields. `READY` requires `unresolved_items_retained: []` and
+an issue body with no `RESEARCH_REQUIRED`, blocker, or research-contract
+scaffolding.

@@ -8,11 +8,12 @@ checkout, push remote, live issue revision, and a matching `READY`
 
 The research handoff must contain exact identity, official behavior, current
 implementation, expected-versus-actual delta, scope/non-goals, product impact,
-safety boundaries, acceptance criteria, validation plan, and completed body-only
-issue publication with post-publication revision fields and no `blocked` label.
-A missing row that can change behavior, architecture, distribution, persistence,
-or tests returns to `modernuo-issue-research`; it is not an implementation
-default.
+safety boundaries, acceptance criteria, validation plan, and a completed
+format-preserving issue-body rewrite with post-publication revision fields. The
+live issue must have no appended research report, unresolved
+`RESEARCH_REQUIRED` or blocker text, or `blocked` label. A missing row that can
+change behavior, architecture, distribution, persistence, or tests returns to
+`modernuo-issue-research`; it is not an implementation default.
 
 ## Inspection
 

@@ -4,14 +4,17 @@
     "inputs": [
       "modernuo issue research",
       "research this issue",
+      "review and rewrite this issue",
+      "rewrite existing issue fields",
+      "remove resolved requirements and blockers",
       "official osi ea sources",
       "researchpacket"
     ],
     "trigger_actions": [
-      "Research this issue against official OSI/EA sources and the configured repository; stop and ask me about every unresolved behavior decision.",
-      "I need an evidence-backed plan for modernuo issue research in the configured ModernUO-based repository.",
-      "Help me implement a modernuo issue research change and identify the focused verification.",
-      "Audit this modernuo issue research diff for era, persistence, lifecycle, and regression risks."
+      "Research this issue against official OSI/EA sources and the configured repository, rewrite its existing fields without appending a report, remove resolved requirements and blockers, and stop on unresolved behavior.",
+      "Review this ModernUO issue, preserve its current headings and field order, and replace obsolete information with verified findings.",
+      "Clean this researched issue in place: remove resolved RESEARCH_REQUIRED markers and answered blockers but retain genuinely unresolved items.",
+      "Make this existing UO issue implementation-ready without changing its title, adding headings, or appending a research contract."
     ],
     "exclusions": [
       "modernuo issue create",
@@ -34,6 +37,9 @@
       "phrases": [
         "modernuo issue research",
         "research this issue",
+        "review and rewrite this issue",
+        "rewrite existing issue fields",
+        "remove resolved requirements and blockers",
         "official osi ea sources",
         "researchpacket"
       ]

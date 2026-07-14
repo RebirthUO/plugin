@@ -10,7 +10,7 @@
       "interview until research is ready"
     ],
     "trigger_actions": [
-      "Take this ModernUO issue from template-gated intake or an existing issue through blocker interviews, an isolated worktree, branch push, and PR.",
+      "Take this ModernUO issue from template-gated intake or an existing issue through a format-preserving research rewrite, blocker interviews, an isolated worktree, branch push, and PR.",
       "I need an evidence-backed plan for modernuo issue workflow in the configured ModernUO-based repository.",
       "Help me implement a modernuo issue workflow change and identify the focused verification.",
       "Audit this modernuo issue workflow diff for era, persistence, lifecycle, and regression risks."

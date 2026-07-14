@@ -7,7 +7,7 @@ explicitly requested advice-only work with no GitHub mutation.
 
 Scoped publication authorizes only:
 
-- one `## Research contract` body update on the identified issue;
+- one format-preserving body rewrite on the identified issue;
 - a `blocked` label toggle on that issue (`--add-label` when `BLOCKED`,
   `--remove-label` when `READY`);
 - read-back of the updated issue revision, labels, and body digest.
@@ -20,86 +20,63 @@ issue creation, commits, pushes, or pull requests.
 1. Re-read the live issue immediately before writing. If `updated_at` or the
    body digest changed since the research capture, reconcile or stop and ask the
    user before overwriting concurrent edits.
-2. Preserve the original intake text. Replace only the `## Research contract`
-   section when it already exists; otherwise append it after the intake body.
-3. Write in English. Do not include local paths, credentials, or secrets.
-4. Verify the repository label set contains `blocked` before toggling it. If the
+2. Treat the live body as the formatting source. Preserve its heading order,
+   field labels, option wording, and overall Markdown structure. Do not add a
+   `## Research contract`, research history, duplicate field, or other appended
+   report.
+3. Rewrite the content under the existing headings so the body describes only
+   the current researched request:
+   - replace stale, speculative, or contradicted claims with verified wording;
+   - incorporate resolved answers into the relevant field;
+   - remove each resolved `RESEARCH_REQUIRED[Rn]` marker and its associated
+     `Why it matters` line;
+   - remove answered questions, resolved blockers, obsolete requirements, and
+     superseded alternatives;
+   - retain unresolved requirements or blockers only in their original relevant
+     fields, with stable IDs that match the current `ResearchPacket`;
+   - remove a stale appended `## Research contract` section if one exists,
+     migrating still-current facts into the existing issue fields first.
+4. Keep every existing heading, even when its content becomes concise or
+   `Not applicable` with a researched rationale. Do not invent a new template
+   or reorder fields. Preserve user-authored context that remains current and
+   relevant; rewriting is not permission to erase the issue's goal, observed
+   behavior, reproduction, non-goals, or valid decisions.
+5. Write in English. Do not include internal packet metadata, readiness status,
+   repository revisions, local paths, credentials, or secrets in the issue
+   body unless the existing template explicitly requests that information.
+6. Verify the repository label set contains `blocked` before toggling it. If the
    label is missing, stop and ask the user; do not publish with a guessed
    substitute label.
-5. Apply the body update, toggle the `blocked` label, then read back the full
+7. Apply the body rewrite, toggle the `blocked` label, then read back the full
    issue and record the post-publication revision in the `ResearchPacket`.
-6. Do not post issue comments. The body section is the only canonical
-   publication surface.
+8. Do not edit the issue title or post issue comments. The rewritten body is
+   the only canonical publication surface.
 
-## Body section template
+## Rewrite model
 
-Replace or append exactly one `## Research contract` section. This section is
-the single source of truth for the current research run:
+Build the replacement body from the live issue, field by field:
 
-```markdown
-## Research contract
-
-**Readiness:** READY | BLOCKED
-**Research run:** ISO-8601 timestamp
-**Repository revision:** owner/repository @ commit-or-branch-sha
-**Issue revision before:** ISO-8601 digest-before
-**Issue revision after:** ISO-8601 digest-after
-
-### Official behavior
-- Era/publish scope:
-- Expected behavior summary:
-- Official sources:
-  - https://...
-
-### Current implementation
-- Verified paths and status:
-- Registration/reachability:
-
-### Evidence highlights
-- Official:
-  - C1: statement — verified | conflicting | unavailable — urls
-- Implementation:
-  - C2: statement — match | partial | absent | custom | unreachable — paths
-
-### Delta
-- Expected versus actual:
-
-### Scope
-- Included:
-- Non-goals:
-
-### Acceptance criteria
-- READY: numbered observable pass/fail boundaries
-- BLOCKED: list unresolved blockers instead
-
-### Validation
-- Focused tests:
-- Build/manual checks:
-
-### Resolved research markers
-- RESEARCH_REQUIRED[R1]: answer or blocker reference (Q1)
-- RESEARCH_REQUIRED[R2]: answer or blocker reference (Q2)
-
-### Gaps
-- Blocking:
-  - Q1: missing decision — risk if guessed
-- Non-blocking:
-  - ...
-
-### User questions
-- BLOCKED only:
-  - Q1: exact answer needed
-
-### Handoff
-- READY: safe to hand off to `modernuo-issue-implement` at the post-publication
-  issue revision recorded above. The `blocked` label must not remain on the issue.
-- BLOCKED: implementation must not start; answer the listed questions and rerun
-  research. The `blocked` label must be present on the issue.
+```yaml
+body_rewrite:
+  format_source: live pre-publication body
+  headings:
+    preserved: true
+    order_preserved: true
+    added: []
+  content:
+    updated_fields: []
+    preserved_fields: []
+    removed_obsolete_items: []
+    unresolved_items_retained: []
+  removed_sections:
+    - Research contract
 ```
 
-For `READY`, complete acceptance and validation rows. For `BLOCKED`, keep
-acceptance and validation explicit about what remains unknown and reference the
-stable question IDs from the current run.
+For `READY`, no `RESEARCH_REQUIRED`, unresolved blocker, or question text may
+remain. For `BLOCKED`, keep only current unresolved items in the relevant
+existing fields and reference their stable IDs in the internal packet. A
+historical `## Research contract` is obsolete publication scaffolding, not part
+of the preserved format.
 
 ## Blocked label rules
 
@@ -125,7 +102,9 @@ gh issue edit {number} --repo {owner}/{repository} --remove-label blocked
 ```
 
 After publication, read back the issue body, `updated_at`, labels, and digest.
-Record the body update and label toggle in `mutation.performed`.
+Verify heading identity/order, cleaned content, absence of an appended research
+section, and the title's unchanged value. Record the body rewrite and label
+toggle in `mutation.performed`.
 
 ## Advice-only exception
 
