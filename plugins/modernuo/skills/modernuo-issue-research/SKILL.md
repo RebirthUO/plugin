@@ -1,6 +1,6 @@
 ---
 name: modernuo-issue-research
-description: Use when the user asks to deeply research, review, or make an existing ModernUO or UO issue implementation-ready. Resolve the exact repository only from applicable project AGENTS.md instructions, establish official OSI/EA behavior, compare the verified repository, and rewrite the issue body in its existing format so obsolete text and resolved requirements or blockers are removed. Stop to ask focused questions whenever evidence or policy cannot resolve a behavior-changing gap. Do not append a research section, implement, or silently choose defaults.
+description: Use when researching, reviewing, or making an existing ModernUO or UO issue implementation-ready. Resolve the repository only from applicable project AGENTS.md, establish official behavior, compare its code, and rewrite existing issue fields without changing their format. Remove obsolete text and resolved requirements or blockers. Ask about behavior-changing gaps; never append a research report, implement, or choose defaults.
 version: 3.0.0
 author: RebirthUO
 license: MIT
@@ -22,42 +22,37 @@ metadata:
 
 ## Boundary
 
-Own Phase 2: turn an intake or existing issue into an evidence-backed,
-implementation-ready current issue. Research rewrites the issue body in place
-unless the user requests advice-only work. Preserve its existing template
-format while replacing obsolete content and removing resolved requirements and
-blockers. Scoped publication includes the `blocked` label toggle; unrelated
-labels require separate authorization.
+Own Phase 2: produce an evidence-backed, implementation-ready current issue.
+Unless work is advice-only, rewrite its body in the existing format, replacing
+obsolete content and removing resolved requirements/blockers. Scoped
+publication includes the `blocked` label; unrelated labels are unauthorized.
 
 ## Repository gate
 
-Read every applicable `AGENTS.md` and require one exact GitHub repository for
-the task. If it is missing, ambiguous, or conflicting, ask the user and stop.
-Never infer it from cwd, remotes, issue numbers, organizations, neighboring
-projects, or memory. Verify the exact identity through `gh api` before every
-GitHub read or write and pass the repository explicitly to each command.
+Read applicable `AGENTS.md` and require one exact GitHub repository. If missing,
+ambiguous, or conflicting, ask and stop. Never infer it from cwd, remotes,
+issue numbers, organizations, neighboring projects, or memory. Verify through
+`gh api` before each GitHub operation and pass it explicitly.
 
 ## Workflow
 
 1. Read [the research contract](references/research-contract.md),
    [issue publication](references/issue-publication.md), and
    [uo-official-evidence](../uo-official-evidence/SKILL.md).
-2. Capture the complete live issue, comments, labels, linked work, updated
-   timestamp, and body digest. Reconcile it with any supplied `IntakePacket`.
+2. Capture the live issue, comments, labels, linked work, timestamp, and body
+   digest; reconcile any `IntakePacket`.
 3. Convert every `RESEARCH_REQUIRED` marker and factual claim into an internal
    evidence ledger. Establish expected official behavior from
    OSI/EA/Broadsword sources before inspecting emulator or target-repository
    behavior.
-4. Inspect the verified target branch for current code, data, configuration,
-   registration/reachability, tests, and merged work. Label this as
-   implementation evidence, never official mechanics evidence.
+4. Inspect target code, data, configuration, reachability, tests, and merged
+   work as implementation evidence, never official-mechanics evidence.
 5. Trace era/ruleset, formulas/order, scope/non-goals, PvP/PvM, economy,
    housing/storage, exploit/security, client presentation, persistence,
    lifecycle, performance, rollback, acceptance criteria, and test boundaries.
-6. If any missing or conflicting item can change behavior, architecture, era,
-   distribution, player impact, persistence, or validation, emit focused
-   `UserQuestions` and mark the run `BLOCKED`. Do not recommend or apply a
-   default for a blocking item and do not call the issue ready.
+6. If a gap can change behavior, architecture, era, distribution, player
+   impact, persistence, or validation, emit focused `UserQuestions`, mark
+   `BLOCKED`, and neither suggest a default nor call the issue ready.
 7. After answers, re-read the issue revision and repeat the affected evidence
    and repository checks. Replace obsolete issue text with the verified answer,
    remove its resolved requirement and blocker text, and return `READY` only
@@ -69,11 +64,10 @@ GitHub read or write and pass the repository explicitly to each command.
 
 ## User-question gate
 
-Each blocking question contains a stable ID, missing decision, evidence already
-checked, concrete options only when evidence supports them, risk of guessing,
-and the exact answer needed. For `BLOCKED`, return the packet in chat and retain
-only the still-unresolved requirement and blocker text in the issue's existing
-field. No implementation follows a blocked run.
+Each blocking question has a stable ID, missing decision, evidence checked,
+supported options, guessing risk, and answer needed. For `BLOCKED`, return the
+packet and retain only current unresolved text in its existing field. Do not
+implement.
 
 ## Output contract
 

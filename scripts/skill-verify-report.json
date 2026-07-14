@@ -405,7 +405,7 @@
         "uo-official-evidence"
       ],
       "description_length": 371,
-      "skill_chars": 4024,
+      "skill_chars": 4135,
       "errors": [],
       "warnings": []
     },
@@ -420,8 +420,8 @@
         "modernuo-code-audit",
         "modernuo-test-workflow"
       ],
-      "description_length": 399,
-      "skill_chars": 4120,
+      "description_length": 359,
+      "skill_chars": 4187,
       "errors": [],
       "warnings": []
     },
@@ -435,8 +435,8 @@
         "uo-official-evidence",
         "uo-living-world-review"
       ],
-      "description_length": 448,
-      "skill_chars": 4177,
+      "description_length": 429,
+      "skill_chars": 4173,
       "errors": [],
       "warnings": []
     },
@@ -464,8 +464,8 @@
         "modernuo-issue-implement",
         "uo-official-evidence"
       ],
-      "description_length": 461,
-      "skill_chars": 4091,
+      "description_length": 446,
+      "skill_chars": 4197,
       "errors": [],
       "warnings": []
     },
