@@ -378,6 +378,12 @@ def semantic_document(record: dict) -> dict:
             "official evidence",
             "unresolved official evidence",
         ],
+        "uo-pets-taming-stables": [
+            "tol animal training",
+            "animal training profiles",
+            "pet training points",
+            "animal lore gumps",
+        ],
     }
     phrases = list(dict.fromkeys([*phrases, *precise.get(name, [])]))
     exclusions = [related.replace("-", " ") for related in record["related"][:8]]

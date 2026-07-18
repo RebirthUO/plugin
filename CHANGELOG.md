@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.1.0 - 2026-07-18
+
+- Extended `uo-pets-taming-stables` to cover current Time of Legends Animal
+  Training implementation surfaces: Animal Lore entry points, pet-training
+  profile persistence, progress, planning, option application, control-slot
+  increases, gump revision guards, regeneration/damage consumers, and focused
+  tests.
+- Added a `pet-training.md` reference that keeps official UO.com Animal
+  Training behavior separate from repository and TrueUO-derived implementation
+  evidence.
+- Updated trigger smoke coverage, generator hints, and README domain coverage
+  for pet-training maintenance.
+
 ## 3.0.0 - 2026-07-14
 
 - Changed `modernuo-issue-research` publication from an appended

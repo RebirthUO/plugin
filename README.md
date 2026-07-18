@@ -71,7 +71,8 @@ The portfolio includes focused owners for recurring ModernUO source domains:
 - `uo-vendors-commerce` - NPC stock and buy/sell transactions plus
   player-vendor listings, proceeds, recovery, packets, and lifecycle;
 - `uo-pets-taming-stables` - taming, controlled ownership and follower slots,
-  pet orders and transfer, stabling, login/logout, and cleanup;
+  Animal Training profiles/progress/options, pet orders and transfer, stabling,
+  login/logout, and cleanup;
 - `uo-factions-towns-sigils` - Factions membership/ranks, elections/offices,
   towns, sigils/monoliths, silver/tax economy, and persistence.
 

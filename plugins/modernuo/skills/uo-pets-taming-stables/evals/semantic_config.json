@@ -3,7 +3,11 @@
     "capability": "UO Pets, Taming, and Stables",
     "inputs": [
       "uo pets, taming, and stables",
-      "uo pets taming stables"
+      "uo pets taming stables",
+      "tol animal training",
+      "animal training profiles",
+      "pet training points",
+      "animal lore gumps"
     ],
     "trigger_actions": [
       "Review this uo pets, taming, and stables task and give me the repository-specific checks.",
@@ -33,7 +37,11 @@
       "weight": 1.0,
       "phrases": [
         "uo pets, taming, and stables",
-        "uo pets taming stables"
+        "uo pets taming stables",
+        "tol animal training",
+        "animal training profiles",
+        "pet training points",
+        "animal lore gumps"
       ]
     }
   },
