@@ -16,7 +16,6 @@
     "vscode"
   ],
   "factory_components": [
-    "references",
     "evals",
     "reports"
   ]

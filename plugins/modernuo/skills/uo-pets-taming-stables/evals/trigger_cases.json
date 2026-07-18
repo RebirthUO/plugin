@@ -16,6 +16,10 @@
     {
       "text": "Audit this uo pets, taming, and stables diff for era, persistence, lifecycle, and regression risks.",
       "family": "owned_job"
+    },
+    {
+      "text": "Help me with animal Training profiles, points, progress, options, or Animal Lore gumps.",
+      "family": "owned_job"
     }
   ],
   "should_not_trigger": [
