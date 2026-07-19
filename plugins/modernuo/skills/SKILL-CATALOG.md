@@ -56,7 +56,7 @@ See [README.md](../../../README.md) for repository resolution, evidence policy, 
 | Skill | Subgroup | Workflow phase | Description |
 |---|---|---|---|
 | `uo-aos-item-properties` | domain | none | Use when adding, debugging, or reviewing AoS-style item-property storage, OPL rows, equipped-value aggregation, gameplay hooks, or era gates in a ModernUO-based repository. Do not  |
-| `uo-bulk-orders-bod` | domain | none | Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor offers/turn-ins, bribery, material matching, or BOD reward selection. D |
+| `uo-bulk-orders-bod` | domain | none | Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, profession-specific offers/turn-ins, bribery, material matching, generated BOD persi |
 | `uo-champions-cannedevil-treasures` | domain | none | Use when adding, debugging, or auditing Champion Spawn/CannedEvil altars, candle progression, champions, Harrower skulls, Doom or Treasures event integration, and facet-specific re |
 | `uo-combat-pipeline` | domain | none | Use when tracing or changing ModernUO-based melee/ranged hit checks, parry, weapon abilities, special moves, slayers, damage modifiers, elemental splits, resist application, or com |
 | `uo-crafting-recipes-resources` | domain | none | Use when adding, debugging, or auditing ModernUO-based CraftSystem/CraftItem registrations, recipe scrolls, subresources, expansion gates, tools, exceptional outcomes, or ICraftabl |

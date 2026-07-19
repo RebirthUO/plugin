@@ -2,29 +2,35 @@
 
 Detailed architecture, tables, examples, and historical observations deferred from the skill entrypoint. Re-check symbols and era rules in the active branch.
 
+Current RebirthUO branch note: `BulkOrderSystem` now owns profession-gated BOD
+support for Smith, Tailor, Alchemy, Inscription, Tinkering, Cooking, Fletching,
+and Carpentry, with later craft paths gated through `Core.TOL`. Treat that as
+repository implementation evidence only; verify official publish chronology and
+player-facing rules through `uo-official-evidence`.
+
 ## Overview
 
-The Bulk Order Deed (BOD) system is the pre-Publish-95 BOD world: a player picks up a craft order from an NPC, fills it with a small set of crafted items, and turns it back in for rewards. The BOD world covers two craft systems in the pre-Publish-95 era — Blacksmithy and Tailoring — and the BOD book (BOB) for storage.
+The Bulk Order Deed (BOD) system lets a player pick up a craft order from an NPC, fill it with crafted items, and turn it back in for gold, fame, reward points, or BOD rewards. The BOD book (BOB) stores and filters deeds across the supported profession surface.
 
 Community pages contain chronology leads for early and expanded BOD support,
 but those dates and craft lists are not an official contract. Verify every
 publish/chronology claim through `uo-official-evidence`, then describe the
 configured repository's implemented craft set separately.
 
-The engine code lives in `Projects/UOContent/Engines/Bulk Orders/`. The base class is `BaseBOD.cs`. The Smith variant is `SmallSmithBOD.cs` / `LargeSmithBOD.cs`. The Tailor variant is `SmallTailorBOD.cs` / `LargeTailorBOD.cs`. The BOB code is in `Books/`. The gumps are `SmallBODGump.cs`, `LargeBODGump.cs`, `BODBuyGump.cs`, `BOBGump.cs`, `BOBFilterGump.cs`, etc.
+The engine code lives in `Projects/UOContent/Engines/Bulk Orders/`. The base class is `BaseBOD.cs`. Profession variants include `Small*/Large*BOD` pairs for Smith, Tailor, Alchemy, Inscription, Tinkering, Cooking, Fletching, and Carpentry. The BOB code is in `Books/`. The gumps include `SmallBODGump.cs`, `LargeBODGump.cs`, `BODBuyGump.cs`, `BODPointsChoiceGump.cs`, `BOBGump.cs`, and `BOBFilterGump.cs`.
 
-This skill covers the BOD hierarchy, the BOD acceptance flow, the turn-in pipeline, the BOB storage and filter system, the per-craft reward mapping, the ML-era turn-in cooldown, the Bribery system (Publish 74+), the BulkMaterialType system, and the vendor-side BOD offer mechanics.
+This skill covers the BOD hierarchy, the BOD acceptance flow, the turn-in pipeline, pending reward points, the BOB storage and filter system, per-craft reward calculators, era-gated cooldowns, the Bribery system, generated persistence schemas, the BulkMaterialType system, and vendor-side BOD offer mechanics.
 
 ## When to Use
 
-- Adding a new BOD type (Smith or Tailor).
+- Adding a new BOD type or maintaining an existing profession BOD.
 - Debugging a BOD turn-in that does not validate the items.
 - Wiring a BOD reward item (e.g. a new dye tub or a new tool).
 - Adding a BOD filter to the BOB.
 - Auditing the BOD reward pool.
 - Adding the Bribery option to a BOD vendor.
 - Adjusting the BOD turn-in cooldown for ML.
-- Reading the per-era BOD scope (pre-Publish-95 = Smith/Tailor only).
+- Reading the per-era BOD scope and separating official publish evidence from repository feature gates.
 
 Don't use for:
 
@@ -35,10 +41,10 @@ Don't use for:
 
 ## The BOD Hierarchy
 
-`Projects/UOContent/Engines/Bulk Orders/BaseBOD.cs` is the abstract base. Two concrete branches:
+`Projects/UOContent/Engines/Bulk Orders/BaseBOD.cs` is the abstract base. Concrete branches:
 
-- `SmallBOD` / `SmallSmithBOD` / `SmallTailorBOD`: requires the player to craft one item type, in a small quantity (typically 10-20).
-- `LargeBOD` / `LargeSmithBOD` / `LargeTailorBOD`: requires the player to collect several `SmallBOD`s (typically 4-5), each filling one item type.
+- `SmallBOD` plus profession subclasses such as `SmallSmithBOD`, `SmallTailorBOD`, `SmallAlchemyBOD`, `SmallInscriptionBOD`, `SmallTinkerBOD`, `SmallCookingBOD`, `SmallFletchingBOD`, and `SmallCarpentryBOD`: requires the player to craft one item type, in a small quantity.
+- `LargeBOD` plus matching profession subclasses: requires the player to collect several `SmallBOD`s, each filling one item type.
 
 The `SmallBulkEntry` and `LargeBulkEntry` are the per-entry data structures. A `SmallBOD` has one `SmallBulkEntry`; a `LargeBOD` has several `SmallBulkEntry`s (the small BODs that combine into the large).
 
@@ -148,15 +154,25 @@ The bribery mechanics:
 
 The bribery gump is the same as the BOD offer gump but with a "Bribe" option. The engine validates that the BOD is "empty" (not yet filled) before allowing the bribe.
 
-## Pre-Publish-95 vs Post-Publish-95 BOD World
+## Era-Gated Profession Scope
 
-Per `docs/mondains-legacy-content-matrix.md:78`, the pre-Publish-95 BOD world covers Smith and Tailor only. The post-Publish-95 world (Artisan Festival) extended to Carpentry, Fletching, Cooking, Inscription, Tinkering, Alchemy, Glassblowing.
+The active `BulkOrderSystem` gates Smith through `Core.UOR`, Tailor through `Core.LBR`, and Alchemy, Inscription, Tinkering, Cooking, Fletching, and Carpentry through `Core.TOL`. Treat this as repository implementation evidence only; use current official sources for publish chronology and player-facing rules.
 
 Inspect the configured repository's current BOD type registrations, craft
-systems, and reachability before stating which crafts are supported. Enum
-members or placeholders alone do not prove an active BOD world.
+systems, reward calculators, generated schemas, and reachability before stating
+which crafts are supported. Enum members or placeholders alone do not prove an
+active BOD world.
 
-`MondainsLegacyRewardServiceRuntimeTests` covers the ML BOD turn-in inspection cooldown, pre-ML no-cooldown control behavior, large tailor ShoeSet material combine rules, and Tinker Guildmaster weapon-engraver recharge context/cost handling.
+Current focused tests live under `Projects/UOContent.Tests/Tests/Engines/BulkOrders/` and include BOD bribery, BOD integration, reward construction, ledger/cooldown, and profession-scope behavior. Re-read test names in the active branch instead of relying on historical `MondainsLegacy*` names.
+
+## Generated Persistence
+
+The BOD engine now uses generated serialization and migration schemas for BOD books, BOB entries/filters, the bulk-order ledger, `SmallBOD`, and profession-specific BOD subclasses. When adding fields or new persistent BOD types:
+
+- preserve existing field indexes and generated migration versions;
+- add the matching schema under `Projects/UOContent/Migrations/`;
+- include legacy/default round-trip coverage for the changed persistent type;
+- keep runtime-only quote, target, gump, and vendor state out of serialized entity payloads unless an explicit schema contract owns it.
 
 ## BOD Rewards
 
@@ -278,9 +294,9 @@ m_LastTurnIn = DateTime.UtcNow;
 - [ ] Bribery: the BOD is upgraded (quantity/quality/material) on bribe, the gold is consumed.
 - [ ] ML turn-in cooldown: enforced on `Core.ML` shards, not enforced on pre-ML shards.
 - [ ] BOD vendor: the context menu offers `Get BOD`, `Combine BODs`, `Turn In BOD`, `Bribe`.
-- [ ] `MondainsLegacyBodRewardColorTests` passes (the 8 special ore hues for the Colored Anvil and mining-glove rewards).
-- [ ] `MondainsLegacyRewardServiceRuntimeTests` passes (the ML BOD turn-in inspection cooldown, the pre-ML no-cooldown control, the large tailor ShoeSet material combine rules, the Tinker Guildmaster weapon-engraver recharge).
-- [ ] Per-craft BOD scope: pre-Publish-95 world = Smith/Tailor only; the others are gated by the era flag.
+- [ ] Focused BOD tests under `Projects/UOContent.Tests/Tests/Engines/BulkOrders/` pass for the changed path.
+- [ ] Generated schema and migration tests cover every persistent BOD/BOB/ledger field change.
+- [ ] Per-craft BOD scope matches the active `BulkOrderSystem` era gates and does not convert repository gates into official gameplay claims.
 
 ## How to Report Issues
 
