@@ -1,6 +1,6 @@
 ---
 name: uo-bulk-orders-bod
-description: Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, Smith/Tailor offers/turn-ins, bribery, material matching, or BOD reward selection. Do not use for generic vendor commerce, ordinary craft recipes, quest rewards, or monster loot.
+description: Use when adding, debugging, or auditing ModernUO-based Bulk Order Deeds, BOD books and filters, profession-specific offers/turn-ins, bribery, material matching, generated BOD persistence, or BOD reward selection. Do not use for generic vendor commerce, ordinary craft recipes, quest rewards, or monster loot.
 license: MIT
 metadata:
   hermes:
@@ -30,8 +30,8 @@ Own the BOD lifecycle from vendor offer through deed fill/combine, BOB storage/f
 
 ## Core Workflow
 
-1. State ruleset and publish boundary. Verify whether the target is the Smith/Tailor baseline or a later/custom craft expansion; do not infer post-Publish-95 crafts from enum placeholders.
-2. Inspect `Projects/UOContent/Engines/Bulk Orders/`, the relevant vendor/context-menu path, BOB gumps/filters, `BulkMaterialType` mapping, reward tables, config/spawn reachability, and existing BOD tests.
+1. State ruleset and publish boundary. Verify whether the target is Smith, Tailor, or a later/custom craft expansion; do not infer supported crafts from enum placeholders alone.
+2. Inspect `Projects/UOContent/Engines/Bulk Orders/`, the relevant vendor/context-menu path, BOB gumps/filters, `BulkMaterialType` mapping, reward tables, generated migration schemas, config/spawn reachability, and existing BOD tests.
 3. Trace one real transaction: eligibility and cached offer -> deed construction -> item/material/quality validation -> small/large combine -> deed/item consumption -> cooldown -> reward delivery. Identify the authoritative owner of every mutation.
 4. For new types, keep deed entry metadata, craft-system output type, graphic, material mapping, exceptional rule, and reward profile aligned. For bribery, require an empty deed, correct publish gate, gold debit, upgrade step, and scrutiny/greed state.
 5. Preserve save compatibility and BOB capacity/filter behavior. Avoid direct reward selection when the local BOD reward calculator owns probability and cost.
@@ -54,5 +54,5 @@ Read [domain-map.md](references/domain-map.md) when you need the hierarchy, BOB/
 
 - Build and run the focused BOD reward/runtime tests.
 - Cover correct and wrong type, material, exceptional flag, amount, and large-deed membership; prove consumed inputs and delivered reward.
-- Cover pre-era and target-era cooldown/bribery behavior, BOB round-trip/filter/capacity, and save/load where state changed.
+- Cover pre-era and target-era cooldown/bribery behavior, pending reward points, BOB round-trip/filter/capacity, and generated save/load migrations where state changed.
 - Self-check that a BOD change did not silently expand supported crafts or bypass the configured reward calculator.

@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.1.1 - 2026-07-19
+
+- Updated `uo-bulk-orders-bod` for current RebirthUO BOD architecture:
+  profession-gated Smith/Tailor/TOL craft paths, pending reward points, bribery,
+  generated persistence schemas, and active focused test locations.
+- Refreshed content taxonomy so TOL Skill Mastery is no longer listed as a full
+  gap; it now records the current `MasterySystem`, `BookOfMasteries`, and
+  Intuition passive support as partial repository coverage.
+- Added README domain coverage for the BOD owner skill while preserving the
+  official-evidence boundary for gameplay claims.
+
 ## 3.1.0 - 2026-07-18
 
 - Extended `uo-pets-taming-stables` to cover current Time of Legends Animal

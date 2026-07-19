@@ -70,6 +70,9 @@ The portfolio includes focused owners for recurring ModernUO source domains:
   import/export, identity, persistence, cleanup, and sector caching;
 - `uo-vendors-commerce` - NPC stock and buy/sell transactions plus
   player-vendor listings, proceeds, recovery, packets, and lifecycle;
+- `uo-bulk-orders-bod` - profession-gated BOD offers, books/filters, bribery,
+  generated persistence schemas, pending reward points, and per-craft reward
+  calculators;
 - `uo-pets-taming-stables` - taming, controlled ownership and follower slots,
   Animal Training profiles/progress/options, pet orders and transfer, stabling,
   login/logout, and cleanup;

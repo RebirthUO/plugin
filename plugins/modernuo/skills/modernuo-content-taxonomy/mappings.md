@@ -75,7 +75,7 @@ Paths are relative to the repo root unless noted.
 
 ## Progression
 
-**Parity summary:** Core skills and spell schools through ML are present. Current main contains Mysticism spell files, but no coherent Imbuing, Throwing, or TOL Skill Mastery implementation was found; classify those jobs as research needed rather than profile-blocked implementation.
+**Parity summary:** Core skills and spell schools through ML are present. Current main contains Mysticism spell files and a TOL-gated Skill Mastery foundation with Intuition passive support; Imbuing and Throwing still require focused repository and official-source review before implementation claims.
 
 | Concept | ModernUO equivalent | Key paths | Parity | Notes |
 |---|---|---|---|---|
@@ -83,7 +83,7 @@ Paths are relative to the repo root unless noted.
 | StatDefinition | `Stat`, `StatType`, `StatLockType`, `AosAttributes` | `Projects/Server/` stat types; `Mobile.SetStr/SetDex/SetInt` | Present | No content-side stat catalog. Caps/influences via AOS in `SkillsInfo.Configure()`. |
 | SpellDefinition | `Spell`, `SpellInfo`, `SpellRegistry` | `Projects/UOContent/Spells/`, `Projects/UOContent/Spells/Initializer.cs` | Partial | Each spell is a `Spell` subclass with ctor `SpellInfo`. SA/TOL spell coverage varies by profile. |
 | AbilityDefinition | `WeaponAbility`, `SpecialMove` | `Projects/UOContent/Items/Weapons/Abilities/`, `Projects/UOContent/Spells/Base/SpecialMove.cs` | Present | Weapon specials (primary/secondary) vs. Bushido/Ninjitsu moves in `SpellRegistry.SpecialMoves`. |
-| MasteryDefinition | `DefenseMastery`, ML Spellweaving unlock | `Projects/UOContent/Items/Weapons/Abilities/DefenseMastery.cs`, `Projects/UOContent/Engines/ML Quests/Definitions/Spellweaving.cs` | Gap | No SA "Skill Mastery" system (TOL Publish 90). Closest: weapon Defense Mastery + ML quest chain for Spellweaving. |
+| MasteryDefinition | `MasterySystem`, `BookOfMasteries`, mastery gump | `Projects/UOContent/Spells/SkillMasteries/MasterySystem.cs`, `Projects/UOContent/Items/Skill Items/Magical/BookOfMasteries.cs`, `Projects/UOContent/Gumps/MasterySelectionGump.cs` | Partial | TOL-gated skill mastery learning/activation exists with Intuition passive for Bushido/Chivalry/Ninjitsu. Other mastery spells/effects require per-skill audit and official-source evidence. |
 | VirtueDefinition | `VirtueName`, `VirtueLevel`, `VirtueSystem` | `Projects/UOContent/Engines/Virtues/` (`Honor.cs`, `Justice.cs`, etc.) | Present | Enum + persistence; behavior split across per-virtue files and `VirtueContext`. |
 | StatusEffectDefinition | `Poison`/`PoisonImpl`, `BuffIcon`, `BuffInfo` | `Projects/UOContent/Misc/Poison.cs`, `Projects/UOContent/Engines/BuffIcons/` | Present | Debuffs/buffs: poison levels + client buff icons. Spells/abilities call `BuffInfo.AddBuff`. |
 | TitleDefinition | `Titles`, `ChampionTitleSystem` | `Projects/UOContent/Misc/Titles.cs`, `Projects/UOContent/Engines/CannedEvil/ChampionTitleSystem.cs` | Present | Fame/karma/skill titles in static tables; champion titles are separate persisted context. |
@@ -100,7 +100,7 @@ Paths are relative to the repo root unless noted.
 | HarvestRule | `HarvestDefinition`, `HarvestSystem`, `HarvestVein` | `Projects/UOContent/Engines/Harvest/Core/`, `Mining.cs`, `Lumberjacking.cs`, `Fishing.cs` | Present | Rules = tile ranges, veins, respawn, skill, messages, resource tables. |
 | CraftRecipe | `CraftItem`, `CraftSystem` subclasses | `Projects/UOContent/Engines/Craft/Core/CraftItem.cs`, `DefBlacksmithy`, `DefTailoring`, etc. (`Engines/Craft/Def*.cs`) | Partial | Recipes registered in each `CraftSystem.InitCraftList()`. Rare recipe distribution — `Partial`. |
 | ToolDefinition | `BaseTool`, `BaseHarvestTool` | `Projects/UOContent/Items/Skill Items/Tools/BaseTool.cs`, concrete tools (`Tongs`, `SewingKit`, `Pickaxe`) | Present | Tools bind to a `CraftSystem` via `CraftSystem` property. |
-| BulkOrderTemplate | `SmallBulkEntry`, `LargeBulkEntry` | `Projects/UOContent/Engines/Bulk Orders/`, `Distribution/Data/Bulk Orders/**/*.cfg` | Partial | Templates loaded from cfg by profession/name (`GetEntries("Blacksmith", "armor")`). |
+| BulkOrderTemplate | `SmallBulkEntry`, `LargeBulkEntry`, profession BOD subclasses | `Projects/UOContent/Engines/Bulk Orders/`, `Distribution/Data/Bulk Orders/**/*.cfg`, `Projects/UOContent/Migrations/Server.Engines.BulkOrders.*.json` | Partial | Smith/Tailor and TOL-gated Alchemy, Inscription, Tinkering, Cooking, Fletching, and Carpentry paths exist in `BulkOrderSystem`; verify active era/profile, vendor reachability, reward calculator, and generated schema coverage. |
 | VendorInventory | `VendorInventory` | `Projects/UOContent/Mobiles/Vendors/VendorInventory.cs`, `BaseHouse.VendorInventories` | Present | Offline player-vendor stash on house deletion — not NPC shop stock. NPC stock is `SBInfo` under MobileSystem. |
 | RewardStore | `RewardSystem`, `TreasuresOfTokuno` | `Projects/UOContent/Engines/Veteran Rewards/`, `Projects/UOContent/Engines/Treasures of Tokuno/` | Present | Veteran-reward tables in code; Tokuno = point-based artifact redemption store. |
 | CurrencyOrToken | `Gold`, `BankCheck`, `PromotionalToken` | `Projects/UOContent/Items/Misc/`, Tokuno points in `TreasuresOfTokuno` | Present | Account gold on trade/deposit. Quest/promo tokens are item subclasses. |
@@ -179,7 +179,7 @@ Structural gaps that span multiple taxonomy domains. Era-specific detail: `dev-d
 
 | Domain | Concept / topic | Status | Notes | Sources |
 |---|---|---|---|---|
-| Progression | SA Skill Masteries (TOL) | Gap | No Skill Mastery system; only `DefenseMastery` + ML Spellweaving quest | [UO.com Skill Mastery](https://uo.com/2015/08/26/publish-90-part-1-time-of-legends/), UOGuide |
+| Progression | SA/TOL Skill Masteries | Partial | `MasterySystem`, `BookOfMasteries`, and `MasterySelectionGump` exist; Intuition passive is implemented, while other mastery effects need per-skill verification | [UO.com Skill Mastery](https://uo.com/2015/08/26/publish-90-part-1-time-of-legends/), current repository scan |
 | Progression | Mysticism, Imbuing, Throwing (SA) | Research needed | Mysticism spell files exist; no coherent Imbuing/Throwing implementation found in current main | Current repository scan plus official source required |
 | QuestNarrative | `QuestStep` type | Gap | No dedicated class; objectives/conversations only | — |
 | QuestNarrative | EJ profile ML quest/spawn packs | Gap | Not explicitly loaded in EJ profile | `mondains-legacy.md`, `endless-journey.md` |
