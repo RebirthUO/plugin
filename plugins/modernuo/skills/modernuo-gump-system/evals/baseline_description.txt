@@ -1,1 +1,4 @@
-Use when creating or modifying gumps (UI dialogs), or working with BaseGump, StaticGump, DynamicGump, or GumpSystem.
+Use when planning, creating, reviewing, or modifying ModernUO gumps from screenshots,
+visual descriptions, or UI flows. Produce a source-marked component inventory and an
+annotated visual concept; consult a user-enabled Ultima/UO MCP when available without
+inventing asset IDs. Covers BaseGump, StaticGump, DynamicGump, and GumpSystem.

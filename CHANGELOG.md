@@ -1,5 +1,177 @@
 # Changelog
 
+## 3.2.0 - 2026-07-21
+
+- Added seven portable ModernUO domain skills for quests, crafting, spells,
+  housing and multis, factions, vendors, and player-skill behavior.
+- Added explicit lifecycle, ownership, official-evidence, and focused
+  verification gates for each domain, plus English and German trigger fixtures.
+- Updated routing and plugin manifests without embedding a repository name,
+  URL, path, or repository-specific assumption in the new skill packages.
+
+## 3.1.0 - 2026-07-21
+
+- Enhanced `modernuo-gump-system` to segment screenshots and descriptions into
+  source-marked UI components, consult a user-enabled Ultima MCP when available
+  without inventing assets, and require an annotated visual concept for every
+  Gump plan.
+
+## 3.0.0 - 2026-07-21
+
+- Renamed `modernuo-repository-scanner` to `skill-scanner` while preserving its
+  revision-bound, read-only maintenance, relationship, and capability triage.
+
+## 5.5.0 - 2026-07-21
+
+- Added `modernuo-repository-scanner`, a portable read-only scanner that
+  compares an explicit repository revision range with the installed skill
+  portfolio, reports maintenance and relationship leads, and leaves new-skill
+  candidates for explicit user approval.
+
+## 5.4.0 - 2026-07-21
+
+- Added the reviewed `modernuo-item-properties` package with portable,
+  evidence-bearing contracts for item-property mechanics, storage, tooltip
+  output, era gates, persistence, and focused tests.
+- Enhanced `modernuo-property-lists` for the current property-list interface,
+  localized argument formatting, ordering, chunked free text, invalidation, and
+  interface-compatible recording tests.
+- Removed repository-specific and Hermes-specific package metadata from these
+  two skill packages; gameplay claims now retain the official-evidence gate.
+
+## 5.3.0 - 2026-07-21
+
+- Replaced the 21 enhanced packages' heading-only result convention with one
+  deterministic YAML envelope, evidence records, and skill-specific decision
+  records; parity, geometry, symbol, and test-table views now render from that
+  envelope rather than compete with it.
+- Expanded the read-only runtime smoke from one fixture framing to direct,
+  paraphrased, competing-scope, and incomplete-context prompt variants, and
+  records the runner fingerprint in its evidence summary.
+- Corrected the custom-module assembly check to preserve unrelated assemblies
+  and separated hard test-name findings from soft `Coverage`/`Smoke` review
+  candidates.
+
+## 5.2.0 - 2026-07-21
+
+- Added and enhanced 21 repository-portable ModernUO engineering skills for
+  era gates, events, UI, lifecycle, content, networking, persistence, spatial
+  work, performance, and testing.
+- Normalized the packages to canonical Agent Skills metadata, portable routing,
+  revision/confidence reporting, German trigger coverage, and runnable trigger
+  fixture smoke validation, with optional read-only runtime behavior smoke
+  coverage for every declared case.
+- Aligned all plugin manifests, README inventory, and skill catalog at 46
+  packages; removed Hermes-specific package guidance.
+
+## 5.1.0 - 2026-07-20
+
+- Enhanced `modernuo-configuration`, `modernuo-code-audit`,
+  `modernuo-codebase`, and `modernuo-commands-targeting` with explicit input
+  gates, blocked outcomes, evidence/confidence reporting, and focused
+  verification contracts.
+- Removed retired Hermes-specific metadata and dead sibling references from the
+  four skill packages; routing now uses present skills or explicit local
+  evidence limits.
+- Reworked their adapter descriptions and trigger fixtures around user intent,
+  including representative German positive requests, and aligned package and
+  cross-runtime plugin versions.
+
+## 5.0.0 - 2026-07-20
+
+- Replaced the five public `modernuo-issue-*` skills with hard-renamed
+  `rebirthuo-issue-*` skills and aligned active manifests, interfaces,
+  documentation, catalog entries, references, and trigger fixtures.
+- Overhauled issue research to infer era when evidence permits, retry misses
+  through materially different official-source routes, invoke relevant research
+  and code-domain skills, and ask only for genuine product or custom-policy
+  decisions after evidence exhaustion.
+- Made full issue workflows continue autonomously from intake through verified
+  pull request, while standalone creation asks once about research, blocked
+  issues cannot enter implementation, and new implementation gaps return
+  through research before user interview.
+- Added multilingual trigger coverage and behavior contracts for template
+  placeholders, research retries, era inference, blocked readiness, autonomous
+  resumption, and end-to-end PR delivery.
+
+## 4.2.0 - 2026-07-19
+
+- Added `uo-official-evidence` for language-independent routing of Ultima Online
+  facts, mechanics, historical behavior, production parity, and implementation
+  research through an official-first evidence workflow.
+- Added the approved UO.com, production-third-party, freeshard, and server-engine
+  source register with strict classification and `UNRESOLVED` handling for
+  claims not established by OSI/EA/Broadsword evidence.
+- Added multilingual trigger coverage, conflict and evidence-gap behavior
+  fixtures, aligned adapter metadata, and an English-authoring plus
+  language-independent-triggering portfolio convention.
+
+## 4.1.0 - 2026-07-19
+
+- Added nine reviewed RunUO migration skills under canonical
+  `modernuo-migrate-*` identifiers for commands/events, gumps, items/mobiles,
+  packets, persistence, property lists, serialization, systems, and timers.
+- Added revision-bound input and evidence gates, deterministic terminal states,
+  structured result contracts, confidence handling, and behavior fixtures for
+  each migration workflow.
+- Removed Hermes-only skill frontmatter, repaired foundation and sibling
+  routing, aligned interface/manifest/trigger metadata, and documented the
+  expanded 15-skill plugin portfolio.
+
+## 4.0.0 - 2026-07-19
+
+- Narrowed `modernuo-world-saves-archives` to generic ModernUO world-save
+  lifecycle, snapshot completion, concurrency, shutdown, crash recovery, and
+  save-path behavior while preserving its existing skill identifier.
+- Removed RebirthUO-only `AutoArchive`, `ArchiveJournal`, completion-marker,
+  distribution, pruning, and restore-state assumptions from the portable skill
+  contract; external archive systems now require revision-bound inspection.
+- Added explicit mode handling, behavior-decision gates, calibrated evidence,
+  a conditional lifecycle reference, and realistic trigger, near-neighbor, and
+  executable behavioral safety cases with captured-response goldens.
+- Replaced the stale required portfolio/catalog/Yao/Hermes validation sequence
+  with the current runtime skill validator and skill-local checks.
+
+## 3.4.0 - 2026-07-19
+
+- Refactored `modernuo-threading` with fail-closed input and ownership checks,
+  explicit failure states, revisions-bound source evidence, and calibrated
+  confidence for static versus measured concurrency conclusions.
+- Added a deterministic seven-section threading result contract and behavioral
+  eval cases for worker/entity crossings, unknown contexts, parallel-save
+  purity, inconclusive shutdown races, and verified event-loop continuations.
+- Tightened timer, serialization, and world-save near-neighbor routing and
+  documented exact sibling-skill dependency locators.
+- Updated all ModernUO package manifests and README usage documentation for the
+  strengthened threading workflow.
+
+## 3.3.0 - 2026-07-19
+
+- Added `modernuo-migrate-foundation` as a self-contained, evidence-backed
+  cross-cutting RunUO/ServUO migration workflow with explicit compatibility
+  gates, terminal states, realistic trigger boundaries, and focused validation.
+- Added `uo-publish-expansion-mapping` with an official-source index and a
+  complete forward-mapping matrix for ModernUO-supported UO eras.
+- Added cumulative implementation-gate guidance, including Publish 81 to
+  `Core.TOL`, direct Publish 90 handling, and unresolved-evidence stop rules.
+- Kept Publish 99 and later in the TOL era while treating Endless Journey only
+  as a distinct account restriction; `Core.EJ` is never selected as an era gate.
+- Updated plugin manifests and README usage/validation documentation for the
+  new skill and the refactoring branch's current validation surface.
+
+## 3.2.0 - 2026-07-19
+
+- Enhanced `modernuo-timers` with repository-revision evidence, explicit API
+  selection, idempotent ownership, callback failure/validity handling,
+  exactly-once deadline restoration, and a stable evidence-rich output contract.
+- Expanded timer trigger smoke coverage for cancellation, deserialization,
+  expiry, API-selection, event-scheduler, and legacy-migration boundaries.
+- Removed the legacy Hermes-only frontmatter namespace from `modernuo-timers`;
+  routing remains expressed through the Agent Skills description and references.
+  Retained the useful skill version as standard `metadata.version` frontmatter.
+- Updated ModernUO package manifests and README usage documentation for the
+  strengthened timer workflow.
+
 ## 3.1.1 - 2026-07-19
 
 - Updated `uo-bulk-orders-bod` for current RebirthUO BOD architecture:

@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "name": "plan_contract",
+      "prompt": "Plan a cross-cutting RunUO guild migration without modifying files.",
+      "mode": "PLAN",
+      "expected_state": "PLANNED",
+      "required_headings": ["Outcome", "Scope", "Migration Inventory", "Evidence", "Checklist", "Compatibility Decisions", "Files", "Validation", "Residual Risk"],
+      "required_outcome_columns": ["State", "Mode", "Confidence"]
+    },
+    {
+      "name": "missing_repository_revision",
+      "prompt": "Implement this migration, but no repository or revision is available.",
+      "mode": "IMPLEMENT",
+      "expected_state": "BLOCKED_INPUT",
+      "required_evidence_classification": "unresolved"
+    },
+    {
+      "name": "overlapping_dirty_worktree",
+      "prompt": "Implement the migration over an unexplained existing edit to the same serialization method.",
+      "mode": "IMPLEMENT",
+      "expected_state": "BLOCKED_COMPATIBILITY",
+      "requires_pre_mutation_status": true
+    },
+    {
+      "name": "narrow_serialization_request",
+      "prompt": "Update only this one Serialize and Deserialize pair.",
+      "mode": "AUDIT",
+      "expected_state": "OUT_OF_SCOPE",
+      "expected_specialization": "serialization"
+    },
+    {
+      "name": "official_gameplay_conflict",
+      "prompt": "Plan a player-visible era behavior where repository behavior conflicts with the only official source.",
+      "mode": "PLAN",
+      "expected_state": "BLOCKED_EVIDENCE",
+      "required_evidence_classifications": ["official-source", "repository", "unresolved"]
+    },
+    {
+      "name": "failed_runtime_validation",
+      "prompt": "Implement the migration; the required focused runtime test fails.",
+      "mode": "IMPLEMENT",
+      "expected_state": "VALIDATION_FAILED",
+      "expected_validation_status": "failed",
+      "maximum_confidence": "medium"
+    },
+    {
+      "name": "invalid_mode",
+      "prompt": "Use DEPLOY mode for this migration.",
+      "mode": "DEPLOY",
+      "expected_state": "BLOCKED_INPUT"
+    }
+  ]
+}

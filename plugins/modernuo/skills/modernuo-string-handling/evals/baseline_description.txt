@@ -1,1 +1,1 @@
-Use when working on ModernUO string construction, interpolation handlers, ValueStringBuilder, packet/gump/message text, or replacing System.Text.StringBuilder in game code.
+Use when implementing or reviewing ModernUO runtime string construction with interpolated-string handlers, Server.Text.ValueStringBuilder, message or gump APIs, packet text, span consumers, or repeated game-code assembly. Route IPropertyList delimiter semantics to modernuo-property-lists.

@@ -1,26 +1,26 @@
 interface:
-  display_name: UO Official Evidence
-  short_description: UO Official Evidence
-  default_prompt: Use $uo-official-evidence to apply UO Official Evidence guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  display_name: "UO Official Evidence"
+  short_description: "Research official UO production behavior"
+  default_prompt: "Use $uo-official-evidence to establish the current or historical official Ultima Online behavior for this mechanic."
 compatibility:
-  canonical_format: agent-skills
+  canonical_format: "agent-skills"
   adapter_targets:
-  - openai
-  - claude
-  - generic
-  - vscode
+  - "openai"
+  - "claude"
+  - "generic"
+  - "vscode"
   activation:
-    mode: manual
+    mode: "implicit"
     paths: []
   execution:
-    context: inline
-    shell: powershell
+    context: "inline"
+    shell: "powershell"
   trust:
-    source_tier: plugin
-    remote_inline_execution: forbid
-    remote_metadata_policy: allow-metadata-only
+    source_tier: "plugin"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
   degradation:
-    openai: Use the canonical SKILL.md and load references on demand.
-    claude: Use the neutral Agent Skills source and preserve explicit safety gates.
-    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
-    vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.
+    openai: "Use the canonical SKILL.md and classify every source explicitly."
+    claude: "Use the neutral Agent Skills source and preserve unresolved evidence gates."
+    generic: "Use SKILL.md with no client-specific automation assumed."
+    vscode: "Use the Agent Skills source in workspace trust and verify repository revisions."

@@ -1,0 +1,12 @@
+{
+  "schema": "rebirthuo-issue-template-behavior/v1",
+  "cases": [
+    {"id":"researchable-field","condition":"One live template fits but its era field is not supplied","expected":"TEMPLATE_READY with a typed research placeholder; no era question"},
+    {"id":"ambiguous-template","condition":"Two live forms materially fit","expected":"TEMPLATE_BLOCKED with one stable typed choice question and no mutation"},
+    {"id":"repository-missing","condition":"Applicable AGENTS.md declares no exact repository","expected":"TEMPLATE_BLOCKED before provider access"},
+    {"id":"no-template","condition":"The verified repository has no live issue template","expected":"TEMPLATE_BLOCKED with one user-owned next-step question"},
+    {"id":"no-fit","condition":"No live form matches the primary object","expected":"TEMPLATE_BLOCKED without free-form fallback"},
+    {"id":"drift","condition":"Selected form digest changes before creation","expected":"Invalidate packet and repeat live selection"},
+    {"id":"provider-failure","condition":"Provider returns authentication, rate-limit, transport, or malformed response failure","expected":"TEMPLATE_PROVIDER_BLOCKED with retryability, preserved evidence, and no mutation"}
+  ]
+}

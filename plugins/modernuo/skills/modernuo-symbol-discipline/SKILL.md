@@ -1,38 +1,31 @@
 ---
 name: modernuo-symbol-discipline
-description: >
-  Use when deciding whether ModernUO-based C# values should be inline,
-  locals, constants, static readonly objects, fields, properties, or explicit
-  Policy* surfaces. Report overexposure as a warning; do not rewrite existing
-  symbols unless cleanup was requested or the user confirms the change.
-version: 1.1.0
-author: Hermes Agent
+description: 'Use when deciding whether ModernUO-based C# values should be inline,
+  locals, constants, static readonly objects, fields, properties, or explicit Policy*
+  surfaces. Report overexposure as a warning; do not rewrite existing symbols unless
+  cleanup was requested or the user confirms the change.
+
+  '
 license: MIT
 metadata:
-  hermes:
-    skill_group: modernuo
-    skill_subgroup: domain
-    workflow_phase: none
-    workflow_tier: support
-    tags:
-      - modernuo
-      - rebirthuo
-      - symbols
-      - naming
-      - code-style
-    related_skills:
-      - modernuo-code-audit
-      - modernuo-no-publish-prefix-names
-      - modernuo-test-naming
+  version: 1.1.0
 ---
 
 # ModernUO Symbol Discipline
+
+## Portfolio Coordination
+
+For cross-cutting work, consult [the portfolio routing guide](../PORTFOLIO-ROUTING.md). Load only a named available neighbor, preserve this skill's boundary, and hand off a compact packet with scope, evidence, constraints, and next owner when the guide routes work elsewhere.
 
 ## Boundary
 
 Every symbol must justify its lifetime, scope, visibility, and semantic value.
 This is a warning/recommendation lens, not permission for behavior or public API
 changes.
+
+## Required context
+
+Before acting, inspect the consuming repository and record its pinned revision, the requested behavior, and the available build/test surface. If a required path, symbol, profile, source claim, or validation surface cannot be verified, return `BLOCKED` with the smallest missing input; do not infer it. Treat sibling skills and repository-local documents as optional: load them only when present, otherwise inspect the current source directly and state the limitation.
 
 ## Workflow
 
@@ -75,8 +68,20 @@ internal unless public access is genuinely needed.
   Compatibility: {none|serialization|reflection|config|public API}
 ```
 
+For a clean audit, return this explicit evidence instead of implying that no
+output means no issue:
+
+```text
+[SYMBOL] CLEAR
+  File: {path or audited scope}
+  Reason: {scope, lifetime, and contract are justified}
+  Compatibility: none
+```
+
 For implementation, also return old/new mappings, access-level changes, source
 evidence location, and verification.
+
+Emit every warning or clear result as one `Decision.records` entry with `kind: symbol-audit`; put the existing warning/clear fields, mappings, and compatibility conclusion in `details`. The text block is an optional rendering of that record, never a separate result schema.
 
 ## Verification
 
@@ -86,10 +91,58 @@ evidence location, and verification.
 - `Policy*` denotes explicit policy rather than era context.
 - Reference search/build/tests show no compatibility or behavior change.
 
+## Intake and result contract
+
+Classify the request as `REVIEW`, `PLAN`, or `IMPLEMENT` before acting. Record `Repository revision`, `Requested behavior`, `Evidence available`, and `Validation surface`; return `BLOCKED` when any required field is unavailable.
+
+Emit exactly one fenced `yaml` document with this ordered, machine-readable schema. Keep all values factual; use `null` or an empty list rather than prose placeholders. Every datum promised by this skill's earlier output contract belongs in one or more `Decision.records` entries; use one record per affected surface, matrix row, warning, or finding. Place optional narrative after the YAML document only when it adds human context without changing the record values.
+
+```yaml
+Outcome: IMPLEMENTED | REVIEWED | BLOCKED
+Repository revision:
+  commit: <full revision or null>
+  dirty: <true | false | null>
+Decision:
+  kind: REVIEW | PLAN | IMPLEMENT
+  summary: <single factual sentence>
+  records:
+    - kind: <skill-specific contract item>
+      subject: <path, symbol, matrix row, or finding>
+      status: <verified | proposed | blocked | not-applicable>
+      details: <required skill-specific fields>
+      evidence_refs: [<Evidence.records.id>]
+Evidence:
+  records:
+    - id: E1
+      class: repository | official | test | runtime | user-supplied
+      locator: <revision-bound path, URL, command, or null>
+      claim: <fact supported by the record>
+Verification:
+  checks:
+    - command_or_method: <command or inspection>
+      result: passed | failed | not-run | blocked
+      evidence_refs: [E1]
+  runtime_smoke:
+    result: passed | failed | not-run | unavailable
+    runner_sha256: <summary value or null>
+Confidence:
+  level: high | medium | low
+  basis: <evidence and verification basis>
+Limitations:
+  items: [<unresolved input, source, or validation limit>]
+```
+
+Use `high` confidence only with a current revision plus focused verification, `medium` with current static evidence but an unrun required check, and `low` when blocked or a required source is unavailable.
+
+## Portable evidence
+
+Use `evals/behavior_cases.json` to preserve the missing-context blocker, named safety branch, and response fields during review or implementation. For every response, state `Outcome` (`IMPLEMENTED`, `REVIEWED`, or `BLOCKED`), the inspected repository revision, calibrated confidence (`high`, `medium`, or `low`), and any evidence or validation limitation. Before completion, run the package trigger-fixture smoke check from the plugin root: `python scripts/validate-modernuo-skill-evals.py plugins/modernuo/skills/modernuo-symbol-discipline`. When a Codex CLI runtime is available, also forward-test every behavior case with `python scripts/run-modernuo-skill-runtime-smoke.py --output-dir <external-output-dir> plugins/modernuo/skills/modernuo-symbol-discipline` and report the result plus the `runner_sha256` from its summary; otherwise state that runtime-evaluation limitation explicitly.
+
 ## Reference Routing
 
 - Read [symbol decision examples](references/symbol-decision-examples.md) when a
   local, wrapper property, or `Policy*` surface is ambiguous.
-- Load `modernuo-no-publish-prefix-names` when the symbol embeds source publish
-  numbers and `modernuo-test-naming` when the symbol is a test identity.
+- When a symbol embeds source publish numbers or is a test identity, use the
+  applicable locally available naming workflow; otherwise inspect references
+  and current consumers directly before proposing a rename.
 - Load the serialization/configuration/API owner before changing a contract name.

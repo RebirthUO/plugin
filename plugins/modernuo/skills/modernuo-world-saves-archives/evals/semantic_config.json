@@ -1,55 +1,64 @@
 {
   "optimizer_hints": {
-    "capability": "ModernUO World Saves and Archives",
+    "capability": "ModernUO world-save lifecycle and recovery",
     "inputs": [
-      "modernuo world saves and archives",
-      "modernuo world saves archives"
+      "world save scheduling and concurrency",
+      "save snapshot completion",
+      "shutdown and crash recovery",
+      "save path migration",
+      "backup integration at the save boundary"
     ],
     "trigger_actions": [
-      "Review this modernuo world saves and archives task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo world saves and archives in the configured ModernUO-based repository.",
-      "Help me implement a modernuo world saves and archives change and identify the focused verification.",
-      "Audit this modernuo world saves and archives diff for era, persistence, lifecycle, and regression risks."
+      "Prevent overlapping ModernUO world saves and verify re-entry behavior.",
+      "Attach a repository-defined backup only after durable snapshot completion.",
+      "Audit shutdown or crash behavior during a world save.",
+      "Plan a safe save-directory migration and recovery procedure."
     ],
     "exclusions": [
-      "modernuo code audit",
-      "modernuo threading",
-      "modernuo server lifecycle",
-      "modernuo events",
-      "modernuo configuration",
-      "modernuo test workflow"
+      "entity field serialization",
+      "generic archive utilities",
+      "configuration-only changes",
+      "repository-specific archive maintenance without a save lifecycle change"
     ],
     "artifacts": [
-      "source evidence",
-      "implementation plan",
-      "verification result"
+      "revision-bound repository evidence",
+      "world-save lifecycle",
+      "verification results",
+      "recovery procedure and residual risk"
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "save_lifecycle"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "save_lifecycle": {
       "weight": 1.0,
       "phrases": [
-        "modernuo world saves and archives",
-        "modernuo world saves archives"
+        "modernuo world save",
+        "world save snapshot",
+        "world save recovery",
+        "save completion boundary",
+        "overlapping world saves"
       ]
     }
   },
   "negative_concepts": {
     "near_neighbor": {
-      "weight": 0.0,
+      "weight": 0.8,
       "exclusive": false,
-      "phrases": []
+      "phrases": [
+        "entity serialization",
+        "generic tar utility",
+        "archivejournal only",
+        "configuration only"
+      ]
     },
     "explicit_no_action": {
-      "weight": 0.5,
-      "exclusive": true,
+      "weight": 0.0,
+      "exclusive": false,
       "phrases": [
-        "do not modify",
         "advice only",
-        "unrelated repository"
+        "do not modify"
       ]
     }
   }

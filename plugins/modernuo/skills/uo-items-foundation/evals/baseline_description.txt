@@ -1,1 +1,0 @@
-Use when working with the UO item entity model in ModernUO/RebirthUO servers - Item base class, Constructible constructors, GetProperties OPL output, LootType, Decay, and the standard item base hierarchy (BaseWeapon/BaseArmor/BaseClothing/BaseJewel/BaseContainer). Use before adding a new item, debugging item persistence, or tracing why an item behaves the way it does in-world.

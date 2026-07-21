@@ -1,1 +1,0 @@
-Use when reviewing an official Ultima Online item property against a configured ModernUO-based repository.

@@ -1,45 +1,18 @@
 {
   "recommended_threshold": 0.33,
   "should_trigger": [
-    {
-      "text": "Review this modernuo codebase task and give me the repository-specific checks.",
-      "family": "owned_job"
-    },
-    {
-      "text": "I need an evidence-backed plan for modernuo codebase in the configured ModernUO-based repository.",
-      "family": "owned_job"
-    },
-    {
-      "text": "Help me implement a modernuo codebase change and identify the focused verification.",
-      "family": "owned_job"
-    },
-    {
-      "text": "Audit this modernuo codebase diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
-    }
+    { "text": "Map this confirmed ModernUO checkout before planning the change.", "family": "codebase_mapping" },
+    { "text": "Find the owning project, source anchor, and focused test command for this ModernUO subsystem.", "family": "codebase_mapping" },
+    { "text": "Ordne dieses ModernUO-Repository seinen Projekten und Quellankern zu.", "family": "codebase_mapping" }
   ],
   "should_not_trigger": [
-    {
-      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Review generic C# in an unrelated application.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
-      "family": "out_of_scope"
-    }
+    { "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.", "family": "out_of_scope" },
+    { "text": "Create a GitHub issue in an unrelated repository.", "family": "out_of_scope" },
+    { "text": "Map this generic repository layout without any ModernUO context.", "family": "out_of_scope" }
   ],
   "near_neighbor": [
-    {
-      "text": "Review this modernuo code audit task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo test workflow task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    }
+    { "text": "Audit this ModernUO C# diff for a lifecycle bug.", "family": "code_audit" },
+    { "text": "Create a branch and implement this issue.", "family": "issue_workflow" },
+    { "text": "I only have a folder path, not a project graph or ModernUO marker; map it anyway.", "family": "blocked_input" }
   ]
 }

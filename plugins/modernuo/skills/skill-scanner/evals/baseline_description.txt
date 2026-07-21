@@ -1,0 +1,6 @@
+Use when a confirmed ModernUO-based repository has changed and a user needs a
+read-only, revision-bound report showing which installed skills may need
+maintenance, whether sibling routing and scope relationships still fit, and
+which uncovered areas are optional candidates for explicit user approval. Do
+not trigger for automatic skill edits, generic repository mapping, or official
+Ultima Online gameplay research.

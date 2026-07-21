@@ -1,0 +1,75 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Item Properties",
+    "inputs": [
+      "Add a weapon hit property with matching tooltip, combat behavior, and focused tests.",
+      "Audit whether this armor property is only displayed or also aggregated while equipped.",
+      "Plan persistence and era gating for a new talisman item property.",
+      "Implementiere eine ModernUO-Gegenstandseigenschaft mit Tooltip, Wirkung und fokussierten Tests."
+    ],
+    "trigger_actions": [
+      "Add a weapon hit property with matching tooltip, combat behavior, and focused tests.",
+      "Audit whether this armor property is only displayed or also aggregated while equipped.",
+      "Plan persistence and era gating for a new talisman item property.",
+      "Implementiere eine ModernUO-Gegenstandseigenschaft mit Tooltip, Wirkung und fokussierten Tests."
+    ],
+    "exclusions": [
+      "modernuo property lists",
+      "modernuo regression testing",
+      "uo official evidence"
+    ],
+    "artifacts": [
+      "property contract",
+      "implementation evidence",
+      "verification result"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "active-property",
+    "passive-property",
+    "persistence-era",
+    "owned_job_de"
+  ],
+  "positive_concepts": {
+    "active-property": {
+      "weight": 1.0,
+      "phrases": [
+        "Add a weapon hit property with matching tooltip, combat behavior, and focused tests."
+      ]
+    },
+    "passive-property": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit whether this armor property is only displayed or also aggregated while equipped."
+      ]
+    },
+    "persistence-era": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan persistence and era gating for a new talisman item property."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Implementiere eine ModernUO-Gegenstandseigenschaft mit Tooltip, Wirkung und fokussierten Tests."
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near-neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": []
+    },
+    "explicit-no-action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not modify",
+        "advice only",
+        "unrelated repository"
+      ]
+    }
+  }
+}

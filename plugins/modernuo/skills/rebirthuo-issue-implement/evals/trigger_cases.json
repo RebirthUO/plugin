@@ -1,0 +1,18 @@
+{
+  "recommended_threshold":0.45,
+  "should_trigger":[
+    {"text":"Implement this live unblocked READY RebirthUO issue in an isolated worktree.","family":"owned_job"},
+    {"text":"Deliver this researched RebirthUO issue with focused tests and verified PR read-back.","family":"owned_job"},
+    {"text":"Implementiere dieses RebirthUO-Issue nur wenn die aktuelle Recherche READY und nicht blocked ist.","family":"owned_job_multilingual"},
+    {"text":"Implementa este issue de RebirthUO solo con una investigación READY vigente.","family":"owned_job_multilingual"}
+  ],
+  "should_not_trigger":[
+    {"text":"Research this blocked issue.","family":"out_of_scope"},
+    {"text":"Create a new intake issue.","family":"out_of_scope"},
+    {"text":"Review generic C# without a READY issue.","family":"out_of_scope"}
+  ],
+  "near_neighbor":[
+    {"text":"Take this new request through intake, research, implementation, and PR.","family":"near_neighbor"},
+    {"text":"Audit the current repository implementation without changing it.","family":"near_neighbor"}
+  ]
+}

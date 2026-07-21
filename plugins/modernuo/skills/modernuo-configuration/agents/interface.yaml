@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Configuration
-  short_description: ModernUO Configuration
-  default_prompt: Use $modernuo-configuration to apply ModernUO Configuration guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Design, review, and verify ModernUO configuration
+  default_prompt: Use $modernuo-configuration to design, review, or change a ModernUO setting or JsonConfig file with ownership, compatibility, evidence limits, and focused verification.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

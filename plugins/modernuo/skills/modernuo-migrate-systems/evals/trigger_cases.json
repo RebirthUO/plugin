@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Migrate this multi-file RunUO guild system with persistence, commands, gumps, and timers.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan vertical slices and rollback for this interdependent engine migration.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-systems migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-systems conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plane die stufenweise Migration dieses mehrteiligen RunUO-Systems mit Rollback-Grenzen.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Convert one isolated Serialize pair.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Review unrelated application architecture.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

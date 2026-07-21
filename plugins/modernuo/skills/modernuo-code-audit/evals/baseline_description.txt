@@ -1,1 +1,1 @@
-Use when writing, modifying, or reviewing .cs files under Projects/. Audits code for ModernUO convention, safety, serialization, lifecycle, and performance issues; reports findings by severity and asks before fixing unless fixes were explicitly requested.
+Use when reviewing a ModernUO C# diff for correctness, persistence, lifecycle, authorization, event-loop safety, performance, strings, UI, and regression risks. Review-only is in scope; report evidence, confidence, skipped checks, and official-gameplay evidence limits without editing unless asked.

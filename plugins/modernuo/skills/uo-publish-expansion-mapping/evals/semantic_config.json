@@ -1,0 +1,59 @@
+{
+  "optimizer_hints": {
+    "capability": "UO Publish-to-Expansion Mapping",
+    "inputs": [
+      "Ultima Online Publish number or release date",
+      "official expansion chronology",
+      "ModernUO expansion gate"
+    ],
+    "trigger_actions": [
+      "Map this Ultima Online Publish to its expansion era.",
+      "Which Core expansion flag should gate this Publish-era behavior?",
+      "Determine whether this change belongs to SA, HS, or TOL.",
+      "Separate this Endless Journey restriction from its underlying expansion era."
+    ],
+    "exclusions": [
+      "generic software release versions",
+      "account entitlement implementation without a Publish question",
+      "player lore without era or implementation mapping"
+    ],
+    "artifacts": [
+      "official Publish evidence",
+      "expansion mapping",
+      "cumulative implementation gate",
+      "confidence and unresolved evidence"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "publish_mapping"
+  ],
+  "positive_concepts": {
+    "publish_mapping": {
+      "weight": 1.0,
+      "phrases": [
+        "UO publish expansion",
+        "publish era gate",
+        "Core.TOL",
+        "Endless Journey expansion"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.0,
+      "exclusive": false,
+      "phrases": [
+        "subscription entitlement",
+        "generic release mapping"
+      ]
+    },
+    "explicit_no_action": {
+      "weight": 0.5,
+      "exclusive": true,
+      "phrases": [
+        "do not research the publish",
+        "unrelated software version"
+      ]
+    }
+  }
+}

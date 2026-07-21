@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Regions",
     "inputs": [
-      "modernuo regions"
+      "Implement a dynamic region with parent inheritance.",
+      "Review a travel rule that needs region policy evidence.",
+      "Plan region JSON and runtime registration cleanup.",
+      "Audit housing and spawn rules at a region boundary.",
+      "Erstelle eine dynamische ModernUO-Region mit sauberem Lebenszyklus."
     ],
     "trigger_actions": [
-      "Review this modernuo regions task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo regions in the configured ModernUO-based repository.",
-      "Help me implement a modernuo regions change and identify the focused verification.",
-      "Audit this modernuo regions diff for era, persistence, lifecycle, and regression risks."
+      "Implement a dynamic region with parent inheritance.",
+      "Review a travel rule that needs region policy evidence.",
+      "Plan region JSON and runtime registration cleanup.",
+      "Audit housing and spawn rules at a region boundary.",
+      "Erstelle eine dynamische ModernUO-Region mit sauberem Lebenszyklus."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -27,13 +32,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo regions"
+        "Implement a dynamic region with parent inheritance."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a travel rule that needs region policy evidence."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan region JSON and runtime registration cleanup."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit housing and spawn rules at a region boundary."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Erstelle eine dynamische ModernUO-Region mit sauberem Lebenszyklus."
       ]
     }
   },
@@ -45,7 +78,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

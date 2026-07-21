@@ -1,0 +1,1 @@
+Use when working on ModernUO player skill activation, passive effects, delays, targets, gains, prerequisites, and skill-specific verification. Require official evidence for player-facing rules.

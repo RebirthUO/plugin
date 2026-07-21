@@ -1,1 +1,1 @@
-Use when creating in-game commands, targeting mechanics, or working with CommandSystem/Target. Covers bracket commands, GM/admin tools, and player interactions.
+Use when designing, reviewing, or changing ModernUO in-game commands, access levels, CommandEventArgs parsing, Target subclasses, or command-to-target flows. Require least privilege, delayed-target revalidation, evidence limits, and focused tests.

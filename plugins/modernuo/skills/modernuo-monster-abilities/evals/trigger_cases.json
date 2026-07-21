@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo monster abilities task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a reusable MonsterAbility cooldown and target guard.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo monster abilities in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review boss phase orchestration routed outside a MonsterAbility.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo monster abilities change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a stateful creature special with persistence and cleanup.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo monster abilities diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit combat-special ordering for a reusable ability.",
+      "family": "audit"
+    },
+    {
+      "text": "Implementiere eine wiederverwendbare ModernUO-MonsterAbility mit Tests.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

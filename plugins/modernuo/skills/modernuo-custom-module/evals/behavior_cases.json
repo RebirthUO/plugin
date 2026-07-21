@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "Missing required repository, behavior, or validation input for a separate content assembly and assemblies.json load order.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository, behavior, or validation input"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "Block without approved name and reject reverse dependencies or wrong load order.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Block without approved name and reject reverse dependencies or wrong load order."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "Verify a reverse dependency from base content to a module with current-source evidence and a focused check.",
+      "expected_outcome": "REVIEWED",
+      "must_verify": "current repository revision and focused verification result"
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return a review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

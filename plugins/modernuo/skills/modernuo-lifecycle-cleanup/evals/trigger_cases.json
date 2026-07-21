@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo lifecycle cleanup task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement timer cancellation during entity deletion.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo lifecycle cleanup in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review an EventSink subscription owned by a reloadable system.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo lifecycle cleanup change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan post-load restoration with retained references.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo lifecycle cleanup diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a dynamic region teardown for leaks.",
+      "family": "audit"
+    },
+    {
+      "text": "Bereinige Timer und Event-Abonnements beim Löschen dieser ModernUO-Entität.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

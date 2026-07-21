@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo regression testing task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a focused timer regression test with isolated state.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo regression testing in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a fixture that mutates process-global tables.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo regression testing change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a save/load failure with deterministic assertions.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo regression testing diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit test evidence that confuses environment failure and regression.",
+      "family": "audit"
+    },
+    {
+      "text": "Schreibe einen fokussierten ModernUO-Regressionstest für einen Timerfehler.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

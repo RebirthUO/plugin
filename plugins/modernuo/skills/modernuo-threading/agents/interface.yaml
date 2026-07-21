@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Threading and Event Loop
   short_description: ModernUO Threading and Event Loop
-  default_prompt: Use $modernuo-threading to apply ModernUO Threading and Event Loop guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  default_prompt: Use $modernuo-threading to review, plan, or implement the explicitly authorized ModernUO threading task, preserve the requested mutation boundary, and verify the result without overstating evidence.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

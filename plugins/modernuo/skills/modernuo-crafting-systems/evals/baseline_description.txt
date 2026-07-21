@@ -1,0 +1,1 @@
+Use when working on ModernUO recipes, resources, tools, crafting quality, repair, resmelting, or bulk-order integration. Preserve resource accounting and route player-facing rules to official evidence.

@@ -1,0 +1,49 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Add a weapon hit property with matching tooltip, combat behavior, and focused tests.",
+      "family": "active-property"
+    },
+    {
+      "text": "Audit whether this armor property is only displayed or also aggregated while equipped.",
+      "family": "passive-property"
+    },
+    {
+      "text": "Plan persistence and era gating for a new talisman item property.",
+      "family": "persistence-era"
+    },
+    {
+      "text": "Implementiere eine ModernUO-Gegenstandseigenschaft mit Tooltip, Wirkung und fokussierten Tests.",
+      "family": "owned_job_de"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Explain this Ultima Online property as player lore only; do not inspect a server codebase.",
+      "family": "out-of-scope"
+    },
+    {
+      "text": "Review generic C# in an unrelated application.",
+      "family": "out-of-scope"
+    },
+    {
+      "text": "Format a tooltip string without deciding item mechanics, storage, or tests.",
+      "family": "property-list-only"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Fix the delimiter handling in this IPropertyList interpolation only.",
+      "family": "property-lists"
+    },
+    {
+      "text": "Design generic ModernUO regression tests without an item-property behavior change.",
+      "family": "testing"
+    },
+    {
+      "text": "Research official player-facing Ultima Online property behavior before implementation planning.",
+      "family": "official-evidence"
+    }
+  ]
+}

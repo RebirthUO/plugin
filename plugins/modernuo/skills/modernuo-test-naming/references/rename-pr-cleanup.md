@@ -12,7 +12,7 @@ after generated branches or AI-assisted work introduced noisy prefixes.
 
 ## Clean worktree pattern
 
-1. Create the cleanup branch from `origin/live` in a separate worktree so existing user changes in the main working copy are not touched.
+1. Discover the configured base branch from repository instructions, the requested PR base, or the current tracked upstream before creating a separate cleanup worktree; do not assume `origin/live`.
 2. On Windows/MSYS worktrees, file mode changes can appear as false dirty state (`100755 => 100644`). Use `git -c core.filemode=false status/diff/add` for inspection and staging rather than committing mode-only noise.
 3. Stage only the test project paths involved, for example:
 
@@ -26,41 +26,18 @@ git -c core.filemode=false add -A Projects/UOContent.Tests
 git -c core.filemode=false diff --cached --name-only | grep -v '^Projects/UOContent.Tests/' || true
 ```
 
+On PowerShell, replace the pipeline with `git -c core.filemode=false diff --cached
+--name-only | Where-Object { $_ -notlike 'Projects/UOContent.Tests/*' }`.
+
 ## Prefix verification script
 
-After edits, scan file stems, class names, and xUnit methods. Allow known domain cases such as source-reference tests and `MLSetArmorTests`.
+After edits, scan file stems, class names, and xUnit methods. Pass the owning test root as `<test-root>`; allow known domain cases such as source-reference tests and `MLSetArmorTests`. The example recognizes common C# xUnit visibility forms, but inspect local conventions before treating a zero result as complete.
 
-```bash
-python - <<'PY'
-import re
-from pathlib import Path
-root = Path('.').resolve()
-tests = root / 'Projects' / 'UOContent.Tests'
-hard = re.compile(r'^(Publish\d+|Pub\d+|P\d+|Issue\d+|Task\d+|Codex|Generated|Regression|AI)')
-generic = re.compile(r'(Coverage|Smoke)')
-method_prefix = re.compile(
-    r'public\s+(?:static\s+)?(?:async\s+)?(?:void|Task|ValueTask)\s+'
-    r'((?:MondainsLegacy|SamuraiEmpire|Publish\d+|Pub\d+|P\d+|Issue\d+|Task\d+|Codex|Generated|Regression|AI)[A-Za-z0-9_]*)\s*\('
-)
-remaining = []
-for p in sorted(tests.rglob('*.cs')):
-    rel = p.relative_to(root).as_posix()
-    if hard.match(p.stem) or generic.search(p.stem):
-        remaining.append(('file', rel, p.stem))
-    text = p.read_text(encoding='utf-8-sig')
-    for m in re.finditer(r'\bclass\s+([A-Za-z0-9_]+)', text):
-        name = m.group(1)
-        if hard.match(name) or generic.search(name):
-            remaining.append(('class', rel, name))
-    for m in method_prefix.finditer(text):
-        name = m.group(1)
-        if 'SourceReferenceTests.cs' in rel or rel.endswith('MLSetArmorTests.cs'):
-            continue
-        remaining.append(('method', rel, name))
-print(len(remaining))
-for row in remaining:
-    print(row)
-PY
+Run the bundled scan from the consuming repository root; this works unchanged
+in Bash, PowerShell, and other Python-capable shells:
+
+```text
+python <skill-path>/references/test-naming-prefix-scan.py <test-root>
 ```
 
 Expected for a completed cleanup: `0` actionable findings.
@@ -74,4 +51,10 @@ Expected for a completed cleanup: `0` actionable findings.
 
 ## PR completion
 
-If the user asked for the PR to change or merge, local validation is not completion. Commit, push, create the PR, merge to the requested base, delete the branch, and verify the PR state and base head.
+Before any commit, push, PR creation, merge, or branch deletion, resolve the
+exact repository from the consuming repository's applicable `AGENTS.md`. If
+that file does not name the repository, return `BLOCKED`; never infer it from
+the cwd, remotes, organization, issue number, or neighboring project. If the
+user asked for the PR to change or merge, local validation is not completion.
+Only after that exact resolution, commit, push, create the PR, merge to the
+requested base, delete the branch, and verify the PR state and base head.

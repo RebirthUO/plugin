@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "Missing required repository, behavior, or validation input for GetMobilesInRange tile coverage.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository, behavior, or validation input"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "Prove tile geometry rather than infer it from an API name.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Prove tile geometry rather than infer it from an API name."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "Verify range-query geometry versus pathfinding policy with current-source evidence and a focused check.",
+      "expected_outcome": "REVIEWED",
+      "must_verify": "current repository revision and focused verification result"
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return a review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

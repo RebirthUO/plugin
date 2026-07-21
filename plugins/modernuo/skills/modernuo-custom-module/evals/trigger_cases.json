@@ -2,20 +2,28 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo custom module task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a separate content assembly and assemblies.json load order.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo custom module in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a module name not approved by the user.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo custom module change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a build-only project reference mistaken for runtime loading.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo custom module diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a reverse dependency from base content to a module.",
+      "family": "audit"
+    },
+    {
+      "text": "Erstelle ein separates ModernUO-Content-Assembly mit Load-Smoke-Test.",
+      "family": "owned_job_de"
+    },
+    {
+      "text": "Dise?a un m?dulo de contenido separado sin seleccionar un nombre de ensamblado no aprobado.",
+      "family": "owned_job_es"
     }
   ],
   "should_not_trigger": [

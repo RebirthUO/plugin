@@ -1,0 +1,18 @@
+{
+  "recommended_threshold":0.45,
+  "should_trigger":[
+    {"text":"Draft a RebirthUO intake issue from the verified live template.","family":"owned_job"},
+    {"text":"Create and read back this RebirthUO issue, then return its IntakePacket.","family":"owned_job"},
+    {"text":"Erstelle ein RebirthUO-Issue aus der Live-Vorlage und frage danach einmal, ob die Recherche starten soll.","family":"owned_job_multilingual"},
+    {"text":"Crea un issue de RebirthUO con la plantilla activa y ofrece iniciar la investigación.","family":"owned_job_multilingual"}
+  ],
+  "should_not_trigger":[
+    {"text":"Research this existing issue against official sources.","family":"out_of_scope"},
+    {"text":"Implement this READY issue.","family":"out_of_scope"},
+    {"text":"Audit the issue-creation code.","family":"out_of_scope"}
+  ],
+  "near_neighbor":[
+    {"text":"Select the one live issue template without drafting.","family":"near_neighbor"},
+    {"text":"Take this request through research, implementation, push, and PR.","family":"near_neighbor"}
+  ]
+}

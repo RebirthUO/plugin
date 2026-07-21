@@ -1,85 +1,149 @@
 ---
 name: modernuo-world-saves-archives
 description: >
-  Use when changing ModernUO world-save backups, archive rollups/destinations,
-  ArchiveJournal recovery, restore prompts, verification, retention, pruning, or
-  post-snapshot events. Do not use for entity field serialization; route that to
-  modernuo-serialization.
-version: 1.1.0
-author: Hermes Agent
+  Use when implementing, reviewing, or planning ModernUO world-save scheduling,
+  snapshot completion, concurrent-save protection, shutdown behavior, crash
+  recovery, save-path changes, or an external backup/archive integration at the
+  save boundary. Do not use for entity field serialization, arbitrary archive
+  utilities, or repository-specific archive subsystems without a world-save
+  lifecycle change.
 license: MIT
 metadata:
-  hermes:
-    skill_group: modernuo
-    skill_subgroup: domain
-    workflow_phase: none
-    workflow_tier: support
-    tags: [modernuo, world-saves, archives, backups, restore]
-    related_skills:
-      - modernuo-code-audit
-      - modernuo-threading
-      - modernuo-server-lifecycle
-      - modernuo-events
-      - modernuo-configuration
-      - modernuo-test-workflow
+  version: "2.0.0"
 ---
 
 # ModernUO World Saves and Archives
 
+## Portfolio Coordination
+
+For cross-cutting work, consult [the portfolio routing guide](../PORTFOLIO-ROUTING.md). Load only a named available neighbor, preserve this skill's boundary, and hand off a compact packet with scope, evidence, constraints, and next owner when the guide routes work elsewhere.
+
 ## Boundary
 
-Protect operator-critical shard data from snapshot through backup, archive,
-distribution, retention, recovery, and restore. Prefer additive/reversible
-changes and prove restore, not merely archive creation.
+Protect the generic ModernUO world-save lifecycle from request through durable
+snapshot completion and recovery. Treat backup, archive, retention, and restore
+systems as repository-defined extensions: inspect their implementation before
+asserting their names, states, markers, formats, or guarantees.
+
+This file is the activation and behavior source of truth. Keep
+`agents/interface.yaml`, `evals/baseline_description.txt`,
+`evals/semantic_config.json`, and `evals/trigger_cases.json` aligned with its
+frontmatter boundary and exclusions.
+
+## Required Inputs
+
+- Resolve the exact repository only from the consuming project's applicable
+  `AGENTS.md` and record its full revision. Fail closed if it declares no single
+  repository; never substitute the cwd, Git remotes, organization, issue number,
+  stale documentation, memory, or a neighboring checkout.
+- Locate the current save entry point, snapshot implementation, lifecycle/event
+  boundary, configuration, shutdown path, recovery behavior, and focused tests.
+- Establish whether the request is advice, review, planning, or implementation.
+- Establish the required recovery point, overwrite behavior, retention policy,
+  headless behavior, and acceptable data-loss window when the change affects
+  them. Ask for any missing behavior decision before implementation.
+
+If repository access, revision identity, or a behavior-affecting source is
+unavailable, stop implementation and report the smallest missing input. For
+source discovery and failure analysis, read
+[references/world-save-lifecycle.md](references/world-save-lifecycle.md).
 
 ## Workflow
 
-1. Map the current data flow and failure boundaries: active `Saves`, rotated old
-   save, completed snapshot event, backup directory, temp/final archive,
-   destinations, journal, retention, and restore selection.
-2. Keep automatic backup work after `WorldSavePostSnapshot`; never archive or
-   prune a directory that lacks the completion marker.
-3. Start a journal operation before archive work and advance only through the
-   real states: `Started`, `Archived`, `Distributed`, `Completed`, or `Failed`.
-4. Write a temporary archive, verify format/entry count/content policy, then move
-   it atomically to the final location. Record destination results and failures.
-5. Prune source backups only after archive verification and required distribution
-   succeed under the configured retention semantics.
-6. Exercise interruption at each state and restore the newest valid backup/archive
-   into an isolated destination before claiming safety.
+1. Trace the actual flow from save request through serialization, snapshot
+   publication, completion notification, cleanup, shutdown, and recovery. Name
+   inspected paths and distinguish observed behavior from assumptions.
+2. Define ownership for concurrent requests, worker activity, cancellation,
+   failure propagation, and shutdown. Preserve the repository's event-loop and
+   snapshot-thread boundaries; load `modernuo-threading` when ownership crosses
+   contexts. Give it the same repository identity, revision, source locators,
+   and read-only versus mutation boundary. Treat its `UNSAFE` or `BLOCKED` as
+   this skill's `BLOCKED`, its `INCONCLUSIVE` as `INCONCLUSIVE`, and its `SAFE`
+   only as threading evidence; always return the final result through this
+   skill's seven H1 sections and allowed statuses.
+3. Define the durable-completion point before attaching backup or archive work.
+   Use only completion signals and artifact markers verified in the consuming
+   repository; do not infer RebirthUO-specific archive contracts.
+4. For an external backup/archive integration, establish input selection,
+   atomic publication, integrity verification, retry/idempotency, retention,
+   restore isolation, and failure visibility from its actual implementation.
+5. Prefer additive and reversible changes. Never remove the last verified
+   recovery point or overwrite active saves before the approved recovery and
+   rollback contract is durable.
+6. Add focused tests for every changed transition and failure boundary. Keep
+   automated test results separate from manual restore or crash-recovery smoke
+   evidence.
 
-## Guardrails
+## Mode Handling
 
-- `.backup-complete` distinguishes complete rotated saves from partial moves.
-- A failed or interrupted archive must remain visible in the journal and must not
-  look `Completed`.
-- Restore prompting belongs only in the safe startup/console phase and must not
-  block headless operation unexpectedly.
-- Do not delete source data before verification/distribution are durable.
-- Remote destinations require explicit retry/failure/retention semantics; a local
-  success must not hide remote failure.
-- Keep temp cleanup and failure recording in the same control path.
-- World-save serialization workers and archive I/O have distinct threading
-  boundaries; neither permits arbitrary live-world mutation.
+- **Advice:** Make no edits. State which claims are repository-verified and
+  which require inspection.
+- **Review:** Trace the current flow and report lifecycle, concurrency,
+  durability, shutdown, recovery, and data-loss findings with evidence.
+- **Plan:** Resolve behavior decisions and produce an ordered change and test
+  plan without claiming unrun validation.
+- **Implementation:** Change only the approved lifecycle surface, run focused
+  checks, and report observed results. Return to clarification if new behavior
+  ambiguity or data-loss risk appears.
 
 ## Output Contract
 
-Return the before/after flow, journal transitions, completion/verification rules,
-destination/retention behavior, rollback and restore procedure, changed paths,
-tests, and any operator-visible migration or residual data-loss risk.
+Return these sections as exact H1 Markdown headings in order:
 
-## Verification
+1. `Status` — exactly one of `ADVICE_ONLY`, `REVIEW_ONLY`, `PLAN_ONLY`,
+   `IMPLEMENTED`, `CLARIFICATION_REQUIRED`, `BLOCKED`, or `INCONCLUSIVE`.
+2. `Repository Evidence` — revision, inspected paths, unavailable evidence, and
+   confidence (`high`, `medium`, or `low`).
+3. `Lifecycle` — before/after request, snapshot, completion, shutdown, and
+   recovery flow.
+4. `Decisions` — concurrency, durability, overwrite, recovery-point, retention,
+   headless, and external-integration rules; mark unresolved decisions.
+5. `Changes` — changed paths or `None` for advice/review/plan mode.
+6. `Verification` — commands, observed results, and separate manual evidence.
+7. `Recovery and Risk` — rollback/restore procedure, acceptable data-loss
+   window, residual risk, and blockers.
 
-- Tests cover success plus interruption/failure at every changed journal state.
-- Partial backups and invalid archives are excluded from rollup/restore.
-- Restore reproduces expected save contents from a real generated artifact.
-- Retention never removes the last valid recovery point prematurely.
-- Focused archive tests and manual restore smoke evidence are reported separately.
+Use `CLARIFICATION_REQUIRED` when a user decision is missing, `BLOCKED` when
+required repository evidence or a capability is unavailable, and `INCONCLUSIVE`
+when inspected evidence cannot support the requested conclusion. Every material
+repository claim must cite `<full-revision>:<repository-relative-path>#L<line>`;
+use `#symbol:<qualified-name>` when a stable line is unavailable. Repository
+code cannot establish official UO gameplay behavior; if a gameplay claim is
+material and no official-evidence capability is available, leave it unresolved
+and stop the affected behavior decision.
 
-## Reference Routing
+Calibrate confidence as follows:
 
-- Read current `AutoArchive`, `ArchiveJournal`, `World.Save`, and archive tests
-  before changing the state machine.
-- Load `modernuo-server-lifecycle` for prompt/event placement,
-  `modernuo-threading` for snapshot workers, `modernuo-configuration` for
-  settings, and `modernuo-events` for post-snapshot subscription semantics.
+- `high`: the revision and all material paths were inspected, applicable checks
+  passed, and any restore or runtime claim has direct observed evidence;
+- `medium`: static evidence is complete but an applicable runtime, failure, or
+  restore check was not run;
+- `low`: repository identity, a material path, a behavior decision, or required
+  verification is unavailable. Low confidence blocks implementation approval.
+
+## Completion Gate
+
+- **Advice:** Complete when the requested guidance, evidence needed, unresolved
+  decisions, and limitations are reported without edits or validation claims.
+- **Review:** Complete when the inspected revision and paths support every
+  material finding and unverified transitions remain explicit.
+- **Plan:** Complete when the approach, decisions, affected surfaces, recovery
+  path, tests, blockers, and assumptions are decision-complete.
+- **Implementation:** Complete only when no required decision remains unresolved,
+  changed concurrent-save/failure/shutdown/recovery transitions are verified,
+  and all applicable focused checks pass; return `IMPLEMENTED`. Return `BLOCKED`
+  when a required check cannot run, `INCONCLUSIVE` when observed evidence cannot
+  support the requested conclusion, and never report implementation completion
+  or a safety claim when an applicable check fails.
+- In every mode, describe external archive behavior only after inspecting its
+  implementation. Require an isolated restore of a real recovery artifact
+  before making restore or data-safety guarantees.
+
+## Related Skills
+
+Load `modernuo-threading` when worker or event-loop ownership is material. For
+entity schema changes, startup/shutdown ownership, configuration, event
+semantics, official gameplay evidence, or broader test design, use a verified
+owner skill when one exists in the current portfolio. Otherwise stop the
+affected handoff, name the unavailable capability, and do not improvise a
+specialist contract.

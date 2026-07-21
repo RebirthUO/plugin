@@ -1,0 +1,64 @@
+{
+  "optimizer_hints": {
+    "capability": "Cross-cutting RunUO or ServUO migration foundation",
+    "inputs": [
+      "cross-cutting RunUO migration",
+      "ServUO to ModernUO migration plan",
+      "audit legacy shard migration compatibility"
+    ],
+    "trigger_actions": [
+      "Plan a multi-file RunUO system migration to ModernUO and account for saves, registrations, timers, lifecycle, and performance.",
+      "Implement this ServUO feature in ModernUO while preserving old saves and verifying cross-cutting compatibility.",
+      "Audit this legacy shard migration diff for identity, persistence, lifecycle, era, and regression risks."
+    ],
+    "exclusions": [
+      "serialization-only migration",
+      "timer-only migration",
+      "gump-only migration",
+      "packet-only migration",
+      "threading-only review",
+      "unrelated C# application"
+    ],
+    "artifacts": [
+      "migration inventory",
+      "classified evidence",
+      "checklist disposition",
+      "compatibility decisions",
+      "verification results"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "cross_cutting_migration"
+  ],
+  "positive_concepts": {
+    "cross_cutting_migration": {
+      "weight": 1.0,
+      "phrases": [
+        "cross-cutting RunUO migration",
+        "ServUO to ModernUO migration",
+        "legacy shard migration compatibility"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "narrow_subsystem": {
+      "weight": 0.8,
+      "exclusive": true,
+      "phrases": [
+        "serialization only",
+        "timer only",
+        "gump only",
+        "packet only",
+        "threading only"
+      ]
+    },
+    "unrelated_work": {
+      "weight": 1.0,
+      "exclusive": true,
+      "phrases": [
+        "unrelated C# application",
+        "player lore only"
+      ]
+    }
+  }
+}

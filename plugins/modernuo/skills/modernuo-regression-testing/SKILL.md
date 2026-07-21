@@ -1,34 +1,31 @@
 ---
 name: modernuo-regression-testing
-description: >
-  Use when designing or repairing focused ModernUO-based regression tests
-  for gameplay formulas, entities, combat hooks, timers, summons, or fixture
-  state. Use modernuo-test-workflow for full build/suite/PR execution and
-  modernuo-test-naming for rename-only cleanup.
-version: 1.1.0
-author: Hermes Agent
+description: 'Use when designing or repairing focused ModernUO-based regression tests
+  for gameplay formulas, entities, combat hooks, timers, summons, or fixture state.
+  Use modernuo-test-workflow for full build/suite/PR execution and modernuo-test-naming
+  for rename-only cleanup.
+
+  '
 license: MIT
 metadata:
-  hermes:
-    skill_group: modernuo
-    skill_subgroup: domain
-    workflow_phase: implement
-    workflow_tier: support
-    tags: [modernuo, rebirthuo, tests, regression, xunit]
-    related_skills:
-      - modernuo-test-workflow
-      - modernuo-test-naming
-      - modernuo-code-audit
-      - modernuo-era-expansion
+  version: 1.1.0
 ---
 
 # ModernUO Regression Testing
+
+## Portfolio Coordination
+
+For cross-cutting work, consult [the portfolio routing guide](../PORTFOLIO-ROUTING.md). Load only a named available neighbor, preserve this skill's boundary, and hand off a compact packet with scope, evidence, constraints, and next owner when the guide routes work elsewhere.
 
 ## Boundary
 
 Choose the smallest reliable test surface that proves the player-visible bug and
 would fail if it returned. This skill covers test design and UOContent fixture
 pitfalls, not the entire PR validation workflow.
+
+## Required context
+
+Before acting, inspect the consuming repository and record its pinned revision, the requested behavior, and the available build/test surface. If a required path, symbol, profile, source claim, or validation surface cannot be verified, return `BLOCKED` with the smallest missing input; do not infer it. Treat sibling skills and repository-local documents as optional: load them only when present, otherwise inspect the current source directly and state the limitation.
 
 ## Workflow
 
@@ -73,6 +70,53 @@ status. Do not call a focused filter suite-green.
 - It is deterministic, isolated, and cleans all entities/global state.
 - Era-before and era-after cases are covered when applicable.
 - Focused and neighboring tests pass; broader validation status is explicit.
+
+## Intake and result contract
+
+Classify the request as `REVIEW`, `PLAN`, or `IMPLEMENT` before acting. Record `Repository revision`, `Requested behavior`, `Evidence available`, and `Validation surface`; return `BLOCKED` when any required field is unavailable.
+
+Emit exactly one fenced `yaml` document with this ordered, machine-readable schema. Keep all values factual; use `null` or an empty list rather than prose placeholders. Every datum promised by this skill's earlier output contract belongs in one or more `Decision.records` entries; use one record per affected surface, matrix row, warning, or finding. Place optional narrative after the YAML document only when it adds human context without changing the record values.
+
+```yaml
+Outcome: IMPLEMENTED | REVIEWED | BLOCKED
+Repository revision:
+  commit: <full revision or null>
+  dirty: <true | false | null>
+Decision:
+  kind: REVIEW | PLAN | IMPLEMENT
+  summary: <single factual sentence>
+  records:
+    - kind: <skill-specific contract item>
+      subject: <path, symbol, matrix row, or finding>
+      status: <verified | proposed | blocked | not-applicable>
+      details: <required skill-specific fields>
+      evidence_refs: [<Evidence.records.id>]
+Evidence:
+  records:
+    - id: E1
+      class: repository | official | test | runtime | user-supplied
+      locator: <revision-bound path, URL, command, or null>
+      claim: <fact supported by the record>
+Verification:
+  checks:
+    - command_or_method: <command or inspection>
+      result: passed | failed | not-run | blocked
+      evidence_refs: [E1]
+  runtime_smoke:
+    result: passed | failed | not-run | unavailable
+    runner_sha256: <summary value or null>
+Confidence:
+  level: high | medium | low
+  basis: <evidence and verification basis>
+Limitations:
+  items: [<unresolved input, source, or validation limit>]
+```
+
+Use `high` confidence only with a current revision plus focused verification, `medium` with current static evidence but an unrun required check, and `low` when blocked or a required source is unavailable.
+
+## Portable evidence
+
+Use `evals/behavior_cases.json` to preserve the missing-context blocker, named safety branch, and response fields during review or implementation. For every response, state `Outcome` (`IMPLEMENTED`, `REVIEWED`, or `BLOCKED`), the inspected repository revision, calibrated confidence (`high`, `medium`, or `low`), and any evidence or validation limitation. Before completion, run the package trigger-fixture smoke check from the plugin root: `python scripts/validate-modernuo-skill-evals.py plugins/modernuo/skills/modernuo-regression-testing`. When a Codex CLI runtime is available, also forward-test every behavior case with `python scripts/run-modernuo-skill-runtime-smoke.py --output-dir <external-output-dir> plugins/modernuo/skills/modernuo-regression-testing` and report the result plus the `runner_sha256` from its summary; otherwise state that runtime-evaluation limitation explicitly.
 
 ## Reference Routing
 

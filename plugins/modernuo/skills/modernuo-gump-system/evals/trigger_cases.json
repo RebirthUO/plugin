@@ -2,20 +2,32 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo gump system task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a StaticGump with authorized responses.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo gump system in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a stale gump response after state changed.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo gump system change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a DynamicGump layout with handler-aware text.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo gump system diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Break this Gump screenshot into components, query the available Ultima MCP for UI assets, and show the implementation plan as a wireframe.",
+      "family": "screenshot_plan"
+    },
+    {
+      "text": "Zerlege diesen Gump-Screenshot in Komponenten, nutze falls vorhanden das Ultima-MCP und erstelle einen visuellen Umsetzungsplan.",
+      "family": "screenshot_plan_de"
+    },
+    {
+      "text": "Audit a gump flow for empty construction or missing close behavior.",
+      "family": "audit"
+    },
+    {
+      "text": "Erstelle eine ModernUO-Gump mit sicherer Antwortprüfung.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [
@@ -28,8 +40,16 @@
       "family": "out_of_scope"
     },
     {
+      "text": "Create a generic web dashboard wireframe without a ModernUO or Ultima context.",
+      "family": "out_of_scope"
+    },
+    {
       "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
       "family": "out_of_scope"
+    },
+    {
+      "text": "Migrate this legacy RunUO Gump and its response handler to ModernUO.",
+      "family": "migration_boundary"
     }
   ],
   "near_neighbor": [

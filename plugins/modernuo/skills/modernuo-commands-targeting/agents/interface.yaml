@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Commands and Targeting
-  short_description: ModernUO Commands and Targeting
-  default_prompt: Use $modernuo-commands-targeting to apply ModernUO Commands and Targeting guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Design and review ModernUO commands and targets
+  default_prompt: Use $modernuo-commands-targeting to design, review, or change a ModernUO command or target flow with least privilege, stale-target safety, evidence limits, and focused tests.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

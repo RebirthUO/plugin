@@ -2,52 +2,56 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Establish the official OSI/EA behavior for this claim and keep community or emulator evidence separate.",
-      "family": "owned_job"
+      "text": "Research the current official Broadsword behavior for Healing Stone and compare it with this implementation.",
+      "family": "official_evidence"
     },
     {
-      "text": "I need an evidence-backed plan for uo official evidence in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Wie funktioniert Hit Chance Increase aktuell auf den offiziellen UO-Produktionsservern?",
+      "family": "multilingual_official_evidence"
     },
     {
-      "text": "Help me implement a uo official evidence change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Investigue la mecanica historica de Animal Taming en los servidores oficiales de Ultima Online.",
+      "family": "multilingual_official_evidence"
     },
     {
-      "text": "Audit this uo official evidence diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Make this TrueUO-derived formula production-like while keeping every unsupported OSI value unresolved.",
+      "family": "implementation_parity"
+    },
+    {
+      "text": "Did EA change this item mechanic between Publish 65 and current production?",
+      "family": "historical_reconciliation"
+    },
+    {
+      "text": "UOGuide and UO.com disagree about this cooldown; establish the official value.",
+      "family": "source_conflict"
     }
   ],
   "should_not_trigger": [
     {
-      "text": "Refactor this unrelated ASP.NET service; no Ultima Online or ModernUO code is involved.",
+      "text": "Write a fictional tavern song set in Britain.",
+      "family": "creative_uo"
+    },
+    {
+      "text": "Explain production deployment strategies for a generic web API.",
       "family": "out_of_scope"
     },
     {
-      "text": "Create a marketing image for our shard announcement.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Give general advice only; do not create, edit, push, or update any GitHub artifact.",
-      "family": "out_of_scope"
+      "text": "Map Publish 81 to the next cumulative ModernUO expansion gate.",
+      "family": "publish_mapping"
     }
   ],
   "near_neighbor": [
     {
-      "text": "Research this issue against official OSI/EA sources and the configured repository, rewrite its existing fields without appending a report, remove resolved requirements and blockers, and stop on unresolved behavior.",
-      "family": "near_neighbor"
+      "text": "Which expansion and Core flag should own Publish 90?",
+      "family": "publish_mapping"
     },
     {
-      "text": "Review this modernuo era and expansion behavior task and give me the repository-specific checks.",
-      "family": "near_neighbor"
+      "text": "Audit only the repository implementation of this timer without making an official gameplay claim.",
+      "family": "code_audit"
     },
     {
-      "text": "Review this modernuo era change gate task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this uo living-world review task and give me the repository-specific checks.",
-      "family": "near_neighbor"
+      "text": "Review how this confirmed official mechanic affects the broader player economy.",
+      "family": "living_world_review"
     }
   ]
 }

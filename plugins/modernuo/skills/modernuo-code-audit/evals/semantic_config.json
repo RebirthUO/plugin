@@ -1,56 +1,27 @@
 {
   "optimizer_hints": {
     "capability": "ModernUO Code Audit",
-    "inputs": [
-      "modernuo code audit"
-    ],
+    "inputs": ["C# diff", "code review", "serialization risk", "lifecycle regression"],
     "trigger_actions": [
-      "Review this modernuo code audit task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo code audit in the configured ModernUO-based repository.",
-      "Help me implement a modernuo code audit change and identify the focused verification.",
-      "Audit this modernuo code audit diff for era, persistence, lifecycle, and regression risks."
+      "Audit this ModernUO C# change for persistence and lifecycle risks.",
+      "Review this command handler diff without modifying it.",
+      "Pruefe diesen ModernUO-C#-Diff auf Berechtigungs- und Save-Risiken."
     ],
-    "exclusions": [
-      "modernuo serialization",
-      "modernuo timers",
-      "modernuo lifecycle cleanup",
-      "modernuo threading",
-      "modernuo performance hot paths",
-      "modernuo string handling",
-      "modernuo property lists",
-      "modernuo gump system"
-    ],
-    "artifacts": [
-      "source evidence",
-      "implementation plan",
-      "verification result"
-    ]
+    "exclusions": ["official gameplay research", "generic C# outside ModernUO"],
+    "artifacts": ["ranked findings", "local evidence", "verification result"]
   },
-  "fallback_positive_concepts": [
-    "owned_job"
-  ],
+  "fallback_positive_concepts": ["audit_intent"],
   "positive_concepts": {
-    "owned_job": {
+    "audit_intent": {
       "weight": 1.0,
-      "phrases": [
-        "modernuo code audit"
-      ]
+      "phrases": ["modernuo code review", "modernuo c# diff", "modernuo persistence risk", "modernuo lifecycle regression", "modernuo code audit", "modernuo c#-diff pruefen"]
     }
   },
   "negative_concepts": {
-    "near_neighbor": {
-      "weight": 0.0,
-      "exclusive": false,
-      "phrases": []
-    },
-    "explicit_no_action": {
+    "out_of_scope": {
       "weight": 0.5,
       "exclusive": true,
-      "phrases": [
-        "do not modify",
-        "advice only",
-        "unrelated repository"
-      ]
+      "phrases": ["unrelated repository", "generic c# outside modernuo"]
     }
   }
 }

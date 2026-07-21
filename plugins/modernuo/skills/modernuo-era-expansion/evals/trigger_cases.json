@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo era and expansion behavior task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement an exact-versus-cumulative Core expansion gate.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo era and expansion behavior in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a behavior request whose era/profile is missing.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo era and expansion behavior change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan the earlier-target-later expansion matrix.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo era and expansion behavior diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit an expansion branch for unintended inherited behavior.",
+      "family": "audit"
+    },
+    {
+      "text": "Prüfe diese ModernUO-Erweiterungsgrenze auf kumulative und exakte Gates.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Monster Abilities",
     "inputs": [
-      "modernuo monster abilities"
+      "Implement a reusable MonsterAbility cooldown and target guard.",
+      "Review boss phase orchestration routed outside a MonsterAbility.",
+      "Plan a stateful creature special with persistence and cleanup.",
+      "Audit combat-special ordering for a reusable ability.",
+      "Implementiere eine wiederverwendbare ModernUO-MonsterAbility mit Tests."
     ],
     "trigger_actions": [
-      "Review this modernuo monster abilities task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo monster abilities in the configured ModernUO-based repository.",
-      "Help me implement a modernuo monster abilities change and identify the focused verification.",
-      "Audit this modernuo monster abilities diff for era, persistence, lifecycle, and regression risks."
+      "Implement a reusable MonsterAbility cooldown and target guard.",
+      "Review boss phase orchestration routed outside a MonsterAbility.",
+      "Plan a stateful creature special with persistence and cleanup.",
+      "Audit combat-special ordering for a reusable ability.",
+      "Implementiere eine wiederverwendbare ModernUO-MonsterAbility mit Tests."
     ],
     "exclusions": [
       "modernuo content patterns",
@@ -24,13 +29,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo monster abilities"
+        "Implement a reusable MonsterAbility cooldown and target guard."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review boss phase orchestration routed outside a MonsterAbility."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a stateful creature special with persistence and cleanup."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit combat-special ordering for a reusable ability."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Implementiere eine wiederverwendbare ModernUO-MonsterAbility mit Tests."
       ]
     }
   },
@@ -42,7 +75,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "Missing required repository, behavior, or validation input for xUnit hard-noise prefixes in file and method names.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository, behavior, or validation input"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "Keep audit-only work behavior-free and distinguish clear from ambiguous results.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Keep audit-only work behavior-free and distinguish clear from ambiguous results."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "Verify a clear audit with no actionable naming noise with current-source evidence and a focused check.",
+      "expected_outcome": "REVIEWED",
+      "must_verify": "current repository revision and focused verification result"
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return a review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

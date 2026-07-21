@@ -1,0 +1,1 @@
+Use when implementing a research-ready RebirthUO issue in the repository declared by the consuming project's AGENTS.md.

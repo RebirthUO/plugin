@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Gump System",
     "inputs": [
-      "modernuo gump system"
+      "Implement a StaticGump with authorized responses.",
+      "Review a stale gump response after state changed.",
+      "Plan a DynamicGump layout with handler-aware text.",
+      "Break this Gump screenshot into components, query the available Ultima MCP for UI assets, and show the implementation plan as a wireframe.",
+      "Zerlege diesen Gump-Screenshot in Komponenten, nutze falls vorhanden das Ultima-MCP und erstelle einen visuellen Umsetzungsplan.",
+      "Audit a gump flow for empty construction or missing close behavior.",
+      "Erstelle eine ModernUO-Gump mit sicherer Antwortprüfung."
     ],
     "trigger_actions": [
-      "Review this modernuo gump system task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo gump system in the configured ModernUO-based repository.",
-      "Help me implement a modernuo gump system change and identify the focused verification.",
-      "Audit this modernuo gump system diff for era, persistence, lifecycle, and regression risks."
+      "Implement a StaticGump with authorized responses.",
+      "Review a stale gump response after state changed.",
+      "Plan a DynamicGump layout with handler-aware text.",
+      "Audit a gump flow for empty construction or missing close behavior.",
+      "Erstelle eine ModernUO-Gump mit sicherer Antwortprüfung."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -20,18 +27,62 @@
     ],
     "artifacts": [
       "source evidence",
+      "component inventory",
+      "visual concept",
       "implementation plan",
       "verification result"
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "screenshot_plan",
+    "screenshot_plan_de",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo gump system"
+        "Implement a StaticGump with authorized responses."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a stale gump response after state changed."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a DynamicGump layout with handler-aware text."
+      ]
+    },
+    "screenshot_plan": {
+      "weight": 1.0,
+      "phrases": [
+        "Break this Gump screenshot into components, query the available Ultima MCP for UI assets, and show the implementation plan as a wireframe."
+      ]
+    },
+    "screenshot_plan_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Zerlege diesen Gump-Screenshot in Komponenten, nutze falls vorhanden das Ultima-MCP und erstelle einen visuellen Umsetzungsplan."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a gump flow for empty construction or missing close behavior."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Erstelle eine ModernUO-Gump mit sicherer Antwortprüfung."
       ]
     }
   },
@@ -43,7 +94,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

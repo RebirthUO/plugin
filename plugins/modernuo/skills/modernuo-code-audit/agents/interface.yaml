@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Code Audit
-  short_description: ModernUO Code Audit
-  default_prompt: Use $modernuo-code-audit to apply ModernUO Code Audit guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Review ModernUO C# changes with evidence
+  default_prompt: Use $modernuo-code-audit to review a ModernUO C# diff for persistence, lifecycle, authorization, event-loop, performance, and regression risks without editing unless requested.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:
@@ -10,7 +10,7 @@ compatibility:
   - generic
   - vscode
   activation:
-    mode: manual
+    mode: implicit
     paths: []
   execution:
     context: inline

@@ -1,0 +1,51 @@
+{
+    "cases":  [
+                  {
+                      "name":  "unknown wire width",
+                      "prompt":  "Migrate this packet but one field width is unknown.",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "truncated input",
+                      "prompt":  "The reader consumes a string without checking remaining length.",
+                      "must_reject":  "unbounded read",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nunbounded read\n"
+                  },
+                  {
+                      "name":  "reserved bytes",
+                      "prompt":  "The proposed writer omits undocumented reserved bytes.",
+                      "must_reject":  "wire change",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nwire change\n"
+                  },
+                  {
+                      "name":  "cannot send",
+                      "prompt":  "The send path lacks CannotSendPackets handling.",
+                      "must_require":  "cannot-send test",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\ncannot-send test\n"
+                  },
+                  {
+                      "name":  "byte mismatch",
+                      "prompt":  "The emitted bytes differ from the known-good capture.",
+                      "expected_status":  "VALIDATION_FAILED",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| VALIDATION_FAILED | IMPLEMENT | medium |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  }
+              ],
+    "global_assertions":  {
+                              "status_values":  [
+                                                    "PLANNED",
+                                                    "IMPLEMENTED",
+                                                    "AUDITED",
+                                                    "OUT_OF_SCOPE",
+                                                    "BLOCKED_INPUT",
+                                                    "BLOCKED_COMPATIBILITY",
+                                                    "BLOCKED_EVIDENCE",
+                                                    "VALIDATION_FAILED"
+                                                ],
+                              "require_byte_evidence":  true,
+                              "complete_requires_all_checks":  true
+                          }
+}

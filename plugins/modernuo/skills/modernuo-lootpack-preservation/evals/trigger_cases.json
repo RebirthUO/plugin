@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo lootpack preservation task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a GenerateLoot migration that retains LootPack behavior.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo lootpack preservation in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review an economy-changing replacement of source-derived loot.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo lootpack preservation change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a creature loot review with era evidence.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo lootpack preservation diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a gold or artifact change for hidden balance drift.",
+      "family": "audit"
+    },
+    {
+      "text": "Prüfe diese LootPack-Änderung auf unbeabsichtigte Wirtschaftsänderungen.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

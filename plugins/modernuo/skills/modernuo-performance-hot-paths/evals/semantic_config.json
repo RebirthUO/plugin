@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Performance Hot Paths",
     "inputs": [
-      "modernuo performance hot paths"
+      "Implement a game-loop allocation hot path.",
+      "Review a claimed speedup with no profiler evidence.",
+      "Plan spatial scan and pooling alternatives.",
+      "Audit LINQ usage in a frequently executed combat path.",
+      "Prüfe diesen ModernUO-Hot-Path auf Allokationen und globale Scans."
     ],
     "trigger_actions": [
-      "Review this modernuo performance hot paths task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo performance hot paths in the configured ModernUO-based repository.",
-      "Help me implement a modernuo performance hot paths change and identify the focused verification.",
-      "Audit this modernuo performance hot paths diff for era, persistence, lifecycle, and regression risks."
+      "Implement a game-loop allocation hot path.",
+      "Review a claimed speedup with no profiler evidence.",
+      "Plan spatial scan and pooling alternatives.",
+      "Audit LINQ usage in a frequently executed combat path.",
+      "Prüfe diesen ModernUO-Hot-Path auf Allokationen und globale Scans."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -27,13 +32,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo performance hot paths"
+        "Implement a game-loop allocation hot path."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a claimed speedup with no profiler evidence."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan spatial scan and pooling alternatives."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit LINQ usage in a frequently executed combat path."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Prüfe diesen ModernUO-Hot-Path auf Allokationen und globale Scans."
       ]
     }
   },
@@ -45,7 +78,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

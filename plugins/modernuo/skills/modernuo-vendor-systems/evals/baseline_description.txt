@@ -1,0 +1,1 @@
+Use when working on ModernUO vendor transactions, stock, prices, restocking, inventory, and commerce-facing validation. Preserve atomic currency and inventory behavior and require policy evidence.

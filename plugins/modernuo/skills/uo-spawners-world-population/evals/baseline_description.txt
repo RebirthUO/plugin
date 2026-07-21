@@ -1,1 +1,0 @@
-Use when adding, migrating, importing, exporting, debugging, or auditing ModernUO BaseSpawner implementations or Distribution/Data/Spawns JSON packs, including entries, bounds, timing, counts, era/facet selection, persistence, cleanup, and sector-cache behavior. Do not use for creature design, region policy, encounter controllers, loot, or calendar scheduling.

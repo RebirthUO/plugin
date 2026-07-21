@@ -1,8 +1,8 @@
 {
   "name": "modernuo-codebase",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "owner": "RebirthUO",
-  "updated_at": "2026-07-12",
+  "updated_at": "2026-07-20",
   "review_cadence": "quarterly",
   "status": "active",
   "maturity_tier": "production",
@@ -16,7 +16,6 @@
     "vscode"
   ],
   "factory_components": [
-    "evals",
-    "reports"
+    "evals"
   ]
 }

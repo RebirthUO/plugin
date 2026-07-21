@@ -2,14 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Networking and Packets",
     "inputs": [
-      "modernuo networking and packets",
-      "modernuo networking"
+      "Implement a SpanWriter packet encoder with bounds checks.",
+      "Review an incoming packet handler with ownership validation.",
+      "Plan NetState fan-out without unsafe allocation.",
+      "Audit a protocol change for framing and dispatch risks.",
+      "Ändere einen ModernUO-Paketencoder mit Längen- und Besitzprüfungen."
     ],
     "trigger_actions": [
-      "Review this modernuo networking and packets task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo networking and packets in the configured ModernUO-based repository.",
-      "Help me implement a modernuo networking and packets change and identify the focused verification.",
-      "Audit this modernuo networking and packets diff for era, persistence, lifecycle, and regression risks."
+      "Implement a SpanWriter packet encoder with bounds checks.",
+      "Review an incoming packet handler with ownership validation.",
+      "Plan NetState fan-out without unsafe allocation.",
+      "Audit a protocol change for framing and dispatch risks.",
+      "Ändere einen ModernUO-Paketencoder mit Längen- und Besitzprüfungen."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -27,14 +31,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo networking and packets",
-        "modernuo networking"
+        "Implement a SpanWriter packet encoder with bounds checks."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review an incoming packet handler with ownership validation."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan NetState fan-out without unsafe allocation."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a protocol change for framing and dispatch risks."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Ändere einen ModernUO-Paketencoder mit Längen- und Besitzprüfungen."
       ]
     }
   },
@@ -46,7 +77,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

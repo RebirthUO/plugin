@@ -1,0 +1,6 @@
+{
+  "optimizer_hints":{"capability":"RebirthUO Issue Workflow","inputs":["rebirthuo issue workflow","research and implement issue","issue to PR","autonomous RebirthUO workflow"],"trigger_actions":["Take this new RebirthUO request autonomously from live-template intake through verified PR.","Research and implement this existing RebirthUO issue, then push and verify the PR."],"exclusions":["single phase only","advice only","merge PR","release","deploy"],"artifacts":["WorkflowResult","verified pull request"]},
+  "fallback_positive_concepts":["owned_job"],
+  "positive_concepts":{"owned_job":{"weight":1.0,"phrases":["rebirthuo issue workflow","research and implement issue","issue to PR","autonomous RebirthUO workflow"]}},
+  "negative_concepts":{"near_neighbor":{"weight":0.8,"exclusive":true,"phrases":["create only","research only","implement only","audit only"]},"explicit_no_action":{"weight":0.7,"exclusive":true,"phrases":["advice only","do not modify","do not push","unrelated repository"]}}
+}

@@ -1,10 +1,13 @@
 # Weapon-Buff Spell Pattern
 
-This is the canonical reference for temporary weapon enchantment spells. Use it whenever
+This is a repository-derived implementation reference for temporary weapon enchantment spells; it is not official gameplay evidence. Use it whenever
 you implement or review a spell that buffs a `BaseWeapon` for a duration and must clean
 up on disarm, weapon deletion, caster death, caster deletion, or timer expiry.
 
-## Canonical implementations in this repo
+Before relying on a named path, hook, line, or behavior below, record the
+consuming repository revision and confirm that anchor in its current source.
+
+## Repository implementation examples
 
 | Spell | School | Cleanup dict | Static helpers exposed |
 |---|---|---|---|
@@ -22,8 +25,7 @@ Note the design split:
 - **Caster-keyed dictionaries** (Attune, StoneForm, BloodOath) are right when the effect
   lives on the caster and the weapon does not matter.
 
-For SA `Enchant`, weapon-keyed is the only correct choice because the official mechanic
-cancels the enchant on disarm.
+For SA `Enchant`, treat weapon-keyed state as a repository precedent only. Verify the target-era official mechanic separately before claiming that disarm cancellation is production behavior.
 
 ## Required `BaseWeapon` integration
 
@@ -49,6 +51,12 @@ and are reset by their own `ExpireTimer` ticks (not by `OnRemoved`). That works 
 those two spells because the flag persists on the weapon after the caster disarms, but
 the official Enchant wording says disarm cancels the effect — so Enchant must use the
 dictionary-keyed pattern, not a `BaseWeapon` flag.
+
+**Version and evidence override:** The preceding implementation descriptions are
+repository discovery examples, not a portable requirement. Confirm every hook
+and cleanup path in the consuming revision before adopting it. Do not treat the
+reference's statement about any official wording as official evidence; obtain
+the applicable era-scoped source separately or return `BLOCKED` for that claim.
 
 ## Source-generated cleanup for caster death/delete
 

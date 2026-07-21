@@ -1,0 +1,26 @@
+interface:
+  display_name: Skill Scanner
+  short_description: Audit skill fit after repository changes
+  default_prompt: Use $skill-scanner to assess which ModernUO skills need an update after a repository change, map routing and scope overlap, and propose optional capability gaps for user approval.
+compatibility:
+  canonical_format: agent-skills
+  adapter_targets:
+  - openai
+  - claude
+  - generic
+  - vscode
+  activation:
+    mode: implicit
+    paths: []
+  execution:
+    context: inline
+    shell: powershell
+  trust:
+    source_tier: plugin
+    remote_inline_execution: forbid
+    remote_metadata_policy: allow-metadata-only
+  degradation:
+    openai: Use the canonical SKILL.md and execute the scanner only after confirming a local repository and base revision.
+    claude: Use the neutral Agent Skills source and preserve explicit scan and approval gates.
+    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.

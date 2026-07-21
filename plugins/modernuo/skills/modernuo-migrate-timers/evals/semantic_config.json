@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Convert this RunUO Timer subclass and preserve save-load deadline semantics.", "Replace DelayCall and TimerPriority with current ModernUO timer APIs and cleanup."],
+    "trigger_actions": ["Convert this RunUO Timer subclass and preserve save-load deadline semantics.", "Replace DelayCall and TimerPriority with current ModernUO timer APIs and cleanup."],
+    "capability": "modernuo-migrate-timers",
+    "exclusions": ["Convert this packet handler."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Convert this RunUO Timer subclass and preserve save-load deadline semantics.", "Replace DelayCall and TimerPriority with current ModernUO timer APIs and cleanup."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Convert this packet handler."],
+      "exclusive": true
+    }
+  }
+}

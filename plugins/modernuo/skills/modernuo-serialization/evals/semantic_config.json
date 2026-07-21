@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Serialization",
     "inputs": [
-      "modernuo serialization"
+      "Implement a SerializationGenerator version migration.",
+      "Review a persistent field with save compatibility risk.",
+      "Plan a legacy reader versus generated MigrateFrom decision.",
+      "Audit post-load restoration of durable state.",
+      "Migriere ein persistentes ModernUO-Feld mit kompatiblem Save/Load-Test."
     ],
     "trigger_actions": [
-      "Review this modernuo serialization task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo serialization in the configured ModernUO-based repository.",
-      "Help me implement a modernuo serialization change and identify the focused verification.",
-      "Audit this modernuo serialization diff for era, persistence, lifecycle, and regression risks."
+      "Implement a SerializationGenerator version migration.",
+      "Review a persistent field with save compatibility risk.",
+      "Plan a legacy reader versus generated MigrateFrom decision.",
+      "Audit post-load restoration of durable state.",
+      "Migriere ein persistentes ModernUO-Feld mit kompatiblem Save/Load-Test."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -25,13 +30,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo serialization"
+        "Implement a SerializationGenerator version migration."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a persistent field with save compatibility risk."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a legacy reader versus generated MigrateFrom decision."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit post-load restoration of durable state."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Migriere ein persistentes ModernUO-Feld mit kompatiblem Save/Load-Test."
       ]
     }
   },
@@ -43,7 +76,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

@@ -1,0 +1,1 @@
+Use when implementing, auditing, or planning a ModernUO item property that needs aligned gameplay mechanics, Object Property List output, storage, era gates, persistence, and focused test evidence.

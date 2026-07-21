@@ -1,0 +1,8 @@
+{
+  "cases": [
+    {"kind": "missing_context", "scenario": "The user asks to scan changed ModernUO skills but supplies no repository path or comparison revision.", "expected_outcome": "BLOCKED", "must_preserve": "do not infer the repository or base revision"},
+    {"kind": "safety_branch", "scenario": "The scanner finds an uncovered packet area and the user has not approved a new skill.", "expected_outcome": "REVIEWED", "must_preserve": "mark the candidate USER_DECISION_REQUIRED and do not create a skill"},
+    {"kind": "verification_branch", "scenario": "A confirmed repository and base revision are available, with a direct changed-path match in a skill reference.", "expected_outcome": "REVIEWED", "must_verify": "run the scanner and inspect the current repository anchor before proposing an edit"},
+    {"kind": "output_contract", "scenario": "Return a complete scan result for a confirmed repository comparison.", "expected_outcome": "REVIEWED", "required_fields": ["Outcome", "Repository revision", "Decision", "Evidence", "Verification", "Confidence", "Limitations"]}
+  ]
+}

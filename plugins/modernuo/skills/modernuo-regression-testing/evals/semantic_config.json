@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Regression Testing",
     "inputs": [
-      "modernuo regression testing"
+      "Implement a focused timer regression test with isolated state.",
+      "Review a fixture that mutates process-global tables.",
+      "Plan a save/load failure with deterministic assertions.",
+      "Audit test evidence that confuses environment failure and regression.",
+      "Schreibe einen fokussierten ModernUO-Regressionstest für einen Timerfehler."
     ],
     "trigger_actions": [
-      "Review this modernuo regression testing task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo regression testing in the configured ModernUO-based repository.",
-      "Help me implement a modernuo regression testing change and identify the focused verification.",
-      "Audit this modernuo regression testing diff for era, persistence, lifecycle, and regression risks."
+      "Implement a focused timer regression test with isolated state.",
+      "Review a fixture that mutates process-global tables.",
+      "Plan a save/load failure with deterministic assertions.",
+      "Audit test evidence that confuses environment failure and regression.",
+      "Schreibe einen fokussierten ModernUO-Regressionstest für einen Timerfehler."
     ],
     "exclusions": [
       "modernuo test workflow",
@@ -23,13 +28,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo regression testing"
+        "Implement a focused timer regression test with isolated state."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a fixture that mutates process-global tables."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a save/load failure with deterministic assertions."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit test evidence that confuses environment failure and regression."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Schreibe einen fokussierten ModernUO-Regressionstest für einen Timerfehler."
       ]
     }
   },
@@ -41,7 +74,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

@@ -1,0 +1,24 @@
+{
+  "optimizer_hints": {
+    "capability": "ModernUO Repository Scanner",
+    "inputs": ["confirmed ModernUO checkout", "comparison revision", "skill portfolio root"],
+    "trigger_actions": [
+      "Scan this ModernUO repository change and tell me which skills may need maintenance.",
+      "Check whether our ModernUO skill routing and scope still fit after these source changes.",
+      "Pruefe nach den Aenderungen im ModernUO-Repository, welche Skills aktualisiert werden sollten."
+    ],
+    "exclusions": ["automatic skill updates", "automatic new-skill creation", "official gameplay research"],
+    "artifacts": ["revision-bound scan report", "relationship map", "user-approved capability candidates"]
+  },
+  "fallback_positive_concepts": ["repository_skill_maintenance", "repository_relationship_audit"],
+  "positive_concepts": {
+    "repository_skill_maintenance": {"weight": 1.0, "phrases": ["Scan this ModernUO repository change and tell me which skills may need maintenance."]},
+    "repository_relationship_audit": {"weight": 1.0, "phrases": ["Check whether our ModernUO skill routing and scope still fit after these source changes."]},
+    "repository_skill_maintenance_de": {"weight": 1.0, "phrases": ["Pruefe nach den Aenderungen im ModernUO-Repository, welche Skills aktualisiert werden sollten."]}
+  },
+  "negative_concepts": {
+    "skill_authoring": {"weight": 0.6, "exclusive": true, "phrases": ["update timer skill workflow", "create modernuo skill packet migration"]},
+    "official_gameplay_research": {"weight": 0.6, "exclusive": true, "phrases": ["ultima online property mechanic official sources"]},
+    "unconfirmed_repository": {"weight": 0.5, "exclusive": true, "phrases": ["generic non modernuo repository"]}
+  }
+}

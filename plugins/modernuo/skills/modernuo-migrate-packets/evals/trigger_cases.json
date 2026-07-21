@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Convert this PacketWriter packet and handler registration to SpanWriter and SpanReader.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migrate this known packet contract and compare bytes with the capture.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-packets migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-packets conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migriere dieses bekannte RunUO-Paket bytegenau auf die aktuellen ModernUO-Span-APIs.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Design a new network protocol and choose an unused packet ID.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Convert this gump response handler.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

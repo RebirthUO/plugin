@@ -1,0 +1,12 @@
+{
+  "optimizer_hints": {
+    "capability":"RebirthUO Issue Create",
+    "inputs":["rebirthuo issue create","draft RebirthUO intake issue","create from live issue template","intakepacket"],
+    "trigger_actions":["Draft a RebirthUO intake issue from the verified live template.","Create and read back a RebirthUO intake issue, then return its IntakePacket."],
+    "exclusions":["research issue","implement issue","full issue workflow","audit issue-creation code"],
+    "artifacts":["IntakePacket","verified issue"]
+  },
+  "fallback_positive_concepts":["owned_job"],
+  "positive_concepts":{"owned_job":{"weight":1.0,"phrases":["rebirthuo issue create","draft RebirthUO intake issue","create from live issue template","intakepacket"]}},
+  "negative_concepts":{"near_neighbor":{"weight":0.8,"exclusive":true,"phrases":["research the issue","implement the issue","full workflow","audit issue creation code"]},"explicit_no_action":{"weight":0.5,"exclusive":true,"phrases":["advice only","unrelated repository"]}}
+}

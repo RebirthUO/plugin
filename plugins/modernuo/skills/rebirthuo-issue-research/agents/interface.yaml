@@ -1,0 +1,26 @@
+interface:
+  display_name: RebirthUO Issue Research
+  short_description: RebirthUO Issue Research
+  default_prompt: Use $rebirthuo-issue-research to exhaust official evidence for this RebirthUO issue, compare its verified repository, publish the researched body safely, and return readiness.
+compatibility:
+  canonical_format: agent-skills
+  adapter_targets:
+  - openai
+  - claude
+  - generic
+  - vscode
+  activation:
+    mode: implicit
+    paths: []
+  execution:
+    context: inline
+    shell: powershell
+  trust:
+    source_tier: plugin
+    remote_inline_execution: forbid
+    remote_metadata_policy: allow-metadata-only
+  degradation:
+    openai: Use the canonical SKILL.md and load references on demand.
+    claude: Use the neutral Agent Skills source and preserve explicit safety gates.
+    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    vscode: Use the canonical scoped-publication authority; if platform policy requires additional confirmation, return a blocked pre-publication state instead of changing semantics.

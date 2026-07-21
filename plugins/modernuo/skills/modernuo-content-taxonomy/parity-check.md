@@ -58,13 +58,13 @@ behavior. Community/emulator agreement never upgrades a claim to official.
 ```markdown
 ## Inventory
 
-| Domain | Official expected behavior | Repository evidence | Status | Confidence |
-|---|---|---|---|---|
-| World | ... | ... | Present / Partial / Gap / Unverified | High / Medium / Low |
-| Entity | ... | ... | ... | ... |
-| ItemSystem | ... | ... | ... | ... |
-| MobileSystem | ... | ... | ... | ... |
-| Progression | ... | ... | ... | ... |
+| Domain | Official expected behavior | Repository evidence | Discovery notes | Status | Confidence |
+|---|---|---|---|---|---|
+| World | ... | ... | ... | Present / Partial / Gap / Unverified | High / Medium / Low |
+| Entity | ... | ... | ... | ... | ... |
+| ItemSystem | ... | ... | ... | ... | ... |
+| MobileSystem | ... | ... | ... | ... | ... |
+| Progression | ... | ... | ... | ... | ... |
 | EconomyCrafting | ... | ... | ... | ... |
 | QuestNarrative | ... | ... | ... | ... |
 | Encounter | ... | ... | ... | ... |
@@ -99,3 +99,7 @@ When requested, draft one issue per independent finding with official expected
 behavior, verified actual state, impact, scope/non-goals, acceptance criteria,
 validation, and open decisions. Tracker mutation belongs to
 `modernuo-issue-create`.
+> Every parity row must include `Official evidence`, `Repository evidence`, and
+> `Discovery notes`. Community material is discovery-only and cannot determine a
+> parity status; leave the status unresolved when official era-scoped evidence
+> is unavailable.

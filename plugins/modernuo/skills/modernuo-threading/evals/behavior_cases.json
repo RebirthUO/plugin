@@ -1,0 +1,90 @@
+{
+  "cases": [
+    {
+      "name": "worker captures live entity",
+      "input": "Review Task.Run code that captures a Mobile and mutates it after awaiting worker I/O.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/Worker.cs#L10", "entry_point": "Worker.Run", "ownership_evidence": "EventLoopContext source trace"},
+      "expected_status": "UNSAFE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["repository", "revision", "source locator", "confidence"],
+      "section_assertions": {"Evidence": ["revision", "source locator"], "Context and Ownership": ["worker", "event loop"], "Crossings and Handoff": ["worker to event loop"], "Lifecycle": ["captured Mobile"], "Verification": ["failed"], "Unresolved": ["confidence"]},
+      "must_not_claim": ["measured safe", "stress test passed"]
+    },
+    {
+      "name": "unknown continuation context",
+      "input": "Approve this await-based mutation, but the repository and synchronization context are unavailable.",
+      "repository_context": null,
+      "expected_status": "BLOCKED",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["low", "missing repository", "not run"],
+      "section_assertions": {"Evidence": ["missing repository"], "Context and Ownership": ["unknown"], "Crossings and Handoff": ["unproven"], "Lifecycle": ["unresolved"], "Verification": ["not run"], "Unresolved": ["low"]},
+      "must_not_claim": ["SAFE", "runtime verified"]
+    },
+    {
+      "name": "parallel save purity",
+      "input": "Review Serialize() code that starts a timer and moves an Item during a parallel world save.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/Item.cs#L20", "entry_point": "Item.Serialize", "ownership_evidence": "parallel save worker trace"},
+      "expected_status": "UNSAFE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["serialization", "worker", "failed", "source locator"],
+      "section_assertions": {"Evidence": ["source locator"], "Context and Ownership": ["serialization worker"], "Crossings and Handoff": ["worker mutation"], "Lifecycle": ["parallel save"], "Verification": ["failed"], "Unresolved": ["confidence"]},
+      "must_not_claim": ["Serialize is pure"]
+    },
+    {
+      "name": "race not reproduced",
+      "input": "A shutdown race was reported but stress runs did not reproduce it and diagnostics are incomplete.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/Shutdown.cs#L30", "entry_point": "Shutdown.Stop", "ownership_evidence": "incomplete stress diagnostics"},
+      "expected_status": "INCONCLUSIVE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["attempts", "missing diagnostics", "not run", "medium"],
+      "section_assertions": {"Evidence": ["attempts", "missing diagnostics"], "Context and Ownership": ["shutdown"], "Crossings and Handoff": ["unresolved"], "Lifecycle": ["race"], "Verification": ["not run"], "Unresolved": ["medium"]},
+      "must_not_claim": ["race fixed", "runtime verified"]
+    },
+    {
+      "name": "safe event-loop continuation",
+      "input": "Review await Timer.Pause code with repository evidence that EventLoopContext captures the continuation.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/TimerFlow.cs#L40", "entry_point": "TimerFlow.Run", "ownership_evidence": "EventLoopContext continuation trace"},
+      "expected_status": "SAFE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["repository", "revision", "source locator", "high"],
+      "section_assertions": {"Evidence": ["revision", "source locator"], "Context and Ownership": ["EventLoopContext"], "Crossings and Handoff": ["event loop continuation"], "Lifecycle": ["bounded"], "Verification": ["passed"], "Unresolved": ["high"]},
+      "must_not_claim": ["stress test passed"]
+    },
+    {
+      "name": "review mode is read only",
+      "input": "Review this ModernUO Task.Run usage and do not modify files.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/Review.cs#L50", "entry_point": "Review.Run", "ownership_evidence": "worker capture trace"},
+      "expected_status": "UNSAFE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["review", "smallest safe change"],
+      "section_assertions": {"Evidence": ["review"], "Context and Ownership": ["worker"], "Crossings and Handoff": ["smallest safe change"], "Lifecycle": ["retained object"], "Verification": ["static"], "Unresolved": ["confidence"]},
+      "must_not_claim": ["edited", "implemented"]
+    },
+    {
+      "name": "plan mode names unrun verification",
+      "input": "Plan a safe immutable worker snapshot and event-loop handoff without editing files.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/Plan.cs#L60", "entry_point": "Plan.Run", "ownership_evidence": "current crossing trace"},
+      "expected_status": "SAFE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["plan", "not run", "confidence"],
+      "section_assertions": {"Evidence": ["plan", "revision"], "Context and Ownership": ["immutable snapshot"], "Crossings and Handoff": ["worker to event loop"], "Lifecycle": ["cancellation"], "Verification": ["not run"], "Unresolved": ["confidence"]},
+      "must_not_claim": ["tests passed", "implemented"]
+    },
+    {
+      "name": "implement mode verifies resulting state",
+      "input": "Implement the authorized event-loop handoff and run the focused lifecycle tests.",
+      "repository_context": {"repository_root": "C:/fixture/ModernUO", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "source_locator": "Server/Implement.cs#L70", "entry_point": "Implement.Run", "ownership_evidence": "current crossing plus test command"},
+      "expected_status": "SAFE",
+      "required_headings_in_order": ["Status", "Evidence", "Context and Ownership", "Crossings and Handoff", "Lifecycle", "Verification", "Unresolved"],
+      "must_include": ["implement", "passed", "confidence"],
+      "section_assertions": {"Evidence": ["implement", "revision", "source locator"], "Context and Ownership": ["event loop owner"], "Crossings and Handoff": ["verified handoff"], "Lifecycle": ["shutdown"], "Verification": ["passed"], "Unresolved": ["confidence"]},
+      "must_not_claim": ["not run", "unverified"]
+    }
+  ],
+  "global_assertions": {
+    "exactly_one_status": true,
+    "status_values": ["SAFE", "UNSAFE", "INCONCLUSIVE", "BLOCKED"],
+    "require_source_locator_for_material_claims": true,
+    "forbid_measured_claims_without_measured_evidence": true
+  }
+}

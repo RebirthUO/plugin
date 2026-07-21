@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "Missing required repository, behavior, or validation input for a SpanWriter packet encoder with bounds checks.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository, behavior, or validation input"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "Reject unverified packet length, ownership, or dispatch assumptions.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Reject unverified packet length, ownership, or dispatch assumptions."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "Verify a protocol change for framing and dispatch risks with current-source evidence and a focused check.",
+      "expected_outcome": "REVIEWED",
+      "must_verify": "current repository revision and focused verification result"
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return a review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

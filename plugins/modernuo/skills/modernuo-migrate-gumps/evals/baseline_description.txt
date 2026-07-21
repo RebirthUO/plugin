@@ -1,0 +1,1 @@
+Use when converting RunUO Gump classes, callers, or response handlers to the gump types and builder APIs verified in the target ModernUO revision. Covers fixed-versus-dynamic structure, display prerequisites, stable IDs, response handling, and empty-gump safety.

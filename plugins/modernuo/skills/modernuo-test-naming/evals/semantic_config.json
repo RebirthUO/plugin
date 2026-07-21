@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Test Naming",
     "inputs": [
-      "modernuo test naming"
+      "Implement xUnit hard-noise prefixes in file and method names.",
+      "Review a real era-domain name that must be preserved.",
+      "Plan a rename collision across tests.",
+      "Audit a clear audit with no actionable naming noise.",
+      "Benenne diese ModernUO-xUnit-Tests ohne künstliche Publish-Präfixe um.",
+      "Revisa nombres de pruebas xUnit y conserva t?rminos del dominio."
     ],
     "trigger_actions": [
-      "Review this modernuo test naming task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo test naming in the configured ModernUO-based repository.",
-      "Help me implement a modernuo test naming change and identify the focused verification.",
-      "Audit this modernuo test naming diff for era, persistence, lifecycle, and regression risks."
+      "Implement xUnit hard-noise prefixes in file and method names.",
+      "Review a real era-domain name that must be preserved.",
+      "Plan a rename collision across tests.",
+      "Audit a clear audit with no actionable naming noise.",
+      "Benenne diese ModernUO-xUnit-Tests ohne künstliche Publish-Präfixe um.",
+      "Revisa nombres de pruebas xUnit y conserva t?rminos del dominio."
     ],
     "exclusions": [
       "modernuo test workflow",
@@ -22,13 +29,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo test naming"
+        "Implement xUnit hard-noise prefixes in file and method names."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a real era-domain name that must be preserved."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a rename collision across tests."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a clear audit with no actionable naming noise."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Benenne diese ModernUO-xUnit-Tests ohne künstliche Publish-Präfixe um."
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Revisa nombres de pruebas xUnit y conserva t?rminos del dominio."
       ]
     }
   },
@@ -40,7 +82,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

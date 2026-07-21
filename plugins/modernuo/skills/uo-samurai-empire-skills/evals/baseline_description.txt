@@ -1,1 +1,0 @@
-Use when explaining, documenting, auditing, or implementing Samurai Empire skill mechanics such as Bushido and Ninjitsu, including PvP/PvM, template, mobility, and RebirthUO doc/test side effects.

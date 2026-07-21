@@ -1,1 +1,1 @@
-Use when adding, migrating, or reviewing ModernUO/RebirthUO creature special attacks as reusable MonsterAbility classes under Projects/UOContent/Mobiles/Abilities instead of inline monster hook logic.
+Use when adding, migrating, or reviewing ModernUO-based creature special attacks as reusable MonsterAbility classes under Projects/UOContent/Mobiles/Abilities instead of inline monster hook logic.

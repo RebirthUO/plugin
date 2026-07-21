@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Convert GetProperties(ObjectPropertyList) to IPropertyList without changing cliloc arguments.", "Fix this property-list interpolation and invalidation path."],
+    "trigger_actions": ["Convert GetProperties(ObjectPropertyList) to IPropertyList without changing cliloc arguments.", "Fix this property-list interpolation and invalidation path."],
+    "capability": "modernuo-migrate-property-lists",
+    "exclusions": ["Migrate a packet text encoding."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Convert GetProperties(ObjectPropertyList) to IPropertyList without changing cliloc arguments.", "Fix this property-list interpolation and invalidation path."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Migrate a packet text encoding."],
+      "exclusive": true
+    }
+  }
+}

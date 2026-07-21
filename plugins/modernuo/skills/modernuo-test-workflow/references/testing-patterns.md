@@ -50,3 +50,6 @@ assertion failure. Delete spawned entities and detach event subscriptions.
 
 Always report command, project/filter, passed/failed/skipped denominator, and
 revision. Rerun focused tests after the final edit.
+> Before reporting a run, verify that every command has its repository revision,
+> test denominator, status, and any environment limitation. Missing evidence is
+> a `BLOCKED` result, not a passing test claim.

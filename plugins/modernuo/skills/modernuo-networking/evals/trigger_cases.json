@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo networking and packets task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a SpanWriter packet encoder with bounds checks.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo networking and packets in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review an incoming packet handler with ownership validation.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo networking and packets change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan NetState fan-out without unsafe allocation.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo networking and packets diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a protocol change for framing and dispatch risks.",
+      "family": "audit"
+    },
+    {
+      "text": "Ändere einen ModernUO-Paketencoder mit Längen- und Besitzprüfungen.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

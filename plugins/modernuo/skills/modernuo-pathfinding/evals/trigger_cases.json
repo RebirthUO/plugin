@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo pathfinding task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a PathFollower repath decision.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo pathfinding in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review bounded A* tuning with no measured corpus.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo pathfinding change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a .swb cache and prebake lifecycle review.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo pathfinding diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit MovementPath behavior versus simple range geometry.",
+      "family": "audit"
+    },
+    {
+      "text": "Diagnostiziere PathFollower und begrenzte A*-Suche in ModernUO.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

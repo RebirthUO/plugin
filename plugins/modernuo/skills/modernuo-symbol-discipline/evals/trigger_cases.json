@@ -2,20 +2,28 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo symbol discipline task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a one-use literal versus const decision.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo symbol discipline in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a public property with serialization compatibility.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo symbol discipline change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a Policy name without a durable policy reason.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo symbol discipline diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a static readonly object versus a mutable field.",
+      "family": "audit"
+    },
+    {
+      "text": "Soll dieser ModernUO-Wert lokal bleiben, const werden oder eine Policy erhalten?",
+      "family": "owned_job_de"
+    },
+    {
+      "text": "Revisa el alcance y la visibilidad de estos s?mbolos de C#.",
+      "family": "owned_job_es"
     }
   ],
   "should_not_trigger": [

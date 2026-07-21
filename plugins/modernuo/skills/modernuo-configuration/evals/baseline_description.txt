@@ -1,1 +1,1 @@
-Use when adding server settings, reading config values, or working with modernuo.json or JsonConfig.
+Use when designing, reviewing, or changing ModernUO server settings, modernuo.json keys, JsonConfig files, defaults, or startup reads. Require local API evidence, compatibility policy, and focused verification; do not guess unresolved startup or era behavior.

@@ -1,53 +1,27 @@
 {
   "optimizer_hints": {
     "capability": "ModernUO Configuration",
-    "inputs": [
-      "modernuo configuration"
-    ],
+    "inputs": ["server setting", "modernuo.json", "JsonConfig", "configuration default"],
     "trigger_actions": [
-      "Review this modernuo configuration task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo configuration in the configured ModernUO-based repository.",
-      "Help me implement a modernuo configuration change and identify the focused verification.",
-      "Audit this modernuo configuration diff for era, persistence, lifecycle, and regression risks."
+      "Add a shard setting with validation and restart persistence.",
+      "Review this JsonConfig migration without editing.",
+      "Pruefe diese ModernUO-Konfiguration auf sichere Defaults und Kompatibilitaet."
     ],
-    "exclusions": [
-      "modernuo server lifecycle",
-      "modernuo events",
-      "modernuo era expansion",
-      "modernuo code audit",
-      "modernuo test workflow"
-    ],
-    "artifacts": [
-      "source evidence",
-      "implementation plan",
-      "verification result"
-    ]
+    "exclusions": ["player lore without server code", "generic application configuration"],
+    "artifacts": ["configuration contract", "local evidence", "verification result"]
   },
-  "fallback_positive_concepts": [
-    "owned_job"
-  ],
+  "fallback_positive_concepts": ["configuration_intent"],
   "positive_concepts": {
-    "owned_job": {
+    "configuration_intent": {
       "weight": 1.0,
-      "phrases": [
-        "modernuo configuration"
-      ]
+      "phrases": ["modernuo server setting", "modernuo.json", "modernuo jsonconfig", "modernuo configuration default", "modernuo servereinstellung", "modernuo konfiguration"]
     }
   },
   "negative_concepts": {
-    "near_neighbor": {
-      "weight": 0.0,
-      "exclusive": false,
-      "phrases": []
-    },
-    "explicit_no_action": {
+    "out_of_scope": {
       "weight": 0.5,
       "exclusive": true,
-      "phrases": [
-        "do not modify",
-        "advice only",
-        "unrelated repository"
-      ]
+      "phrases": ["unrelated repository", "generic application configuration"]
     }
   }
 }

@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Convert CommandSystem.Register and EventSink.Login handlers to current ModernUO.", "Update this disconnect subscription and prove cleanup on reload."],
+    "trigger_actions": ["Convert CommandSystem.Register and EventSink.Login handlers to current ModernUO.", "Update this disconnect subscription and prove cleanup on reload."],
+    "capability": "modernuo-migrate-commands-events",
+    "exclusions": ["Migrate a legacy packet reader to SpanReader."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Convert CommandSystem.Register and EventSink.Login handlers to current ModernUO.", "Update this disconnect subscription and prove cleanup on reload."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Migrate a legacy packet reader to SpanReader."],
+      "exclusive": true
+    }
+  }
+}

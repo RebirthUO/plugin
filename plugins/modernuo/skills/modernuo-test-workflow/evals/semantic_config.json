@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Test Workflow",
     "inputs": [
-      "modernuo test workflow"
+      "Implement a focused test run with missing client data.",
+      "Review a broad failure requiring one clean baseline comparison.",
+      "Plan shared fixture state and a narrow denominator.",
+      "Audit a validation report that falsely calls a focused run CI green.",
+      "Führe fokussierte ModernUO-Tests mit sauberer Fixture- und Worktree-Prüfung aus.",
+      "Planifica pruebas ModernUO enfocadas con evidencia de la revisi?n actual."
     ],
     "trigger_actions": [
-      "Review this modernuo test workflow task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo test workflow in the configured ModernUO-based repository.",
-      "Help me implement a modernuo test workflow change and identify the focused verification.",
-      "Audit this modernuo test workflow diff for era, persistence, lifecycle, and regression risks."
+      "Implement a focused test run with missing client data.",
+      "Review a broad failure requiring one clean baseline comparison.",
+      "Plan shared fixture state and a narrow denominator.",
+      "Audit a validation report that falsely calls a focused run CI green.",
+      "Führe fokussierte ModernUO-Tests mit sauberer Fixture- und Worktree-Prüfung aus.",
+      "Planifica pruebas ModernUO enfocadas con evidencia de la revisi?n actual."
     ],
     "exclusions": [
       "modernuo codebase",
@@ -24,13 +31,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo test workflow"
+        "Implement a focused test run with missing client data."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a broad failure requiring one clean baseline comparison."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan shared fixture state and a narrow denominator."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a validation report that falsely calls a focused run CI green."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Führe fokussierte ModernUO-Tests mit sauberer Fixture- und Worktree-Prüfung aus."
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Planifica pruebas ModernUO enfocadas con evidencia de la revisi?n actual."
       ]
     }
   },
@@ -42,7 +84,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

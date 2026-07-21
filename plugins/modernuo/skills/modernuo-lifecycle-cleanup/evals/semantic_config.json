@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Lifecycle Cleanup",
     "inputs": [
-      "modernuo lifecycle cleanup"
+      "Implement timer cancellation during entity deletion.",
+      "Review an EventSink subscription owned by a reloadable system.",
+      "Plan post-load restoration with retained references.",
+      "Audit a dynamic region teardown for leaks.",
+      "Bereinige Timer und Event-Abonnements beim Löschen dieser ModernUO-Entität."
     ],
     "trigger_actions": [
-      "Review this modernuo lifecycle cleanup task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo lifecycle cleanup in the configured ModernUO-based repository.",
-      "Help me implement a modernuo lifecycle cleanup change and identify the focused verification.",
-      "Audit this modernuo lifecycle cleanup diff for era, persistence, lifecycle, and regression risks."
+      "Implement timer cancellation during entity deletion.",
+      "Review an EventSink subscription owned by a reloadable system.",
+      "Plan post-load restoration with retained references.",
+      "Audit a dynamic region teardown for leaks.",
+      "Bereinige Timer und Event-Abonnements beim Löschen dieser ModernUO-Entität."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -27,13 +32,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo lifecycle cleanup"
+        "Implement timer cancellation during entity deletion."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review an EventSink subscription owned by a reloadable system."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan post-load restoration with retained references."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a dynamic region teardown for leaks."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Bereinige Timer und Event-Abonnements beim Löschen dieser ModernUO-Entität."
       ]
     }
   },
@@ -45,7 +78,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

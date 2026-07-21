@@ -1,1 +1,1 @@
-Use when discussing async patterns, world saves, game loop, reviewing code for threading issues, or using await, Task, or any concurrency-related code in game logic.
+Use for ModernUO event-loop ownership, async continuations, worker-thread boundaries, concurrent infrastructure, or parallel world-save serialization; route ordinary gameplay delays to modernuo-timers.

@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Convert this RunUO Gump and OnResponse handler to current ModernUO builders.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Preserve these button IDs while adding stale-response validation.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-gumps migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-gumps conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migriere diesen RunUO-Gump samt OnResponse sicher auf die in dieser ModernUO-Revision vorhandenen APIs.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Design an unrelated new UI from scratch.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Migrate this ObjectPropertyList override.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

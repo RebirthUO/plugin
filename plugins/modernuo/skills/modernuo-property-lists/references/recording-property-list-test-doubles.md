@@ -1,49 +1,35 @@
-# RecordingPropertyList test doubles after IPropertyList interface changes
+# Recording Property-List Test Doubles
 
-When `IPropertyList` gains new members, existing content tests with private
-`RecordingPropertyList : IPropertyList` doubles can fail at compile time before
-any assertions run.
+Read this reference only when a private `IPropertyList` test double stops
+compiling after the consuming repository changes the interface.
 
-Typical symptom:
+## Diagnose Before Patching
 
-```text
-error CS0535: "<TestClass>.RecordingPropertyList" does not implement interface member
-"IPropertyList.Add(ReadOnlySpan<char>)"
-error CS0535: "<TestClass>.RecordingPropertyList" does not implement interface member
-"IPropertyList.Add(int, ReadOnlySpan<char>)"
-error CS0535: "<TestClass>.RecordingPropertyList" does not implement interface member
-"IPropertyList.AddChunked(ReadOnlySpan<char>)"
-error CS0535: "<TestClass>.RecordingPropertyList" does not implement interface member
-"IPropertyList.TextBlock()"
-```
+Inspect the active interface and compiler diagnostics first. A stale double can
+fail before assertions execute because it lacks new span, chunking, or text-block
+members. Do not copy a member list from this reference without comparing it with
+the pinned source.
 
-Root cause: the product interface changed, but legacy per-test doubles still implement the old shape. This often appears when merging/cherry-picking OPL refactors such as `OplTextBlock` / `AddChunked` support.
-
-Minimal compatibility implementation for recording-only tests:
+For a recording-only double, delegate new text forms to the same entry recorder
+that existing assertions use. A current ModernUO-style interface may require a
+shape like this:
 
 ```csharp
 public void Add(ReadOnlySpan<char> argument) => Add(argument.ToString());
-public void Add(int number, ReadOnlySpan<char> argument) => Entries.Add(new Entry(number, argument.ToString()));
+public void Add(int number, ReadOnlySpan<char> argument) =>
+    Entries.Add(new Entry(number, argument.ToString()));
 public void AddChunked(ReadOnlySpan<char> text) => Add(text);
 public OplTextBlock TextBlock() => new(this);
 ```
 
-This is correct for tests that only assert emitted cliloc/argument entries; `OplTextBlock.Dispose()` will call back into `AddChunked`, so the recorded output still flows through the same `Entries` path.
+This is suitable only when tests assert recorded cliloc/raw entries. If the
+feature relies on chunk boundaries, disposal, packet encoding, hashing, or
+allocation behavior, test the real property-list implementation at the smallest
+reliable layer instead.
 
-Validation pattern:
+## Verify
 
-```bash
-export MODERNUO_TEST_DATA_DIR='<client-data-directory-containing-tiledata.mul>'
-export MODERNUO_CLIENT_PATH="$MODERNUO_TEST_DATA_DIR"
-export MODERNUO_CLIENT_PATH="$MODERNUO_TEST_DATA_DIR"
-MSBUILDDISABLENODEREUSE=1 dotnet test Projects/UOContent.Tests/UOContent.Tests.csproj \
-  --filter 'FullyQualifiedName~PropertiesTests' --no-restore --nologo --verbosity quiet \
-  --logger 'console;verbosity=minimal'
-```
-
-If the filtered compile is green, run the owning project broadly when feasible:
-
-```bash
-MSBUILDDISABLENODEREUSE=1 dotnet test Projects/UOContent.Tests/UOContent.Tests.csproj \
-  --no-build --no-restore --nologo --verbosity quiet --logger 'console;verbosity=minimal'
-```
+Rebuild the owning test project before interpreting assertion results. Then run
+the focused property-list filter and report its exact denominator. Run the
+broader owning project only when the changed interface or shared helper makes
+that proportionate.

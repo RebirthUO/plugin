@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Replace these WorldSave and WorldLoad binary handlers with GenericPersistence.", "Migrate this global system file while preserving legacy versions and rollback."],
+    "trigger_actions": ["Replace these WorldSave and WorldLoad binary handlers with GenericPersistence.", "Migrate this global system file while preserving legacy versions and rollback."],
+    "capability": "modernuo-migrate-persistence",
+    "exclusions": ["Review an unrelated database migration."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Replace these WorldSave and WorldLoad binary handlers with GenericPersistence.", "Migrate this global system file while preserving legacy versions and rollback."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Review an unrelated database migration."],
+      "exclusive": true
+    }
+  }
+}

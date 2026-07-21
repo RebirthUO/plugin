@@ -1,1 +1,0 @@
-Use when working with the UO crafting engine in ModernUO/RebirthUO servers - CraftSystem, CraftItem, Def* registration files, recipe scrolls, subresources, ML-era recipe gates, runic tools, and bulk order deeds. Use when adding a new craftable item, wiring a new recipe scroll, debugging why a craft succeeds/exceptional/fails, or auditing ML/HL/SA crafting parity.

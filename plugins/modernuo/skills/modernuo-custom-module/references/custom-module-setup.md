@@ -1,6 +1,6 @@
 # Custom Module Setup Reference
 
-Use this reference when the task is specifically about creating or maintaining a separate ModernUO content module. It is a pattern guide, not a literal name source. `CUOContent` is the neutral default example, where `CUO` means `CustomUO`.
+Use this reference when the task is specifically about creating or maintaining a separate ModernUO content module. It is a pattern guide, not a literal name source. `{ModuleName}` is a placeholder, not a default: do not create or select a module name until the user has approved it and the consuming repository's project, assembly, and distribution paths have been confirmed at the recorded revision.
 
 ## Files To Inspect
 
@@ -16,12 +16,12 @@ Use this reference when the task is specifically about creating or maintaining a
 
 If the user does not provide a server or shard shortcut:
 
-- Module project: `Projects/CUOContent/CUOContent.csproj`
-- Test project: `Projects/CUOContent.Tests/CUOContent.Tests.csproj`
-- Assembly name: `CUOContent`
-- Runtime DLL: `CUOContent.dll`
+- Module project: `Projects/{ModuleName}/{ModuleName}.csproj`
+- Test project: `Projects/{ModuleName}.Tests/{ModuleName}.Tests.csproj`
+- Assembly name: `{ModuleName}`
+- Runtime DLL: `{ModuleName}.dll`
 - Product text: `CustomUO Content`
-- Test collection: `Sequential CUOContent Tests`
+- Test collection: `Sequential {ModuleName} Tests`
 
 If the user says "make one for Avalon" or gives shortcut `AV`, derive the project names from that shortcut instead, such as `AVContent` and `AVContent.Tests`.
 
@@ -32,7 +32,7 @@ The module project should generally include:
 ```xml
 <PropertyGroup>
     <RootNamespace>Server</RootNamespace>
-    <AssemblyName>CUOContent</AssemblyName>
+    <AssemblyName>{ModuleName}</AssemblyName>
     <Product>CustomUO Content</Product>
     <OutDir>..\..\Distribution\Assemblies</OutDir>
     <PublishDir>..\..\Distribution\Assemblies</PublishDir>
@@ -67,7 +67,7 @@ The runtime chain has two separate requirements:
 Add the application project reference with the same non-copying metadata as the existing content assembly references:
 
 ```xml
-<ProjectReference Include="..\CUOContent\CUOContent.csproj" Private="false" PrivateAssets="All" IncludeAssets="None">
+<ProjectReference Include="..\{ModuleName}\{ModuleName}.csproj" Private="false" PrivateAssets="All" IncludeAssets="None">
     <IncludeInPackage>false</IncludeInPackage>
 </ProjectReference>
 ```
@@ -77,7 +77,7 @@ Add the runtime DLL after `UOContent.dll`:
 ```json
 [
   "UOContent.dll",
-  "CUOContent.dll"
+  "{ModuleName}.dll"
 ]
 ```
 
@@ -88,7 +88,7 @@ Do not hand-edit generated `.deps.json` files. Run a build and inspect generated
 For a new module, create only top-level maintainability folders that mirror `UOContent` domain boundaries. Common starting folders are:
 
 ```text
-Projects/CUOContent/
+Projects/{ModuleName}/
   Commands/
   Configuration/
   Engines/
@@ -117,12 +117,12 @@ The test project should reference the engine, base content, the custom module, a
 ```xml
 <ProjectReference Include="..\Server\Server.csproj" />
 <ProjectReference Include="..\UOContent\UOContent.csproj" />
-<ProjectReference Include="..\CUOContent\CUOContent.csproj" />
+<ProjectReference Include="..\{ModuleName}\{ModuleName}.csproj" />
 <ProjectReference Include="..\Server.Tests\Server.Tests.csproj" />
 <DataFiles Include="$(SolutionDir)\Distribution\Data\**" />
 ```
 
-Add a fixture that initializes the server test host and loads `Server.dll`, `UOContent.dll`, and `CUOContent.dll` into `AssemblyHandler`.
+Add a fixture that initializes the server test host and loads `Server.dll`, `UOContent.dll`, and `{ModuleName}.dll` into `AssemblyHandler`.
 
 Add a smoke test:
 
@@ -131,15 +131,15 @@ using System.Linq;
 using Server;
 using Xunit;
 
-namespace CUOContent.Tests.Smoke;
+namespace {ModuleName}.Tests.Smoke;
 
-[Collection("Sequential CUOContent Tests")]
+[Collection("Sequential {ModuleName} Tests")]
 public class AssemblyLoadTests
 {
     [Fact]
-    public void CUOContentAssembly_IsLoaded()
+    public void {ModuleName}Assembly_IsLoaded()
     {
-        var loaded = AssemblyHandler.Assemblies.Any(a => a.GetName().Name == "CUOContent");
+        var loaded = AssemblyHandler.Assemblies.Any(a => a.GetName().Name == "{ModuleName}");
         Assert.True(loaded);
     }
 }
@@ -148,6 +148,10 @@ public class AssemblyLoadTests
 ## Validation
 
 - `dotnet build ModernUO.slnx`
-- `dotnet test Projects/CUOContent.Tests/CUOContent.Tests.csproj`
-- Inspect `Distribution/Assemblies/CUOContent.dll` and `Distribution/Assemblies/CUOContent.deps.json` after build.
-- Confirm `Distribution/Data/assemblies.json` still loads `UOContent.dll` before `CUOContent.dll`.
+- `dotnet test Projects/{ModuleName}.Tests/{ModuleName}.Tests.csproj`
+- Inspect `Distribution/Assemblies/{ModuleName}.dll` and `Distribution/Assemblies/{ModuleName}.deps.json` after build.
+- Confirm `Distribution/Data/assemblies.json` still loads `UOContent.dll` before `{ModuleName}.dll`.
+> Treat all names and paths in this reference as examples. Select one
+> user-approved module placeholder for the task, resolve it against the
+> consuming repository revision, and do not combine distinct example assembly
+> names in one implementation.

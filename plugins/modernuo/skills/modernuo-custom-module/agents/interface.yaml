@@ -1,7 +1,9 @@
 interface:
   display_name: ModernUO Custom Module
   short_description: ModernUO Custom Module
-  default_prompt: Use $modernuo-custom-module to apply ModernUO Custom Module guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  default_prompt: Use $modernuo-custom-module to review, plan, or implement ModernUO
+    Custom Module work in a ModernUO-based repository with current-source evidence
+    and focused verification.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:
@@ -22,5 +24,6 @@ compatibility:
   degradation:
     openai: Use the canonical SKILL.md and load references on demand.
     claude: Use the neutral Agent Skills source and preserve explicit safety gates.
-    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    generic: Use SKILL.md with relative references; no client-specific automation
+      is assumed.
     vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.
