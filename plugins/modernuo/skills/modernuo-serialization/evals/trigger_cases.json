@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo serialization task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a SerializationGenerator version migration.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo serialization in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a persistent field with save compatibility risk.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo serialization change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a legacy reader versus generated MigrateFrom decision.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo serialization diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit post-load restoration of durable state.",
+      "family": "audit"
+    },
+    {
+      "text": "Migriere ein persistentes ModernUO-Feld mit kompatiblem Save/Load-Test.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

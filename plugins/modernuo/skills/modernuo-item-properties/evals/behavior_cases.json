@@ -1,0 +1,42 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "A requested active item property has no verified chance, cooldown, era, or lifecycle contract.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing official or user-approved behavior decision"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "A tooltip request describes a player-facing effect but no matching mechanic exists.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Do not emit a gameplay tooltip until its corresponding mechanic is present or explicitly non-mechanical."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "A new equipped property changes aggregate values and tooltip output.",
+      "expected_outcome": "IMPLEMENTED",
+      "must_verify": "the current repository revision plus focused tooltip, equipped/removal, and applicable era or persistence evidence"
+    },
+    {
+      "kind": "plan_branch",
+      "scenario": "Plan a passive item property from current source evidence without authorization to edit.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Emit one parseable YAML document with Decision.kind PLAN and only proposed or verified records."
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return an item-property review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

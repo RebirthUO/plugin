@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Content Taxonomy",
     "inputs": [
-      "modernuo content taxonomy"
+      "Implement a classification across World and Encounter domains.",
+      "Review a parity request with no official era evidence.",
+      "Plan repository discovery paths for an ItemSystem feature.",
+      "Audit a community source proposed as parity proof.",
+      "Ordne diese UO-Funktion den ModernUO-Domänen zu und markiere offene Belege.",
+      "Clasifica esta funci?n de ModernUO sin confundir hallazgos del repositorio con paridad oficial."
     ],
     "trigger_actions": [
-      "Review this modernuo content taxonomy task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo content taxonomy in the configured ModernUO-based repository.",
-      "Help me implement a modernuo content taxonomy change and identify the focused verification.",
-      "Audit this modernuo content taxonomy diff for era, persistence, lifecycle, and regression risks."
+      "Implement a classification across World and Encounter domains.",
+      "Review a parity request with no official era evidence.",
+      "Plan repository discovery paths for an ItemSystem feature.",
+      "Audit a community source proposed as parity proof.",
+      "Ordne diese UO-Funktion den ModernUO-Domänen zu und markiere offene Belege.",
+      "Clasifica esta funci?n de ModernUO sin confundir hallazgos del repositorio con paridad oficial."
     ],
     "exclusions": [
       "modernuo content patterns",
@@ -27,13 +34,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo content taxonomy"
+        "Implement a classification across World and Encounter domains."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a parity request with no official era evidence."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan repository discovery paths for an ItemSystem feature."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a community source proposed as parity proof."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Ordne diese UO-Funktion den ModernUO-Domänen zu und markiere offene Belege."
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Clasifica esta funci?n de ModernUO sin confundir hallazgos del repositorio con paridad oficial."
       ]
     }
   },
@@ -45,7 +87,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

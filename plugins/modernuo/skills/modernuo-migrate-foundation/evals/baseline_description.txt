@@ -1,0 +1,1 @@
+Use for cross-cutting RunUO or ServUO migrations to ModernUO that require a shared inventory of conventions, saved-state compatibility, lifecycle, time, threading, performance, era policy, and focused verification. Do not trigger for a single narrow subsystem or unrelated C# work.

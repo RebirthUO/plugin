@@ -1,0 +1,50 @@
+{
+    "cases":  [
+                  {
+                      "name":  "missing revision",
+                      "prompt":  "Implement these command hooks without a target repository revision.",
+                      "expected_status":  "BLOCKED_INPUT",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_INPUT | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "ambiguous disconnect",
+                      "prompt":  "Map Logout to a ModernUO hook, but lifecycle requirements are unknown.",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "duplicate subscription",
+                      "prompt":  "Migrate an OnEvent handler that is also manually subscribed.",
+                      "must_reject":  "duplicate registration",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nduplicate registration\n"
+                  },
+                  {
+                      "name":  "audit only",
+                      "prompt":  "Audit these EventSink handlers without editing.",
+                      "must_preserve_mode":  "audit",
+                      "expected_status":  "AUDITED",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| AUDITED | AUDIT | high |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "failed test",
+                      "prompt":  "The required event-order test fails after migration.",
+                      "expected_status":  "VALIDATION_FAILED",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| VALIDATION_FAILED | IMPLEMENT | medium |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  }
+              ],
+    "global_assertions":  {
+                              "status_values":  [
+                                                    "PLANNED",
+                                                    "IMPLEMENTED",
+                                                    "AUDITED",
+                                                    "OUT_OF_SCOPE",
+                                                    "BLOCKED_INPUT",
+                                                    "BLOCKED_COMPATIBILITY",
+                                                    "BLOCKED_EVIDENCE",
+                                                    "VALIDATION_FAILED"
+                                                ],
+                              "require_revision_locators":  true,
+                              "complete_requires_all_checks":  true
+                          }
+}

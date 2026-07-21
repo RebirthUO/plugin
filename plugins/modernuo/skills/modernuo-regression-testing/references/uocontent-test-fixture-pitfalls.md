@@ -3,7 +3,11 @@
 Concrete pitfalls hit while writing regression tests under `Projects/UOContent.Tests/`.
 The umbrella skill `modernuo-regression-testing` says "register a minimal
 `SpeedLevel.Medium` entry once" but does not show the exact code. This file is
-the working recipe.
+a revision-bound discovery recipe. Before using any path, fixture behavior,
+recovery step, or code fragment below, record the consuming repository revision
+and confirm it in current source. If the anchor is absent or differs, do not
+apply the recipe; adapt it from the current fixture or return `BLOCKED` with the
+missing evidence.
 
 ## NPCSpeeds — `KeyNotFoundException` on every `BaseCreature` ctor
 
@@ -126,25 +130,12 @@ without needing to drive a target cursor through `SpellTarget<T>`.
 Precedent: `ReactiveArmorSpell.OnCastForTests` (test extension in
 `PurgeMagicSpellTests.cs:407`).
 
-## Worktree recovery when a parallel session stashes your work
+## Worktree recovery boundary
 
-If `git status --short --untracked-files=all` shows a clean tree but you
-expect your own untracked files and modified files, a parallel session may
-have stashed your work and switched branches:
-
-```bash
-git stash list                         # look for "pre-..." messages
-git switch <your-branch>               # get back
-git stash pop                          # restore your changes
-```
-
-Untracked files do **not** survive a `git stash` round-trip — only tracked
-modifications do. Re-create untracked files from your last write_file content
-or session memory. After re-creating, rerun `dotnet build` and the focused
-test filter to confirm the worktree is still green before continuing.
-
-The `modernuo-issue-implement` skill does not currently mention this
-recovery path; consider whether to add it to that skill's pitfalls.
+This testing reference does not prescribe stash, branch, recovery, or file
+reconstruction commands. If a worktree differs unexpectedly, preserve the
+observed state and use the consuming repository's separately authorized
+recovery workflow before resuming test work.
 
 ## Era-gate test recipe
 

@@ -3,13 +3,16 @@
     "capability": "ModernUO Timers and Scheduling",
     "inputs": [
       "modernuo timers and scheduling",
-      "modernuo timers"
+      "modernuo timers",
+      "TimerExecutionToken cancellation",
+      "restore a decay timer after deserialization"
     ],
     "trigger_actions": [
       "Review this modernuo timers and scheduling task and give me the repository-specific checks.",
       "I need an evidence-backed plan for modernuo timers and scheduling in the configured ModernUO-based repository.",
       "Help me implement a modernuo timers and scheduling change and identify the focused verification.",
-      "Audit this modernuo timers and scheduling diff for era, persistence, lifecycle, and regression risks."
+      "Audit this modernuo timers and scheduling diff for era, persistence, lifecycle, and regression risks.",
+      "Fix this duplicate decay timer after save and load, including cancellation and focused tests."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -35,7 +38,9 @@
       "weight": 1.0,
       "phrases": [
         "modernuo timers and scheduling",
-        "modernuo timers"
+        "modernuo timers",
+        "TimerExecutionToken cancellation",
+        "restore a decay timer after deserialization"
       ]
     }
   },
@@ -43,7 +48,11 @@
     "near_neighbor": {
       "weight": 0.0,
       "exclusive": false,
-      "phrases": []
+      "phrases": [
+        "daily reset calendar event",
+        "serialize a field with no timer behavior",
+        "generic task delay"
+      ]
     },
     "explicit_no_action": {
       "weight": 0.5,

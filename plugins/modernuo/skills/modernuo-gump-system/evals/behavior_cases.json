@@ -1,0 +1,118 @@
+{
+  "runtime_contract": {
+    "required_yaml_fields": [
+      "Outcome",
+      "Repository revision",
+      "Decision",
+      "Evidence",
+      "Verification",
+      "Confidence",
+      "Limitations"
+    ],
+    "visual_heading": "## Visual Concept",
+    "visual_fence_language": "text",
+    "require_exact_case_assertions": true,
+    "decision_details": {
+      "required_keys": ["type", "summary", "fields"],
+      "types": {
+        "component": ["role", "bounds", "parent", "z_order", "state", "interaction", "asset_status", "source"],
+        "validation": ["command_or_method", "result"],
+        "warning": ["condition", "impact"],
+        "finding": ["condition", "impact"],
+        "summary": []
+      }
+    }
+  },
+  "terminal_outcomes": {
+    "PLAN": ["REVIEWED", "BLOCKED"],
+    "REVIEW": ["REVIEWED", "BLOCKED"],
+    "IMPLEMENT": ["IMPLEMENTED", "BLOCKED"]
+  },
+  "cases": [
+    {
+      "kind": "missing_context",
+      "decision_kind": "IMPLEMENT",
+      "scenario": "Missing required repository, behavior, or validation input for a StaticGump with authorized responses.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository, behavior, or validation input"
+    },
+    {
+      "kind": "safety_branch",
+      "decision_kind": "REVIEW",
+      "scenario": "Reject empty construction and stale unauthorized responses.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Reject empty construction and stale unauthorized responses."
+    },
+    {
+      "kind": "cached_layout_policy",
+      "decision_kind": "REVIEW",
+      "scenario": "Review a StaticGump whose cached layout uses per-instance text without verified placeholders.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Require a stable cached layout with handler-aware placeholders or select DynamicGump when structure varies."
+    },
+    {
+      "kind": "text_bounds_branch",
+      "decision_kind": "IMPLEMENT",
+      "scenario": "Implement a gump that accepts player-entered HTML-like text longer than the local limit, but no repository revision or verified local text API is available.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository revision or verified local text API input"
+    },
+    {
+      "kind": "bounded_dynamic_list_branch",
+      "decision_kind": "REVIEW",
+      "scenario": "Review a DynamicGump that serializes an unbounded player-provided list during layout construction.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Bound dynamic lists and avoid heavy work during layout serialization."
+    },
+    {
+      "kind": "nonzero_action_id_branch",
+      "decision_kind": "IMPLEMENT",
+      "scenario": "Implement page and apply controls that both use button ID 0, but no repository revision or focused validation surface is available.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository revision or focused validation input"
+    },
+    {
+      "kind": "visual_plan_branch",
+      "decision_kind": "PLAN",
+      "scenario": "Plan a screenshot-backed Gump fix where no Ultima MCP is available.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Produce a source-marked component inventory and annotated visual concept while marking unresolved concrete assets instead of inventing IDs."
+    },
+    {
+      "kind": "mcp_evidence_branch",
+      "decision_kind": "PLAN",
+      "scenario": "Plan a Gump from a screenshot when a user-enabled Ultima MCP returns a candidate asset.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Record the MCP query and result as separate evidence; do not treat it as official gameplay authority."
+    },
+    {
+      "kind": "verification_branch",
+      "decision_kind": "REVIEW",
+      "scenario": "Verify a gump flow for empty construction or missing close behavior with current-source evidence and a focused check.",
+      "expected_outcome": "REVIEWED",
+      "must_verify": "current repository revision and focused verification result"
+    },
+    {
+      "kind": "validation_failure_disposition",
+      "decision_kind": "IMPLEMENT",
+      "scenario": "A changed Gump fails its required focused validation after implementation.",
+      "expected_outcome": "BLOCKED",
+      "must_preserve": "Do not report IMPLEMENTED; preserve changes, report the failed check, and request focused review or the missing validation input."
+    },
+    {
+      "kind": "output_contract",
+      "decision_kind": "REVIEW",
+      "scenario": "Return a review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

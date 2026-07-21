@@ -1,0 +1,57 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Publish 81 changed this weapon damage. Which UO expansion and ModernUO gate should own it?",
+      "family": "publish_mapping"
+    },
+    {
+      "text": "Map Publish 90 to the correct Ultima Online expansion and Core flag.",
+      "family": "publish_mapping"
+    },
+    {
+      "text": "This mechanic arrived in Publish 99. Does it belong to TOL or Endless Journey?",
+      "family": "publish_mapping"
+    },
+    {
+      "text": "Which cumulative expansion guard should activate this Publish 72 behavior?",
+      "family": "publish_mapping"
+    },
+    {
+      "text": "Research the official release date and decide whether this pre-numbered UO change belongs to T2A or UOR.",
+      "family": "publish_mapping"
+    },
+    {
+      "text": "How should a post-Time of Legends Publish be gated when ModernUO also exposes Core.EJ?",
+      "family": "publish_mapping"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Map version 8.0 of this unrelated JavaScript package to its compatibility range.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Explain the lore of the Valley of Eodon without discussing Publishes or server implementation.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Implement a generic subscription tier for this SaaS application.",
+      "family": "out_of_scope"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Implement the per-account Endless Journey bank-box restriction; the era gate is already decided.",
+      "family": "entitlement_implementation"
+    },
+    {
+      "text": "Establish the current official combat formula for this UO weapon without selecting an expansion gate.",
+      "family": "official_evidence"
+    },
+    {
+      "text": "Audit the ModernUO Expansion enum without mapping any Publish chronology.",
+      "family": "code_audit"
+    }
+  ]
+}

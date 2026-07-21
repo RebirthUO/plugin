@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo performance hot paths task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a game-loop allocation hot path.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo performance hot paths in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a claimed speedup with no profiler evidence.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo performance hot paths change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan spatial scan and pooling alternatives.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo performance hot paths diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit LINQ usage in a frequently executed combat path.",
+      "family": "audit"
+    },
+    {
+      "text": "Prüfe diesen ModernUO-Hot-Path auf Allokationen und globale Scans.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

@@ -1,1 +1,1 @@
-Use when implementing GetProperties(), working with IPropertyList/ObjectPropertyList, or customizing item tooltips.
+Use when implementing, auditing, or planning a ModernUO tooltip involving IPropertyList or Object Property List entries, cliloc arguments, ordering, chunked free text, or refresh invalidation.

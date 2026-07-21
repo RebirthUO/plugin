@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO String Handling
-  short_description: ModernUO String Handling
-  default_prompt: Use $modernuo-string-handling to apply ModernUO String Handling guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Verify efficient ModernUO runtime text construction
+  default_prompt: Use $modernuo-string-handling to inspect the call site and overloads, choose a safe runtime string strategy, and report evidence and verification.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

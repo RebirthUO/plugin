@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Codebase
-  short_description: ModernUO Codebase
-  default_prompt: Use $modernuo-codebase to apply ModernUO Codebase guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Map a confirmed ModernUO checkout
+  default_prompt: Use $modernuo-codebase to map a confirmed ModernUO checkout to its instructions, projects, source anchors, validation surfaces, and read-only next steps.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

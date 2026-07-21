@@ -1,1 +1,0 @@
-Use when a ModernUO or UO issue workflow must select and validate the exact live GitHub Issue_Template before drafting or creating an issue. Resolve the exact repository only from applicable project AGENTS.md instructions, return a fresh TemplatePacket, and ask the user if no single template fits. Do not draft, create, edit, label, research, or implement an issue.

@@ -16,6 +16,14 @@
     {
       "text": "Audit this modernuo timers and scheduling diff for era, persistence, lifecycle, and regression risks.",
       "family": "owned_job"
+    },
+    {
+      "text": "Fix this duplicate decay timer after save and load, including cancellation and focused tests.",
+      "family": "owned_job"
+    },
+    {
+      "text": "Should this ModernUO effect use TimerExecutionToken, DelayCall, or Timer.Pause?",
+      "family": "owned_job"
     }
   ],
   "should_not_trigger": [
@@ -47,6 +55,14 @@
     },
     {
       "text": "Review this modernuo threading and event loop task and give me the repository-specific checks.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Schedule a timezone-aware weekly holiday event for the shard.",
+      "family": "near_neighbor"
+    },
+    {
+      "text": "Migrate this legacy RunUO Timer subclass without otherwise designing new behavior.",
       "family": "near_neighbor"
     }
   ]

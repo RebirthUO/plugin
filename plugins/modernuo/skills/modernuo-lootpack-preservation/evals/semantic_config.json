@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO LootPack Preservation",
     "inputs": [
-      "modernuo lootpack preservation"
+      "Implement a GenerateLoot migration that retains LootPack behavior.",
+      "Review an economy-changing replacement of source-derived loot.",
+      "Plan a creature loot review with era evidence.",
+      "Audit a gold or artifact change for hidden balance drift.",
+      "Prüfe diese LootPack-Änderung auf unbeabsichtigte Wirtschaftsänderungen."
     ],
     "trigger_actions": [
-      "Review this modernuo lootpack preservation task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo lootpack preservation in the configured ModernUO-based repository.",
-      "Help me implement a modernuo lootpack preservation change and identify the focused verification.",
-      "Audit this modernuo lootpack preservation diff for era, persistence, lifecycle, and regression risks."
+      "Implement a GenerateLoot migration that retains LootPack behavior.",
+      "Review an economy-changing replacement of source-derived loot.",
+      "Plan a creature loot review with era evidence.",
+      "Audit a gold or artifact change for hidden balance drift.",
+      "Prüfe diese LootPack-Änderung auf unbeabsichtigte Wirtschaftsänderungen."
     ],
     "exclusions": [
       "uo loot generation artifacts",
@@ -23,13 +28,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo lootpack preservation"
+        "Implement a GenerateLoot migration that retains LootPack behavior."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review an economy-changing replacement of source-derived loot."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a creature loot review with era evidence."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a gold or artifact change for hidden balance drift."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Prüfe diese LootPack-Änderung auf unbeabsichtigte Wirtschaftsänderungen."
       ]
     }
   },
@@ -41,7 +74,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

@@ -1,0 +1,66 @@
+{
+  "cases": [
+    {
+      "name": "missing repository evidence",
+      "input": "Implement safer ModernUO world saves, but the consuming repository and revision are unavailable.",
+      "expected_mode": "implementation",
+      "expected_outcome": "BLOCKED",
+      "must_include": ["Repository Evidence", "low", "missing", "Recovery and Risk"],
+      "must_not_claim": ["implemented", "tests passed", "safe"]
+    },
+    {
+      "name": "unresolved destructive policy",
+      "input": "Move the save directory and overwrite any collision; no recovery-point or acceptable data-loss policy has been decided.",
+      "expected_mode": "implementation",
+      "expected_outcome": "CLARIFICATION_REQUIRED",
+      "must_include": ["overwrite", "recovery point", "data-loss"],
+      "must_not_claim": ["Changes applied", "migration complete"]
+    },
+    {
+      "name": "overlapping saves review",
+      "input": "Review two concurrent world-save requests without modifying files.",
+      "expected_mode": "review",
+      "expected_outcome": "REVIEW_ONLY",
+      "must_include": ["revision", "re-entry", "concurrency", "Changes", "None"],
+      "must_not_claim": ["edited", "implemented"]
+    },
+    {
+      "name": "restore not exercised",
+      "input": "Approve this archive integration as restore-safe using only an archive entry-count check.",
+      "expected_mode": "review",
+      "expected_outcome": "INCONCLUSIVE",
+      "must_include": ["isolated restore", "not run", "low"],
+      "must_not_claim": ["restore-safe", "high"]
+    },
+    {
+      "name": "advice remains read only",
+      "input": "Advice only: describe the evidence needed before attaching backup work to snapshot completion.",
+      "expected_mode": "advice",
+      "expected_outcome": "ADVICE_ONLY",
+      "must_include": ["Repository Evidence", "Lifecycle", "Changes", "None"],
+      "must_not_claim": ["edited", "validated"]
+    },
+    {
+      "name": "decision-complete plan",
+      "input": "Plan a save-path migration with an approved recovery point, no overwrite, headless startup, and a zero-loss requirement.",
+      "expected_mode": "plan",
+      "expected_outcome": "PLAN_ONLY",
+      "must_include": ["Decisions", "Recovery and Risk", "Verification", "Changes", "None"],
+      "must_not_claim": ["tests passed", "implemented"]
+    }
+  ],
+  "global_assertions": {
+    "required_headings_in_order": [
+      "Status",
+      "Repository Evidence",
+      "Lifecycle",
+      "Decisions",
+      "Changes",
+      "Verification",
+      "Recovery and Risk"
+    ],
+    "require_revision_for_material_repository_claims": true,
+    "forbid_safety_claim_without_applicable_observed_verification": true,
+    "implementation_requires_resolved_behavior_decisions": true
+  }
+}

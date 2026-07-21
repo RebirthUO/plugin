@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Convert CommandSystem.Register and EventSink.Login handlers to current ModernUO.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Update this disconnect subscription and prove cleanup on reload.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-commands-events migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-commands-events conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migriere diese RunUO-Befehlsregistrierung und die EventSink-Handler revisionsgebunden nach ModernUO.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Design a brand-new targeting system for a new command.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Migrate a legacy packet reader to SpanReader.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

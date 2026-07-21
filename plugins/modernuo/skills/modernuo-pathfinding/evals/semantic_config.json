@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Pathfinding",
     "inputs": [
-      "modernuo pathfinding"
+      "Implement a PathFollower repath decision.",
+      "Review bounded A* tuning with no measured corpus.",
+      "Plan a .swb cache and prebake lifecycle review.",
+      "Audit MovementPath behavior versus simple range geometry.",
+      "Diagnostiziere PathFollower und begrenzte A*-Suche in ModernUO."
     ],
     "trigger_actions": [
-      "Review this modernuo pathfinding task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo pathfinding in the configured ModernUO-based repository.",
-      "Help me implement a modernuo pathfinding change and identify the focused verification.",
-      "Audit this modernuo pathfinding diff for era, persistence, lifecycle, and regression risks."
+      "Implement a PathFollower repath decision.",
+      "Review bounded A* tuning with no measured corpus.",
+      "Plan a .swb cache and prebake lifecycle review.",
+      "Audit MovementPath behavior versus simple range geometry.",
+      "Diagnostiziere PathFollower und begrenzte A*-Suche in ModernUO."
     ],
     "exclusions": [
       "modernuo performance hot paths",
@@ -25,13 +30,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo pathfinding"
+        "Implement a PathFollower repath decision."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review bounded A* tuning with no measured corpus."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a .swb cache and prebake lifecycle review."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit MovementPath behavior versus simple range geometry."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Diagnostiziere PathFollower und begrenzte A*-Suche in ModernUO."
       ]
     }
   },
@@ -43,7 +76,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

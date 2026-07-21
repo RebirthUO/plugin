@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "Missing required repository, behavior, or validation input for a focused timer regression test with isolated state.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing repository, behavior, or validation input"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "Restore global state and label environment blockers separately.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Restore global state and label environment blockers separately."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "Verify test evidence that confuses environment failure and regression with current-source evidence and a focused check.",
+      "expected_outcome": "REVIEWED",
+      "must_verify": "current repository revision and focused verification result"
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return a review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

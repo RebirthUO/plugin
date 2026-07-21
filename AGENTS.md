@@ -10,24 +10,24 @@
   notable changes for the updated version.
 - Treat `plugins/modernuo/skills/` in this checkout as the reviewed source.
   Never hand-edit the installed Codex plugin cache.
-- Keep every member skill valid against the Agent Skills format and the Yao
-  production boundary: lean `SKILL.md`, conditional references, aligned
+- Keep every member skill valid against the Agent Skills format: lean
+  `SKILL.md`, conditional references, aligned
   `agents/interface.yaml`, `manifest.json`, and trigger smoke evals.
-- After skill edits, run this maintenance sequence from the repository root:
+- Maintain every skill, adapter metadata file, and evaluation contract in
+  English. Make implicit triggering depend on user intent in any language;
+  include representative multilingual positive fixtures for new skills without
+  requiring a portfolio-wide fixture rewrite in every individual change.
+- Do not add or maintain Hermes-specific metadata. Continue to maintain version
+  metadata and bump the plugin version as required above.
+- After skill edits, run the current runtime validator from the repository root:
 
   ```powershell
-  python scripts/prepare-yao-portfolio.py
-  python scripts/generate-skill-catalog.py
-  python scripts/verify-skill-portfolio.py
-  python scripts/run-yao-portfolio.py --yao-root <path-to-yao-meta-skill> --extended
+  python C:\path\to\skill-creator\scripts\quick_validate.py plugins\modernuo\skills\<skill-name>
   ```
 
-- Synchronize to a Hermes profile only after the gates pass. Preview the exact
-  target first:
-
-  ```powershell
-  python scripts/sync-plugin-to-hermes.py --hermes-root <profile-skills> --dry-run
-  ```
+- Also parse changed JSON/YAML metadata, inspect trigger fixtures and referenced
+  resources, and run `git diff --check`. Do not substitute the retired
+  preparation, catalog, Yao, or Hermes sequence for these skill-local gates.
 - GitHub-mutating skills must fail closed when the exact repository cannot be
   resolved from the consuming project's applicable `AGENTS.md`. Do not infer or
   substitute a repository from the cwd, git remotes, organization name, stale

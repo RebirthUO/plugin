@@ -1,0 +1,49 @@
+{
+  "recommended_threshold": 0.5,
+  "should_trigger": [
+    {
+      "text": "Plan the migration of this RunUO guild system to ModernUO; it spans registrations, saved state, timers, commands, and lifecycle cleanup.",
+      "family": "cross_cutting_plan"
+    },
+    {
+      "text": "Port this ServUO event system to ModernUO, preserve existing saves, replace only APIs proven by current repository precedent, and run focused tests.",
+      "family": "cross_cutting_implementation"
+    },
+    {
+      "text": "Audit this multi-file RunUO migration diff for type identity, persistence, timer ownership, era behavior, and performance regressions.",
+      "family": "cross_cutting_audit"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Explain how RunUO shards worked as player lore; do not inspect or migrate code.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Refactor dependency injection in this unrelated ASP.NET application.",
+      "family": "out_of_scope"
+    },
+    {
+      "text": "Review whether this ModernUO lock is safe across worker threads; no migration is involved.",
+      "family": "threading_only"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Update only this RunUO Serialize and Deserialize pair to the current ModernUO persistence API.",
+      "family": "serialization_only"
+    },
+    {
+      "text": "Convert this one RunUO timer callback to the current ModernUO timer API.",
+      "family": "timer_only"
+    },
+    {
+      "text": "Port this single RunUO gump layout without changing persistence, lifecycle, or other systems.",
+      "family": "gump_only"
+    },
+    {
+      "text": "Translate this one legacy packet writer to the current packet API.",
+      "family": "packet_only"
+    }
+  ]
+}

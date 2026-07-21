@@ -1,54 +1,18 @@
 {
   "optimizer_hints": {
-    "capability": "ModernUO String Handling",
-    "inputs": [
-      "modernuo string handling"
-    ],
-    "trigger_actions": [
-      "Review this modernuo string handling task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo string handling in the configured ModernUO-based repository.",
-      "Help me implement a modernuo string handling change and identify the focused verification.",
-      "Audit this modernuo string handling diff for era, persistence, lifecycle, and regression risks."
-    ],
-    "exclusions": [
-      "modernuo code audit",
-      "modernuo performance hot paths",
-      "modernuo property lists",
-      "modernuo gump system",
-      "modernuo networking",
-      "modernuo content patterns"
-    ],
-    "artifacts": [
-      "source evidence",
-      "implementation plan",
-      "verification result"
-    ]
+    "capability": "ModernUO runtime string construction",
+    "inputs": ["call site", "candidate overload declarations", "ownership and lifetime", "culture or encoding contract"],
+    "trigger_actions": ["verify handler binding", "select ValueStringBuilder strategy", "audit span lifetime", "preserve runtime text behavior"],
+    "exclusions": ["IPropertyList semantics", "generic C# strings", "network encoding only", "gump layout only", "broad performance profiling", "broad code audit"],
+    "artifacts": ["repository evidence", "construction decision", "ownership boundary", "verification result"]
   },
-  "fallback_positive_concepts": [
-    "owned_job"
-  ],
+  "fallback_positive_concepts": ["handler_binding", "builder_lifetime"],
   "positive_concepts": {
-    "owned_job": {
-      "weight": 1.0,
-      "phrases": [
-        "modernuo string handling"
-      ]
-    }
+    "handler_binding": {"weight": 1.0, "phrases": ["interpolated-string-handler overload", "direct handler binding", "temporary string"]},
+    "builder_lifetime": {"weight": 1.0, "phrases": ["ValueStringBuilder", "AsSpan", "capacity strategy", "allocation boundary"]}
   },
   "negative_concepts": {
-    "near_neighbor": {
-      "weight": 0.0,
-      "exclusive": false,
-      "phrases": []
-    },
-    "explicit_no_action": {
-      "weight": 0.5,
-      "exclusive": true,
-      "phrases": [
-        "do not modify",
-        "advice only",
-        "unrelated repository"
-      ]
-    }
+    "near_neighbor": {"weight": 0.8, "exclusive": true, "phrases": ["IPropertyList", "packet byte encoding", "gump HTML layout", "profiling campaign", "broad code audit"]},
+    "explicit_no_action": {"weight": 0.5, "exclusive": true, "phrases": ["advice only", "do not inspect code", "generic console application"]}
   }
 }

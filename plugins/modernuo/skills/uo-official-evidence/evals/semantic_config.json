@@ -2,40 +2,49 @@
   "optimizer_hints": {
     "capability": "UO Official Evidence",
     "inputs": [
-      "uo official evidence",
-      "official osi ea behavior",
-      "official evidence",
-      "unresolved official evidence"
+      "Ultima Online gameplay claim or mechanic",
+      "current production or historical target",
+      "official and supporting evidence"
     ],
     "trigger_actions": [
-      "Establish the official OSI/EA behavior for this claim and keep community or emulator evidence separate.",
-      "I need an evidence-backed plan for uo official evidence in the configured ModernUO-based repository.",
-      "Help me implement a uo official evidence change and identify the focused verification.",
-      "Audit this uo official evidence diff for era, persistence, lifecycle, and regression risks."
+      "Establish the official UO behavior for this mechanic.",
+      "Research this Ultima Online production rule.",
+      "Reconcile historical and current official behavior.",
+      "Compare this engine implementation with OSI, EA, or Broadsword production."
     ],
     "exclusions": [
-      "modernuo issue research",
-      "modernuo era expansion",
-      "modernuo era change gate",
-      "uo living world review"
+      "purely creative Ultima Online writing",
+      "Publish-to-expansion mapping without a gameplay claim",
+      "generic production software questions"
     ],
     "artifacts": [
-      "source evidence",
-      "implementation plan",
-      "verification result"
+      "classified evidence",
+      "current versus historical reconciliation",
+      "production implementation guidance",
+      "confidence and unresolved gaps"
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "official_evidence",
+    "multilingual_official_evidence"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "official_evidence": {
       "weight": 1.0,
       "phrases": [
-        "uo official evidence",
-        "official osi ea behavior",
-        "official evidence",
-        "unresolved official evidence"
+        "official UO behavior",
+        "OSI production mechanic",
+        "EA Ultima Online formula",
+        "Broadsword production parity"
+      ]
+    },
+    "multilingual_official_evidence": {
+      "weight": 0.9,
+      "phrases": [
+        "offiziellen UO Produktionsservern",
+        "Spielmechanik auf OSI",
+        "servidores oficiales de Ultima Online",
+        "mecanica oficial de UO"
       ]
     }
   },
@@ -43,15 +52,17 @@
     "near_neighbor": {
       "weight": 0.0,
       "exclusive": false,
-      "phrases": []
+      "phrases": [
+        "Publish expansion gate",
+        "fictional Ultima Online story"
+      ]
     },
     "explicit_no_action": {
       "weight": 0.5,
       "exclusive": true,
       "phrases": [
-        "do not modify",
-        "advice only",
-        "unrelated repository"
+        "do not research official behavior",
+        "unrelated production system"
       ]
     }
   }

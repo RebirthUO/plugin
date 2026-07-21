@@ -1,0 +1,23 @@
+{
+  "name": "skill-scanner",
+  "version": "1.0.0",
+  "owner": "RebirthUO",
+  "updated_at": "2026-07-21",
+  "review_cadence": "on_repository_change",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "production",
+  "context_budget_tier": "governed",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic",
+    "agent-skills-compatible",
+    "vscode"
+  ],
+  "factory_components": [
+    "scripts",
+    "references",
+    "evals"
+  ]
+}

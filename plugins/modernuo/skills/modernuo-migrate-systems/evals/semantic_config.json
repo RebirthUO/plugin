@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Migrate this multi-file RunUO guild system with persistence, commands, gumps, and timers.", "Plan vertical slices and rollback for this interdependent engine migration."],
+    "trigger_actions": ["Migrate this multi-file RunUO guild system with persistence, commands, gumps, and timers.", "Plan vertical slices and rollback for this interdependent engine migration."],
+    "capability": "modernuo-migrate-systems",
+    "exclusions": ["Review unrelated application architecture."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Migrate this multi-file RunUO guild system with persistence, commands, gumps, and timers.", "Plan vertical slices and rollback for this interdependent engine migration."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Review unrelated application architecture."],
+      "exclusive": true
+    }
+  }
+}

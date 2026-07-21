@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo events task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement an EventSink handler with owned unsubscription.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo events in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a generated event versus manual subscription decision.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo events change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan pooled event arguments and exception cleanup.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo events diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit event ordering and duplicate delivery.",
+      "family": "audit"
+    },
+    {
+      "text": "Registriere einen ModernUO EventSink-Handler mit sicherer Bereinigung.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

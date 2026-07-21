@@ -1,0 +1,50 @@
+{
+    "cases":  [
+                  {
+                      "name":  "unknown restart",
+                      "prompt":  "Migrate a saved timer without remaining-duration semantics.",
+                      "expected_status":  "BLOCKED_INPUT",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_INPUT | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "unknown overload",
+                      "prompt":  "Choose a timer overload without target revision evidence.",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "serialized token",
+                      "prompt":  "Persist TimerExecutionToken in the schema.",
+                      "must_reject":  "runtime token serialization",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nruntime token serialization\n"
+                  },
+                  {
+                      "name":  "orphan callback",
+                      "prompt":  "Owner deletion does not cancel the callback.",
+                      "must_require":  "owner cleanup",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nowner cleanup\n"
+                  },
+                  {
+                      "name":  "failed timing",
+                      "prompt":  "The exact expiry-boundary test fails.",
+                      "expected_status":  "VALIDATION_FAILED",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| VALIDATION_FAILED | IMPLEMENT | medium |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  }
+              ],
+    "global_assertions":  {
+                              "status_values":  [
+                                                    "PLANNED",
+                                                    "IMPLEMENTED",
+                                                    "AUDITED",
+                                                    "OUT_OF_SCOPE",
+                                                    "BLOCKED_INPUT",
+                                                    "BLOCKED_COMPATIBILITY",
+                                                    "BLOCKED_EVIDENCE",
+                                                    "VALIDATION_FAILED"
+                                                ],
+                              "require_owner_matrix":  true,
+                              "complete_requires_all_checks":  true
+                          }
+}

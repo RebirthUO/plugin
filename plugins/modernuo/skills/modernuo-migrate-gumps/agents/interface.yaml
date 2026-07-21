@@ -1,0 +1,26 @@
+interface:
+  display_name: RunUO to ModernUO Gump Migration
+  short_description: RunUO to ModernUO Gump Migration
+  default_prompt: Use $modernuo-migrate-gumps with the complete RunUO source, explicit ModernUO repository and revision, requested plan/implement/audit mode, compatibility requirements, and available validation evidence.
+compatibility:
+  canonical_format: agent-skills
+  adapter_targets:
+  - openai
+  - claude
+  - generic
+  - vscode
+  activation:
+    mode: implicit
+    paths: []
+  execution:
+    context: inline
+    shell: powershell
+  trust:
+    source_tier: plugin
+    remote_inline_execution: forbid
+    remote_metadata_policy: allow-metadata-only
+  degradation:
+    openai: Use the canonical SKILL.md and load references on demand.
+    claude: Use the neutral Agent Skills source and preserve explicit safety gates.
+    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.

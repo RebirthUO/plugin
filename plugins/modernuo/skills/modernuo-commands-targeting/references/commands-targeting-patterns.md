@@ -53,7 +53,7 @@ Use `TargetFlags.Harmful` or `Beneficial` when combat/notoriety semantics requir
 
 ## Verification matrix
 
-Test:
+For each test, record the scenario, expected result, actual result, command or automated-test method, and relevant log/test evidence. Test:
 
 - minimum access level and one level below;
 - missing, extra, malformed, and boundary arguments;

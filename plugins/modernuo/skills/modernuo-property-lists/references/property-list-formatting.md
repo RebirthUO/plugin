@@ -1,105 +1,64 @@
 # Property-List Formatting and Ordering
 
-Read this reference when a tooltip needs cliloc arguments, a specific relative
-position, or a testable recording representation.
+Read this reference when choosing a property-list overload, localized argument
+shape, relative position, text-block mechanism, or refresh path. Confirm every
+API against the consuming repository's pinned revision.
 
-## Normal append versus name-property insertion
+## Select the Emission Path
 
-Normal tooltip additions belong in `GetProperties()` after the base call:
+Normal additions usually follow the verified base call in `GetProperties`:
 
 ```csharp
 public override void GetProperties(IPropertyList list)
 {
     base.GetProperties(list);
-    list.Add(1060741, $"{_charges}");
+    list.Add(1060741, $"{charges}");
 }
 ```
 
-`Item.GetProperties()` calls `AddNameProperties()` for name, loot flags, quest
-state, and weight. If a source requires a custom entry immediately after that
-block rather than at the end, use:
+Use a name-stage override only when the current base sequence proves the entry
+must appear there. Call its base implementation first, then assert the custom
+entry's relative position in a focused test. Do not infer a hook name or order
+from an older source tree.
+
+## Construct Arguments
+
+In the specialized `IPropertyList` interpolated handler, literal text is
+structural delimiter metadata. Put human text and string constants inside holes;
+normally only `\t` remains a bare literal:
 
 ```csharp
-public override void AddNameProperties(IPropertyList list)
-{
-    base.AddNameProperties(list);
+// Wrong: the handler receives "Charges" as delimiter text.
+list.Add(1060658, $"Charges\t{charges}");
 
-    if (Core.HS)
-    {
-        list.Add(1150058);
-    }
-}
+// Correct: both values are formatted arguments.
+list.Add(1060658, $"{"Charges"}\t{charges}");
 ```
 
-Record entry numbers in a focused test and assert the custom cliloc relative to
-weight and later equipment properties. Test both sides of an era gate.
+Pass values directly. Do not place `.ToString()`, `string.Format`, concatenated
+strings, prebuilt strings, LINQ output, or conditional formatting expressions
+inside a hole. When an argument is itself a cliloc, use the current localized
+argument overload or supported format specifier rather than raw `"#number"`
+text.
 
-## Argument separators
+These rules do not apply automatically to a normal message or gump interpolation
+handler; inspect that handler separately.
 
-Cliloc placeholders receive tab-separated arguments:
+## Free Text and Refresh
 
-```csharp
-list.Add(1060637, $"{current}\t{maximum}");
-list.Add(1072241, $"{items}\t{maxItems}\t{weight}\t{maxWeight}");
-```
+For variable multi-line free text, use the current `AddChunked` primitive or a
+scoped text-block builder if the active interface provides one. Preserve line
+boundaries and dispose the scoped builder so it flushes. A short localized
+property should remain a normal property-list entry.
 
-The `IPropertyList` interpolation handler treats bare literal text as delimiter
-metadata. Human text must be a hole; normally only `\t` is bare:
+For a serialized displayed field, use the repository's generated invalidation
+attribute only when supported. A custom setter or runtime state transition must
+invalidate exactly when visible output changes and retain the local persistence
+or dirty-marking rule. Avoid repeated invalidation when the displayed value is
+unchanged.
 
-```csharp
-// Wrong: "Charges" is parsed as a literal delimiter.
-list.Add(1060658, $"Charges\t{_charges}");
+## Test Shape
 
-// Correct: both values are arguments.
-list.Add(1060658, $"{"Charges"}\t{_charges}");
-```
-
-This rule is specific to property lists. Normal message and gump handlers should
-keep ordinary text as interpolation literals.
-
-## Values and cliloc references
-
-Pass values directly so the handler can format into its buffer:
-
-```csharp
-list.Add(1060658, $"{"Charges"}\t{_charges}");
-```
-
-Avoid `_charges.ToString()`, `string.Format`, concatenation, pre-built locals,
-ternary/switch interpolated branches, or LINQ aggregation in the hole.
-
-When an argument is itself a cliloc, mark it as localized data:
-
-```csharp
-list.Add(1050039, $"{amount}\t{1060000:#}");
-// Or use the applicable AddLocalized overload.
-```
-
-A string such as `"#1060000"` is raw text and can render literally in alternate
-consumers.
-
-## Refresh behavior
-
-Generated fields that change the tooltip can use:
-
-```csharp
-[SerializableField(0)]
-[InvalidateProperties]
-[SerializedCommandProperty(AccessLevel.GameMaster)]
-private int _charges;
-```
-
-Custom setters/non-serialized state must call `InvalidateProperties()` when the
-visible value changes. Custom persistent setters also call `this.MarkDirty()`.
-Do not invalidate repeatedly when no visible state changed.
-
-## Useful source anchors
-
-- `Projects/Server/PropertyList/IPropertyList.cs`
-- `Projects/Server/PropertyList/ObjectPropertyList.cs`
-- `Projects/Server/Items/Item.cs`
-- `Projects/Server/Items/Container.cs`
-
-Use the current interfaces rather than a copied overload list; private recording
-test doubles can lag interface additions. See
-`recording-property-list-test-doubles.md` when that occurs.
+Record property number, argument payload, and sequence. Test both sides of an
+era gate and the state transition that refreshes visible output. Use byte-level
+or hash assertions only when packet behavior is the requested contract.

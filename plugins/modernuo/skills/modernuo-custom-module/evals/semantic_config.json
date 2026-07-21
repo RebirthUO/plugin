@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Custom Module",
     "inputs": [
-      "modernuo custom module"
+      "Implement a separate content assembly and assemblies.json load order.",
+      "Review a module name not approved by the user.",
+      "Plan a build-only project reference mistaken for runtime loading.",
+      "Audit a reverse dependency from base content to a module.",
+      "Erstelle ein separates ModernUO-Content-Assembly mit Load-Smoke-Test.",
+      "Dise?a un m?dulo de contenido separado sin seleccionar un nombre de ensamblado no aprobado."
     ],
     "trigger_actions": [
-      "Review this modernuo custom module task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo custom module in the configured ModernUO-based repository.",
-      "Help me implement a modernuo custom module change and identify the focused verification.",
-      "Audit this modernuo custom module diff for era, persistence, lifecycle, and regression risks."
+      "Implement a separate content assembly and assemblies.json load order.",
+      "Review a module name not approved by the user.",
+      "Plan a build-only project reference mistaken for runtime loading.",
+      "Audit a reverse dependency from base content to a module.",
+      "Erstelle ein separates ModernUO-Content-Assembly mit Load-Smoke-Test.",
+      "Dise?a un m?dulo de contenido separado sin seleccionar un nombre de ensamblado no aprobado."
     ],
     "exclusions": [
       "modernuo content patterns",
@@ -24,13 +31,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo custom module"
+        "Implement a separate content assembly and assemblies.json load order."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a module name not approved by the user."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a build-only project reference mistaken for runtime loading."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a reverse dependency from base content to a module."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Erstelle ein separates ModernUO-Content-Assembly mit Load-Smoke-Test."
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Dise?a un m?dulo de contenido separado sin seleccionar un nombre de ensamblado no aprobado."
       ]
     }
   },
@@ -42,7 +84,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

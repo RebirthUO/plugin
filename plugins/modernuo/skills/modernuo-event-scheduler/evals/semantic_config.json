@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Event Scheduler",
     "inputs": [
-      "modernuo event scheduler"
+      "Implement a timezone-aware daily reset.",
+      "Review an unspecified DST and catch-up policy.",
+      "Plan a seasonal recurrence with idempotent restart behavior.",
+      "Audit calendar scheduling versus an elapsed timer.",
+      "Plane einen täglichen ModernUO-Reset mit Zeitzone und Neustart-Schutz."
     ],
     "trigger_actions": [
-      "Review this modernuo event scheduler task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo event scheduler in the configured ModernUO-based repository.",
-      "Help me implement a modernuo event scheduler change and identify the focused verification.",
-      "Audit this modernuo event scheduler diff for era, persistence, lifecycle, and regression risks."
+      "Implement a timezone-aware daily reset.",
+      "Review an unspecified DST and catch-up policy.",
+      "Plan a seasonal recurrence with idempotent restart behavior.",
+      "Audit calendar scheduling versus an elapsed timer.",
+      "Plane einen täglichen ModernUO-Reset mit Zeitzone und Neustart-Schutz."
     ],
     "exclusions": [
       "modernuo timers",
@@ -24,13 +29,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo event scheduler"
+        "Implement a timezone-aware daily reset."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review an unspecified DST and catch-up policy."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a seasonal recurrence with idempotent restart behavior."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit calendar scheduling versus an elapsed timer."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Plane einen täglichen ModernUO-Reset mit Zeitzone und Neustart-Schutz."
       ]
     }
   },
@@ -42,7 +75,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

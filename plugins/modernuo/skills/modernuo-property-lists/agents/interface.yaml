@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Property Lists
-  short_description: ModernUO Property Lists
-  default_prompt: Use $modernuo-property-lists to apply ModernUO Property Lists guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Implement verified ModernUO tooltips
+  default_prompt: Use $modernuo-property-lists to review, plan, or implement a ModernUO tooltip with verified entry order, localized arguments, refresh behavior, and focused tests.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

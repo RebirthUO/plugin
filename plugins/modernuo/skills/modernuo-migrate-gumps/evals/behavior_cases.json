@@ -1,0 +1,51 @@
+{
+    "cases":  [
+                  {
+                      "name":  "missing revision",
+                      "prompt":  "Implement this gump migration without a target revision.",
+                      "expected_status":  "BLOCKED_INPUT",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_INPUT | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "ambiguous gump type",
+                      "prompt":  "Choose StaticGump or DynamicGump without the current declarations.",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "empty layout",
+                      "prompt":  "A construction path produces no controls.",
+                      "must_reject":  "empty gump",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nempty gump\n"
+                  },
+                  {
+                      "name":  "stale response",
+                      "prompt":  "OnResponse trusts ownership captured at display time.",
+                      "must_require":  "response revalidation",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nresponse revalidation\n"
+                  },
+                  {
+                      "name":  "audit only",
+                      "prompt":  "Audit IDs and response safety without editing.",
+                      "must_preserve_mode":  "audit",
+                      "expected_status":  "AUDITED",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| AUDITED | AUDIT | high |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  }
+              ],
+    "global_assertions":  {
+                              "status_values":  [
+                                                    "PLANNED",
+                                                    "IMPLEMENTED",
+                                                    "AUDITED",
+                                                    "OUT_OF_SCOPE",
+                                                    "BLOCKED_INPUT",
+                                                    "BLOCKED_COMPATIBILITY",
+                                                    "BLOCKED_EVIDENCE",
+                                                    "VALIDATION_FAILED"
+                                                ],
+                              "require_revision_locators":  true,
+                              "complete_requires_all_checks":  true
+                          }
+}

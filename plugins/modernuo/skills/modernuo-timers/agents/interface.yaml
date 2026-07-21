@@ -1,7 +1,7 @@
 interface:
   display_name: ModernUO Timers and Scheduling
-  short_description: ModernUO Timers and Scheduling
-  default_prompt: Use $modernuo-timers to apply ModernUO Timers and Scheduling guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  short_description: Design and verify owned ModernUO timer behavior
+  default_prompt: Use $modernuo-timers to select, implement, or audit an owned ModernUO timer with explicit lifecycle, persistence, failure, and focused-test evidence.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

@@ -1,1 +1,0 @@
-Use when creating a ModernUO or UO intake issue in the exact repository declared by the consuming project's AGENTS.md.

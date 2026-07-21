@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Symbol Discipline",
     "inputs": [
-      "modernuo symbol discipline"
+      "Implement a one-use literal versus const decision.",
+      "Review a public property with serialization compatibility.",
+      "Plan a Policy name without a durable policy reason.",
+      "Audit a static readonly object versus a mutable field.",
+      "Soll dieser ModernUO-Wert lokal bleiben, const werden oder eine Policy erhalten?",
+      "Revisa el alcance y la visibilidad de estos s?mbolos de C#."
     ],
     "trigger_actions": [
-      "Review this modernuo symbol discipline task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo symbol discipline in the configured ModernUO-based repository.",
-      "Help me implement a modernuo symbol discipline change and identify the focused verification.",
-      "Audit this modernuo symbol discipline diff for era, persistence, lifecycle, and regression risks."
+      "Implement a one-use literal versus const decision.",
+      "Review a public property with serialization compatibility.",
+      "Plan a Policy name without a durable policy reason.",
+      "Audit a static readonly object versus a mutable field.",
+      "Soll dieser ModernUO-Wert lokal bleiben, const werden oder eine Policy erhalten?",
+      "Revisa el alcance y la visibilidad de estos s?mbolos de C#."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -22,13 +29,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo symbol discipline"
+        "Implement a one-use literal versus const decision."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a public property with serialization compatibility."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a Policy name without a durable policy reason."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a static readonly object versus a mutable field."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Soll dieser ModernUO-Wert lokal bleiben, const werden oder eine Policy erhalten?"
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Revisa el alcance y la visibilidad de estos s?mbolos de C#."
       ]
     }
   },
@@ -40,7 +82,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

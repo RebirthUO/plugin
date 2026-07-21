@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Convert this RunUO Gump and OnResponse handler to current ModernUO builders.", "Preserve these button IDs while adding stale-response validation."],
+    "trigger_actions": ["Convert this RunUO Gump and OnResponse handler to current ModernUO builders.", "Preserve these button IDs while adding stale-response validation."],
+    "capability": "modernuo-migrate-gumps",
+    "exclusions": ["Migrate this ObjectPropertyList override."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Convert this RunUO Gump and OnResponse handler to current ModernUO builders.", "Preserve these button IDs while adding stale-response validation."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Migrate this ObjectPropertyList override."],
+      "exclusive": true
+    }
+  }
+}

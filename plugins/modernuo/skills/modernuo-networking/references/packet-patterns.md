@@ -8,7 +8,7 @@ code over these illustrative shapes.
 ```csharp
 public static class OutgoingMyPackets
 {
-    public const int PacketLength = 12;
+    public const int PacketLength = 11;
 
     public static void SendMyPacket(this NetState ns, Serial target, int value)
     {
@@ -57,7 +57,7 @@ storage. Dispose writers that rent buffers.
 ```csharp
 public static unsafe void Configure()
 {
-    IncomingPackets.Register(0x99, 12, true, &HandleMyPacket);
+    IncomingPackets.Register(0x99, 11, true, &HandleMyPacket);
 }
 
 public static void HandleMyPacket(NetState state, SpanReader reader)

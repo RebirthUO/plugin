@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Convert these Serialize and Deserialize methods and preserve all old save versions.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Add a generated serialization version migration and retain prior schemas.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-serialization migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-serialization conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migriere diese Serialize- und Deserialize-Pfade mit vollständiger Alt-Save-Kompatibilität.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Migrate a global custom save file.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Design persistence for a new external database.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

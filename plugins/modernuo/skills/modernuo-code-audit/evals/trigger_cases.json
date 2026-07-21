@@ -1,53 +1,17 @@
 {
   "recommended_threshold": 0.33,
   "should_trigger": [
-    {
-      "text": "Review this modernuo code audit task and give me the repository-specific checks.",
-      "family": "owned_job"
-    },
-    {
-      "text": "I need an evidence-backed plan for modernuo code audit in the configured ModernUO-based repository.",
-      "family": "owned_job"
-    },
-    {
-      "text": "Help me implement a modernuo code audit change and identify the focused verification.",
-      "family": "owned_job"
-    },
-    {
-      "text": "Audit this modernuo code audit diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
-    }
+    { "text": "Audit this ModernUO C# diff for persistence, lifecycle, and authorization risks.", "family": "audit_intent" },
+    { "text": "Review this ModernUO OnTarget handler without modifying it.", "family": "audit_intent" },
+    { "text": "Pruefe diesen ModernUO-C#-Diff auf Berechtigungs- und Save-Risiken.", "family": "audit_intent" }
   ],
   "should_not_trigger": [
-    {
-      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Review generic C# in an unrelated application.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Give general advice only; do not create, edit, push, or update any GitHub artifact.",
-      "family": "out_of_scope"
-    }
+    { "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.", "family": "out_of_scope" },
+    { "text": "Review generic C# in an unrelated application.", "family": "out_of_scope" },
+    { "text": "Perform a code audit for this generic C# service.", "family": "out_of_scope" }
   ],
   "near_neighbor": [
-    {
-      "text": "Review this modernuo serialization task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo timers and scheduling task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo lifecycle cleanup task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo threading and event loop task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    }
+    { "text": "Implement a new ModernUO command and target flow.", "family": "commands_targeting" },
+    { "text": "Establish the official UO behavior for this mechanic.", "family": "official_evidence" }
   ]
 }

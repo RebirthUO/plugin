@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Convert these Serialize and Deserialize methods and preserve all old save versions.", "Add a generated serialization version migration and retain prior schemas."],
+    "trigger_actions": ["Convert these Serialize and Deserialize methods and preserve all old save versions.", "Add a generated serialization version migration and retain prior schemas."],
+    "capability": "modernuo-migrate-serialization",
+    "exclusions": ["Design persistence for a new external database."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Convert these Serialize and Deserialize methods and preserve all old save versions.", "Add a generated serialization version migration and retain prior schemas."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Design persistence for a new external database."],
+      "exclusive": true
+    }
+  }
+}

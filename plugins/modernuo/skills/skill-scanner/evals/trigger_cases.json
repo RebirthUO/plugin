@@ -1,0 +1,18 @@
+{
+  "recommended_threshold": 0.35,
+  "should_trigger": [
+    {"text": "Scan this ModernUO repository change and tell me which skills may need maintenance.", "family": "repository_skill_maintenance"},
+    {"text": "Check whether our ModernUO skill routing and scope still fit after these source changes.", "family": "repository_relationship_audit"},
+    {"text": "Pruefe nach den Aenderungen im ModernUO-Repository, welche Skills aktualisiert werden sollten.", "family": "repository_skill_maintenance_de"}
+  ],
+  "should_not_trigger": [
+    {"text": "Update the timer skill now and change its workflow.", "family": "skill_authoring"},
+    {"text": "Explain this Ultima Online property mechanic from official sources.", "family": "official_gameplay_research"},
+    {"text": "Map a generic non-ModernUO repository.", "family": "unconfirmed_repository"}
+  ],
+  "near_neighbor": [
+    {"text": "Map this confirmed ModernUO checkout before planning a feature.", "family": "codebase_mapping"},
+    {"text": "Review this ModernUO C# diff for correctness and lifecycle risks.", "family": "code_audit"},
+    {"text": "Create a new ModernUO skill for packet migration.", "family": "skill_authoring"}
+  ]
+}

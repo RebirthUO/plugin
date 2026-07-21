@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Replace these WorldSave and WorldLoad binary handlers with GenericPersistence.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migrate this global system file while preserving legacy versions and rollback.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-persistence migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-persistence conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Ersetze diese RunUO-WorldSave-Datei revisionssicher durch ModernUO GenericPersistence.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Convert fields stored on one Item.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Review an unrelated database migration.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema":"rebirthuo-issue-research-behavior/v1",
+  "cases":[
+    {"id":"retry-success","condition":"First official query misses; alias route succeeds","expected":"Record both and continue without asking"},
+    {"id":"era-inference","condition":"Chronology and repository gates identify one era","expected":"Select it without asking"},
+    {"id":"era-policy","condition":"Two product-valid eras remain after exhaustion","expected":"BLOCKED with one focused choice"},
+    {"id":"official-gap","condition":"Materially different official routes are exhausted","expected":"Offer scope, direct-source, or labeled custom-policy choices"},
+    {"id":"repository-missing","condition":"AGENTS.md declares no exact repository","expected":"RESEARCH_REPOSITORY_BLOCKED; no inferred target"},
+    {"id":"issue-input","condition":"Issue locator is missing, conflicting, multiple, inaccessible, or cross-repository","expected":"ISSUE_INPUT_BLOCKED with no mutation"},
+    {"id":"domain-skill-missing","condition":"No installed domain skill owns an implicated surface","expected":"Direct repository inspection with recorded degradation"},
+    {"id":"concurrent-overlap","condition":"Live body changed in an overlapping field","expected":"PUBLICATION_BLOCKED pending renewed authorization"},
+    {"id":"advice-only","condition":"User forbids GitHub mutation","expected":"Publication skipped; action arrays empty"},
+    {"id":"authorization","condition":"Standalone research lacks explicit issue-publication authority","expected":"AUTHORIZATION_REQUIRED with proposed body and no mutation"},
+    {"id":"body-ok-label-fails","condition":"Body read-back succeeds and label operation fails","expected":"PUBLICATION_BLOCKED partial with only body action proven"},
+    {"id":"readback-mismatch","condition":"Provider write response cannot be verified","expected":"PUBLICATION_BLOCKED; no READY and no blind retry"}
+  ]
+}

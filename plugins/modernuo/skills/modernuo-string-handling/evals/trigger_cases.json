@@ -1,53 +1,22 @@
 {
-  "recommended_threshold": 0.33,
+  "recommended_threshold": 0.45,
   "should_trigger": [
-    {
-      "text": "Review this modernuo string handling task and give me the repository-specific checks.",
-      "family": "owned_job"
-    },
-    {
-      "text": "I need an evidence-backed plan for modernuo string handling in the configured ModernUO-based repository.",
-      "family": "owned_job"
-    },
-    {
-      "text": "Help me implement a modernuo string handling change and identify the focused verification.",
-      "family": "owned_job"
-    },
-    {
-      "text": "Audit this modernuo string handling diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
-    }
+    {"text": "Verify which SendMessage interpolated-string-handler overload binds and remove the temporary string.", "family": "handler_binding"},
+    {"text": "Refactor this ternary interpolation so each ModernUO gump call keeps direct handler binding.", "family": "branch_interpolation"},
+    {"text": "Review whether this ValueStringBuilder AsSpan escapes beyond the builder lifetime.", "family": "span_lifetime"},
+    {"text": "Choose a safe capacity strategy for this repeated ModernUO runtime string assembly.", "family": "capacity"},
+    {"text": "Preserve culture-sensitive formatting while replacing this runtime StringBuilder path.", "family": "culture"},
+    {"text": "Audit allocation and ownership boundaries for text passed into this ModernUO packet writer.", "family": "packet_text"}
   ],
   "should_not_trigger": [
-    {
-      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Review generic C# in an unrelated application.",
-      "family": "out_of_scope"
-    },
-    {
-      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
-      "family": "out_of_scope"
-    }
+    {"text": "Explain C# string interpolation in a generic console application.", "family": "unrelated_repository"},
+    {"text": "Advice only: explain this UO item name without inspecting or modifying code.", "family": "no_action"},
+    {"text": "Change IPropertyList tab delimiters and localized tooltip argument semantics.", "family": "property_list_owner"}
   ],
   "near_neighbor": [
-    {
-      "text": "Review this modernuo code audit task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo performance hot paths task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo property lists task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    },
-    {
-      "text": "Review this modernuo gump system task and give me the repository-specific checks.",
-      "family": "near_neighbor"
-    }
+    {"text": "Benchmark the whole combat loop and design a performance profiling campaign.", "family": "performance_owner"},
+    {"text": "Fix packet byte encoding, terminators, and truncation limits.", "family": "networking_owner"},
+    {"text": "Correct gump HTML escaping and layout coordinates.", "family": "gump_owner"},
+    {"text": "Perform a broad ModernUO code audit for lifecycle and persistence risks.", "family": "audit_owner"}
   ]
 }

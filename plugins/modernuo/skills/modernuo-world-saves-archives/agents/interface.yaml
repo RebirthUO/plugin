@@ -1,7 +1,7 @@
 interface:
-  display_name: ModernUO World Saves and Archives
-  short_description: ModernUO World Saves and Archives
-  default_prompt: Use $modernuo-world-saves-archives to apply ModernUO World Saves and Archives guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  display_name: ModernUO World Saves
+  short_description: Audit and change ModernUO save lifecycle and recovery
+  default_prompt: Use $modernuo-world-saves-archives to inspect this repository's ModernUO world-save lifecycle, resolve recovery decisions, and verify the result.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:
@@ -20,7 +20,7 @@ compatibility:
     remote_inline_execution: forbid
     remote_metadata_policy: allow-metadata-only
   degradation:
-    openai: Use the canonical SKILL.md and load references on demand.
-    claude: Use the neutral Agent Skills source and preserve explicit safety gates.
+    openai: Use the canonical SKILL.md and load the lifecycle reference only when needed.
+    claude: Use the neutral Agent Skills source and preserve evidence and data-safety gates.
     generic: Use SKILL.md with relative references; no client-specific automation is assumed.
     vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.

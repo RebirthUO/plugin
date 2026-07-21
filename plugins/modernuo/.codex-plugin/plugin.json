@@ -1,6 +1,6 @@
 {
   "name": "modernuo",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Official-UO research and ModernUO engineering workflows",
   "author": {
     "name": "Jan Siems",
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "ModernUO",
     "shortDescription": "Official UO evidence, ModernUO engineering, and strict issue delivery.",
-    "longDescription": "A repository-portable Agent Skills portfolio for official OSI/EA/Broadsword research, ModernUO engineering, RunUO migration, testing, and a strict template-gated issue-to-PR workflow. Issue skills resolve the exact repository from the consuming project's AGENTS.md and interview unresolved policy while never substituting for missing official evidence.",
+    "longDescription": "A repository-portable Agent Skills portfolio for official OSI/EA/Broadsword research, ModernUO engineering, RunUO migration, testing, and an autonomous RebirthUO issue-to-PR workflow. Issue skills exhaust discoverable evidence before asking for a product decision and never substitute for missing official evidence.",
     "developerName": "Jan Siems",
     "category": "Developer Tools",
     "capabilities": [
@@ -20,13 +20,14 @@
     ],
     "brandColor": "#7A2F1A",
     "defaultPrompt": [
-      "Run a template-gated ModernUO issue workflow from intake or an existing GitHub issue through research, an isolated worktree, branch push, and PR.",
-      "Create an intake issue using the repository and live template declared by this project's AGENTS.md.",
-      "Research or review this issue against official OSI/EA sources, rewrite its existing body fields with current findings, remove resolved requirements and blockers, and stop to ask me about unresolved decisions.",
-      "Implement this issue from its current READY research handoff and run focused verification.",
+      "Run an autonomous RebirthUO issue workflow from intake or an existing GitHub issue through exhaustive research, an isolated worktree, branch push, and PR.",
+      "Create a RebirthUO intake issue using the repository and live template declared by this project's AGENTS.md, then ask once whether research should start.",
+      "Research this RebirthUO issue through materially different official-source routes, infer its era when possible, rewrite its body, and ask only for a genuine product decision.",
+      "Implement this RebirthUO issue only from its current unblocked READY research handoff and run focused verification.",
       "Establish the official UO behavior for this mechanic and compare it with the configured repository.",
       "Audit this ModernUO subsystem for persistence, lifecycle, performance, and regression risks.",
       "Migrate this RunUO code to current ModernUO conventions.",
+      "Map this Ultima Online Publish to the next applicable true expansion and cumulative ModernUO Core gate, keeping Endless Journey restrictions separate.",
       "Design focused ModernUO behavior tests and report their exact scope."
     ],
     "composerIcon": "./assets/rebirthuo-logo.png",

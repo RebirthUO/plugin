@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Server Lifecycle",
     "inputs": [
-      "modernuo server lifecycle"
+      "Implement Configure and Initialize ordering for a server subsystem.",
+      "Review a startup hook that assumes the world is loaded.",
+      "Plan shutdown work with explicit event ordering.",
+      "Audit a ConfigurePrompts expansion configuration decision.",
+      "Ordne diese ModernUO-Initialisierung korrekt in Configure und Initialize ein."
     ],
     "trigger_actions": [
-      "Review this modernuo server lifecycle task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo server lifecycle in the configured ModernUO-based repository.",
-      "Help me implement a modernuo server lifecycle change and identify the focused verification.",
-      "Audit this modernuo server lifecycle diff for era, persistence, lifecycle, and regression risks."
+      "Implement Configure and Initialize ordering for a server subsystem.",
+      "Review a startup hook that assumes the world is loaded.",
+      "Plan shutdown work with explicit event ordering.",
+      "Audit a ConfigurePrompts expansion configuration decision.",
+      "Ordne diese ModernUO-Initialisierung korrekt in Configure und Initialize ein."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -25,13 +30,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo server lifecycle"
+        "Implement Configure and Initialize ordering for a server subsystem."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a startup hook that assumes the world is loaded."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan shutdown work with explicit event ordering."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit a ConfigurePrompts expansion configuration decision."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Ordne diese ModernUO-Initialisierung korrekt in Configure und Initialize ein."
       ]
     }
   },
@@ -43,7 +76,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

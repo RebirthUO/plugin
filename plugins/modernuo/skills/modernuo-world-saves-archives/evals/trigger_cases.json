@@ -2,52 +2,72 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo world saves and archives task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Prevent two ModernUO world saves from overlapping and add focused tests for the re-entry behavior.",
+      "family": "save_concurrency"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo world saves and archives in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Move this backup hook to the point where the ModernUO save snapshot is durably complete.",
+      "family": "snapshot_integration"
     },
     {
-      "text": "Help me implement a modernuo world saves and archives change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Audit what happens when the shard shuts down or crashes during a world save and document recovery.",
+      "family": "failure_recovery"
     },
     {
-      "text": "Audit this modernuo world saves and archives diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Plan a ModernUO save-directory migration without overwriting the last valid recovery point.",
+      "family": "save_path"
+    },
+    {
+      "text": "Review this external object-storage backup integration at the ModernUO world-save completion boundary.",
+      "family": "snapshot_integration"
+    },
+    {
+      "text": "Advice only: explain which ModernUO save lifecycle evidence I must inspect before adding archive retention.",
+      "family": "advice_only"
     }
   ],
   "should_not_trigger": [
     {
-      "text": "Explain this UO mechanic as player lore only; do not inspect a server codebase.",
-      "family": "out_of_scope"
+      "text": "Add a versioned serialized field to this Mobile and migrate its reader.",
+      "family": "entity_serialization"
     },
     {
-      "text": "Review generic C# in an unrelated application.",
-      "family": "out_of_scope"
+      "text": "Create a generic TAR utility for an unrelated .NET application.",
+      "family": "generic_archive"
     },
     {
-      "text": "Create an unrelated GitHub issue without a repository declared in project instructions.",
+      "text": "Change only the logging level in this application configuration file.",
+      "family": "configuration_only"
+    },
+    {
+      "text": "Change RebirthUO ArchiveJournal retention states without touching the ModernUO world-save lifecycle.",
+      "family": "repository_archive_extension"
+    },
+    {
+      "text": "Explain this UO mechanic as player lore without inspecting server code.",
       "family": "out_of_scope"
     }
   ],
   "near_neighbor": [
     {
-      "text": "Review this modernuo code audit task and give me the repository-specific checks.",
-      "family": "near_neighbor"
+      "text": "Fix entity serialization compatibility after loading an old world save.",
+      "family": "serialization"
     },
     {
-      "text": "Review this modernuo threading and event loop task and give me the repository-specific checks.",
-      "family": "near_neighbor"
+      "text": "Review general event-loop shutdown ordering without changing world-save behavior.",
+      "family": "lifecycle"
     },
     {
-      "text": "Review this modernuo server lifecycle task and give me the repository-specific checks.",
-      "family": "near_neighbor"
+      "text": "Tune worker-thread batching inside serialization without changing save completion or recovery.",
+      "family": "threading"
     },
     {
-      "text": "Review this modernuo events task and give me the repository-specific checks.",
-      "family": "near_neighbor"
+      "text": "Modify RebirthUO ArchiveJournal retention states without changing the ModernUO world-save boundary.",
+      "family": "repository_archive_extension"
+    },
+    {
+      "text": "Add a new server setting without otherwise changing the save lifecycle.",
+      "family": "configuration"
     }
   ]
 }

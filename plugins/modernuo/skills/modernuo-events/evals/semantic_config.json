@@ -2,13 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Events",
     "inputs": [
-      "modernuo events"
+      "Implement an EventSink handler with owned unsubscription.",
+      "Review a generated event versus manual subscription decision.",
+      "Plan pooled event arguments and exception cleanup.",
+      "Audit event ordering and duplicate delivery.",
+      "Registriere einen ModernUO EventSink-Handler mit sicherer Bereinigung."
     ],
     "trigger_actions": [
-      "Review this modernuo events task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo events in the configured ModernUO-based repository.",
-      "Help me implement a modernuo events change and identify the focused verification.",
-      "Audit this modernuo events diff for era, persistence, lifecycle, and regression risks."
+      "Implement an EventSink handler with owned unsubscription.",
+      "Review a generated event versus manual subscription decision.",
+      "Plan pooled event arguments and exception cleanup.",
+      "Audit event ordering and duplicate delivery.",
+      "Registriere einen ModernUO EventSink-Handler mit sicherer Bereinigung."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -26,13 +31,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo events"
+        "Implement an EventSink handler with owned unsubscription."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a generated event versus manual subscription decision."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan pooled event arguments and exception cleanup."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit event ordering and duplicate delivery."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Registriere einen ModernUO EventSink-Handler mit sicherer Bereinigung."
       ]
     }
   },
@@ -44,7 +77,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

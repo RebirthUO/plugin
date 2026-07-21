@@ -1,0 +1,1 @@
+Use when the user wants a new RebirthUO request or existing issue handled autonomously through template-gated intake, exhaustive research, isolated implementation, branch push, and verified pull request. Interview only for the narrow repository, template, or post-exhaustion product decisions defined by the workflow; an existing issue skips creation.

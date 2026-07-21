@@ -1,0 +1,42 @@
+{
+  "cases": [
+    {
+      "kind": "missing_context",
+      "scenario": "A request supplies a tooltip sentence but no verified cliloc, argument shape, order, or visible-state transition.",
+      "expected_outcome": "BLOCKED",
+      "must_require": "the smallest missing localized identifier, ordering rule, or refresh decision"
+    },
+    {
+      "kind": "safety_branch",
+      "scenario": "A normal gump interpolation bug is presented as an IPropertyList formatting request.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Do not copy specialized property-list interpolation rules to ordinary message or gump handlers."
+    },
+    {
+      "kind": "verification_branch",
+      "scenario": "A serialized charges tooltip gains an ordered localized entry and refresh behavior.",
+      "expected_outcome": "IMPLEMENTED",
+      "must_verify": "the current interface, focused entry number and argument assertions, relative order, and refresh transition"
+    },
+    {
+      "kind": "plan_branch",
+      "scenario": "Plan an ordered tooltip change from current source evidence without authorization to edit.",
+      "expected_outcome": "REVIEWED",
+      "must_preserve": "Emit one parseable YAML document with Decision.kind PLAN and only proposed or verified records."
+    },
+    {
+      "kind": "output_contract",
+      "scenario": "Return a property-list review result.",
+      "expected_outcome": "REVIEWED",
+      "required_fields": [
+        "Outcome",
+        "Repository revision",
+        "Decision",
+        "Evidence",
+        "Verification",
+        "Confidence",
+        "Limitations"
+      ]
+    }
+  ]
+}

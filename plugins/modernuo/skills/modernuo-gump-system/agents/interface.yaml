@@ -1,7 +1,9 @@
 interface:
-  display_name: ModernUO Gump System
-  short_description: ModernUO Gump System
-  default_prompt: Use $modernuo-gump-system to apply ModernUO Gump System guidance to this Ultima Online, ModernUO, or RebirthUO task and verify the result.
+  display_name: Screenshot-Aware ModernUO Gumps
+  short_description: Plan and build evidenced ModernUO gumps
+  default_prompt: Use $modernuo-gump-system to decompose this Gump screenshot, look
+    up available Ultima UI data, and plan the ModernUO implementation with a visual
+    component map.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:
@@ -22,5 +24,6 @@ compatibility:
   degradation:
     openai: Use the canonical SKILL.md and load references on demand.
     claude: Use the neutral Agent Skills source and preserve explicit safety gates.
-    generic: Use SKILL.md with relative references; no client-specific automation is assumed.
+    generic: Use SKILL.md with relative references; no client-specific automation
+      is assumed.
     vscode: Use the Agent Skills source in workspace trust and confirm mutations explicitly.

@@ -1,0 +1,6 @@
+{
+  "optimizer_hints":{"capability":"RebirthUO Issue Research","inputs":["rebirthuo issue research","research existing issue","make issue READY","researchpacket"],"trigger_actions":["Research this RebirthUO issue exhaustively and publish its current readiness.","Infer the issue era, compare the verified repository, and return a ResearchPacket."],"exclusions":["create issue","implement issue","full issue workflow","generic UO fact only"],"artifacts":["ResearchPacket","format-preserving issue update"]},
+  "fallback_positive_concepts":["owned_job"],
+  "positive_concepts":{"owned_job":{"weight":1.0,"phrases":["rebirthuo issue research","research existing issue","make issue READY","researchpacket"]}},
+  "negative_concepts":{"near_neighbor":{"weight":0.8,"exclusive":true,"phrases":["create issue","implement issue","full workflow","generic UO fact"]},"explicit_no_action":{"weight":0.5,"exclusive":true,"phrases":["do not inspect issue","unrelated repository"]}}
+}

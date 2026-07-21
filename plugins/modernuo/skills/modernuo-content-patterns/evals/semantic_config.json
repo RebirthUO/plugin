@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Content Patterns",
     "inputs": [
-      "modernuo content patterns"
+      "Implement a new persistent item with lifecycle cleanup.",
+      "Review a gameplay mechanic with missing official evidence.",
+      "Plan a content type that needs focused persistence tests.",
+      "Audit an economy-sensitive content change.",
+      "Füge ein neues ModernUO-Item mit Persistenz, Cleanup und Tests hinzu.",
+      "Implementa un tipo de contenido ModernUO conservando sus l?mites de ciclo de vida."
     ],
     "trigger_actions": [
-      "Review this modernuo content patterns task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo content patterns in the configured ModernUO-based repository.",
-      "Help me implement a modernuo content patterns change and identify the focused verification.",
-      "Audit this modernuo content patterns diff for era, persistence, lifecycle, and regression risks."
+      "Implement a new persistent item with lifecycle cleanup.",
+      "Review a gameplay mechanic with missing official evidence.",
+      "Plan a content type that needs focused persistence tests.",
+      "Audit an economy-sensitive content change.",
+      "Füge ein neues ModernUO-Item mit Persistenz, Cleanup und Tests hinzu.",
+      "Implementa un tipo de contenido ModernUO conservando sus l?mites de ciclo de vida."
     ],
     "exclusions": [
       "modernuo code audit",
@@ -27,13 +34,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo content patterns"
+        "Implement a new persistent item with lifecycle cleanup."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a gameplay mechanic with missing official evidence."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a content type that needs focused persistence tests."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit an economy-sensitive content change."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Füge ein neues ModernUO-Item mit Persistenz, Cleanup und Tests hinzu."
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Implementa un tipo de contenido ModernUO conservando sus l?mites de ciclo de vida."
       ]
     }
   },
@@ -45,7 +87,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

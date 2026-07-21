@@ -1,0 +1,12 @@
+{
+  "schema": "skill-behavior-capture/v1",
+  "captured_at": "2026-07-19",
+  "generator_runtime": "Codex isolated subagent",
+  "generator_model": "runtime-managed; exact model identifier not exposed",
+  "source_agent": "/root/capture_behavior_responses",
+  "generator_prompt": "Use the skill at C:\\Users\\Jsiem\\Documents\\GitHub\\RebirthUO\\plugin\\plugins\\modernuo\\skills\\modernuo-world-saves-archives to answer each of the six user tasks in its evals/behavior_cases.json. Read the current SKILL.md and conditional reference. Do not modify files or claim repository facts you cannot inspect. Return ONLY one valid JSON object mapping each exact case name to its complete Markdown response string. Each response must independently follow the skill's exact output contract. Treat each case as a separate fresh request.",
+  "repository_revision": "dcd3fa9a28557b29d427e12987fbc3514b84cb6e",
+  "skill_sha256": "80944ef1d0f8eb808e004bf5152f12e3d8f1facc1659c3286f073139d53b291e",
+  "behavior_cases_sha256": "69f52ccdc803a36638331308be7eb5b0312b565b6b51b21a27c264e8de725bb7",
+  "captured_responses_sha256": "c9119c459c83a4529d5345f69d52e128137df6e0e3c7706cd1cfd1f087ccd6b3"
+}

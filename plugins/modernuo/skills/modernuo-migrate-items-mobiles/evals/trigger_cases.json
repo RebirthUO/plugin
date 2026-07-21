@@ -1,0 +1,41 @@
+{
+    "recommended_threshold":  0.33,
+    "should_trigger":  [
+                           {
+                               "text":  "Migrate this RunUO BaseCreature with its saves, timers, loot, and deletion hooks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Convert this Item class while preserving old saves and visible properties.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Plan a modernuo-migrate-items-mobiles migration with revision-bound evidence and do not modify files.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Audit an existing modernuo-migrate-items-mobiles conversion for compatibility and lifecycle risks.",
+                               "family":  "owned_job"
+                           },
+                           {
+                               "text":  "Migriere dieses RunUO-Mobile vollständig mit Saves, Timern, Eigenschaften und Lösch-Lifecycle.",
+                               "family":  "owned_job"
+                           }
+                       ],
+    "should_not_trigger":  [
+                               {
+                                   "text":  "Change one isolated timer callback only.",
+                                   "family":  "out_of_scope"
+                               },
+                               {
+                                   "text":  "Review generic C# in an unrelated application.",
+                                   "family":  "out_of_scope"
+                               }
+                           ],
+    "near_neighbor":  [
+                          {
+                              "text":  "Invent a brand-new creature design.",
+                              "family":  "near_neighbor"
+                          }
+                      ]
+}

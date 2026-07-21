@@ -1,0 +1,50 @@
+{
+    "cases":  [
+                  {
+                      "name":  "unknown saves",
+                      "prompt":  "Migrate this creature but supported save versions are unknown.",
+                      "expected_status":  "BLOCKED_INPUT",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_INPUT | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "unofficial gameplay",
+                      "prompt":  "Change loot to match an emulator without official evidence.",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  },
+                  {
+                      "name":  "serialized token",
+                      "prompt":  "The proposed item schema serializes a TimerExecutionToken.",
+                      "must_reject":  "runtime handle serialization",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nruntime handle serialization\n"
+                  },
+                  {
+                      "name":  "delete ownership",
+                      "prompt":  "An owned timer survives OnDelete.",
+                      "must_require":  "lifecycle cleanup",
+                      "expected_status":  "BLOCKED_EVIDENCE",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| BLOCKED_EVIDENCE | IMPLEMENT | low |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nlifecycle cleanup\n"
+                  },
+                  {
+                      "name":  "failed round trip",
+                      "prompt":  "An old-save round-trip test fails.",
+                      "expected_status":  "VALIDATION_FAILED",
+                      "response_fixture":  "# Outcome\n\n| State | Mode | Confidence |\n|---|---|---|\n| VALIDATION_FAILED | IMPLEMENT | medium |\n\n# Scope\n\nFixture scope.\n\n# Migration Inventory\n\nFixture inventory.\n\n# Evidence\n\nFixture evidence.\n\n# Checklist\n\nFixture checklist.\n\n# Compatibility Decisions\n\nFixture decisions.\n\n# Files\n\nNone.\n\n# Validation\n\nFixture validation.\n\n# Residual Risk\n\nNone\n"
+                  }
+              ],
+    "global_assertions":  {
+                              "status_values":  [
+                                                    "PLANNED",
+                                                    "IMPLEMENTED",
+                                                    "AUDITED",
+                                                    "OUT_OF_SCOPE",
+                                                    "BLOCKED_INPUT",
+                                                    "BLOCKED_COMPATIBILITY",
+                                                    "BLOCKED_EVIDENCE",
+                                                    "VALIDATION_FAILED"
+                                                ],
+                              "separate_gameplay_and_repository_evidence":  true,
+                              "complete_requires_all_checks":  true
+                          }
+}

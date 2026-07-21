@@ -2,14 +2,18 @@
   "optimizer_hints": {
     "capability": "ModernUO Era and Expansion Behavior",
     "inputs": [
-      "modernuo era and expansion behavior",
-      "modernuo era expansion"
+      "Implement an exact-versus-cumulative Core expansion gate.",
+      "Review a behavior request whose era/profile is missing.",
+      "Plan the earlier-target-later expansion matrix.",
+      "Audit an expansion branch for unintended inherited behavior.",
+      "Prüfe diese ModernUO-Erweiterungsgrenze auf kumulative und exakte Gates."
     ],
     "trigger_actions": [
-      "Review this modernuo era and expansion behavior task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo era and expansion behavior in the configured ModernUO-based repository.",
-      "Help me implement a modernuo era and expansion behavior change and identify the focused verification.",
-      "Audit this modernuo era and expansion behavior diff for era, persistence, lifecycle, and regression risks."
+      "Implement an exact-versus-cumulative Core expansion gate.",
+      "Review a behavior request whose era/profile is missing.",
+      "Plan the earlier-target-later expansion matrix.",
+      "Audit an expansion branch for unintended inherited behavior.",
+      "Prüfe diese ModernUO-Erweiterungsgrenze auf kumulative und exakte Gates."
     ],
     "exclusions": [
       "modernuo era change gate",
@@ -25,14 +29,41 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo era and expansion behavior",
-        "modernuo era expansion"
+        "Implement an exact-versus-cumulative Core expansion gate."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review a behavior request whose era/profile is missing."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan the earlier-target-later expansion matrix."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit an expansion branch for unintended inherited behavior."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Prüfe diese ModernUO-Erweiterungsgrenze auf kumulative und exakte Gates."
       ]
     }
   },
@@ -44,7 +75,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

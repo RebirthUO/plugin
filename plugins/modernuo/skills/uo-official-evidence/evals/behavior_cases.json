@@ -1,0 +1,28 @@
+{
+  "cases": [
+    {
+      "name": "official_community_conflict",
+      "prompt": "UO.com and UOGuide disagree about the current cooldown.",
+      "expected_conclusion": "official-controls",
+      "required_labels": ["current official", "production third-party"]
+    },
+    {
+      "name": "engine_only_formula",
+      "prompt": "TrueUO is the only source that supplies the numeric formula.",
+      "expected_conclusion": "UNRESOLVED",
+      "required_labels": ["engine implementation"]
+    },
+    {
+      "name": "historical_official_change",
+      "prompt": "An older EA Publish note differs from a newer applicable Broadsword page.",
+      "expected_conclusion": "newer-official-controls-current",
+      "required_labels": ["current official", "historical official"]
+    },
+    {
+      "name": "third_party_consensus",
+      "prompt": "Three production third-party sites agree, but no official source establishes the rule.",
+      "expected_conclusion": "UNRESOLVED",
+      "required_labels": ["production third-party"]
+    }
+  ]
+}

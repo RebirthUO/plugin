@@ -1,0 +1,18 @@
+{
+  "recommended_threshold":0.4,
+  "should_trigger":[
+    {"text":"Research this RebirthUO issue exhaustively against official sources and the verified repository, then publish its readiness.","family":"owned_job"},
+    {"text":"Retry alternative official terminology before declaring this RebirthUO issue blocked.","family":"owned_job"},
+    {"text":"Recherchiere dieses RebirthUO-Issue vollständig, versuche alternative offizielle Suchwege und frage nur bei einer echten Policy-Entscheidung.","family":"owned_job_multilingual"},
+    {"text":"Investiga este issue de RebirthUO de forma autónoma y agota las fuentes oficiales antes de preguntar.","family":"owned_job_multilingual"}
+  ],
+  "should_not_trigger":[
+    {"text":"Create a new intake issue.","family":"out_of_scope"},
+    {"text":"Implement this READY issue.","family":"out_of_scope"},
+    {"text":"Give advice only without inspecting an issue or repository.","family":"out_of_scope"}
+  ],
+  "near_neighbor":[
+    {"text":"Establish one UO fact without an issue-readiness workflow.","family":"near_neighbor"},
+    {"text":"Take this issue through implementation, push, and PR.","family":"near_neighbor"}
+  ]
+}

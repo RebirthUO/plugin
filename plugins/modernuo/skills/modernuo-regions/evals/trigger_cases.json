@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo regions task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a dynamic region with parent inheritance.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo regions in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a travel rule that needs region policy evidence.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo regions change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan region JSON and runtime registration cleanup.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo regions diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit housing and spawn rules at a region boundary.",
+      "family": "audit"
+    },
+    {
+      "text": "Erstelle eine dynamische ModernUO-Region mit sauberem Lebenszyklus.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

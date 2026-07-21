@@ -2,20 +2,28 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo content taxonomy task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a classification across World and Encounter domains.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo content taxonomy in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a parity request with no official era evidence.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo content taxonomy change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan repository discovery paths for an ItemSystem feature.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo content taxonomy diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a community source proposed as parity proof.",
+      "family": "audit"
+    },
+    {
+      "text": "Ordne diese UO-Funktion den ModernUO-Domänen zu und markiere offene Belege.",
+      "family": "owned_job_de"
+    },
+    {
+      "text": "Clasifica esta funci?n de ModernUO sin confundir hallazgos del repositorio con paridad oficial.",
+      "family": "owned_job_es"
     }
   ],
   "should_not_trigger": [

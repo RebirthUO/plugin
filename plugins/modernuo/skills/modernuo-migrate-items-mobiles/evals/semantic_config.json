@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Migrate this RunUO BaseCreature with its saves, timers, loot, and deletion hooks.", "Convert this Item class while preserving old saves and visible properties."],
+    "trigger_actions": ["Migrate this RunUO BaseCreature with its saves, timers, loot, and deletion hooks.", "Convert this Item class while preserving old saves and visible properties."],
+    "capability": "modernuo-migrate-items-mobiles",
+    "exclusions": ["Invent a brand-new creature design."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Migrate this RunUO BaseCreature with its saves, timers, loot, and deletion hooks.", "Convert this Item class while preserving old saves and visible properties."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Invent a brand-new creature design."],
+      "exclusive": true
+    }
+  }
+}

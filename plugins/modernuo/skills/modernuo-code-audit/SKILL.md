@@ -1,30 +1,16 @@
 ---
 name: modernuo-code-audit
-description: Use when reviewing new or modified C# under Projects/ for ModernUO correctness, serialization, lifecycle, event-loop safety, performance, strings, UI, and era conventions. Report evidence-ranked findings; do not edit code unless the user explicitly requested fixes. Do not use as a substitute for domain-specific behavior or parity review.
-version: 1.1.0
-author: Hermes Agent
+description: Use when reviewing new or modified ModernUO C# for correctness, serialization, lifecycle, event-loop safety, performance, strings, UI, and era conventions. Report evidence-ranked findings; do not edit code unless the user explicitly requested fixes. Do not use as a substitute for domain-specific behavior or parity review.
 license: MIT
 metadata:
-  hermes:
-    skill_group: modernuo
-    skill_subgroup: domain
-    workflow_phase: none
-    workflow_tier: support
-    tags: [modernuo, csharp, audit, safety, performance]
-    related_skills:
-      - modernuo-serialization
-      - modernuo-timers
-      - modernuo-lifecycle-cleanup
-      - modernuo-threading
-      - modernuo-performance-hot-paths
-      - modernuo-string-handling
-      - modernuo-property-lists
-      - modernuo-gump-system
-      - modernuo-content-patterns
-      - modernuo-test-workflow
+  version: "1.2.0"
 ---
 
 # ModernUO Code Audit
+
+## Portfolio Coordination
+
+For cross-cutting work, consult [the portfolio routing guide](../PORTFOLIO-ROUTING.md). Load only a named available neighbor, preserve this skill's boundary, and hand off a compact packet with scope, evidence, constraints, and next owner when the guide routes work elsewhere.
 
 ## Boundary
 
@@ -32,12 +18,14 @@ Audit the requested files or diff and report actionable findings. A review reque
 
 ## Workflow
 
-1. Establish the exact diff/files and preserve unrelated work. Read each complete changed file plus definitions/callers needed to understand behavior.
-2. Classify code as game-loop content or infrastructure and as hot, warm, or cold before applying performance/threading rules.
-3. Read [audit-rules.md](references/audit-rules.md) and route risky surfaces to the relevant domain skill.
-4. Trace each potential finding to a concrete path/line, impact, and locally valid correction. Avoid style-only findings unless repository policy requires them.
-5. Check tests and generated schemas against changed behavior; run read-only build/test commands only when useful and authorized by the task.
-6. Re-read the diff to remove false positives, duplicates, and claims not supported by local code.
+1. Require a file set or diff, intended behavior, target era/profile when relevant, and requested review/fix mode. If scope, callers, tests, or a local API cannot be resolved, return a limited review or `BLOCKED` result with the exact missing input; preserve unrelated work.
+2. Read each complete changed file plus definitions/callers needed to understand behavior.
+3. Classify code as game-loop content or infrastructure and as hot, warm, or cold before applying performance/threading rules.
+4. Read [audit-rules.md](references/audit-rules.md). Keep this audit self-contained; recommend a separately triggered specialist skill only when its own exact trigger applies, and never represent an unrun specialist review as completed audit evidence.
+5. Trace each potential finding to a concrete path/line, impact, and locally valid correction. Avoid style-only findings unless repository policy requires them.
+6. Check tests and generated schemas against changed behavior; run read-only build/test commands only when useful and authorized by the task.
+7. For legacy serialization migration, cross-thread ownership, or player-visible era claims, report the specialized follow-up needed and the evidence gap. Do not delegate inside this audit; trace the current local contract and label unavailable evidence.
+8. Re-read the diff to remove false positives, duplicates, and claims not supported by local code.
 
 ## Finding priorities
 
@@ -50,17 +38,17 @@ Use the priority guidance in [audit-rules.md](references/audit-rules.md). Format
 - Game-loop threading, world scans, pooling, allocation, and blocking work.
 - Gump non-empty paths, stale response authorization, property-list arguments, and handler-aware strings.
 - Era/profile gates and player-visible PvP, PvM, economy, housing, or client effects.
+- Local code, client data, emulators, and community material may establish implementation observations only. Require OSI/EA/Broadsword evidence for gameplay claims; otherwise label the claim unresolved and request policy direction.
 
 ## Verification/self-check
 
-Re-read every finding against the complete file, callers, tests, and local API; remove duplicates, speculation, and style-only noise. Confirm priorities match the demonstrated impact and that review-only work made no edits.
+Re-read every finding against the complete file, callers, tests, and local API; remove duplicates, speculation, and style-only noise. Confirm priorities match the demonstrated impact, that review-only work made no edits, and that every required output section appears in the prescribed order with allowed source, verification, and confidence values.
 
 ## Output contract
 
-Return findings ordered by priority, each with exact evidence and correction; then list assumptions, commands/results, and residual risks. Do not include a generic summary before findings. When asked to fix, make only approved changes and re-run the relevant audit plus focused verification.
+Return these sections in order: `Outcome` (`REVIEWED`, `LIMITED`, or `BLOCKED`); `Findings` (P0 through P3, or `No findings`); `Evidence` (path/line anchors and source class); `Verification` (each result is `PASSED`, `FAILED`, `SKIPPED`, or `UNAVAILABLE`, with reason); `Assumptions and Confidence`; and `Residual Risks`. Source classes are `local-source`, `test-output`, `official-gameplay`, `user-supplied`, or `unresolved`. Use `high` confidence only when local evidence and relevant verification are complete; `medium` when evidence is partial with named gaps; and `low` for `LIMITED` or `BLOCKED`. Each finding includes failure scenario, cause, smallest safe correction, evidence, and test gap. For player-visible claims, separate official gameplay evidence from local implementation observations. For review-only work, do not edit.
 
 ## Reference routing
 
 - Always read [audit-rules.md](references/audit-rules.md).
-- Read [modernuo-serialization](../modernuo-serialization/SKILL.md), [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md), or [modernuo-performance-hot-paths](../modernuo-performance-hot-paths/SKILL.md) only when those surfaces changed.
-- Read [modernuo-era-expansion](../modernuo-era-expansion/SKILL.md) when a mechanic is era-sensitive.
+- For player-visible or era-sensitive claims, identify `uo-official-evidence` as the required follow-up; otherwise keep the audit local and disclose the evidence limit.

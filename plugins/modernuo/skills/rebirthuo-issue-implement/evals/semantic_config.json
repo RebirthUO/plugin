@@ -1,0 +1,6 @@
+{
+  "optimizer_hints":{"capability":"RebirthUO Issue Implement","inputs":["rebirthuo issue implement","implement READY issue","unblocked research handoff","implementationresult"],"trigger_actions":["Implement this live unblocked READY RebirthUO issue in an isolated worktree.","Deliver this researched RebirthUO issue with focused tests and verified PR read-back."],"exclusions":["create issue","research blocked issue","generic code audit","full workflow from intake"],"artifacts":["ImplementationResult","verified pull request"]},
+  "fallback_positive_concepts":["owned_job"],
+  "positive_concepts":{"owned_job":{"weight":1.0,"phrases":["rebirthuo issue implement","implement READY issue","unblocked research handoff","implementationresult"]}},
+  "negative_concepts":{"near_neighbor":{"weight":0.8,"exclusive":true,"phrases":["create issue","research issue","blocked issue","generic code audit","full workflow"]},"explicit_no_action":{"weight":0.5,"exclusive":true,"phrases":["do not modify","advice only","unrelated repository"]}}
+}

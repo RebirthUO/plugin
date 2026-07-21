@@ -2,20 +2,28 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo test naming task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement xUnit hard-noise prefixes in file and method names.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo test naming in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a real era-domain name that must be preserved.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo test naming change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a rename collision across tests.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo test naming diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a clear audit with no actionable naming noise.",
+      "family": "audit"
+    },
+    {
+      "text": "Benenne diese ModernUO-xUnit-Tests ohne künstliche Publish-Präfixe um.",
+      "family": "owned_job_de"
+    },
+    {
+      "text": "Revisa nombres de pruebas xUnit y conserva t?rminos del dominio.",
+      "family": "owned_job_es"
     }
   ],
   "should_not_trigger": [

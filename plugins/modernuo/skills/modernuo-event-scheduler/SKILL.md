@@ -1,29 +1,27 @@
 ---
 name: modernuo-event-scheduler
-description: Use when implementing or reviewing wall-clock/calendar scheduling such as daily resets, weekly activities, seasonal windows, or maintenance. Covers recurrence selection, time zones, DST/restart policy, ownership, cancellation, and tests. Do not use for short game-time delays or sub-second ticks; use modernuo-timers.
-version: 1.1.0
-author: Hermes Agent
+description: Use when implementing or reviewing wall-clock/calendar scheduling such
+  as daily resets, weekly activities, seasonal windows, or maintenance. Covers recurrence
+  selection, time zones, DST/restart policy, ownership, cancellation, and tests. Do
+  not use for short game-time delays or sub-second ticks; use modernuo-timers.
 license: MIT
 metadata:
-  hermes:
-    skill_group: modernuo
-    skill_subgroup: domain
-    workflow_phase: none
-    workflow_tier: support
-    tags: [modernuo, event-scheduler, calendar, seasonal-events, scheduling]
-    related_skills:
-      - modernuo-timers
-      - modernuo-code-audit
-      - modernuo-threading
-      - modernuo-content-patterns
-      - modernuo-test-workflow
+  version: 1.1.0
 ---
 
 # ModernUO Event Scheduler
 
+## Portfolio Coordination
+
+For cross-cutting work, consult [the portfolio routing guide](../PORTFOLIO-ROUTING.md). Load only a named available neighbor, preserve this skill's boundary, and hand off a compact packet with scope, evidence, constraints, and next owner when the guide routes work elsewhere.
+
 ## Boundary
 
-Use EventScheduler for civil/calendar time (“Monday at 09:00”, annual seasonal window). Use [modernuo-timers](../modernuo-timers/SKILL.md) for elapsed game time (“five seconds later”), combat ticks, and sub-second work.
+Use EventScheduler for civil/calendar time (“Monday at 09:00”, annual seasonal window). Use an available local timer workflow for elapsed game time (“five seconds later”), combat ticks, and sub-second work.
+
+## Required context
+
+Before acting, inspect the consuming repository and record its pinned revision, the requested behavior, and the available build/test surface. If a required path, symbol, profile, source claim, or validation surface cannot be verified, return `BLOCKED` with the smallest missing input; do not infer it. Treat sibling skills and repository-local documents as optional: load them only when present, otherwise inspect the current source directly and state the limitation.
 
 ## Workflow
 
@@ -37,6 +35,7 @@ Use EventScheduler for civil/calendar time (“Monday at 09:00”, annual season
 ## Safety gates
 
 - Never rely on the host's implicit local time zone; use an explicit reviewed `TimeZoneInfo`.
+- If DST gaps/overlaps, catch-up, restart, duplicate-run, or idempotency policy is unspecified, return `BLOCKED` and request that policy before implementation.
 - Decide whether a seasonal end is inclusive/exclusive and how invalid month-days behave.
 - Calendar scheduling has coarse granularity and is not a combat timer.
 - Do not issue duplicate rewards, resets, or spawns after restart; define idempotency keys/state when side effects are not naturally idempotent.
@@ -53,5 +52,52 @@ Return the schedule specification (zone, recurrence, window, catch-up/idempotenc
 ## Reference routing
 
 - Always read [schedule-patterns.md](references/schedule-patterns.md).
-- Read [modernuo-timers](../modernuo-timers/SKILL.md) if the requirement mixes calendar activation with elapsed in-event delays.
-- Read [modernuo-lifecycle-cleanup](../modernuo-lifecycle-cleanup/SKILL.md) when ownership/disable cleanup is ambiguous.
+- Read an available local timer workflow if the requirement mixes calendar activation with elapsed in-event delays.
+- Read an available local lifecycle workflow when ownership/disable cleanup is ambiguous.
+
+## Intake and result contract
+
+Classify the request as `REVIEW`, `PLAN`, or `IMPLEMENT` before acting. Record `Repository revision`, `Requested behavior`, `Evidence available`, and `Validation surface`; return `BLOCKED` when any required field is unavailable.
+
+Emit exactly one fenced `yaml` document with this ordered, machine-readable schema. Keep all values factual; use `null` or an empty list rather than prose placeholders. Every datum promised by this skill's earlier output contract belongs in one or more `Decision.records` entries; use one record per affected surface, matrix row, warning, or finding. Place optional narrative after the YAML document only when it adds human context without changing the record values.
+
+```yaml
+Outcome: IMPLEMENTED | REVIEWED | BLOCKED
+Repository revision:
+  commit: <full revision or null>
+  dirty: <true | false | null>
+Decision:
+  kind: REVIEW | PLAN | IMPLEMENT
+  summary: <single factual sentence>
+  records:
+    - kind: <skill-specific contract item>
+      subject: <path, symbol, matrix row, or finding>
+      status: <verified | proposed | blocked | not-applicable>
+      details: <required skill-specific fields>
+      evidence_refs: [<Evidence.records.id>]
+Evidence:
+  records:
+    - id: E1
+      class: repository | official | test | runtime | user-supplied
+      locator: <revision-bound path, URL, command, or null>
+      claim: <fact supported by the record>
+Verification:
+  checks:
+    - command_or_method: <command or inspection>
+      result: passed | failed | not-run | blocked
+      evidence_refs: [E1]
+  runtime_smoke:
+    result: passed | failed | not-run | unavailable
+    runner_sha256: <summary value or null>
+Confidence:
+  level: high | medium | low
+  basis: <evidence and verification basis>
+Limitations:
+  items: [<unresolved input, source, or validation limit>]
+```
+
+Use `high` confidence only with a current revision plus focused verification, `medium` with current static evidence but an unrun required check, and `low` when blocked or a required source is unavailable.
+
+## Portable evidence
+
+Use `evals/behavior_cases.json` to preserve the missing-context blocker, named safety branch, and response fields during review or implementation. For every response, state `Outcome` (`IMPLEMENTED`, `REVIEWED`, or `BLOCKED`), the inspected repository revision, calibrated confidence (`high`, `medium`, or `low`), and any evidence or validation limitation. Before completion, run the package trigger-fixture smoke check from the plugin root: `python scripts/validate-modernuo-skill-evals.py plugins/modernuo/skills/modernuo-event-scheduler`. When a Codex CLI runtime is available, also forward-test every behavior case with `python scripts/run-modernuo-skill-runtime-smoke.py --output-dir <external-output-dir> plugins/modernuo/skills/modernuo-event-scheduler` and report the result plus the `runner_sha256` from its summary; otherwise state that runtime-evaluation limitation explicitly.

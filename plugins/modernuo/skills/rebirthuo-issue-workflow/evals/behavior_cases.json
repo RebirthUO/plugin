@@ -1,0 +1,16 @@
+{
+  "schema":"rebirthuo-issue-workflow-behavior/v1",
+  "cases":[
+    {"id":"existing-route","condition":"User identifies a live issue","expected":"Start RESEARCH and create no issue"},
+    {"id":"new-route","condition":"Full workflow for new change","expected":"Template through PR without phase confirmation"},
+    {"id":"stale-template","condition":"Template digest changes before creation","expected":"Repeat template gate"},
+    {"id":"stale-issue","condition":"Issue revision changes before implementation","expected":"Return to research; no edits"},
+    {"id":"blocked-label","condition":"Research says READY but blocked label remains","expected":"IMPLEMENTATION_BLOCKED"},
+    {"id":"access-failure","condition":"Provider access fails","expected":"State-specific checkpoint; no inferred target or blind retry"},
+    {"id":"concurrent-state","condition":"Overlapping issue or branch state changes","expected":"Block before overwrite"},
+    {"id":"research-loop","condition":"Implementation discovers a claim","expected":"Research, republish, refresh READY, resume"},
+    {"id":"push-without-pr","condition":"Push succeeds and PR creation fails","expected":"DELIVERY_BLOCKED at push; resume without repush"},
+    {"id":"pr-readback-fails","condition":"PR write cannot be verified","expected":"DELIVERY_BLOCKED; read before retry"},
+    {"id":"delivered","condition":"PR read-back matches and blockers are zero","expected":"DELIVERED with high confidence"}
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "optimizer_hints": {
+    "inputs": ["Convert this PacketWriter packet and handler registration to SpanWriter and SpanReader.", "Migrate this known packet contract and compare bytes with the capture."],
+    "trigger_actions": ["Convert this PacketWriter packet and handler registration to SpanWriter and SpanReader.", "Migrate this known packet contract and compare bytes with the capture."],
+    "capability": "modernuo-migrate-packets",
+    "exclusions": ["Convert this gump response handler."],
+    "artifacts": ["revision-bound evidence", "migration result", "validation result"]
+  },
+  "fallback_positive_concepts": ["owned_job"],
+  "positive_concepts": {
+    "owned_job": {
+      "weight": 1,
+      "phrases": ["Convert this PacketWriter packet and handler registration to SpanWriter and SpanReader.", "Migrate this known packet contract and compare bytes with the capture."]
+    }
+  },
+  "negative_concepts": {
+    "near_neighbor": {
+      "weight": 0.8,
+      "phrases": ["Convert this gump response handler."],
+      "exclusive": true
+    }
+  }
+}

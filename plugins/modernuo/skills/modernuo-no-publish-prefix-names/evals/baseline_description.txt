@@ -1,1 +1,0 @@
-Use when naming ModernUO/RebirthUO functions, variables, constants, fields, helpers, tests, or other symbols for era/publish-sourced mechanics. Prevents `PublishXX` or publish-number prefixes in symbol names; keep publish numbers in comments, PR text, docs, source evidence, or test display data instead.

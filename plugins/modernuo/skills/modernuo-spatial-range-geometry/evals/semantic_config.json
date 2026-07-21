@@ -2,13 +2,20 @@
   "optimizer_hints": {
     "capability": "ModernUO Spatial Range Geometry",
     "inputs": [
-      "modernuo spatial range geometry"
+      "Implement GetMobilesInRange tile coverage.",
+      "Review an AoE radius with inclusive bounds.",
+      "Plan a Rectangle2D conversion for source-filter separation.",
+      "Audit range-query geometry versus pathfinding policy.",
+      "Prüfe die genaue Reichweite von GetMobilesInRange in ModernUO.",
+      "Revisa la geometr?a de rango de m?viles y las inclusiones de borde."
     ],
     "trigger_actions": [
-      "Review this modernuo spatial range geometry task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo spatial range geometry in the configured ModernUO-based repository.",
-      "Help me implement a modernuo spatial range geometry change and identify the focused verification.",
-      "Audit this modernuo spatial range geometry diff for era, persistence, lifecycle, and regression risks."
+      "Implement GetMobilesInRange tile coverage.",
+      "Review an AoE radius with inclusive bounds.",
+      "Plan a Rectangle2D conversion for source-filter separation.",
+      "Audit range-query geometry versus pathfinding policy.",
+      "Prüfe die genaue Reichweite von GetMobilesInRange in ModernUO.",
+      "Revisa la geometr?a de rango de m?viles y las inclusiones de borde."
     ],
     "exclusions": [
       "modernuo performance hot paths",
@@ -25,13 +32,48 @@
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "implementation",
+    "review",
+    "planning",
+    "audit",
+    "owned_job_de",
+    "owned_job_es"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "implementation": {
       "weight": 1.0,
       "phrases": [
-        "modernuo spatial range geometry"
+        "Implement GetMobilesInRange tile coverage."
+      ]
+    },
+    "review": {
+      "weight": 1.0,
+      "phrases": [
+        "Review an AoE radius with inclusive bounds."
+      ]
+    },
+    "planning": {
+      "weight": 1.0,
+      "phrases": [
+        "Plan a Rectangle2D conversion for source-filter separation."
+      ]
+    },
+    "audit": {
+      "weight": 1.0,
+      "phrases": [
+        "Audit range-query geometry versus pathfinding policy."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Prüfe die genaue Reichweite von GetMobilesInRange in ModernUO."
+      ]
+    },
+    "owned_job_es": {
+      "weight": 1.0,
+      "phrases": [
+        "Revisa la geometr?a de rango de m?viles y las inclusiones de borde."
       ]
     }
   },
@@ -43,7 +85,7 @@
     },
     "explicit_no_action": {
       "weight": 0.5,
-      "exclusive": true,
+      "exclusive": false,
       "phrases": [
         "do not modify",
         "advice only",

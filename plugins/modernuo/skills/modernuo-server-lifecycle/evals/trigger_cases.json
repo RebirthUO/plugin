@@ -2,20 +2,24 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo server lifecycle task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement Configure and Initialize ordering for a server subsystem.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo server lifecycle in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a startup hook that assumes the world is loaded.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo server lifecycle change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan shutdown work with explicit event ordering.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo server lifecycle diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a ConfigurePrompts expansion configuration decision.",
+      "family": "audit"
+    },
+    {
+      "text": "Ordne diese ModernUO-Initialisierung korrekt in Configure und Initialize ein.",
+      "family": "owned_job_de"
     }
   ],
   "should_not_trigger": [

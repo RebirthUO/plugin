@@ -1,8 +1,8 @@
 {
   "name": "modernuo-gump-system",
-  "version": "1.1.0",
-  "owner": "RebirthUO",
-  "updated_at": "2026-07-12",
+  "version": "1.2.0",
+  "owner": "ModernUO Plugin",
+  "updated_at": "2026-07-21",
   "review_cadence": "quarterly",
   "status": "active",
   "maturity_tier": "production",
@@ -17,7 +17,6 @@
   ],
   "factory_components": [
     "references",
-    "evals",
-    "reports"
+    "evals"
   ]
 }

@@ -1,56 +1,27 @@
 {
   "optimizer_hints": {
     "capability": "ModernUO Commands and Targeting",
-    "inputs": [
-      "modernuo commands and targeting",
-      "modernuo commands targeting"
-    ],
+    "inputs": ["staff command", "CommandEventArgs", "Target subclass", "access level"],
     "trigger_actions": [
-      "Review this modernuo commands and targeting task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo commands and targeting in the configured ModernUO-based repository.",
-      "Help me implement a modernuo commands and targeting change and identify the focused verification.",
-      "Audit this modernuo commands and targeting diff for era, persistence, lifecycle, and regression risks."
+      "Add a least-privilege staff command that targets an item.",
+      "Review this Target.OnTarget handler without editing.",
+      "Erstelle einen ModernUO-Befehl mit sicherer Zielauswahl und Berechtigungspruefung."
     ],
-    "exclusions": [
-      "modernuo code audit",
-      "modernuo gump system",
-      "modernuo content patterns",
-      "modernuo threading",
-      "modernuo test workflow",
-      "migrate commands events"
-    ],
-    "artifacts": [
-      "source evidence",
-      "implementation plan",
-      "verification result"
-    ]
+    "exclusions": ["gump-only interaction", "legacy RunUO conversion"],
+    "artifacts": ["command contract", "local evidence", "verification result"]
   },
-  "fallback_positive_concepts": [
-    "owned_job"
-  ],
+  "fallback_positive_concepts": ["command_target_intent"],
   "positive_concepts": {
-    "owned_job": {
+    "command_target_intent": {
       "weight": 1.0,
-      "phrases": [
-        "modernuo commands and targeting",
-        "modernuo commands targeting"
-      ]
+      "phrases": ["modernuo staff command", "modernuo commandeventargs", "modernuo target subclass", "modernuo target.ontarget", "modernuo access level", "modernuo zielauswahl", "modernuo serverbefehl"]
     }
   },
   "negative_concepts": {
-    "near_neighbor": {
-      "weight": 0.0,
-      "exclusive": false,
-      "phrases": []
-    },
-    "explicit_no_action": {
+    "out_of_scope": {
       "weight": 0.5,
       "exclusive": true,
-      "phrases": [
-        "do not modify",
-        "advice only",
-        "unrelated repository"
-      ]
+      "phrases": ["unrelated repository", "gump-only interaction", "legacy runuo conversion"]
     }
   }
 }

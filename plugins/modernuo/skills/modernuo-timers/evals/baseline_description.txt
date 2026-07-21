@@ -1,1 +1,1 @@
-Use when creating delayed actions, recurring timers, or any time-based behavior involving Timer.StartTimer, Timer.DelayCall, or TimerExecutionToken.
+Use when implementing or auditing delayed, recurring, cancellable, decay, expiry, or awaitable ModernUO behavior involving Timer.StartTimer, Timer.DelayCall, TimerExecutionToken, Timer.Pause, ownership, restoration, or timer precision.

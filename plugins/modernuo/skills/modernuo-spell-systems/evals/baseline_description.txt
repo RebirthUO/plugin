@@ -1,0 +1,1 @@
+Use when working on ModernUO spell casts, resources, targeting, interruption, effects, transformations, summons, and effect cleanup. Require official evidence for player-facing mechanics.

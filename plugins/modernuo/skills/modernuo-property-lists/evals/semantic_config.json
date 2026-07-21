@@ -2,46 +2,67 @@
   "optimizer_hints": {
     "capability": "ModernUO Property Lists",
     "inputs": [
-      "modernuo property lists"
+      "Fix this IPropertyList cliloc argument delimiter and verify the recorded entry.",
+      "Place a tooltip property after the name block and test the relative order.",
+      "Refresh a serialized charges tooltip once when the value changes.",
+      "Überprüfe diese ModernUO-Tooltipzeile auf Cliloc-Argumente, Reihenfolge und Aktualisierung."
     ],
     "trigger_actions": [
-      "Review this modernuo property lists task and give me the repository-specific checks.",
-      "I need an evidence-backed plan for modernuo property lists in the configured ModernUO-based repository.",
-      "Help me implement a modernuo property lists change and identify the focused verification.",
-      "Audit this modernuo property lists diff for era, persistence, lifecycle, and regression risks."
+      "Fix this IPropertyList cliloc argument delimiter and verify the recorded entry.",
+      "Place a tooltip property after the name block and test the relative order.",
+      "Refresh a serialized charges tooltip once when the value changes.",
+      "Überprüfe diese ModernUO-Tooltipzeile auf Cliloc-Argumente, Reihenfolge und Aktualisierung."
     ],
     "exclusions": [
-      "modernuo code audit",
-      "modernuo serialization",
-      "modernuo string handling",
-      "modernuo era expansion",
-      "modernuo content patterns",
-      "migrate property lists"
+      "modernuo item properties",
+      "modernuo regression testing",
+      "modernuo string handling"
     ],
     "artifacts": [
-      "source evidence",
-      "implementation plan",
+      "entry sequence",
+      "argument format",
       "verification result"
     ]
   },
   "fallback_positive_concepts": [
-    "owned_job"
+    "argument-format",
+    "entry-order",
+    "invalidation",
+    "owned_job_de"
   ],
   "positive_concepts": {
-    "owned_job": {
+    "argument-format": {
       "weight": 1.0,
       "phrases": [
-        "modernuo property lists"
+        "Fix this IPropertyList cliloc argument delimiter and verify the recorded entry."
+      ]
+    },
+    "entry-order": {
+      "weight": 1.0,
+      "phrases": [
+        "Place a tooltip property after the name block and test the relative order."
+      ]
+    },
+    "invalidation": {
+      "weight": 1.0,
+      "phrases": [
+        "Refresh a serialized charges tooltip once when the value changes."
+      ]
+    },
+    "owned_job_de": {
+      "weight": 1.0,
+      "phrases": [
+        "Überprüfe diese ModernUO-Tooltipzeile auf Cliloc-Argumente, Reihenfolge und Aktualisierung."
       ]
     }
   },
   "negative_concepts": {
-    "near_neighbor": {
+    "near-neighbor": {
       "weight": 0.0,
       "exclusive": false,
       "phrases": []
     },
-    "explicit_no_action": {
+    "explicit-no-action": {
       "weight": 0.5,
       "exclusive": true,
       "phrases": [

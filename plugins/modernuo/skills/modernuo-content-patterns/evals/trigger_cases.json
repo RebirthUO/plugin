@@ -2,20 +2,28 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo content patterns task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a new persistent item with lifecycle cleanup.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo content patterns in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a gameplay mechanic with missing official evidence.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo content patterns change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan a content type that needs focused persistence tests.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo content patterns diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit an economy-sensitive content change.",
+      "family": "audit"
+    },
+    {
+      "text": "Füge ein neues ModernUO-Item mit Persistenz, Cleanup und Tests hinzu.",
+      "family": "owned_job_de"
+    },
+    {
+      "text": "Implementa un tipo de contenido ModernUO conservando sus l?mites de ciclo de vida.",
+      "family": "owned_job_es"
     }
   ],
   "should_not_trigger": [

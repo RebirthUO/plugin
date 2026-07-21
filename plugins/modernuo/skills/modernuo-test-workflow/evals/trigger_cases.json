@@ -2,20 +2,28 @@
   "recommended_threshold": 0.33,
   "should_trigger": [
     {
-      "text": "Review this modernuo test workflow task and give me the repository-specific checks.",
-      "family": "owned_job"
+      "text": "Implement a focused test run with missing client data.",
+      "family": "implementation"
     },
     {
-      "text": "I need an evidence-backed plan for modernuo test workflow in the configured ModernUO-based repository.",
-      "family": "owned_job"
+      "text": "Review a broad failure requiring one clean baseline comparison.",
+      "family": "review"
     },
     {
-      "text": "Help me implement a modernuo test workflow change and identify the focused verification.",
-      "family": "owned_job"
+      "text": "Plan shared fixture state and a narrow denominator.",
+      "family": "planning"
     },
     {
-      "text": "Audit this modernuo test workflow diff for era, persistence, lifecycle, and regression risks.",
-      "family": "owned_job"
+      "text": "Audit a validation report that falsely calls a focused run CI green.",
+      "family": "audit"
+    },
+    {
+      "text": "Führe fokussierte ModernUO-Tests mit sauberer Fixture- und Worktree-Prüfung aus.",
+      "family": "owned_job_de"
+    },
+    {
+      "text": "Planifica pruebas ModernUO enfocadas con evidencia de la revisi?n actual.",
+      "family": "owned_job_es"
     }
   ],
   "should_not_trigger": [

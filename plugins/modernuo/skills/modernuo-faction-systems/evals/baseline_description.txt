@@ -1,0 +1,1 @@
+Use when working on ModernUO faction membership, authority, towns, elections, guards, items, and faction persistence. Preserve state ownership and require official evidence for player-facing policy.
