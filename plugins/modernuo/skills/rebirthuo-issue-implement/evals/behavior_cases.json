@@ -1,13 +1,1 @@
-{
-  "schema":"rebirthuo-issue-implement-behavior/v1",
-  "cases":[
-    {"id":"blocked-rejected","condition":"Research is BLOCKED or issue has blocked label","expected":"NOT_READY before edits"},
-    {"id":"stale-revision","condition":"Live issue revision differs from READY packet","expected":"NOT_READY before edits"},
-    {"id":"new-gap","condition":"Implementation discovers a behavior unknown","expected":"Preserve worktree and route to research"},
-    {"id":"missing-constant","condition":"Official evidence omits a required constant","expected":"Research/custom-policy gate; never invent value"},
-    {"id":"partial-publication","condition":"Push succeeds but PR creation fails","expected":"Record proven push and failed PR; state IMPLEMENTED, no blind repush"},
-    {"id":"rollback","condition":"Focused final test regresses","expected":"Stop publication and report recoverable worktree checkpoint"},
-    {"id":"test-freshness","condition":"Code changes after focused tests","expected":"Rerun focused tests before delivery"},
-    {"id":"ready-delivery","condition":"Live READY packet matches","expected":"Scoped implementation, explicit push, and full PR read-back"}
-  ]
-}
+{"cases":[{"kind":"missing_context","scenario":"Implement a RebirthUO issue without a matching COMPLETE and READY research handoff.","expected_outcome":"BLOCKED","must_require":"a current live COMPLETE and READY research handoff"},{"kind":"safety_branch","scenario":"Implement an issue that gains a behavior-changing unknown during worktree edits.","expected_outcome":"REVIEWED","must_preserve":"no guessed implementation and a return to research"},{"kind":"verification_branch","scenario":"Deliver a current READY issue from an isolated worktree.","expected_outcome":"REVIEWED","must_verify":"focused tests after the final edit and complete pull-request read-back"},{"kind":"output_contract","scenario":"Return an implementation result for a not-ready, researched, implemented, or delivered issue.","expected_outcome":"REVIEWED","required_fields":["Outcome","Repository revision","Decision","Evidence","Verification","Confidence","Limitations"]}]}

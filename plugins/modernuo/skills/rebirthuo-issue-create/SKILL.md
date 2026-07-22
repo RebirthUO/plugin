@@ -1,7 +1,9 @@
 ---
 name: rebirthuo-issue-create
-description: Draft or create a RebirthUO GitHub intake issue from the target repository's live template. Resolve the repository only from applicable project AGENTS.md, preserve exact template structure, encode researchable unknowns as owned claim-specific placeholders, and after verified standalone intake ask once whether to start research. In a full rebirthuo-issue-workflow continue automatically. Do not perform mechanics research, readiness review, or implementation.
+description: Draft or create a RebirthUO GitHub intake issue through an optional live template. Resolve the repository only from applicable project AGENTS.md; preserve exact template structure when a TemplatePacket is supplied or project instructions require one, otherwise use the governed fallback issue format. Encode researchable unknowns as owned claim-specific placeholders, and after verified standalone intake ask once whether to start research. In a full rebirthuo-issue-workflow continue automatically. Do not perform mechanics research, readiness review, or implementation.
 license: MIT
+metadata:
+  version: "3.1.1"
 ---
 
 # RebirthUO Issue Create
@@ -12,8 +14,9 @@ For cross-cutting work, consult [the portfolio routing guide](../PORTFOLIO-ROUTI
 
 ## Boundary
 
-Own template-conformant intake. Record supplied facts and convert researchable
-unknowns into precise work items; do not use vague filler or invent mechanics.
+Own template-conformant or governed-fallback intake. Record supplied facts and
+convert researchable unknowns into precise work items; do not use vague filler
+or invent mechanics.
 
 ## Repository and authority gate
 
@@ -28,8 +31,10 @@ unknowns into precise work items; do not use vague filler or invent mechanics.
 
 ## Workflow
 
-1. Load [the intake contract](references/authoring-contract.md) and require a
-   fresh `TEMPLATE_READY` packet from `rebirthuo-issue-template-gate`.
+1. Load [the intake contract](references/authoring-contract.md). Require a
+   fresh `TEMPLATE_READY` packet only when the request or applicable project
+   instructions require a live template; otherwise select the canonical
+   fallback format without calling the template gate.
 2. Capture the goal, observed and desired behavior, supplied scope/non-goals,
    reproduction/context, links, and explicit decisions in the live field order.
 3. For each researchable unknown, add a stable `RESEARCH_REQUIRED[Rn]` entry
@@ -56,14 +61,16 @@ ambiguous create result, search exact title/body before any authorized retry.
 
 Return the contract's `IntakePacket`, including status, blockers, calibrated
 confidence/residual uncertainty, `mode: standalone | workflow`,
-verified template and repository identity, duplicate/label checks, claim-level
+verified format and repository identity, duplicate/label checks, claim-level
 research work, mutation read-back, and
 `continuation: ASK_RESEARCH | RESEARCH`. This skill never returns `READY`.
 
 ## Verification
 
-- Repository and template identities match current provider read-back.
-- The issue preserves every live field; required fields are never blank or
-  invented, while optional blank fields preserve the live form's semantics.
+- Repository identity matches current provider read-back. Template identity
+  matches when `format: template`; fallback intake records its fixed format and
+  the optional-template reason.
+- Template intake preserves every live field; fallback intake preserves every
+  canonical fallback field. Required fields are never blank or invented.
 - Each unknown is claim-specific, risk-labeled, and assigned to a research owner.
 - Standalone intake asks once; full workflow intake continues automatically.

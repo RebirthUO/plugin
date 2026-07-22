@@ -2,6 +2,8 @@
 name: rebirthuo-issue-implement
 description: Implement one RebirthUO GitHub issue only from a live revision-matching rebirthuo-issue-research handoff with execution_state COMPLETE and implementation_readiness READY whose issue has no unresolved marker or blocked label. Verify repository, checkout, base, and push remote; implement and test the smallest approved delta. Route new unknowns back through research. Do not implement blocked issues, choose defaults, merge, release, or deploy.
 license: MIT
+metadata:
+  version: "4.0.1"
 ---
 
 # RebirthUO Issue Implement

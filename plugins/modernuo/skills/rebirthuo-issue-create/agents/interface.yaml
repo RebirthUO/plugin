@@ -1,7 +1,7 @@
 interface:
   display_name: RebirthUO Issue Create
   short_description: RebirthUO Issue Create
-  default_prompt: Use $rebirthuo-issue-create to draft or create a live-template RebirthUO intake issue and return its verified IntakePacket.
+  default_prompt: Use $rebirthuo-issue-create to draft or create a RebirthUO intake issue with an optional live template and return its verified IntakePacket.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

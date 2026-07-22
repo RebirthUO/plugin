@@ -93,7 +93,7 @@ none treats a sibling's route as API evidence.
 ## Governed Issue Sequence
 
 `rebirthuo-issue-workflow` is the only orchestrator. Its sequence is
-`rebirthuo-issue-template-gate` -> `rebirthuo-issue-create` ->
+`rebirthuo-issue-template-gate` (only when required) -> `rebirthuo-issue-create` ->
 `rebirthuo-issue-research` -> `rebirthuo-issue-implement`. Each child retains
 its own repository, mutation, evidence, and readiness gates. An implementation
 unknown returns through research; it never receives an assumed default.

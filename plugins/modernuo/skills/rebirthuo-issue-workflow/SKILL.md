@@ -1,7 +1,9 @@
 ---
 name: rebirthuo-issue-workflow
-description: Autonomously take a new RebirthUO request or identified GitHub issue through live-template intake, exhaustive official research, format-preserving issue publication, isolated implementation, branch push, and pull request verification. Existing issues skip creation; full-workflow requests continue between phases without repeated confirmation. Ask only for repository identity, genuine template ambiguity, or a product/custom-policy decision that remains after research exhaustion. Do not merge, release, deploy, or guess missing official behavior.
+description: Autonomously take a new RebirthUO request or identified GitHub issue through optional live-template intake, exhaustive official research, format-preserving issue publication, isolated implementation, branch push, and pull request verification. Existing issues skip creation; full-workflow requests continue between phases without repeated confirmation. Use a live Issue Template only when the request or applicable project instructions require it; otherwise use the governed fallback issue format. Ask only for repository identity, genuine template ambiguity when a template is required, or a product/custom-policy decision that remains after research exhaustion. Do not merge, release, deploy, or guess missing official behavior.
 license: MIT
+metadata:
+  version: "3.1.1"
 ---
 
 # RebirthUO Issue Workflow
@@ -20,8 +22,10 @@ readiness, mutation, and verification gates.
 
 1. Read applicable `AGENTS.md`, verify the exact repository, classify the route,
    and load [the state machine](references/workflow-state-machine.md).
-2. `NEW_REQUEST`: run `rebirthuo-issue-template-gate`, then
-   `rebirthuo-issue-create` in workflow mode and continue directly to research.
+2. `NEW_REQUEST`: determine whether the request or applicable project
+   instructions require a live template. Invoke `rebirthuo-issue-template-gate`
+   only when they do; otherwise invoke `rebirthuo-issue-create` in fallback
+   mode. Continue directly to research after verified intake.
    `EXISTING_ISSUE`: skip template/create and start at research.
 3. Run `rebirthuo-issue-research` autonomously through its exhaustion and
    publication gates. On `implementation_readiness: BLOCKED`, return only its focused last-mile decision
@@ -38,7 +42,7 @@ readiness, mutation, and verification gates.
 
 ## Continuation Rules
 
-Do not ask whether to continue between template, create, research,
+Do not ask whether to continue between optional template selection, create, research,
 implementation, push, and PR when the user requested the full workflow. Pause
 only for missing repository authority, genuine live-template ambiguity, a
 post-exhaustion product/custom-policy choice, external access, or an unsafe
@@ -60,7 +64,8 @@ partial external mutation; never omit state-required fields.
 
 ## Verification
 
-- New requests use one current matching template; existing issues create none.
+- New requests use a current matching template only when one is required;
+  otherwise they use the governed fallback format. Existing issues create none.
 - Research exhausted discoverable evidence before any user question.
 - Implementation started only from the matching live `COMPLETE`/`READY` revision.
 - Full workflow did not repeat phase-continuation questions.

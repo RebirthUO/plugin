@@ -1,15 +1,1 @@
-{
-  "schema":"rebirthuo-issue-create-behavior/v1",
-  "cases":[
-    {"id":"standalone-continuation","condition":"Standalone intake is verified","expected":"ASK_RESEARCH exactly once after read-back"},
-    {"id":"workflow-continuation","condition":"Full workflow intake is verified","expected":"continuation RESEARCH without another question"},
-    {"id":"owned-placeholder","condition":"A formula is missing","expected":"Stable claim, field, risk, and research owner; no generic filler"},
-    {"id":"repository-failure","condition":"AGENTS.md lacks exact repository identity","expected":"INTAKE_BLOCKED before provider mutation"},
-    {"id":"template-drift","condition":"Template digest changes before creation","expected":"Invalidate intake and repeat template gate"},
-    {"id":"duplicate","condition":"Near-identical open or closed issue exists","expected":"INTAKE_BLOCKED with typed duplicate disposition question"},
-    {"id":"missing-label","condition":"Configured live-template label is absent","expected":"INTAKE_BLOCKED and separate label-maintenance handoff; no label mutation"},
-    {"id":"unauthorized","condition":"Draft-only request reaches mutation step","expected":"No issue creation"},
-    {"id":"readback-mismatch","condition":"Created issue read-back differs from requested body","expected":"INTAKE_PROVIDER_BLOCKED without blind overwrite"},
-    {"id":"ambiguous-create","condition":"Create response is ambiguous","expected":"Search exact title/body before any authorized retry"}
-  ]
-}
+{"cases":[{"kind":"missing_context","scenario":"Create a RebirthUO issue without an exact repository declared by applicable AGENTS.md.","expected_outcome":"BLOCKED","must_require":"the exact repository identity from applicable AGENTS.md"},{"kind":"safety_branch","scenario":"Create a new issue when no request or project instruction requires a template.","expected_outcome":"REVIEWED","must_preserve":"the canonical fallback field order and template_optional_reason"},{"kind":"verification_branch","scenario":"Create a template-based intake issue after the selected template digest changes.","expected_outcome":"REVIEWED","must_verify":"a fresh TEMPLATE_READY packet, duplicate checks, and issue read-back"},{"kind":"output_contract","scenario":"Return an intake result for a draft, blocked, or created issue.","expected_outcome":"REVIEWED","required_fields":["Outcome","Repository revision","Decision","Evidence","Verification","Confidence","Limitations"]}]}

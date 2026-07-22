@@ -2,6 +2,8 @@
 name: rebirthuo-issue-research
 description: Autonomously research, review, and make an existing RebirthUO issue implementation-ready. Exhaust current and historical official OSI/EA/Broadsword searches, infer era when evidence permits, use relevant research and code-domain skills, retry failed searches through materially different routes, compare the verified repository, and rewrite the issue in place. Ask only for a genuine product or custom-policy decision after evidence exhaustion. Do not implement or silently substitute emulator behavior.
 license: MIT
+metadata:
+  version: "4.0.1"
 ---
 
 # RebirthUO Issue Research

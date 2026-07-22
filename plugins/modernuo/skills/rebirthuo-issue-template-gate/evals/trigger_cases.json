@@ -1,14 +1,14 @@
 {
   "recommended_threshold": 0.45,
   "should_trigger": [
-    {"text":"Select and verify the one live GitHub Issue Template for this new RebirthUO issue.","family":"owned_job"},
-    {"text":"Return a TemplatePacket for the uniquely matching live RebirthUO issue form without creating anything.","family":"owned_job"},
-    {"text":"Wähle die passende Live-Issue-Vorlage für dieses neue RebirthUO-Issue aus, ohne recherchierbare Felder beim Nutzer abzufragen.","family":"owned_job_multilingual"},
-    {"text":"Selecciona la plantilla activa correcta para este nuevo issue de RebirthUO.","family":"owned_job_multilingual"}
+    {"text":"Select and verify the required live GitHub Issue Template for this new RebirthUO issue.","family":"owned_job"},
+    {"text":"Return a TemplatePacket for the uniquely matching required RebirthUO issue form without creating anything.","family":"owned_job"},
+    {"text":"Wähle die verlangte Live-Issue-Vorlage für dieses neue RebirthUO-Issue aus.","family":"owned_job_de"},
+    {"text":"Selecciona la plantilla activa requerida para este nuevo issue de RebirthUO.","family":"owned_job_es"}
   ],
   "should_not_trigger": [
+    {"text":"Create an optional-template fallback issue.","family":"out_of_scope"},
     {"text":"Explain this UO mechanic as player lore only.","family":"out_of_scope"},
-    {"text":"Review generic C# in an unrelated application.","family":"out_of_scope"},
     {"text":"Audit or implement the issue-template code itself.","family":"out_of_scope"}
   ],
   "near_neighbor": [

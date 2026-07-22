@@ -1,7 +1,7 @@
 interface:
   display_name: RebirthUO Issue Template Gate
   short_description: RebirthUO Issue Template Gate
-  default_prompt: Use $rebirthuo-issue-template-gate to select and verify the one live GitHub Issue Template for this new RebirthUO issue without mutation.
+  default_prompt: Use $rebirthuo-issue-template-gate only when this new RebirthUO issue requires a live GitHub Issue Template, then select and verify it without mutation.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

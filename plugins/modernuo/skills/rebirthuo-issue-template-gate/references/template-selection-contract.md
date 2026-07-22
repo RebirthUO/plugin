@@ -1,7 +1,9 @@
 # Live Issue Template Selection Contract
 
-Use this contract only after the parent skill resolves and verifies the exact
-repository from applicable project `AGENTS.md` instructions.
+Use this contract only after the parent skill determines that a live template
+is required and resolves and verifies the exact repository from applicable
+project `AGENTS.md` instructions. When template intake is optional, do not load
+this contract; return `TEMPLATE_NOT_REQUIRED` and hand off to fallback intake.
 
 ## Snapshot
 
@@ -84,13 +86,22 @@ template:
   fields: []
   selection_rationale: exact distinguishing facts
   research_placeholder_fields: []
-  confidence: high | blocked
+  confidence: high | medium | low
   residual_uncertainty: []
 questions: []
-provider_failure: null
+provider_failure: null | { operation: string, status: string, retryable: true | false, evidence_preserved: [], mutation_performed: false }
 mutation:
   performed: []
 ```
 
-The parent must attach this packet to the `IntakePacket` and revalidate its
-selected template immediately before issue creation.
+For `TEMPLATE_READY`, `path`, `ref`, `digest`, `title_prefix`, `fields`, and
+`selection_rationale` are required. For `TEMPLATE_BLOCKED`, `questions` is
+required and selection fields are null. For `TEMPLATE_PROVIDER_BLOCKED`,
+`provider_failure` is required and selection fields are null. The parent must
+attach the complete packet to the `IntakePacket` and revalidate its selected
+template immediately before issue creation.
+
+For a `TEMPLATE_NOT_REQUIRED` handoff, emit only the verified project
+instruction evidence, the explicit request evidence, `mutation.performed: []`,
+and `template: null`; do not create a candidate inventory or contact the
+provider. The intake contract owns the fallback format.
