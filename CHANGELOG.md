@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.3.1 - 2026-07-22
+
+- Converted all five RebirthUO issue behavior fixtures to the portable runtime
+  schema, restoring read-only runtime-smoke compatibility.
+
+## 3.3.0 - 2026-07-21
+
+- Made the RebirthUO new-issue template gate optional across the workflow,
+  template-gate, and intake contracts. A live template remains mandatory when
+  the request or applicable project instructions require it.
+- Added a deterministic fallback intake format for optional-template requests;
+  repository identity, duplicate checks, official research, publication, and
+  implementation-readiness gates remain unchanged.
+
 ## 3.2.0 - 2026-07-21
 
 - Added seven portable ModernUO domain skills for quests, crafting, spells,

@@ -1,7 +1,7 @@
 interface:
   display_name: RebirthUO Issue Workflow
   short_description: RebirthUO Issue Workflow
-  default_prompt: Use $rebirthuo-issue-workflow to take this new or existing RebirthUO issue autonomously through exhaustive research, isolated implementation, push, and verified PR.
+  default_prompt: Use $rebirthuo-issue-workflow to take this new or existing RebirthUO issue through optional template intake, exhaustive research, isolated implementation, push, and verified PR.
 compatibility:
   canonical_format: agent-skills
   adapter_targets:

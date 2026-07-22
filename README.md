@@ -1,8 +1,8 @@
 # ModernUO Plugin
 
 The `modernuo` plugin packages 56 English Agent Skills for official Ultima
-Online research, ModernUO engineering, RunUO migration, testing, and a strict
-template-gated issue-to-PR workflow. It is distributed for Codex, Claude Code, Cursor,
+Online research, ModernUO engineering, RunUO migration, testing, and a governed
+issue-to-PR workflow with optional template intake. It is distributed for Codex, Claude Code, Cursor,
 and compatible Agent Skills runtimes.
 
 ## Purpose
@@ -15,13 +15,15 @@ remains unresolved until the user supplies an explicit custom-policy decision.
 
 ## Issue-to-PR workflow
 
-1. `rebirthuo-issue-template-gate` snapshots the verified repository's live
-   Issue Templates, accepts research placeholders, and asks only on genuine
-   template or user-intent ambiguity.
+1. `rebirthuo-issue-template-gate` is used only when the request or applicable
+   project instructions require a live template. It snapshots the verified
+   repository's Issue Templates, accepts research placeholders, and asks only
+   on genuine required-template or user-intent ambiguity.
 2. `rebirthuo-issue-create` reads the exact GitHub repository from the consuming
-   project's applicable `AGENTS.md`, requires the gate's fresh `TemplatePacket`,
-   produces or creates an `IntakePacket`, then asks once about research only in
-   standalone mode.
+   project's applicable `AGENTS.md`, preserves a required fresh `TemplatePacket`
+   or uses a canonical fallback format when templates are optional, produces or
+   creates an `IntakePacket`, then asks once about research only in standalone
+   mode.
 3. `rebirthuo-issue-research` exhausts materially different official research
    routes, infers era when evidence permits, inspects the same
    verified repository, and rewrites the issue body under its existing headings.

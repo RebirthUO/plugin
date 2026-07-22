@@ -1,18 +1,18 @@
 {
-  "recommended_threshold":0.45,
-  "should_trigger":[
-    {"text":"Take this new RebirthUO request autonomously from live-template intake through verified PR.","family":"owned_job"},
+  "recommended_threshold": 0.45,
+  "should_trigger": [
+    {"text":"Take this new RebirthUO request autonomously from optional template intake through verified PR.","family":"owned_job"},
     {"text":"Research and implement this existing RebirthUO issue, then push and verify the PR.","family":"owned_job"},
-    {"text":"Bearbeite dieses RebirthUO-Issue autonom von Recherche bis Pull Request, ohne zwischen den Phasen erneut zu fragen.","family":"owned_job_multilingual"},
-    {"text":"Lleva este issue de RebirthUO de forma autónoma desde la investigación hasta el pull request.","family":"owned_job_multilingual"}
+    {"text":"Bearbeite dieses RebirthUO-Issue autonom von optionaler Vorlagenaufnahme bis Pull Request.","family":"owned_job_de"},
+    {"text":"Lleva este issue de RebirthUO de forma autónoma desde la investigación hasta el pull request.","family":"owned_job_es"}
   ],
-  "should_not_trigger":[
+  "should_not_trigger": [
     {"text":"Research this issue only; do not implement.","family":"out_of_scope"},
     {"text":"Implement this READY issue only.","family":"out_of_scope"},
     {"text":"Merge and deploy this pull request.","family":"out_of_scope"}
   ],
-  "near_neighbor":[
-    {"text":"Create a template-conformant intake issue only.","family":"near_neighbor"},
+  "near_neighbor": [
+    {"text":"Create a fallback intake issue only.","family":"near_neighbor"},
     {"text":"Establish one official UO mechanic without an issue workflow.","family":"near_neighbor"}
   ]
 }

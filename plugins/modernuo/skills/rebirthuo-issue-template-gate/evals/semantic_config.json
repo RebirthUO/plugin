@@ -1,18 +1,1 @@
-{
-  "optimizer_hints": {
-    "capability": "RebirthUO Issue Template Gate",
-    "inputs": ["rebirthuo issue template gate", "select live GitHub issue template", "templatepacket"],
-    "trigger_actions": [
-      "Select and verify the one live GitHub Issue Template for this new RebirthUO issue without mutation.",
-      "Determine which current RebirthUO issue form uniquely fits this request and return a TemplatePacket."
-    ],
-    "exclusions": ["create issue", "research issue", "implement issue", "full issue workflow", "audit template implementation"],
-    "artifacts": ["TemplatePacket", "TemplateQuestions", "provider failure"]
-  },
-  "fallback_positive_concepts": ["owned_job"],
-  "positive_concepts": {"owned_job":{"weight":1.0,"phrases":["rebirthuo issue template gate","select live GitHub issue template","templatepacket"]}},
-  "negative_concepts": {
-    "near_neighbor":{"weight":0.8,"exclusive":true,"phrases":["create the issue","research the issue","implement the issue","full workflow","audit the template code"]},
-    "explicit_no_action":{"weight":0.5,"exclusive":true,"phrases":["unrelated repository","generic C# review"]}
-  }
-}
+{"optimizer_hints":{"capability":"RebirthUO Issue Template Gate","inputs":["rebirthuo issue template gate","select required live GitHub issue template","templatepacket"],"trigger_actions":["Select and verify the required live GitHub Issue Template for this new RebirthUO issue.","Return a TemplatePacket for the uniquely matching required RebirthUO issue form without creating anything."],"exclusions":["create issue","research issue","implement issue","full issue workflow","audit template implementation"],"artifacts":["TemplatePacket","TemplateQuestions","provider failure"]},"fallback_positive_concepts":["owned_job"],"positive_concepts":{"owned_job":{"weight":1.0,"phrases":["Select and verify the required live GitHub Issue Template for this new RebirthUO issue.","Return a TemplatePacket for the uniquely matching required RebirthUO issue form without creating anything.","Wähle die verlangte Live-Issue-Vorlage für dieses neue RebirthUO-Issue aus.","Selecciona la plantilla activa requerida para este nuevo issue de RebirthUO."]}},"negative_concepts":{"near_neighbor":{"weight":0.8,"exclusive":true,"phrases":["Create an intake issue from the selected live template.","Research this RebirthUO issue against official sources.","Take this issue through research, implementation, push, and PR."]},"explicit_no_action":{"weight":0.5,"exclusive":true,"phrases":["Create an optional-template fallback issue.","generic C# review"]}}}

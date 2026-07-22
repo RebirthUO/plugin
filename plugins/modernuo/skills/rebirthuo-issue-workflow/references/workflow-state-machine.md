@@ -7,7 +7,7 @@ authoritative for their own packets and gates.
 
 | Route | Evidence | First state | Rule |
 |---|---|---|---|
-| `NEW_REQUEST` | No user-identified live issue | `INTAKE` | Create exactly one issue only after template selection. |
+| `NEW_REQUEST` | No user-identified live issue | `INTAKE` | Create exactly one issue through required-template or governed-fallback intake. |
 | `EXISTING_ISSUE` | The user points to a specific issue URL or number in the verified repository | `RESEARCH` | Do not call issue creation or open a duplicate. |
 | `ROUTE_UNKNOWN` | Issue reference or repository cannot be matched safely | `INTERVIEW_PENDING` | Ask one focused identity question; do not mutate. |
 
@@ -20,7 +20,7 @@ organization, nearby repositories, prior sessions, or an issue number alone.
 
 ```text
 NEW_REQUEST
-  -> TEMPLATE_GATE -> INTAKE -> RESEARCH -> READY -> IMPLEMENT -> PR_VERIFY -> DELIVERED
+  -> [TEMPLATE_GATE when required] -> INTAKE -> RESEARCH -> READY -> IMPLEMENT -> PR_VERIFY -> DELIVERED
                          ^            |          ^        |
                          |            v          |        v
                          +---- INTERVIEW_PENDING +-- RESEARCH
@@ -28,9 +28,10 @@ NEW_REQUEST
 EXISTING_ISSUE -> RESEARCH
 ```
 
-`TEMPLATE_GATE` produces `TemplatePacket: TEMPLATE_READY`. `INTAKE` produces
-an `IntakePacket`; it may create one issue when the full workflow request is
-current and explicit, then continues without another confirmation. `RESEARCH`
+When used, `TEMPLATE_GATE` produces `TemplatePacket: TEMPLATE_READY`. `INTAKE`
+produces an `IntakePacket` with `format: template | fallback`; it may create
+one issue when the full workflow request is current and explicit, then continues
+without another confirmation. `RESEARCH`
 produces a `ResearchPacket` with `execution_state` and
 `implementation_readiness: READY | BLOCKED | null`
 and requires a scoped format-preserving issue rewrite on every completed run.
@@ -39,19 +40,24 @@ revision, repository mismatch, unverified write, missing research publication,
 test regression, or new behavior-changing gap transitions to
 `INTERVIEW_PENDING` or `RESEARCH` rather than forward.
 
-## Template and intake integrity
+## Optional template and intake integrity
 
-On the new-request route, invoke `rebirthuo-issue-template-gate` inside the
-preflight of `rebirthuo-issue-create`. Its template path, revision, digest,
-required fields, labels, and selection rationale must be carried into the
-`IntakePacket`. Re-read the selected form immediately before issue creation.
-If it changed, repeat template selection; never apply a stale field map or
-invent a generic issue format.
+On the new-request route, invoke `rebirthuo-issue-template-gate` only when the
+request or applicable project instructions require a live template. Its path,
+revision, digest, required fields, labels, and rationale must be carried into
+the `IntakePacket`, and the form must be re-read immediately before creation.
+If it changed, repeat selection; never apply a stale field map.
 
-An absent, genuinely ambiguous, or mismatched template requires a `TemplateQuestions`
-packet. The user may identify one current candidate or provide missing request
-context. Editing a template or proceeding with a non-template issue is a
-separate request; this workflow does not assume either permission.
+When no template is required, `rebirthuo-issue-create` uses its canonical
+fallback field order. Record `format: fallback`, `template: null`, and the
+reason that made template selection optional. Do not probe, select, or block on
+repository templates in this route, and do not invent a request-specific
+format.
+
+When a template is required, an absent, genuinely ambiguous, or mismatched
+template requires a `TemplateQuestions` packet. The user may identify one
+current candidate or provide missing request context. Editing a template
+remains a separate request.
 
 ## Research-exhaustion and EA-clarity gate
 
@@ -92,7 +98,7 @@ workflow_checkpoint:
   issue_revision: null | ISO-8601 plus digest
   completed_states: []
   questions: []
-  next_state_after_answers: TEMPLATE_GATE | RESEARCH
+  next_state_after_answers: TEMPLATE_GATE | INTAKE | RESEARCH
 ```
 
 Do not report success, choose defaults, edit code, or make an unrelated GitHub
@@ -112,7 +118,7 @@ unique scoped branch. Preserve the user's existing checkout and unrelated
 changes. If the implementation discovers an unknown, save the checkpoint and
 return to autonomous research before asking; do not commit a guessed solution.
 
-An explicit full-workflow request authorizes continuation across template,
+An explicit full-workflow request authorizes continuation across optional template selection,
 intake, research, implementation, scoped push, and PR creation. Do not repeat a
 phase-continuation question. This does not authorize merge, release, deployment,
 or unrelated GitHub mutations.
@@ -139,7 +145,8 @@ Use this envelope in every state; unknown values are `null`, not omitted.
 state: REPOSITORY_BLOCKED | TEMPLATE_BLOCKED | INTAKE_BLOCKED | INTERVIEW_PENDING | RESEARCH_BLOCKED | IMPLEMENTATION_BLOCKED | DELIVERY_BLOCKED | DELIVERED
 route: NEW_REQUEST | EXISTING_ISSUE | ROUTE_UNKNOWN
 repository: { full_name: owner/repository, verified_at: ISO-8601 }
-template: { status: null, path: null, ref: null, digest: null }
+intake_format: template | fallback | null
+template: { status: null, path: null, ref: null, digest: null, optional_reason: null }
 issue: { number: null, url: null, updated_at: null, body_digest: null }
 research: { execution_state: null, implementation_readiness: null, revision: null, packet_digest: null }
 interviews: []
@@ -163,7 +170,7 @@ Map child checkpoints deterministically:
 
 | Child checkpoint | WorkflowResult state | Resume target |
 | --- | --- | --- |
-| template `TEMPLATE_BLOCKED` or `TEMPLATE_PROVIDER_BLOCKED` | `TEMPLATE_BLOCKED` | template gate |
+| required template `TEMPLATE_BLOCKED` or `TEMPLATE_PROVIDER_BLOCKED` | `TEMPLATE_BLOCKED` | template gate |
 | create blocked/provider/ambiguous mutation outcome | `INTAKE_BLOCKED` | create |
 | research `ISSUE_INPUT_BLOCKED` | `INTERVIEW_PENDING` | affected research rows |
 | research repository, authorization, publication, or provider block | `RESEARCH_BLOCKED` | research |
