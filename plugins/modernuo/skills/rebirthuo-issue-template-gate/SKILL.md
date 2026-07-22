@@ -3,7 +3,7 @@ name: rebirthuo-issue-template-gate
 description: Select and validate the exact live GitHub Issue Template only when a new RebirthUO issue request or applicable project instructions require template-conformant intake. Accept explicit research placeholders for mechanics fields and ask only for repository identity, a genuinely ambiguous required template, the primary requested object, or another value only the user can supply. Do not draft, create, edit, label, research, or implement an issue.
 license: MIT
 metadata:
-  version: "2.1.1"
+  version: "2.1.2"
 ---
 
 # RebirthUO Issue Template Gate
@@ -28,7 +28,8 @@ publish, code anchor, or test oracle.
    it through the provider API. Never infer identity from the checkout, remotes,
    organization, issue number, or memory.
 3. Read [the selection contract](references/template-selection-contract.md) and
-   snapshot the live issue forms, chooser configuration, labels, and revision.
+   snapshot the live issue forms, chooser configuration, complete repository
+   label inventory, and revision.
 4. Match the stated problem, primary player-visible object, and outcome to all
    live forms. Treat a structured `RESEARCH_REQUIRED` placeholder as a known
    source for a mechanics field.
@@ -48,7 +49,8 @@ when explicitly safe; never substitute cached or inferred repository data.
 
 Return the contract's `TemplatePacket` with verified repository/instruction
 source, complete inventory, selected path/ref/digest, title prefix, fields,
-labels, research-placeholder fields, rationale, calibrated confidence/residual
+template labels, repository label inventory, research-placeholder fields,
+rationale, calibrated confidence/residual
 uncertainty, questions, provider failure when present, and
 `status: TEMPLATE_NOT_REQUIRED | TEMPLATE_READY | TEMPLATE_BLOCKED |
 TEMPLATE_PROVIDER_BLOCKED`.

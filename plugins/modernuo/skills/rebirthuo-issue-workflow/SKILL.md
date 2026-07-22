@@ -3,7 +3,7 @@ name: rebirthuo-issue-workflow
 description: Autonomously take a new RebirthUO request or identified GitHub issue through optional live-template intake, exhaustive official research, format-preserving issue publication, isolated implementation, branch push, and pull request verification. Existing issues skip creation; full-workflow requests continue between phases without repeated confirmation. Use a live Issue Template only when the request or applicable project instructions require it; otherwise use the governed fallback issue format. Ask only for repository identity, genuine template ambiguity when a template is required, or a product/custom-policy decision that remains after research exhaustion. Do not merge, release, deploy, or guess missing official behavior.
 license: MIT
 metadata:
-  version: "3.1.1"
+  version: "3.1.2"
 ---
 
 # RebirthUO Issue Workflow
@@ -27,7 +27,9 @@ readiness, mutation, and verification gates.
    only when they do; otherwise invoke `rebirthuo-issue-create` in fallback
    mode. Continue directly to research after verified intake.
    `EXISTING_ISSUE`: skip template/create and start at research.
-3. Run `rebirthuo-issue-research` autonomously through its exhaustion and
+3. Carry template labels, intake label selections, and their live evidence to
+   the child packets; do not select or mutate labels independently. Run
+   `rebirthuo-issue-research` autonomously through its exhaustion and
    publication gates. On `implementation_readiness: BLOCKED`, return only its focused last-mile decision
    packet; after the answer, resume the affected claims without repeating
    resolved questions.
@@ -51,7 +53,8 @@ concurrent-state conflict. Resume from the stored checkpoint after resolution.
 ## Output Contract
 
 Return `WorkflowResult` with route, repository, issue/template identity,
-research attempts/readiness/revision, interview and research-loop history,
+research attempts/readiness/revision, selected/applied-label evidence, interview
+and research-loop history,
 worktree/branch/base, validation, mutation read-backs, PR URL/SHA/checks, and
 `state: REPOSITORY_BLOCKED | TEMPLATE_BLOCKED | INTAKE_BLOCKED |
 INTERVIEW_PENDING | RESEARCH_BLOCKED | IMPLEMENTATION_BLOCKED |

@@ -1,0 +1,22 @@
+interface:
+  display_name: UltimaMCP Client Data
+  short_description: Inspect configured UO Classic client data
+  default_prompt: Use $ultima-mcp to query the active UltimaMCP for this local UO Classic client datum and classify the result as client evidence.
+compatibility:
+  canonical_format: agent-skills
+  adapter_targets: [openai, claude, generic, vscode]
+  activation:
+    mode: implicit
+    paths: []
+  execution:
+    context: inline
+    shell: powershell
+  trust:
+    source_tier: plugin
+    remote_inline_execution: forbid
+    remote_metadata_policy: allow-metadata-only
+  degradation:
+    openai: Use only an active explicitly identified UltimaMCP tool and preserve the client-evidence boundary.
+    claude: Use the neutral Agent Skills source and mark unavailable local client data unresolved.
+    generic: Use SKILL.md without assuming an MCP host, endpoint, or tool name.
+    vscode: Use the Agent Skills source in workspace trust and never expose or reconfigure the localhost service.

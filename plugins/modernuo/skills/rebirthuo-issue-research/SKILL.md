@@ -3,7 +3,7 @@ name: rebirthuo-issue-research
 description: Autonomously research, review, and make an existing RebirthUO issue implementation-ready. Exhaust current and historical official OSI/EA/Broadsword searches, infer era when evidence permits, use relevant research and code-domain skills, retry failed searches through materially different routes, compare the verified repository, and rewrite the issue in place. Ask only for a genuine product or custom-policy decision after evidence exhaustion. Do not implement or silently substitute emulator behavior.
 license: MIT
 metadata:
-  version: "4.0.1"
+  version: "4.0.2"
 ---
 
 # RebirthUO Issue Research
@@ -54,14 +54,18 @@ community evidence remain separately labeled and never fill an official claim.
    scaffolding, then publish only when the user explicitly requested an issue
    update or the full workflow supplied scoped publication authority. Otherwise
    return `AUTHORIZATION_REQUIRED` with the proposed body and label action.
-   After authorized publication, toggle `blocked`, read back the mutation, and
-   return implementation readiness `READY` only at that revision with no blocker.
+   After authorized publication, apply only live-verified, issue-specifically
+   justified existing labels add-only alongside the `blocked` readiness toggle,
+   read back every mutation, and return implementation readiness `READY` only
+   at that revision with no blocker. Never create, remove, rename, or
+   bulk-synchronize labels.
 
 ## Output Contract
 
 Return the contract's `ResearchPacket` with search-attempt ledger, era inference,
 official and implementation evidence, readiness matrix, policy decisions,
-calibrated claim and packet confidence, truthful publication state/read-back,
+calibrated claim and packet confidence, selected-label rationale and truthful
+publication read-back,
 `execution_state`, and nullable `implementation_readiness`. A blocked packet
 has stable focused questions and exact resume claim IDs. Only
 `execution_state: COMPLETE` with `implementation_readiness: READY` may hand off
@@ -72,7 +76,8 @@ to `rebirthuo-issue-implement`.
 - No evidence-unavailable result lacks materially different recorded attempts.
 - Era was inferred when evidence permitted; ambiguity is tied to product intent.
 - Every official claim is cited or remains explicitly unresolved.
-- Publication is format-preserving and the `blocked` label matches readiness.
+- Publication is format-preserving, relevant labels are add-only and read back,
+  and the `blocked` label matches readiness.
 - Implementation readiness `READY` has no unresolved marker, question, blocker,
   or stale issue revision and requires publication state `succeeded`; partial
   or failed publication uses execution state `PUBLICATION_BLOCKED`.

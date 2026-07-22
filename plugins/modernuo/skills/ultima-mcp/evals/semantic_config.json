@@ -1,0 +1,20 @@
+{
+  "optimizer_hints": {
+    "capability": "UltimaMCP Client Data",
+    "inputs": ["configured active UltimaMCP tool", "bounded local client-data query", "requested client-data domain"],
+    "trigger_actions": ["Use the active UltimaMCP to find the local client tile data for static ID 0x0EED.", "Query configured UltimaMCP for the Gump art and cliloc record used by this screenshot.", "Nutze das konfigurierte UltimaMCP, um die lokalen Kartenkoordinaten und die zugehörigen Statics zu prüfen.", "Inspect the local Classic client through UltimaMCP for this sound, animation, and patch metadata."],
+    "exclusions": ["official gameplay research without a client-data lookup", "MCP server installation or configuration", "generic unrelated maps or media"],
+    "artifacts": ["bounded MCP query", "source-marked client evidence", "availability state", "unresolved client-data limitations"]
+  },
+  "fallback_positive_concepts": ["tile_lookup", "ui_assets", "map_lookup_de", "client_media"],
+  "positive_concepts": {
+    "tile_lookup": {"weight": 1.0, "phrases": ["Use the active UltimaMCP to find the local client tile data for static ID 0x0EED."]},
+    "ui_assets": {"weight": 1.0, "phrases": ["Query configured UltimaMCP for the Gump art and cliloc record used by this screenshot."]},
+    "map_lookup_de": {"weight": 1.0, "phrases": ["Nutze das konfigurierte UltimaMCP, um die lokalen Kartenkoordinaten und die zugehörigen Statics zu prüfen."]},
+    "client_media": {"weight": 1.0, "phrases": ["Inspect the local Classic client through UltimaMCP for this sound, animation, and patch metadata."]}
+  },
+  "negative_concepts": {
+    "near_neighbor": {"weight": 0.0, "exclusive": false, "phrases": []},
+    "explicit_no_action": {"weight": 0.5, "exclusive": true, "phrases": ["do not query local client data", "install or configure UltimaMCP", "unrelated production system"]}
+  }
+}

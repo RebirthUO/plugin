@@ -1,8 +1,8 @@
 {
   "name": "rebirthuo-issue-template-gate",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "owner": "RebirthUO",
-  "updated_at": "2026-07-20",
+  "updated_at": "2026-07-22",
   "review_cadence": "quarterly",
   "status": "active",
   "maturity_tier": "production",

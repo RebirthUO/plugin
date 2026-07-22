@@ -30,6 +30,7 @@ repository or source check.
 | Review already identified code without changing it | `modernuo-code-audit` | The named domain owner for a deeper concern |
 | Establish player-facing production behavior | `uo-official-evidence` | `uo-publish-expansion-mapping` for Publish or era ownership |
 | Map a Publish or expansion gate | `uo-publish-expansion-mapping` | `modernuo-era-expansion` for the implementation gate |
+| Inspect configured local Ultima Online Classic client data | `ultima-mcp` | The owning UI, implementation, or official-evidence skill for the requested conclusion |
 | Run a complete issue-to-delivery flow | `rebirthuo-issue-workflow` | Its governed child sequence below |
 | Design, run, or assess tests | `modernuo-regression-testing`, `modernuo-test-workflow`, or `modernuo-test-naming` | The other test owner only for its exact concern |
 
@@ -47,6 +48,7 @@ repository or source check.
 | Event subscriptions and handlers | `modernuo-events` | Send calendar semantics to `modernuo-event-scheduler`. |
 | Calendar and wall-clock schedules | `modernuo-event-scheduler` | Send game-time delays to `modernuo-timers`. |
 | Gump creation or review | `modernuo-gump-system` | Send legacy conversion to `modernuo-migrate-gumps`. |
+| Local UltimaMCP client-data lookup | `ultima-mcp` | Send Gump composition to `modernuo-gump-system` and gameplay claims to `uo-official-evidence`. |
 | Faction membership, towns, elections, guards, and faction state | `modernuo-faction-systems` | Send generic UI, timers, regions, or vendors to their narrow owner. |
 | Housing, multis, ownership, and component lifecycle | `modernuo-housing-multis` | Send exact geometry or region policy to its narrow owner. |
 | Complete item-property behavior | `modernuo-item-properties` | Send tooltip-only emission to `modernuo-property-lists`. |

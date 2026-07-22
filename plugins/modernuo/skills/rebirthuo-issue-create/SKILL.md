@@ -3,7 +3,7 @@ name: rebirthuo-issue-create
 description: Draft or create a RebirthUO GitHub intake issue through an optional live template. Resolve the repository only from applicable project AGENTS.md; preserve exact template structure when a TemplatePacket is supplied or project instructions require one, otherwise use the governed fallback issue format. Encode researchable unknowns as owned claim-specific placeholders, and after verified standalone intake ask once whether to start research. In a full rebirthuo-issue-workflow continue automatically. Do not perform mechanics research, readiness review, or implementation.
 license: MIT
 metadata:
-  version: "3.1.1"
+  version: "3.1.2"
 ---
 
 # RebirthUO Issue Create
@@ -26,8 +26,9 @@ or invent mechanics.
    pass the exact repository explicitly. Never infer it from cwd, remotes,
    organization, issue number, adjacent projects, documentation, or memory.
 3. Drafting is read-only. Creating the issue requires an explicit request.
-   Unrelated comments, labels, relationships, projects, and milestones remain
-   unauthorized.
+   Unrelated comments, label changes, relationships, projects, and milestones
+   remain unauthorized. Applying the verified selected labels as part of the
+   authorized issue creation is allowed.
 
 ## Workflow
 
@@ -41,10 +42,13 @@ or invent mechanics.
    naming the exact claim, affected field, risk, and next research owner such
    as `uo-official-evidence`, `uo-publish-expansion-mapping`, or a relevant
    RebirthUO/ModernUO code-domain skill.
-4. Search open and closed issues for duplicates and verify configured labels.
-   A duplicate blocks creation pending an explicit duplicate disposition. A
-   missing configured label returns `INTAKE_BLOCKED` and hands off separate
-   label maintenance; this skill never creates or edits labels.
+4. Search open and closed issues for duplicates and build the label selection:
+   preserve every configured live-template label, then add only an existing
+   repository label whose relevance is directly supported by the issue's
+   requested object, scope, or stated classification. Record a source and
+   issue-specific rationale for every selected label. A duplicate, missing
+   label, or ambiguous relevance returns `INTAKE_BLOCKED` without creation;
+   this skill never creates, removes, renames, or bulk-synchronizes labels.
 5. Return the complete `IntakePacket`. When creation is authorized, create
    once, read it back, and record number, URL, timestamp, and body digest.
 6. In standalone mode, after draft or creation verification ask exactly once
@@ -61,7 +65,8 @@ ambiguous create result, search exact title/body before any authorized retry.
 
 Return the contract's `IntakePacket`, including status, blockers, calibrated
 confidence/residual uncertainty, `mode: standalone | workflow`,
-verified format and repository identity, duplicate/label checks, claim-level
+verified format and repository identity, duplicate/label-selection checks,
+selected-label rationale and creation read-back, claim-level
 research work, mutation read-back, and
 `continuation: ASK_RESEARCH | RESEARCH`. This skill never returns `READY`.
 

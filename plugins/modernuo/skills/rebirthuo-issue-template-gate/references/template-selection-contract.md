@@ -17,6 +17,11 @@ The live template controls title prefixes, labels, field labels/order, allowed
 options, required fields, and user-facing wording. Repository instructions can
 add constraints, but cannot be guessed from an adjacent checkout.
 
+Also snapshot the exact repository's current label inventory separately from
+template labels. The gate does not select, apply, create, remove, or infer any
+additional labels; it supplies the live inventory to downstream intake and
+research for their add-only, issue-specific selection checks.
+
 ## Matching protocol
 
 Create a candidate table from the live forms. Compare each candidate against:
@@ -76,6 +81,9 @@ repository:
 template_inventory:
   ref: default-branch SHA
   candidates: []
+repository_label_inventory:
+  checked_at: ISO-8601
+  labels: []
 template:
   status: TEMPLATE_READY | TEMPLATE_BLOCKED | TEMPLATE_PROVIDER_BLOCKED
   path: .github/ISSUE_TEMPLATE/example.yml
@@ -94,7 +102,8 @@ mutation:
   performed: []
 ```
 
-For `TEMPLATE_READY`, `path`, `ref`, `digest`, `title_prefix`, `fields`, and
+For `TEMPLATE_READY`, `path`, `ref`, `digest`, `title_prefix`, `fields`,
+`template.labels`, `repository_label_inventory`, and
 `selection_rationale` are required. For `TEMPLATE_BLOCKED`, `questions` is
 required and selection fields are null. For `TEMPLATE_PROVIDER_BLOCKED`,
 `provider_failure` is required and selection fields are null. The parent must

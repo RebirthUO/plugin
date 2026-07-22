@@ -81,9 +81,9 @@
     {
       "kind": "mcp_evidence_branch",
       "decision_kind": "PLAN",
-      "scenario": "Plan a Gump from a screenshot when a user-enabled Ultima MCP returns a candidate asset.",
+      "scenario": "Plan a Gump from a screenshot when ultima-mcp returns a candidate asset from a user-enabled UltimaMCP tool.",
       "expected_outcome": "REVIEWED",
-      "must_preserve": "Record the MCP query and result as separate evidence; do not treat it as official gameplay authority."
+      "must_preserve": "Record the ultima-mcp query and result as separate evidence; do not treat it as official gameplay authority."
     },
     {
       "kind": "verification_branch",
