@@ -170,6 +170,10 @@ issue_publication:
   labels:
     blocked_applied: false
     blocked_removed: false
+    selected: []
+    existing_relevant_applied: []
+    selection_rationale: []
+    read_back: []
   recovery: { retryable: false, last_proven_step: null, failed_step: null, exact_action: null }
 mutation:
   authorized: true | false

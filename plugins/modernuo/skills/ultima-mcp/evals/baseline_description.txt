@@ -1,0 +1,4 @@
+Use when a configured and active Kita72/UltimaMCP server is needed to inspect
+local Ultima Online Classic client data. Query only documented exposed tools,
+return read-only source-marked client evidence, and keep it separate from
+official gameplay evidence.

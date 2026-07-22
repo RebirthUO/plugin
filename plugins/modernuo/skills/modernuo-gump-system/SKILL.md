@@ -1,6 +1,6 @@
 ---
 name: modernuo-gump-system
-description: Use when planning, creating, reviewing, or changing ModernUO gumps from a screenshot, visual description, or existing UI flow, including StaticGump, DynamicGump, builders, placeholders, SendGump/CloseGump, and response handling. Produces a source-marked component inventory and an annotated visual concept for planned UI changes; consults a user-enabled Ultima/UO MCP when available without inventing asset IDs. Covers layout choice, non-empty construction, stale-response authorization, handler-aware strings, and tests. Do not use for migrating legacy RunUO gumps; use modernuo-migrate-gumps.
+description: Use when planning, creating, reviewing, or changing ModernUO gumps from a screenshot, visual description, or existing UI flow, including StaticGump, DynamicGump, builders, placeholders, SendGump/CloseGump, and response handling. Produces a source-marked component inventory and an annotated visual concept for planned UI changes; routes configured UltimaMCP client-data lookups to ultima-mcp without inventing asset IDs. Covers layout choice, non-empty construction, stale-response authorization, handler-aware strings, and tests. Do not use for migrating legacy RunUO gumps; use modernuo-migrate-gumps.
 ---
 
 # ModernUO Gump System
@@ -46,14 +46,13 @@ inspect the current source directly and state the limitation.
    base/builder APIs plus a sibling gump. Read
    [screenshot-composition.md](references/screenshot-composition.md) only for
    a screenshot/mock-up request or a `PLAN` that requires a visual concept.
-4. Check the active tool catalog for a user-enabled MCP that explicitly offers
-   Ultima Online data. If one exists and can answer the question, use its
-   documented interface only for candidate art, cliloc, text, or other requested
-   element data. Record the query and result as `ultima-mcp` evidence. If it is
-   absent, inaccessible, or inconclusive, keep the semantic element role and
-   mark its concrete asset as unresolved; do not block a description-led plan
-   and do not invent IDs. Keep MCP/client/repository evidence separate from
-   official gameplay evidence.
+4. For local client-data needs, route the bounded lookup to `ultima-mcp` when
+   that available skill confirms an active UltimaMCP tool. Use the returned
+   candidate art, cliloc, text, or other element data only as `ultima-mcp`
+   evidence. If it is absent, inaccessible, or inconclusive, keep the semantic
+   element role and mark its concrete asset as unresolved; do not block a
+   description-led plan and do not invent IDs. Keep MCP/client/repository
+   evidence separate from official gameplay evidence.
 5. For every `PLAN`, produce the required visual concept after the inventory:
    an annotated wireframe that maps component IDs to containment, alignment,
    spacing, z-order, and action targets. Base it on the screenshot when present

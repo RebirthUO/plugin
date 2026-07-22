@@ -28,7 +28,8 @@ NEW_REQUEST
 EXISTING_ISSUE -> RESEARCH
 ```
 
-When used, `TEMPLATE_GATE` produces `TemplatePacket: TEMPLATE_READY`. `INTAKE`
+When used, `TEMPLATE_GATE` produces `TemplatePacket: TEMPLATE_READY`, including
+preserved template labels and a live repository label inventory. `INTAKE`
 produces an `IntakePacket` with `format: template | fallback`; it may create
 one issue when the full workflow request is current and explicit, then continues
 without another confirmation. `RESEARCH`
@@ -53,6 +54,11 @@ fallback field order. Record `format: fallback`, `template: null`, and the
 reason that made template selection optional. Do not probe, select, or block on
 repository templates in this route, and do not invent a request-specific
 format.
+
+Carry template labels and `IntakePacket.label_selection` unchanged to research.
+The workflow does not decide whether a label is relevant or perform label
+mutations; intake and research own their respective add-only checks and
+read-backs.
 
 When a template is required, an absent, genuinely ambiguous, or mismatched
 template requires a `TemplateQuestions` packet. The user may identify one
@@ -128,8 +134,8 @@ verified remote branch, create or update the PR, and read back its URL, head,
 base, state, remote SHA, body, and checks. A merge, release, deployment,
 unrelated comment, unrelated label, or project update is out of scope unless
 separately requested. Scoped format-preserving body rewrites and
-`blocked`-label toggles from `rebirthuo-issue-research` are in scope for the
-research phase.
+`blocked`-label toggles and add-only, justified existing-label actions from
+`rebirthuo-issue-research` are in scope for the research phase.
 
 Execute commit, push, PR create/update, and PR verification as separate
 read-backed steps. After a partial failure, return `DELIVERY_BLOCKED` with the
@@ -148,6 +154,7 @@ repository: { full_name: owner/repository, verified_at: ISO-8601 }
 intake_format: template | fallback | null
 template: { status: null, path: null, ref: null, digest: null, optional_reason: null }
 issue: { number: null, url: null, updated_at: null, body_digest: null }
+labels: { selected: [], applied: [], rationale: [], read_back: [] }
 research: { execution_state: null, implementation_readiness: null, revision: null, packet_digest: null }
 interviews: []
 research_loops: []

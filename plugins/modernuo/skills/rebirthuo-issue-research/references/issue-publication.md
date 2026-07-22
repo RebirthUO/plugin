@@ -10,11 +10,13 @@ nothing. Advice-only remains read-only without an authorization prompt.
 Scoped publication authorizes only:
 
 - one format-preserving body rewrite on the identified issue;
+- an add-only application of existing, issue-specifically justified labels;
 - a `blocked` label toggle on that issue (`--add-label` when `BLOCKED`,
   `--remove-label` when `READY`);
 - read-back of the updated issue revision, labels, and body digest.
 
-It does not authorize issue comments, unrelated labels, projects, milestones,
+It does not authorize issue comments, unrelated labels, label removals,
+projects, milestones,
 issue creation, commits, pushes, or pull requests.
 
 ## Publication boundary
@@ -48,14 +50,21 @@ issue creation, commits, pushes, or pull requests.
 5. Write in English. Do not include internal packet metadata, readiness status,
    repository revisions, local paths, credentials, or secrets in the issue
    body unless the existing template explicitly requests that information.
-6. Verify the repository label set contains `blocked` before toggling it. If the
+6. Before any mutation, select additional labels only from the live repository
+   label set. Each must be supported directly by the current issue's requested
+   object, scope, template classification, or researched conclusion; record
+   that evidence as its rationale. Preserve applicable template labels. A
+   missing label or ambiguous relevance returns `PUBLICATION_BLOCKED` before
+   body rewrite and with no mutation; never guess from label names.
+7. Verify the repository label set contains `blocked` before toggling it. If the
    label is missing, stop and ask the user; do not publish with a guessed
    substitute label.
-7. Apply one step at a time and read back after each: body rewrite, required
-   label action, then final full issue. Record only proven actions. If a later
+8. Apply one step at a time and read back after each: body rewrite, selected
+   add-only labels, required `blocked` action, then final full issue. Record
+   only proven actions. If a later
    step fails, return `PUBLICATION_BLOCKED` with state `partial`, successful and
    failed steps, live revision, retryability, and exact recovery action.
-8. Do not edit the issue title or post issue comments. The rewritten body is
+9. Do not edit the issue title or post issue comments. The rewritten body is
    the only canonical publication surface.
 
 ## Rewrite model
@@ -91,7 +100,9 @@ of the preserved format.
 | `BLOCKED` | Add `blocked` when the label exists and is not already present |
 | `READY` | Remove `blocked` when it is present |
 
-Do not add unrelated labels during scoped publication. Other label changes
+Add only selected existing labels with recorded issue-specific rationale. Never
+remove, rename, create, or bulk-synchronize labels. `blocked` is the sole
+readiness-state label and retains the toggle above; all other label changes
 remain separately authorized.
 
 ## Provider commands
@@ -103,14 +114,16 @@ gh api repos/{owner}/{repository}
 gh label list --repo {owner}/{repository}
 gh issue view {number} --repo {owner}/{repository} --json body,updatedAt,url,labels
 gh issue edit {number} --repo {owner}/{repository} --body-file research-body.md
+gh issue edit {number} --repo {owner}/{repository} --add-label {selected-label}
 gh issue edit {number} --repo {owner}/{repository} --add-label blocked
 gh issue edit {number} --repo {owner}/{repository} --remove-label blocked
 ```
 
 After publication, read back the issue body, `updated_at`, labels, and digest.
 Verify heading identity/order, cleaned content, absence of an appended research
-section, and the title's unchanged value. Record the body rewrite and label
-toggle in `mutation.performed`.
+section, title's unchanged value, every selected label, and the absence of
+label removals. Record the body rewrite and label actions in
+`mutation.performed`.
 
 Retries are idempotent and state-aware: re-read first, skip an already-proven
 body or label state, and retry only the failed operation. Authentication,

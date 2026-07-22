@@ -3,10 +3,10 @@ import json
 from pathlib import Path
 
 cases=json.loads(Path(__file__).with_name("behavior_cases.json").read_text(encoding="utf-8"))["cases"]
-assert [case["kind"] for case in cases] == ["missing_context","safety_branch","verification_branch","output_contract"]
-assert [case["expected_outcome"] for case in cases] == ["BLOCKED","REVIEWED","REVIEWED","REVIEWED"]
+assert [case["kind"] for case in cases] == ["missing_context","safety_branch","template_labels","verification_branch","output_contract"]
+assert [case["expected_outcome"] for case in cases] == ["BLOCKED","REVIEWED","REVIEWED","REVIEWED","REVIEWED"]
 assert all(case["scenario"] for case in cases)
 assert cases[-1]["required_fields"] == ["Outcome","Repository revision","Decision","Evidence","Verification","Confidence","Limitations"]
 contract="\n".join(path.read_text(encoding="utf-8") for path in [Path(__file__).parents[1]/"SKILL.md",Path(__file__).parents[1]/"references/template-selection-contract.md"]).casefold()
-for token in ["template_not_required", "no provider access", "template_provider_blocked"]: assert token in contract
+for token in ["template_not_required", "no provider access", "template_provider_blocked", "repository label inventory", "does not select, apply, create, remove"]: assert token in contract
 print(json.dumps({"contract_cases":len(cases),"passing":len(cases),"failing":0}))

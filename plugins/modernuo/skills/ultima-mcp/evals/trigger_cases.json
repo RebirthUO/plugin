@@ -1,0 +1,19 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {"text": "Use the active UltimaMCP to find the local client tile data for static ID 0x0EED.", "family": "tile_lookup"},
+    {"text": "Query configured UltimaMCP for the Gump art and cliloc record used by this screenshot.", "family": "ui_assets"},
+    {"text": "Nutze das konfigurierte UltimaMCP, um die lokalen Kartenkoordinaten und die zugehörigen Statics zu prüfen.", "family": "map_lookup_de"},
+    {"text": "Inspect the local Classic client through UltimaMCP for this sound, animation, and patch metadata.", "family": "client_media"}
+  ],
+  "should_not_trigger": [
+    {"text": "Explain the current official Broadsword mechanics of Healing Stone.", "family": "official_gameplay"},
+    {"text": "Configure an MCP server and expose it to the internet.", "family": "server_configuration"},
+    {"text": "Create a generic web map with fictional fantasy locations.", "family": "unrelated_map"}
+  ],
+  "near_neighbor": [
+    {"text": "Implement a StaticGump with authorized responses and a visual component map.", "family": "gump_ownership"},
+    {"text": "Research the official OSI item behavior before changing this ModernUO implementation.", "family": "official_evidence"},
+    {"text": "Map Publish 81 to its cumulative ModernUO expansion gate.", "family": "publish_mapping"}
+  ]
+}

@@ -5,8 +5,8 @@
       "Implement a StaticGump with authorized responses.",
       "Review a stale gump response after state changed.",
       "Plan a DynamicGump layout with handler-aware text.",
-      "Break this Gump screenshot into components, query the available Ultima MCP for UI assets, and show the implementation plan as a wireframe.",
-      "Zerlege diesen Gump-Screenshot in Komponenten, nutze falls vorhanden das Ultima-MCP und erstelle einen visuellen Umsetzungsplan.",
+      "Break this Gump screenshot into components, route the available UltimaMCP asset lookup through ultima-mcp, and show the implementation plan as a wireframe.",
+      "Zerlege diesen Gump-Screenshot in Komponenten, route die verfügbare UltimaMCP-Asset-Abfrage über ultima-mcp und erstelle einen visuellen Umsetzungsplan.",
       "Audit a gump flow for empty construction or missing close behavior.",
       "Erstelle eine ModernUO-Gump mit sicherer Antwortprüfung."
     ],
@@ -64,13 +64,13 @@
     "screenshot_plan": {
       "weight": 1.0,
       "phrases": [
-        "Break this Gump screenshot into components, query the available Ultima MCP for UI assets, and show the implementation plan as a wireframe."
+        "Break this Gump screenshot into components, route the available UltimaMCP asset lookup through ultima-mcp, and show the implementation plan as a wireframe."
       ]
     },
     "screenshot_plan_de": {
       "weight": 1.0,
       "phrases": [
-        "Zerlege diesen Gump-Screenshot in Komponenten, nutze falls vorhanden das Ultima-MCP und erstelle einen visuellen Umsetzungsplan."
+        "Zerlege diesen Gump-Screenshot in Komponenten, route die verfügbare UltimaMCP-Asset-Abfrage über ultima-mcp und erstelle einen visuellen Umsetzungsplan."
       ]
     },
     "audit": {

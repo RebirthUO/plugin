@@ -1,4 +1,4 @@
 Use when planning, creating, reviewing, or modifying ModernUO gumps from screenshots,
 visual descriptions, or UI flows. Produce a source-marked component inventory and an
-annotated visual concept; consult a user-enabled Ultima/UO MCP when available without
-inventing asset IDs. Covers BaseGump, StaticGump, DynamicGump, and GumpSystem.
+annotated visual concept; route configured UltimaMCP client-data lookups through
+ultima-mcp without inventing asset IDs. Covers BaseGump, StaticGump, DynamicGump, and GumpSystem.

@@ -79,6 +79,11 @@ template_optional_reason: string | null
 template_packet: TemplatePacket | null
 title: English title with live prefix
 labels: []
+label_selection:
+  - name: existing repository label
+    source: template | issue_context
+    rationale: exact template configuration or issue fact
+    verified_at: ISO-8601
 body: complete English body
 research_required:
   - id: R1
@@ -91,7 +96,7 @@ duplicate_check:
   matches: []
 status: INTAKE_READY | INTAKE_BLOCKED | INTAKE_PROVIDER_BLOCKED
 blockers:
-  - code: repository | template | duplicate | missing_label | provider
+  - code: repository | template | duplicate | missing_label | ambiguous_label | provider
     evidence: []
     question: { id: IQ1, missing: string, options: [], answer_needed: string }
 confidence: high | medium | low
@@ -117,12 +122,25 @@ authorizes creation; a provider failure after that point retains `true` while
 ## Publication checks
 
 1. Search exact and near-neighbor terms across open and closed issues.
-2. Confirm every configured/requested label exists.
-3. Validate English title/body, exact live prefix and field order, links, and
+2. Build an add-only label selection before any mutation. Preserve every label
+   configured by the verified live template. An additional label is eligible
+   only when it already exists in the exact repository and its relevance is
+   directly supported by the issue's requested object, scope, or stated
+   classification. Record `source`, issue-specific `rationale`, and
+   verification time for each selection. Do not use a label merely because its
+   name sounds related.
+3. Confirm every selected label exists in the current repository label set.
+   A missing label returns `INTAKE_BLOCKED` with `code: missing_label`; unclear
+   relevance returns `INTAKE_BLOCKED` with `code: ambiguous_label`. Both leave
+   `mutation.performed: []` and require no label mutation.
+4. Validate English title/body, exact live prefix and field order, links, and
    absence of local paths and secrets.
-4. Create once with the exact repository argument.
-5. Read back repository, number, URL, title, labels, body, and revision.
-6. After an ambiguous result, search for the exact title/body before retrying.
+5. Create once with the exact repository argument and only the selected
+   existing labels. Applying those labels is part of the authorized create, not
+   a later issue edit.
+6. Read back repository, number, URL, title, labels, body, and revision; prove
+   that every selected label is present and record no removals.
+7. After an ambiguous result, search for the exact title/body before retrying.
 
 For `template`, re-read and compare the selected template digest immediately
 before creation. A mismatch invalidates the entire IntakePacket: return to the
@@ -131,14 +149,15 @@ template gate, take a fresh snapshot, attach a newly selected
 and only then create. Never create from a stale packet. For `fallback`, verify
 the canonical field order and that no template requirement was introduced by
 the current applicable instructions.
-If a configured label is missing, do not create it: return `INTAKE_BLOCKED` with
+If a selected label is missing, do not create it: return `INTAKE_BLOCKED` with
 `code: missing_label` and a separate label-maintenance handoff. Provider errors
 populate `provider_failure` with operation, provider status, retryability,
 preserved evidence, and `mutation_performed: false | unknown`; an unknown create
 result always requires exact title/body search before retry authorization.
 
-Creating an issue does not authorize comments, edits, labels, relationships,
-projects, milestones, implementation, commits, pushes, or pull requests.
+Creating an issue does not authorize comments, later label edits, relationships,
+projects, milestones, implementation, commits, pushes, or pull requests. It
+authorizes only applying the verified add-only `label_selection` during creation.
 
 After verified standalone intake, ask once whether to start
 `rebirthuo-issue-research`. In workflow mode, continue automatically and do not
